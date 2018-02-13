@@ -41,7 +41,8 @@
         <!--link rel="manifest" href="<?= webroot("resources/assets/manifest.json"); ?>"-->
         <link rel="icon" sizes="128x128" href="<?= webroot("public/images/pizza128.png"); ?>">
         <link rel="icon" sizes="192x192" href="<?= webroot("public/images/pizza192.png"); ?>">
-        <link href="<?= $css; ?>/font-awesome.min.css" rel='stylesheet' type='text/css'>
+        <!--link href="<?= $css; ?>/font-awesome.min.css" rel='stylesheet' type='text/css'-->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
         <link href='<?= $css; ?>/Roboto.css' rel='stylesheet' type='text/css'>
         <link href='<?= $css; ?>/Roboto-slab.css' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
