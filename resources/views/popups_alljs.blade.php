@@ -560,9 +560,13 @@
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
                 }
 
+                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto force-right">';
                 tempHTML += '<span id="cost_' + itemid + '" class="dont-float-right">$' + totalcost +'</span>';
+                tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
+                    tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil"></I></button>';
                 } else {
+                    tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
                 }
                 tempHTML += '</SPAN></div>';
 
