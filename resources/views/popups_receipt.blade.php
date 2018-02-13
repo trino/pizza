@@ -476,7 +476,7 @@
                     echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT" TITLE="' . $originaldiscount . '">Discount $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($discount, 2) . '</TD></TR>';
                     $subtotal = $subtotal - $discount;
                 }
-                echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($deliveryfee, 2) . '</TD></TR>';
+                if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($deliveryfee, 2) . '</TD></TR>';}
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($tax, 2) . '</TD></TR>';
                 echo '<TR style="font-weight: bold;"><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($total, 2) . '</TD></TR>';
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';
