@@ -9,7 +9,7 @@
 
     switch ($style) {
         case 0:
-            echo '<DIV CLASS="row"><DIV CLASS="col-md-2">Address</DIV><DIV CLASS="col-md-10" ID="gmapc">';
+            echo '<DIV><DIV CLASS="col-md-2">Address</DIV><DIV CLASS="col-md-12" ID="gmapc">';
             echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="formatted_address"></div></DIV>';
             break;
         case 1:

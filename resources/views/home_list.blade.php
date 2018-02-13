@@ -52,9 +52,9 @@
         $formatted = formatfield($field);
         echo '<TH CLASS="th-left col_' . $field . '"';
         if($NoWrap){ echo ' NOWRAP';}
-        echo '><DIV CLASS="pull-center nowrap"><i class="btn btn-sm btn-primary fa fa-arrow-down pull-left desc_' . $field . '" onclick="sort(' . "'" . $field . "', 'DESC'" . ')" TITLE="Sort by ' . $formatted;
-        echo ' descending"> </i>' . $formatted . ' <i class="btn btn-sm btn-primary fa fa-arrow-up pull-right asc_' . $field . '" onclick="sort(' . "'" . $field . "', 'ASC'" . ')" TITLE="Sort by ' . $formatted;
-        echo ' ascending"></i></DIV></TH>';
+        echo '><DIV CLASS="pull-center nowrap"><i class="btn btn-sm btn-primary pull-left desc_' . $field . '" onclick="sort(' . "'" . $field . "', 'DESC'" . ')" TITLE="Sort by ' . $formatted;
+        echo ' descending"><I CLASS="fa fa-arrow-down"></I></i>' . $formatted . ' <i class="btn btn-sm btn-primary pull-right asc_' . $field . '" onclick="sort(' . "'" . $field . "', 'ASC'" . ')" TITLE="Sort by ' . $formatted;
+        echo ' ascending"><I CLASS="fa fa-arrow-up"></I></i></DIV></TH>';
     }
     function changeorderstatus($ID, $Status, $Reason){
         //HomeController::placeorder(["action" => "changestatus", "orderid" => $ID, "status" => $Status, "reason" => $Reason]);
@@ -485,9 +485,12 @@
                     -webkit-appearance:menulist;
                 }
 
-                #searchtext:not(:focus){
-                    border: 1px solid grey !important;
+                #searchtext, .form-control{
+                    border: 1px solid darkgrey !important;
                     padding-left: 2px;
+                }
+                #searchtext::placeholder{
+                    color: darkgrey;
                 }
 
                 .dropdown-toggle{
@@ -579,10 +582,10 @@
                                         <A onclick="testemail();" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
                                         <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash-o"></i></A>
                                     @else
-                                        <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square-o"></i> Select None</A>
-                                        <A onclick="selecttableitems(-1);" href="#"><i class="fa fa-fw fa-check-square-o" id="invert"></i> Invert Selection</A>
-                                        <A onclick="selecttableitems(1);" href="#"><i class="fa fa-check-square-o"></i> Select All</A>
-                                        <A onclick="deletetableitems();" href="#"><i class="fa fa-trash-o"></i> Delete Selected</A>
+                                        <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
+                                        <A onclick="selecttableitems(-1);" href="#" ID="invert"><i class="fa fa-check-square"></i><i class="fa fa-square"></i> Invert Selection</A>
+                                        <A onclick="selecttableitems(1);" href="#"><i class="fa fa-check-square"></i> Select All</A>
+                                        <A onclick="deletetableitems();" href="#"><i class="fa fa-trash"></i> Delete Selected</A>
                                         <!--A onclick="deletetable();" TITLE="Delete the entire table" class="hyperlink" id="deletetable"><i class="fa fa-trash-o"></i></A-->
                                     @endif
                                     <A HREF="{{ webroot("public/list/all") }}" TITLE="Back"><i class="fa fa-arrow-left"></i></A>
@@ -1896,13 +1899,18 @@
                         var countdown = checkfordebug(true);
                     }
 
+                    var currentinverticon = -1;
                     inverticon();
-                    function inverticon(){
-                        if($("#invert").hasClass("fa-check-square-o")){
-                            $("#invert").removeClass("fa-check-square-o").addClass("fa-square-o");
-                        } else {
-                            $("#invert").removeClass("fa-square-o").addClass("fa-check-square-o");
-                        }
+                    function inverticon(){//animated invert icon
+                        var selector = "#invert svg";
+                        currentinverticon = (currentinverticon + 1) % 2;
+                        $(selector).each(function( index ) {
+                            if(index == currentinverticon){
+                                $( this ).show();
+                            } else {
+                                $( this ).hide();
+                            }
+                        });
                         window.setTimeout(function () {inverticon();}, 1000);
                     }
 
@@ -2174,8 +2182,8 @@
                                                 if(!$keys){
                                                     $keys = array_keys($data);
                                                 }
-                                                echo '<button class="bg-transparent text-muted fa fa-minus btn-sm" onclick="comboitem(' . $data["id"] . ', false);"></button>';
-                                                echo '<button class="bg-transparent text-muted fa fa-plus btn-sm" onclick="comboitem(' . $data["id"] . ', true);"></button>';
+                                                echo '<button class="bg-transparent text-muted btn-sm" onclick="comboitem(' . $data["id"] . ', false);"><I CLASS="fa fa-minus"></I></button>';
+                                                echo '<button class="bg-transparent text-muted btn-sm" onclick="comboitem(' . $data["id"] . ', true);"><I CLASS="fa fa-plus"></I></button>';
                                                 echo '<LABEL ID="comboitem_' . $data["id"] . '"';
                                                 foreach($keys as $key){
                                                     if($key != "id" && $key != "item"){

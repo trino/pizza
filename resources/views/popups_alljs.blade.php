@@ -2362,6 +2362,12 @@
         ?>
     });
 
+    $(document).on( "click", function() {
+        if($(".dropdown-menu").is(":visible")){
+            $(".dropdown-menu").hide();
+        }
+    });
+
     $(document).keyup(function(e) {
         if (e.keyCode == 27) {//escape key
             $(".modal:visible").modal("hide");
