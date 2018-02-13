@@ -77,7 +77,7 @@
                             <i class="fa fa-user icon-width"></i> My Profile</A>
                         </li>
                         @if($routename != "help")
-                            <li class="profiletype_not profiletype_not2"><A ONCLICK="orders();" class="dropdown-item" href="#"><i class="fa fa-clock-o icon-width"></i> Past Orders</A></li>
+                            <li class="profiletype_not profiletype_not2"><A ONCLICK="orders();" class="dropdown-item" href="#"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
                         @endif
                     </SPAN>
                 @endif
@@ -92,7 +92,7 @@
                     <LI><A CLASS="dropdown-item" href="<?= webroot("help"); ?>"><i class="fa fa-question-circle icon-width"></i> More Info</A></LI>
                 @endif
                 @if(read("id"))
-                    <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out icon-width"></i> Log Out</A></LI>
+                    <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
                 @endif
             </ul>
             <a HREF="<?= webroot("public/index"); ?>" class="align-left text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
