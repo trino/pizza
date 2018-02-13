@@ -1984,7 +1984,7 @@
         }
 
         var thisside = ' CLASS="thisside">';
-
+        var showthisitem = 0;
         for (var itemindex = 0; itemindex < currentaddonlist.length; itemindex++) {
             var freetoppings = 0;
             var paidtoppings = 0;
@@ -2003,8 +2003,16 @@
             for (var i = 0; i < currentaddonlist[itemindex].length; i++) {
                 var currentaddon = currentaddonlist[itemindex][i];
                 var qualifier = "";
-                tempstr += '<DIV CLASS="pr-3 ' + classname + '" id="topping_' + itemindex + '_' + i + '">' + currentaddon.name +
-                    '<!--span ONCLICK="removelistitem(' + itemindex + ', ' + i + ');">&nbsp; <i CLASS="fa fa-times"></i> </span--></div>';
+                if(isfirstinstance(itemindex, i)) {
+                    tempstr += '<DIV CLASS="' + classname + '" id="topping_' + itemindex + '_' + i + '">' + countaddons(itemindex, i) + currentaddon.name + '</div>';
+                    //<!--span ONCLICK="removelistitem(' + itemindex + ', ' + i + ');">&nbsp; <i CLASS="fa fa-times"></i> </span-->
+                    if(!islasttopping(itemindex, i)){
+                        tempstr += ', ';
+                    }
+                    if(ismatch(itemindex, ToppingIndex, i) && itemindex == ItemIndex){
+                        ToppingIndex = i;
+                    }
+                }
                 qualifier = currentaddon.qual;
                 if (qualifier == 0) {
                     qualifier = 0.5;
@@ -2021,7 +2029,6 @@
             if (debugmode) {
                 HTML += " (Paid: " + paidtoppings + " Free: " + freetoppings + ')';
             }
-            //tempstr += '<span id="cursor' + itemindex + '" class="blinking-cursor">|</span>';
             HTML += tempstr + '</DIV>';
         }
 
@@ -2031,9 +2038,50 @@
         $(".currentitem.thisside").trigger("click");
         refreshremovebutton();
         if (ItemIndex > -1) {
+            log("FADE: #topping_" + ItemIndex + "_" + ToppingIndex);
             $("#topping_" + ItemIndex + "_" + ToppingIndex).hide().fadeTo('fast', 1);
         }
-        showcursor(currentitemindex);
+    }
+
+    function ismatch(itemindex, toppingindex1, toppingindex2){
+        if (toppingindex1 == -1 || toppingindex2 == -1){return false;}
+        var topping1 = currentaddonlist[itemindex][toppingindex1];
+        var topping2 = currentaddonlist[itemindex][toppingindex2];
+        if (topping1.qual == topping2.qual && topping1.side == topping2.side){
+            if (topping1.type == topping2.type) {
+                return topping1.name == topping2.name;
+            }
+        }
+        return false;
+    }
+
+    function isfirstinstance(itemindex, toppingindex){
+        for (var i = 0; i < toppingindex; i++) {
+            if (ismatch(itemindex, toppingindex, i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function islasttopping(itemindex, toppingindex){
+        for (var i = toppingindex+1; i < currentaddonlist[itemindex].length; i++) {
+            if (!ismatch(itemindex, toppingindex, i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function countaddons(itemindex, toppingindex){
+        var total = 0;
+        for (var i = 0; i < currentaddonlist[itemindex].length; i++) {
+            if (ismatch(itemindex, toppingindex, i)){
+                total+=1;
+            }
+        }
+        if (total < 2){return "";}
+        return total + "x ";
     }
 
     function getcost(Toppings) {
@@ -2241,10 +2289,6 @@
         $(".currentitem" + index).addClass("thisside");
         currentitemindex = index;
         refreshremovebutton();
-    }
-    function showcursor(Index){
-        $(".blinking-cursor").hide();
-        $("#cursor" + Index).show();
     }
 
     function removelistitem(index, subindex) {
