@@ -112,7 +112,7 @@
                 //echo '</DIV><div class="col-md-4" style="background:white;">';
             }
             $itemsInCol += $menuitemcount;
-            echo '<div class="border-category text-danger strong list-group-item" ID="category_' . $CurrentCat . '"><h2>' . $category['category'] . '</h2></div>';
+            echo '<div class="border-category text-danger strong list-group-item" ID="category_' . $CurrentCat . '"><h2 CLASS="align-middle h2-middle">' . $category['category'] . '</h2></div>';
             $CurrentCat +=1;
         ?>
         @foreach ($menuitems as $menuitem)

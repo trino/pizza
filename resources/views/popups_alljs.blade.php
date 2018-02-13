@@ -560,13 +560,9 @@
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
                 }
 
-                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto align-middle">';
-                tempHTML += '<span id="cost_' + itemid + '">$' + totalcost +'</span>';
-                tempHTML += '<button class="bg-transparent text-normal fa fa-minus btn-sm" onclick="removeorderitem(' + itemid + ', ' + quantity + ');"></button>';
+                tempHTML += '<span id="cost_' + itemid + '" class="dont-float-right">$' + totalcost +'</span>';
                 if (hasaddons) {
-                    tempHTML += '<button class="bg-transparent text-normal fa fa-pencil btn-sm" onclick="edititem(this, ' + itemid + ');"></button>';
                 } else {
-                    tempHTML += '<button class="bg-transparent text-normal fa fa-plus btn-sm" onclick="cloneitem(this, ' + itemid + ');"></button>';
                 }
                 tempHTML += '</SPAN></div>';
 
@@ -626,7 +622,7 @@
             $("#checkout-total").text('$0.00');
         } else {
             tempHTML = "";
-            tempHTML += '<DIV id="newvalues"';
+            tempHTML += '<DIV id="newvalues" style="float: right;" ';
             if (fadein || forcefade) {
                 tempHTML += 'class="dont-show"';
             }
@@ -639,7 +635,7 @@
             $("#checkout-total").text('$' + totalcost.toFixed(2));
         }
         if (fadein || forcefade) {
-            tempHTML += '<DIV id="oldvalues">' + oldvalues + '</div>';
+            tempHTML += '<DIV id="oldvalues" style="float: right;">' + oldvalues + '</div>';
         }
         if (theorder.length > 0) {
             if (totalcost >= minimumfee) {

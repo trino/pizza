@@ -1,10 +1,32 @@
 .itemcontents{
     display: inline-block;
 }
+.float-right{
+    float: right;
+}
+.text-right{
+    text-align: right;
+}
+.btn-fa{
+    padding-top: 0px;
+}
+.force-right{
+    position: absolute;
+    right: 0px;
+}
+.h2-middle{
+    margin-top: 12px !important;
+}
 
+.align-middle{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.border-category{
+    padding-top: 5px;
+}
 
-
-.close-button{
+.close-button, .cancel-button{
     position: absolute;
     top: 5px;
     right: 5px;
@@ -143,9 +165,8 @@ button, .btn-sm, a, .btn {
 h2 {
     font-size: 1rem !important;
     line-height: 1rem !important;
-    padding: 0 !important;
+    /*padding: 0 !important; margin: .5rem 0 !important;*/
     font-weight: bold !important;
-    margin: .5rem 0 !important;
 }
 
 .list-group-item {
