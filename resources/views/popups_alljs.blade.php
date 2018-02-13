@@ -564,7 +564,7 @@
                 tempHTML += '<span id="cost_' + itemid + '" class="dont-float-right">$' + totalcost +'</span>';
                 tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
-                    tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil"></I></button>';
+                    tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
                 } else {
                     tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
                 }
@@ -589,15 +589,18 @@
                                 tempHTML += 'no ' + nonames[tablename] + '';
                             } else {
                                 for (var addonid = 0; addonid < addons["addons"].length; addonid++) {
-                                    if (addonid > 0) {
-                                        tempHTML += ", ";
-                                    }
-                                    var addonname = addons["addons"][addonid]["text"];
-                                    var isfree = isaddon_free(tablename, addonname);
-                                    if (isfree) {
-                                        tempHTML += '<I TITLE="Free addon">' + addonname + '</I>';
-                                    } else {
-                                        tempHTML += addonname;
+                                    if (isfirstinstance2(addons["addons"], addonid)) {
+                                        if (addonid > 0) {
+                                            tempHTML += ", ";
+                                        }
+                                        var addonname = addons["addons"][addonid]["text"];
+                                        var isfree = isaddon_free(tablename, addonname);
+                                        addonname = countaddons2(addons["addons"], addonid) + addonname;
+                                        if (isfree) {
+                                            tempHTML += '<I TITLE="Free addon">' + addonname + '</I>';
+                                        } else {
+                                            tempHTML += addonname;
+                                        }
                                     }
                                 }
                             }
@@ -656,6 +659,31 @@
             }
             $("#oldvalues").show().fadeOut("slow", function () {$("#newvalues").fadeIn();});
         }
+    }
+
+    function isfirstinstance2(addons, addonid){
+        for (var i = 0; i < addonid; i++) {
+            if (ismatch2(addons, addonid, i)){
+                return false;
+            }
+        }
+        return true;
+    }
+    function countaddons2(addons, addonid){
+        var total = 0;
+        for (var i = 0; i < addons.length; i++) {
+            if (ismatch2(addons, addonid, i)){
+                total+=1;
+            }
+        }
+        if (total < 2){return "";}
+        return total + "x ";
+    }
+    function ismatch2(addons, addonid1, addonid2){
+        if(addons[addonid1]["isfree"] == addons[addonid2]["isfree"]){
+            return addons[addonid1]["text"] == addons[addonid2]["text"];
+        }
+        return false;
     }
 
     //hides the checkout form
@@ -2044,7 +2072,9 @@
     }
 
     function ismatch(itemindex, toppingindex1, toppingindex2){
-        if (toppingindex1 == -1 || toppingindex2 == -1){return false;}
+        log("itemindex: " + itemindex + " toppingindex1: " +  toppingindex1 + " toppingindex2: " + toppingindex2 + " currentaddonlist.length: " + currentaddonlist.length);
+        if(itemindex >= currentaddonlist.length){return false;}
+        if (toppingindex1 == -1 || toppingindex2 == -1 || toppingindex1 >= currentaddonlist[itemindex].length || toppingindex2 >= currentaddonlist[itemindex].length){return false;}
         var topping1 = currentaddonlist[itemindex][toppingindex1];
         var topping2 = currentaddonlist[itemindex][toppingindex2];
         if (topping1.qual == topping2.qual && topping1.side == topping2.side){
@@ -2360,7 +2390,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="alertmodallabel">Title</h2>
-                <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-close"></i></button>
+                <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-times-circle"></i></button>
             </div>
             <div class="modal-body">
                 <DIV ID="alertmodalbody"></DIV>

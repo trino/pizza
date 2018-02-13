@@ -2133,7 +2133,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2 id="myModalLabel">View Order</h2>
-                            <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-close"></i></button>
+                            <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times-circle"></i></button>
                         </div>
 
                         <div class="modal-body">
@@ -2153,7 +2153,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2 id="myModalLabel">Combo Items</h2>
-                            <button onclick="closecombo();" class="btn btn-sm ml-auto align-middle"><i class="fa fa-close"></i></button>
+                            <button onclick="closecombo();" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times-circle"></i></button>
                         </div>
                         <div class="modal-body">
                             Name: <INPUT TYPE="text" id="comboname" class="form-control" style="background-color: white !important;" onchange="comboChanged=true;">

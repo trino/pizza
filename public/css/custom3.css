@@ -10,6 +10,11 @@
 .btn-fa{
     padding-top: 0px;
 }
+.top-left{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
 .force-right{
     position: absolute;
     right: 0px;

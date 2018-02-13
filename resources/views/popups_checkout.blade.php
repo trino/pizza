@@ -1,8 +1,8 @@
 <?php startfile("popups_checkout"); ?>
 
 <div class="list-group-item">
-    <h2 class="mr-auto align-left"> My Order</h2>
-    <button class="btn-sm dont-show ml-auto align-right bg-transparent cancel-button" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-close"></i></button>
+    <h2 class="top-left"> My Order</h2>
+    <button class="btn-sm dont-show ml-auto align-right bg-transparent cancel-button" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times-circle"></i></button>
 </div>
 
 <div id="myorder" style='font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-weight: bold;font-size: .85rem'></div>
@@ -16,7 +16,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="myModalLabel" style="text-transform: uppercase;">Hi, <SPAN CLASS="session_name"></SPAN></h2>
-                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-close"></i></button>
+                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times-circle"></i></button>
             </div>
             <div class="modal-body" style="padding: 0 !important;">
                 <FORM ID="orderinfo" name="orderinfo">
@@ -133,7 +133,7 @@
                     <div class="input_left_icon">
                         <span class="fa-stack fa-2x">
                         <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-pencil text-white fa-stack-1x"></i>
+                        <i class="fa fa-pencil-alt text-white fa-stack-1x"></i>
                         </span>
                     </div>
                     <div class="input_right">

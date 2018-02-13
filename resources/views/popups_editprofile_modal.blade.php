@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="myModalLabel" class="align-middle">My Profile</h2>
-                <button data-popup-close="profilemodal" data-dismiss="modal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-close"></i></button>
+                <button data-popup-close="profilemodal" data-dismiss="modal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times-circle"></i></button>
             </div>
 
             <div class="modal-body">
