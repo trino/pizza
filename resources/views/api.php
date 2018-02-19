@@ -9,7 +9,11 @@
             define("serverurl", "londonpizza.ca");
             define("sitename", "londonpizza.ca");
             define("cityname", "London");
-            break;
+            break;        case 'hamiltonpizza.ca':
+        define("serverurl", "hamiltonpizza.ca");
+        define("sitename", "hamiltonpizza.ca");
+        define("cityname", "Hamilton");
+        break;
         default:
             define("serverurl", "http://" . $_SERVER["SERVER_NAME"] . "/ai/");
             define("sitename", "localhost");
@@ -52,9 +56,9 @@
         }
         if (islive()) {
             switch (sitename) {
-                case "londonpizza.ca": case "scpizza.ca":
-                    $database = "londonpi_db";
-                    $username = "londonpi_user";
+                case "londonpizza.ca": case "hamiltonpizza.ca": case "scpizza.ca":
+                    $database = "hamilton_db";
+                    $username = "hamilton_user";
                     $password = "Pass1234!";
                     break;
                 default:
