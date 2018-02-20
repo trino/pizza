@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2018 at 05:39 PM
+-- Generation Time: Feb 20, 2018 at 05:45 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -78,7 +78,10 @@ INSERT INTO `additional_toppings` (`id`, `size`, `price`) VALUES
 (6, 'Panzerotti', 0.95),
 (7, 'Delivery', 3),
 (8, 'Minimum', 15),
-(10, 'DeliveryTime', 45);
+(10, 'DeliveryTime', 45),
+(11, 'over$20', 10),
+(12, 'over$30', 20),
+(13, 'over$40', 30);
 
 -- --------------------------------------------------------
 
@@ -329,9 +332,9 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
-(1, 'lastSQL', '1518536456'),
+(1, 'lastSQL', '1519144826'),
 (20, 'orders', '1487775876'),
-(24, 'menucache', '1519143876'),
+(24, 'menucache', '1519145091'),
 (25, 'useraddresses', '1495910443'),
 (37, 'users', '1495489938'),
 (38, 'additional_toppings', '1487175322'),
@@ -343,14 +346,11 @@ INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
 (1553, 'domenucache', '1'),
 (1554, 'settings', '1494344646'),
 (1560, 'onlyfiftycents', '1'),
-(1567, 'over$20', '10%'),
-(1571, 'over$30', '20%'),
-(1575, 'over$40', '30%'),
 (1579, 'deletetopping', '0'),
 (1582, 'localhostdialing', '0'),
 (1593, 'maxdistance_live', '5'),
 (1594, 'maxdistance_local', '20'),
-(1600, 'lastupdate', '1519143876556');
+(1600, 'lastupdate', '1519145091729');
 
 -- --------------------------------------------------------
 
@@ -652,7 +652,7 @@ ALTER TABLE `actions`
 -- AUTO_INCREMENT for table `additional_toppings`
 --
 ALTER TABLE `additional_toppings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `combos`
@@ -682,7 +682,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1815;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1822;
 
 --
 -- AUTO_INCREMENT for table `shortage`
