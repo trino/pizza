@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2018 at 09:32 PM
+-- Generation Time: Feb 20, 2018 at 09:36 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -326,7 +326,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
-(1, 'lastSQL', '1519145137'),
+(1, 'lastSQL', '1519158727'),
 (20, 'orders', '1519151188'),
 (24, 'menucache', '1519153619'),
 (25, 'useraddresses', '1495910443'),
@@ -490,7 +490,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `lastlogin`, `loginattempts`, `profiletype`, `authcode`, `stripecustid`) VALUES
-(0, 'Tanya Myoko', 'kalerufe@EMAILhgHOSTNAME.COM', '$2y$10$9dO.UZZB7a9qi5dgDCzaeOxEMar.FTe9MrUQENead5pbZ4XCcUyQq', '', '2018-02-20 19:09:45', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
 (1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '0000-00-00 00:00:00', '2017-04-25 17:52:10', '9055123067', 1487608084, 0, 1, '', 'cus_CMP8XVe641qT0g'),
 (2, 'Roy Test', 'roy+test@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:20:28', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
 (3, 'thanhtrungtran@live.com', 'thanhtrungtran@live.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:49:31', '0000-00-00 00:00:00', '9055555555', 1481048458, 0, 2, '', 'cus_9yYE78hosPbuGH'),
@@ -679,7 +678,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1880;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1881;
 
 --
 -- AUTO_INCREMENT for table `shortage`
@@ -692,6 +691,12 @@ ALTER TABLE `shortage`
 --
 ALTER TABLE `useraddresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
