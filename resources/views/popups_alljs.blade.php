@@ -489,6 +489,15 @@
         );
     }
 
+    function getDiscount(subtotal){
+        for (var tens = Math.floor(subtotal / 10) * 10;tens >= 0; tens-=10){
+            if(freetoppings.hasOwnProperty('over$' + tens)){
+                return freetoppings['over$' + tens];
+            }
+        }
+        return 0;
+    }
+
     //convert the order to an HTML receipt
     function generatereceipt(forcefade) {
         if ($("#myorder").length == 0) {
@@ -612,8 +621,11 @@
                 HTML += tempHTML;
             }
         }
-        var taxes = (subtotal + deliveryfee) * 0.13;//ontario only
-        totalcost = subtotal + deliveryfee + taxes;
+        var discountpercent = getDiscount(subtotal);
+        var discount = (discountpercent * 0.01 * subtotal).toFixed(2)
+
+        var taxes = (subtotal + deliveryfee - discount) * 0.13;//ontario only
+        totalcost = subtotal - discount + deliveryfee + taxes;
 
         visible("#checkout", userdetails);
         createCookieValue("theorder", JSON.stringify(theorder));
@@ -634,6 +646,9 @@
                 tempHTML += 'class="dont-show"';
             }
             tempHTML += '><div class="pull-right text-normal py-1"><TABLE><TR><TD>Sub-total $</TD><TD>' + subtotal.toFixed(2) + '</TD></TR>';
+            if(discount>0){
+                tempHTML += '<TR><TD>Discount %</TD><TD>' + discountpercent + '</TD></TR><TR><TD>Discount $</TD><TD>' + discount + '</TD></TR>';
+            }
             if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery $</TD><TD>' + deliveryfee.toFixed(2) + '</TD></TR>';}
             tempHTML += '<TR><TD>Tax $</TD><TD>' + taxes.toFixed(2) + '</TD></TR>';
             tempHTML += '<TR><TD class="strong">Total $</TD><TD class="strong">' + totalcost.toFixed(2) + '</TD></TR>';
