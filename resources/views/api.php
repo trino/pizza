@@ -75,6 +75,9 @@
     function left($text, $length){
         return substr($text, 0, $length);
     }
+    function startswith($text, $test){
+        return left($text, strlen($test)) == $test;
+    }
 
     function right($text, $length){
         return substr($text, -$length);

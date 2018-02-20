@@ -7,14 +7,19 @@
     if (!isset($icons))     {$icons = false;}
     if (isset($autored))    {$required .= ' autored="' . $autored . '"';}
 
+    $q = "'";
+    $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
+    $autocompleteblocker = ' ONCLICK="autofix(this);"';
+    echo '<SPAN ID="mirror"></SPAN>';
+
     switch ($style) {
         case 0:
             echo '<DIV><DIV CLASS="col-md-2">Address</DIV><DIV CLASS="col-md-12" ID="gmapc">';
-            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="formatted_address"></div></DIV>';
+            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '></div></DIV>';
             break;
         case 1:
             if($icons) {echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-home text-white fa-stack-1x"></i></span></div><div class="input_right">';}
-            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start by Typing Address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="formatted_address"></SPAN>';
+            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start by Typing the Address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '></SPAN>';
             if($icons) {echo '</div>';}
             echo '<STYLE>.address:focus{z-index: 999;}</STYLE>';
             break;
@@ -54,6 +59,24 @@
             });
         }
     //endif
+
+    function transferdata(value){
+        var html = $("#mirror").html();
+        if(!html){
+            $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" STYLE="display:none;">');
+        }
+        $('input[autocomplete=really-truly-off]').val(value);
+        $("#formatted_address").val(value);
+    }
+
+    function autofix(element){
+        if(is_chrome) {
+            element.setAttribute("name", "");
+            element.setAttribute("id", "");
+            element.setAttribute("class", "form-control");
+            element.setAttribute("autocomplete", "really-truly-off");
+        }
+    }
 
     function editaddresses() {
         $("#checkoutmodal").modal("hide");
@@ -164,6 +187,7 @@
             $("#saveaddressbtn").attr("disabled", true);
         }
         $('.formatted_address').val(streetformat);
+        transferdata(streetformat);
         place.formatted_address = streetformat;
         @if(isset($findclosest))
             if (isFunction(addresshaschanged)) {

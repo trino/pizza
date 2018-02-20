@@ -13,3 +13,4 @@ yarn-error.log
 .env
 *.json
 public/royslog.txt
+public/royslog.txt

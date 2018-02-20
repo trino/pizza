@@ -20,10 +20,11 @@
 <script>
     var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
     var is_android = navigator.userAgent.toLowerCase().indexOf('android') > -1;
+    var is_chrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     var is_firefox_for_android = is_firefox && is_android;
     var currentitemID = -1;
     var MAX_DISTANCE = 5;//km
-    var debugmode = false;//'<?= !islive(); ?>' == '1';
+    var debugmode = '<?= !islive(); ?>' == '1';
 
     String.prototype.isEqual = function (str) {
         if (isUndefined(str)) {

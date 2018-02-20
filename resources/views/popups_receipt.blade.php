@@ -118,11 +118,11 @@
             $subtotal = floor($subtotal/10)*10;
             for($dollars = $subtotal; $dollars > 0; $dollars-=10){
                 $keyname = "over$" . $dollars;
-                if(isset($GLOBALS["settings"][$keyname])){
-                    return $GLOBALS["settings"][$keyname];
+                if(isset($GLOBALS["discounts"][$keyname])){
+                    return $GLOBALS["discounts"][$keyname];
                 }
             }
-            return false;
+            return 0;
         }
     }
     //edit countdown timer duration
@@ -275,6 +275,24 @@
                     return $quantity . $text;
                 }
             }
+
+            function counttoppings(&$toppings, $toppingtocount){
+                $count = 0;
+                foreach ($toppings as $topping) {
+                    if (isset($topping->id)) {//search by id
+                        if($toppingtocount->id == $topping->id){
+                            $count++;
+                            $topping->counted = true;
+                        }
+                    } else if($toppingtocount->text == $topping->text){
+                        $count++;
+                        $topping->counted = true;
+                    }
+                }
+                if($count>1){
+                    return $count . "x ";
+                }
+            }
         }
 
         //check all data again, do not trust the prices from the user!!
@@ -286,6 +304,11 @@
 
         $deliveryfee = findkey($tables["additional_toppings"], "size", "Delivery");
         $deliveryfee = $tables["additional_toppings"][$deliveryfee]["price"];
+        foreach($tables["additional_toppings"] as $key => $value){
+            if (startswith($value["size"], "over$")){
+                $GLOBALS["discounts"][$value["size"]] = $value["price"];
+            }
+        }
 
         if (file_exists($filename)) {
             $filename = file_get_contents($filename);
@@ -400,7 +423,8 @@
                                         } else {//search by name
                                             $toppingkey = findkey($tables[$tablename], "name", $topping->text);
                                         }
-
+                                        $counted = isset($topping->counted);
+                                        $count = counttoppings($toppings, $topping);
                                         $topping = $tables[$tablename][$toppingkey];
                                         if ($topping["isfree"]) {
                                             $freetoppings++;
@@ -411,7 +435,9 @@
                                         if ($debugmode) {
                                             $debug = ' TITLE="' . $onlydebug . print_r($topping, true) . '"';
                                         }
-                                        $newtoppings[] = '<SPAN' . $debug . '>' . $topping["name"] . '</SPAN>';
+                                        if(!$counted){
+                                            $newtoppings[] = '<SPAN' . $debug . '>' . $count . $topping["name"] . '</SPAN>';
+                                        }
                                     }
                                     if (!$newtoppings) {
                                         $newtoppings[] = $none;
@@ -461,21 +487,17 @@
                 }
 
                 $tax_percent = 0.13;
-                $tax = ($subtotal + $deliveryfee) * $tax_percent;
-                $total = $subtotal + $deliveryfee + $tax;
                 $colspanminus1 = $colspan - 1;
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($subtotal, 2) . '</TD></TR>';
                 $discount = getdiscount($subtotal);
-                if($discount){
-                    $originaldiscount = $discount;
-                    if(left($discount,1) == "$"){
-                        $discount = right($discount, strlen($discount)-1);
-                    } else if (right($discount, 1) == "%"){
-                        $discount = left($discount, strlen($discount)-1) * 0.01 * $subtotal;
-                    }
-                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT" TITLE="' . $originaldiscount . '">Discount $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($discount, 2) . '</TD></TR>';
+                if($discount > 0){
+                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount %&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
+                    $discount = number_format($discount * 0.01 * $subtotal, 2);
+                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount $&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
                     $subtotal = $subtotal - $discount;
                 }
+                $tax = ($subtotal + $deliveryfee) * $tax_percent;
+                $total = $subtotal + $deliveryfee + $tax;
                 if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($deliveryfee, 2) . '</TD></TR>';}
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($tax, 2) . '</TD></TR>';
                 echo '<TR style="font-weight: bold;"><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($total, 2) . '</TD></TR>';

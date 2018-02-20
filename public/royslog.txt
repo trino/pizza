@@ -1,87 +1,28 @@
 ----------------------------------------------------------------------------------------------
-2018-02-11 06:06:08 pm (USER # 1: Roy Wall)  --  Order ID: 257 - Stripe error: Your card has expired.
+2018-02-20 01:26:28 pm (USER # 1: Roy Wall)  --  Sending email to customer: dvt1985@hotmail.com
 ----------------------------------------------------------------------------------------------
-2018-02-19 11:51:49 am (USER # 1: Roy Wall)  --  Sending email to restaurant: odealyonline@gmail.com
-----------------------------------------------------------------------------------------------
-2018-02-19 11:51:50 am (USER # 1: Roy Wall)  --  email_receipt EMAIL TO odealyonline@gmail.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO dvt1985@hotmail.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
 "<P><HTML>
     Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
-        <h2 style="font-weight: normal !important;">Delivery Today (February 19) at 12:45 PM</h2>
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
     </div>
 
                 
             <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
     
-    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" valign="middle" style="font-weight: bold;">2 Medium Pizzas</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT" WIDTH="5%">$16.15</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4">1st Pizza: <SPAN TITLE="Only shows in debug mode! - Array
-(
-    [id] => 20
-    [name] => Jalapeno Peppers
-    [type] => Vegetable
-    [isfree] => 0
-    [qualifiers] => 
-    [isall] => 0
-    [groupid] => 0
-)
-">Jalapeno Peppers</SPAN>
-2nd Pizza: No Toppings
-</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">16.15</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">3.00</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Tax $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">2.49</TD></TR><TR style="font-weight: bold;"><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">21.64</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT"><span>Paid</span></TD></TR>    </TABLE>
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
 
-            <B>Notes </B><br> 123
+            <B>Notes </B><br> This is a test order. -Van
     
             <h2 class="mt-2">Delivery Info</h2>
-        Roy Wall
-18 Oakland Dr
-Hamilton Ontario L8E 3Z2<br>(905) 512-3067
-        <h2 class="mt-2">Order #<span ID="receipt_id">271</span></h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
 
-        Test Pizza Store
-2372 Barton St E<br>Hamilton Ontario L8E 2W7
- (905) 531-5331<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="43.2304791"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-79.769272699999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="43.2376467"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-79.765102399999">    
-                    <br>
-        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
-    
-        <HR>
-Thank you,
-The localhost Team
-</HTML>
-
-----------------------------------------------------------------------------------------------
-2018-02-19 11:51:50 am (USER # 1: Roy Wall)  --  Sending email to customer: roy@trinoweb.com
-----------------------------------------------------------------------------------------------
-2018-02-19 11:51:51 am (USER # 1: Roy Wall)  --  email_receipt EMAIL TO roy@trinoweb.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
-"<P><HTML>
-    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
-        <h2 style="font-weight: normal !important;">Delivery Today (February 19) at 12:45 PM</h2>
-    </div>
-
-                
-            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
-    
-    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" valign="middle" style="font-weight: bold;">2 Medium Pizzas</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT" WIDTH="5%">$16.15</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4">1st Pizza: <SPAN TITLE="Only shows in debug mode! - Array
-(
-    [id] => 20
-    [name] => Jalapeno Peppers
-    [type] => Vegetable
-    [isfree] => 0
-    [qualifiers] => 
-    [isall] => 0
-    [groupid] => 0
-)
-">Jalapeno Peppers</SPAN>
-2nd Pizza: No Toppings
-</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">16.15</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">3.00</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Tax $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">2.49</TD></TR><TR style="font-weight: bold;"><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">21.64</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT"><span>Paid</span></TD></TR>    </TABLE>
-
-            <B>Notes </B><br> 123
-    
-            <h2 class="mt-2">Delivery Info</h2>
-        Roy Wall
-18 Oakland Dr
-Hamilton Ontario L8E 3Z2<br>(905) 512-3067
-        <h2 class="mt-2">Order #<span ID="receipt_id">271</span></h2>
-
-        Test Pizza Store
-2372 Barton St E<br>Hamilton Ontario L8E 2W7
- (905) 531-5331<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="43.2304791"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-79.769272699999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="43.2376467"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-79.765102399999">    
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
                         <h2 class="mt-2">Questions about your order?</h2>
             Please contact the restaurant directly
             <DIV CLASS="clearfix"></DIV>
@@ -94,12 +35,489 @@ The localhost Team
 </HTML>
 
 ----------------------------------------------------------------------------------------------
-2018-02-19 11:51:51 am (USER # 1: Roy Wall)  --  Calling restaurant: 9055315331
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
 ----------------------------------------------------------------------------------------------
-2018-02-19 11:51:51 am (USER # 1: Roy Wall)  --  ERROR - Calling: 9055315331 - Hello Test Pizza Store, you have an order on localhost - Is not live/valid or is a blocked number, did not contact
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
 ----------------------------------------------------------------------------------------------
-2018-02-19 12:19:18 pm (USER # : [NOT LOGGED IN])  --  email_verify EMAIL TO info+9@trinoweb.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
-"<P>Hi van trinh. Thank you for registering at localhostYour password is admin
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  Sending email to customer: dvt1985@hotmail.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO dvt1985@hotmail.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
+
+            <B>Notes </B><br> This is a test order. -Van
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  Sending email to customer: info+1@trinoweb.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO info+1@trinoweb.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
+
+            <B>Notes </B><br> This is a test order. -Van
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:32 pm (USER # 1: Roy Wall)  --  Sending email to customer: info+1@trinoweb.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO info+1@trinoweb.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
+
+            <B>Notes </B><br> This is a test order. -Van
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  Sending email to customer: dvt1985@hotmail.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO dvt1985@hotmail.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
+
+            <B>Notes </B><br> This is a test order. -Van
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:33 pm (USER # 1: Roy Wall)  --  Sending email to customer: dvt1985@hotmail.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO dvt1985@hotmail.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
+
+            <B>Notes </B><br> This is a test order. -Van
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  Sending email to customer: dvt1985@hotmail.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO dvt1985@hotmail.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery May 16 at 9:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4" ALIGN="CENTER"><B TITLE="C:\xampp\htdocs\pizza\resources\orders/264.json">ORDER NOT FOUND</B></TD></TR>    </TABLE>
+
+            <B>Notes </B><br> This is a test order. -Van
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Van T.
+400 Richmond St
+London Ontario N6A 3C7<br>(905) 531-5331
+        <h2 class="mt-2">Order #<span ID="receipt_id">264</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9834744"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.249403499999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  Sending SMS to admin: 9055123067
+----------------------------------------------------------------------------------------------
+2018-02-20 01:26:34 pm (USER # 1: Roy Wall)  --  ERROR - Sending an SMS to: 9055123067 - localhost - An order was cancelled: Order was deleted - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 01:50:14 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) LIMIT 10 AS distance FROM useraddresses WHERE id IN (1,97) HAVING distance <= 5 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:50:14 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) LIMIT 1 AS distance FROM useraddresses WHERE id IN (1,97) ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:51:11 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses LIMIT 10 WHERE id IN (1,97) HAVING distance <= 5 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:51:11 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses LIMIT 1 WHERE id IN (1,97) ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:52:19 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 10 HAVING distance <= 5 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:52:19 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 1 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:52:44 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 10 HAVING distance <= 5 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:52:44 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 1 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:53:35 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 10 HAVING distance <= 5 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:53:35 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 1 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:56:21 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 10 HAVING distance <= 5 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:56:21 pm (USER # 1: Roy Wall)  --  SELECT *, ( 6371 * acos( cos( radians('42.9505') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('-81.1735999') ) + sin( radians('42.9505') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (1,97) LIMIT 1 ORDER BY distance ASC returned no results
+----------------------------------------------------------------------------------------------
+2018-02-20 01:59:13 pm (USER # 1: Roy Wall)  --  Sending email to restaurant: thanhtrungtran@live.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:59:14 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO thanhtrungtran@live.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery Today (February 20) at 2:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" valign="middle" style="font-weight: bold;">Small Pizza</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT" WIDTH="5%">$11.60</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4"><SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 1
+    [name] => Anchovies
+    [type] => Meat
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">6x Anchovies</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 2
+    [name] => Bacon
+    [type] => Meat
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">5x Bacon</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 11
+    [name] => Pepperoni
+    [type] => Meat
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">2x Pepperoni</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 15
+    [name] => Broccoli
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">2x Broccoli</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 19
+    [name] => Hot Peppers
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">Hot Peppers</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 22
+    [name] => Onions
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">Onions</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 26
+    [name] => Spinach
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">Spinach</SPAN>
+</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">11.60</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">3.00</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Tax $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">1.90</TD></TR><TR style="font-weight: bold;"><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">16.50</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT"><span>Paid</span></TD></TR>    </TABLE>
+
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Roy Wall
+2396 Asima Dr
+London Ontario N6M 0B3<br>(905) 512-3067
+        <h2 class="mt-2">Order #<span ID="receipt_id">271</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9505"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.1735999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                    <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:59:14 pm (USER # 1: Roy Wall)  --  Sending email to customer: roy@trinoweb.com
+----------------------------------------------------------------------------------------------
+2018-02-20 01:59:14 pm (USER # 1: Roy Wall)  --  email_receipt EMAIL TO roy@trinoweb.com FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P><HTML>
+    Thank you for your order.<br><div class="alert alert-success text-center text-sm-center mb-0">
+        <h2 style="font-weight: normal !important;">Delivery Today (February 20) at 2:45 PM</h2>
+    </div>
+
+                
+            <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
+    
+    <TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" valign="middle" style="font-weight: bold;">Small Pizza</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" width="1%"></TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT" WIDTH="5%">$11.60</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="4"><SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 1
+    [name] => Anchovies
+    [type] => Meat
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">6x Anchovies</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 2
+    [name] => Bacon
+    [type] => Meat
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">5x Bacon</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 11
+    [name] => Pepperoni
+    [type] => Meat
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">2x Pepperoni</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 15
+    [name] => Broccoli
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">2x Broccoli</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 19
+    [name] => Hot Peppers
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">Hot Peppers</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 22
+    [name] => Onions
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">Onions</SPAN>, <SPAN TITLE="Only shows in debug mode! - Array
+(
+    [id] => 26
+    [name] => Spinach
+    [type] => Vegetable
+    [isfree] => 0
+    [qualifiers] => 
+    [isall] => 0
+    [groupid] => 0
+)
+">Spinach</SPAN>
+</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">11.60</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">3.00</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Tax $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">1.90</TD></TR><TR style="font-weight: bold;"><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">Total $&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT">16.50</TD></TR><TR><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" COLSPAN="3" ALIGN="RIGHT">&nbsp;</TD><TD STYLE="border: 1px solid #eceeef; padding: .3rem; display: table-cell;" ALIGN="RIGHT"><span>Paid</span></TD></TR>    </TABLE>
+
+    
+            <h2 class="mt-2">Delivery Info</h2>
+        Roy Wall
+2396 Asima Dr
+London Ontario N6M 0B3<br>(905) 512-3067
+        <h2 class="mt-2">Order #<span ID="receipt_id">271</span></h2>
+
+        Fabulous 2 for 1 Pizza
+483 Dundas Street<br>London Ontario N6B 1W4
+ (519) 439-7779<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="42.9505"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="-81.1735999"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="42.9871816"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="-81.2386115">    
+                        <h2 class="mt-2">Questions about your order?</h2>
+            Please contact the restaurant directly
+            <DIV CLASS="clearfix"></DIV>
+                <br>
+        <a class="pull-left btn-link btn pl-0" href="http://localhost/pizza/public/help">MORE INFO</a>
+    
+        <HR>
+Thank you,
+The localhost Team
+</HTML>
+
+----------------------------------------------------------------------------------------------
+2018-02-20 01:59:14 pm (USER # 1: Roy Wall)  --  Calling restaurant: 5194397779
+----------------------------------------------------------------------------------------------
+2018-02-20 01:59:14 pm (USER # 1: Roy Wall)  --  ERROR - Calling: 5194397779 - Hello Fabulous 2 for 1 Pizza, you have an order on localhost - Is not live/valid or is a blocked number, did not contact
+----------------------------------------------------------------------------------------------
+2018-02-20 02:09:45 pm (USER # : [NOT LOGGED IN])  --  email_verify EMAIL TO kalerufe@EMAILhgHOSTNAME.COM FAILED: Expected response code 250 but got code "530", with message "530 5.7.1 Authentication required
+"<P>Hi Tanya Myoko. Thank you for registering at localhostYour password is 1111111
 
 
 <HR>

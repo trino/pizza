@@ -580,7 +580,7 @@
                                 @if($table != "all" && $profiletype == 1)
                                     @if($table == "debug")
                                         <A onclick="testemail();" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
-                                        <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash-o"></i></A>
+                                        <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
                                         <A onclick="selecttableitems(-1);" href="#" ID="invert"><i class="fa fa-check-square"></i><i class="fa fa-square"></i> Invert Selection</A>

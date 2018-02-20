@@ -88,6 +88,16 @@ class HomeController extends Controller {
                     break;
                 case "closestrestaurant":
                     $ret["closest"] = $this->closestrestaurant($info, true);
+                    if(!islive()) {
+                        $ret["sql"] = $ret["closest"]["SQL"];
+                        unset($ret["closest"]["SQL"]);
+                        if (!$ret["closest"]) {
+                            unset($info['radius']);// = 99999999;
+                            $info["limit"] = 1;
+                            $ret["closest"] = $this->closestrestaurant($info, true, false);
+                            $ret["Reason"] = "Forcing a restaurant for testing purposes.";
+                        }
+                    }
                     break;
                 case "changestatus":
                     if ($_POST["status"] == -1) {//email out
@@ -293,22 +303,24 @@ class HomeController extends Controller {
      * @param bool|false $gethours
      * @return array|bool|\mysqli_result
      */
-    function closestrestaurant($data, $gethours = false){
+    function closestrestaurant($data, $gethours = false, $includesql = true){
         //if(!isset($data['radius'])){$data['radius'] = 100;}//default radius
         $SQL = "SELECT address_id FROM restaurants WHERE address_id > 0 AND is_delivery = 1";
         if (isset($data["restaurant_id"])) {
             $SQL .= " AND id = " . $data["restaurant_id"];
         }
         $owners = implode(",", collapsearray(Query($SQL, true), "address_id"));
+        $limit = "";
+        if (isset($data["limit"])) {
+            $limit = " LIMIT " . $data["limit"];
+        } else {
+            $data["limit"] = 1;
+        }
         $SQL = "SELECT *, ( 6371 * acos( cos( radians('" . $data['latitude'] . "') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('" . $data['longitude'] . "') ) + sin( radians('" . $data['latitude'] . "') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (" . $owners . ")";
         if (isset($data['radius'])) {
             $SQL .= " HAVING distance <= " . $data['radius'];
         }
-        if (!isset($data["limit"])) {
-            $data["limit"] = 1;
-        }
-        //$SQL .= " ORDER BY distance ASC LIMIT " . $data["limit"];
-        $SQL .= " ORDER BY distance ASC";
+        $SQL .= " ORDER BY distance ASC" . $limit;
 
         $Restaurants = Query($SQL, true);//useraddresses
         if ($Restaurants) {
@@ -323,6 +335,7 @@ class HomeController extends Controller {
                 }
             }
         }
+        if(!islive() && $includesql){$Restaurants["SQL"] = $SQL;}
         return $Restaurants;
     }
 

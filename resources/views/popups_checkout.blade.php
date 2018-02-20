@@ -39,7 +39,7 @@
                     <div class="input_left_icon" id="red_rest">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-cutlery text-white fa-stack-1x" style="font-size: .9rem !important;"></i>
+                          <i class="fa fa-utensils text-white fa-stack-1x" style="font-size: .9rem !important;"></i>
                         </span>
                     </div>
 
@@ -79,7 +79,7 @@
                     <div class="input_left_icon" id="red_card">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-credit-card-alt text-white fa-stack-1x" style="font-size: .9rem !important;"></i>
+                          <i class="fa fa-credit-card text-white fa-stack-1x" style="font-size: .9rem !important;"></i>
                         </span>
                     </div>
 
