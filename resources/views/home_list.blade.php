@@ -555,7 +555,7 @@
                         <div class="card-block bg-danger">
                             <h2 class="pull-left text-white h2class">
                                 <div class="dropdown">
-                                    <Button class="btn btn-primary dropdown-toggle text-white" type="button" data-toggle="dropdown"><i class="fa fa-{{ $faicon }}"></i>
+                                    <Button class="btn btn-primary dropdown-toggle text-white" type="button" data-toggle="dropdown" onclick="$('#alllist').toggle();"><i class="fa fa-{{ $faicon }}"></i>
                                         {{ ucfirst($table) . ' ' . $secondword . ' ' . $extratitle }}</Button>
                                     <ul class="dropdown-menu" id="alllist">
                                         <?php
