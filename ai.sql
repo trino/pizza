@@ -1,4 +1,32 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 20, 2018 at 05:39 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ai`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `actions`
+--
 
 CREATE TABLE `actions` (
   `id` int(11) NOT NULL,
@@ -205,13 +233,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `placed_at`, `number`, `unit`, `buzzcode`, `street`, `postalcode`, `city`, `province`, `latitude`, `longitude`, `accepted_at`, `restaurant_id`, `type`, `payment_type`, `phone`, `cell`, `paid`, `stripeToken`, `deliverytime`, `cookingnotes`, `status`, `price`, `email`) VALUES
-(264, 54, '2017-05-20 01:19:14', 400, '', '', 'Richmond St', 'N6A 3C7', 'London', 'Ontario', '42.9834744', '-81.249403499999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, '', 'May 16 at 2145', 'This is a test order. -Van', 0, '21.64', NULL),
-(265, 54, '2017-05-20 01:19:13', 400, '', '', 'Richmond St', 'N6A 3C7', 'London', 'Ontario', '42.9834744', '-81.249403499999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '20.28', NULL),
-(266, 71, '2017-05-17 00:53:55', 300, '', '', 'Dundas St', 'N6B 1T6', 'London', 'Ontario', '42.9854177', '-81.244139099999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, 'tok_AfbdNLdS3dTfXC', 'Deliver Now', 'This is a test order - Van', 0, '43.10', NULL),
-(267, 71, '2017-05-17 00:59:23', 300, '', '', 'Dundas St', 'N6B 1T6', 'London', 'Ontario', '42.9854177', '-81.244139099999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, '', 'Deliver Now', 'test order', 0, '20.28', NULL),
-(268, 54, '2017-05-27 17:21:32', 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '16.33', NULL),
-(269, 54, '2017-05-27 21:09:47', 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', '0000-00-00 00:00:00', 3, 0, 0, '(905) 531-5331', '', 1, '', 'Deliver Now', '', 0, '23.72', NULL),
-(270, 54, '2017-10-07 14:01:08', 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', '0000-00-00 00:00:00', 3, 0, 0, '(905) 531-5331', '', 1, '', 'October 7 at 1100', '567', 0, '15.58', NULL);
+(264, 54, '2017-05-20 05:19:14', 400, '', '', 'Richmond St', 'N6A 3C7', 'London', 'Ontario', '42.9834744', '-81.249403499999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, '', 'May 16 at 2145', 'This is a test order. -Van', 0, '21.64', NULL),
+(265, 54, '2017-05-20 05:19:13', 400, '', '', 'Richmond St', 'N6A 3C7', 'London', 'Ontario', '42.9834744', '-81.249403499999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '20.28', NULL),
+(266, 71, '2017-05-17 04:53:55', 300, '', '', 'Dundas St', 'N6B 1T6', 'London', 'Ontario', '42.9854177', '-81.244139099999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, 'tok_AfbdNLdS3dTfXC', 'Deliver Now', 'This is a test order - Van', 0, '43.10', NULL),
+(267, 71, '2017-05-17 04:59:23', 300, '', '', 'Dundas St', 'N6B 1T6', 'London', 'Ontario', '42.9854177', '-81.244139099999', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, '', 'Deliver Now', 'test order', 0, '20.28', NULL),
+(268, 54, '2017-05-27 21:21:32', 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '16.33', NULL),
+(269, 54, '2017-05-28 01:09:47', 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', '0000-00-00 00:00:00', 3, 0, 0, '(905) 531-5331', '', 1, '', 'Deliver Now', '', 0, '23.72', NULL),
+(270, 54, '2017-10-07 18:01:08', 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', '0000-00-00 00:00:00', 3, 0, 0, '(905) 531-5331', '', 1, '', 'October 7 at 1100', '567', 0, '15.58', NULL);
 
 -- --------------------------------------------------------
 
@@ -301,9 +329,9 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
-(1, 'lastSQL', '1494360840'),
+(1, 'lastSQL', '1518536456'),
 (20, 'orders', '1487775876'),
-(24, 'menucache', '1518141830'),
+(24, 'menucache', '1519143876'),
 (25, 'useraddresses', '1495910443'),
 (37, 'users', '1495489938'),
 (38, 'additional_toppings', '1487175322'),
@@ -314,7 +342,15 @@ INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
 (1552, 'debugmode', '0'),
 (1553, 'domenucache', '1'),
 (1554, 'settings', '1494344646'),
-(1560, 'onlyfiftycents', '1');
+(1560, 'onlyfiftycents', '1'),
+(1567, 'over$20', '10%'),
+(1571, 'over$30', '20%'),
+(1575, 'over$40', '30%'),
+(1579, 'deletetopping', '0'),
+(1582, 'localhostdialing', '0'),
+(1593, 'maxdistance_live', '5'),
+(1594, 'maxdistance_local', '20'),
+(1600, 'lastupdate', '1519143876556');
 
 -- --------------------------------------------------------
 
@@ -459,13 +495,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `lastlogin`, `loginattempts`, `profiletype`, `authcode`, `stripecustid`) VALUES
-(1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '0000-00-00 00:00:00', '2017-04-25 13:52:10', '9055123067', 1487608084, 0, 1, '', ''),
-(2, 'Roy Test', 'roy+test@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 15:20:28', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
-(3, 'thanhtrungtran@live.com', 'thanhtrungtran@live.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 15:49:31', '0000-00-00 00:00:00', '9055555555', 1481048458, 0, 2, '', 'cus_9yYE78hosPbuGH'),
-(4, 'Marvellous', 'info+mar@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2017-02-14 15:28:50', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
-(48, 'Van Trinh', 'info@trinoweb.com', '$2y$10$.0DQCK8l9YOr49mc3AcEr.8zemyiRmUa1j69p5MJO4vf6PCIAOip.', '', '2017-04-01 17:18:32', '2017-04-22 13:15:53', '', 1516924073, 1, 0, '', ''),
-(50, 'Quality Pizza & Wings', 'odealyonline@gmail.com', '$2y$10$S5SNVTZgWk9Ufe.kLdtaMOOMo2VxRqkXUpv1k/af09Bn1c32UUrcq', '', '2017-04-01 18:20:18', '0000-00-00 00:00:00', '', 1494703615, 1, 2, '', ''),
-(54, 'Van T.', 'dvt1985@hotmail.com', '$2y$10$.QT//bWNHJolITvSCTQnjuioE9U3tOyPIa030/vIfwduBXUXs8AkG', '', '2017-04-23 16:16:17', '2017-10-08 18:54:26', '(905) 531-5331', 1517449276, 7, 0, '', 'cus_AWrH95lAblBCVy'),
+(1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '0000-00-00 00:00:00', '2017-04-25 17:52:10', '9055123067', 1487608084, 0, 1, '', ''),
+(2, 'Roy Test', 'roy+test@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:20:28', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
+(3, 'thanhtrungtran@live.com', 'thanhtrungtran@live.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:49:31', '0000-00-00 00:00:00', '9055555555', 1481048458, 0, 2, '', 'cus_9yYE78hosPbuGH'),
+(4, 'Marvellous', 'info+mar@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2017-02-14 20:28:50', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
+(48, 'Van Trinh', 'info@trinoweb.com', '$2y$10$.0DQCK8l9YOr49mc3AcEr.8zemyiRmUa1j69p5MJO4vf6PCIAOip.', '', '2017-04-01 21:18:32', '2017-04-22 17:15:53', '', 1516924073, 1, 0, '', ''),
+(50, 'Quality Pizza & Wings', 'odealyonline@gmail.com', '$2y$10$S5SNVTZgWk9Ufe.kLdtaMOOMo2VxRqkXUpv1k/af09Bn1c32UUrcq', '', '2017-04-01 22:20:18', '0000-00-00 00:00:00', '', 1494703615, 1, 2, '', ''),
+(54, 'Van T.', 'dvt1985@hotmail.com', '$2y$10$.QT//bWNHJolITvSCTQnjuioE9U3tOyPIa030/vIfwduBXUXs8AkG', '', '2017-04-23 20:16:17', '2017-10-08 22:54:26', '(905) 531-5331', 1517449276, 7, 0, '', 'cus_AWrH95lAblBCVy'),
 (60, 'King Pizza', '1', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
 (61, 'Royal Pizza & Wings', '2', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
 (62, 'Pizza Inferno Eatery', '3', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
@@ -476,8 +512,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `creat
 (67, 'Venice Beach Pizzeria\'s', '8', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
 (68, 'Carlo\'s Pizza & Grill', '9', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
 (69, 'D & A Pizza', '10', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
-(70, 'van man', 'info+123@trinoweb.com', '$2y$10$aNnSkhs6W2dT.bXDmvbMBeS/IiTu/GeIdbOjS0RdIBEzGTzR1TEV6', '', '2017-05-13 22:46:02', '0000-00-00 00:00:00', '9055555555', 0, 0, 0, '', 'cus_AeOFan6Dkhx1z3'),
-(71, 'Van Trinh', 'info+1@trinoweb.com', '$2y$10$7WYvtqX7bYXkQ2HNuGSwhOSTerMLnMg9avpx7uWR.qoFry/0Ctq56', '', '2017-05-17 04:52:31', '0000-00-00 00:00:00', '9055315331', 0, 0, 0, '', 'cus_AfbdK2a7UF5t9R');
+(70, 'van man', 'info+123@trinoweb.com', '$2y$10$aNnSkhs6W2dT.bXDmvbMBeS/IiTu/GeIdbOjS0RdIBEzGTzR1TEV6', '', '2017-05-14 02:46:02', '0000-00-00 00:00:00', '9055555555', 0, 0, 0, '', 'cus_AeOFan6Dkhx1z3'),
+(71, 'Van Trinh', 'info+1@trinoweb.com', '$2y$10$7WYvtqX7bYXkQ2HNuGSwhOSTerMLnMg9avpx7uWR.qoFry/0Ctq56', '', '2017-05-17 08:52:31', '0000-00-00 00:00:00', '9055315331', 0, 0, 0, '', 'cus_AfbdK2a7UF5t9R');
 
 -- --------------------------------------------------------
 
@@ -611,48 +647,56 @@ ALTER TABLE `wings_sauce`
 --
 ALTER TABLE `actions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `additional_toppings`
 --
 ALTER TABLE `additional_toppings`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `combos`
 --
 ALTER TABLE `combos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
+
 --
 -- AUTO_INCREMENT for table `presets`
 --
 ALTER TABLE `presets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1599;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1815;
+
 --
 -- AUTO_INCREMENT for table `shortage`
 --
 ALTER TABLE `shortage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `useraddresses`
 --
 ALTER TABLE `useraddresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;COMMIT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
