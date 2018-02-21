@@ -679,10 +679,10 @@
                                             $filetime = date("l F j, Y - g:i A", filemtime($menucache_filename)) . ' <a class="btn btn-sm btn-danger cursor-pointer" onclick="settingaction(0);">Delete</a>';
                                         }
                                         echo 'Menu cache last update: <SPAN ID="filetime">' . $filetime . '</SPAN>';
-                                        ?>
-                                            <BR><a class="btn btn-sm btn-danger cursor-pointer" onclick="settingaction(1);" id="setting1">Delete Session Variables and Cookie</a>
-                                            <BR><A class="btn btn-sm btn-primary cursor-pointer" HREF="<?= webroot("list/dump"); ?>" download="ai.sql">Export SQL</A>
-                                        <?php
+                                        echo '<BR><a class="btn btn-sm btn-danger cursor-pointer" onclick="settingaction(1);" id="setting1">Delete Session Variables and Cookie</a>';
+                                        if($profiletype == 1){//non-admins should not have access to all the data!
+                                            echo '<BR><A class="btn btn-sm btn-primary cursor-pointer" HREF="' . webroot("list/dump") . '" download="ai.sql">Export SQL</A>';
+                                        }
                                         break;
                                 }
                             ?>

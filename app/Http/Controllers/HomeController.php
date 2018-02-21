@@ -127,12 +127,6 @@ class HomeController extends Controller {
         }
         $addressID = $this->processaddress($info);
         if (isset($_POST["order"])) {
-            /*
-            $restaurant = $this->closestrestaurant($info,true);
-            if(!isset($restaurant["id"])){return false;}
-            $info["restaurant_id"] = $restaurant["id"];
-            */
-
             $info["placed_at"] = my_now();
             unset($info["name"]);
             unset($info["creditcard"]);
@@ -158,8 +152,7 @@ class HomeController extends Controller {
                 $user["phone"] = $_POST["phone"];
                 insertdb("users", array("id" => $info["user_id"], "name" => $_POST["name"], "phone" => $_POST["phone"]));//attempt to update user profile
             }
-
-            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user"))->render();//generate total
+            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user"))->render();                     //generate total
             //if ($text) {return $text;} //shows email errors. Uncomment when email works
             if (isset($info["stripeToken"]) || $user["stripecustid"]) {//process stripe payment here
                 $amount = select_field_where("orders", "id=" . $orderid, "price");
@@ -267,7 +260,6 @@ class HomeController extends Controller {
                         break;
                 }
 
-
                 if ($Reason) {
                     $action["message"] = str_replace("[reason]", $Reason, $action["message"]);
                 }
@@ -277,11 +269,11 @@ class HomeController extends Controller {
                 $message = str_replace("[name]", $name, $message);
                 if ($action["email"]) {
                     $action["message"] = str_replace("[url]", "", $message);
-                    debugprint("Sending email to " . $party . ": " . $email);
-                    $this->sendEMail("email_receipt", ["orderid" => $orderid, "email" => $email, "party" => $party, "mail_subject" => $action["message"]]);//send emails to customer also generates the cost
+                    debugprint("Sending email to " . $party . ": " . $email);//send emails to customer also generates the cost
+                    $this->sendEMail("email_receipt", ["orderid" => $orderid, "email" => $email, "party" => $party, "mail_subject" => $action["message"]]);
                 }
                 if ($action["sms"]) {
-                    $action["message"] = str_replace("[url]", webroot("list/orders?action=getreceipt&orderid=") . $orderid, $message);//http://localhost/ai/public/list/orders?action=getreceipt&orderid=224
+                    $action["message"] = str_replace("[url]", webroot("list/orders?action=getreceipt&orderid=") . $orderid, $message);
                     debugprint("Sending SMS to " . $party . ": " . $phone);
                     $this->sendSMS($phone, $action["message"]);
                 }
@@ -295,6 +287,11 @@ class HomeController extends Controller {
             }
         }
         $user["orderid"] = $orderid;
+        $resttext = "";
+        if(isset($restaurant)){
+            $resttext = "for: " . $restaurant["restaurant"]["name"] . " (" . $info["restaurant_id"] . ")";
+        }
+        debugprint($event . ": " . $orderid . " by: " . $user["name"] . " (" . $info["user_id"] . ")" . $resttext);
         return $user;
     }
 
@@ -351,13 +348,6 @@ class HomeController extends Controller {
         $Restaurant["hours"] = gethours($Restaurant["id"]);
         $Restaurant["user"] = first("SELECT id, name, phone, email FROM users WHERE id = " . $Restaurant["user_id"]);//do not send password
         $Restaurant["shortage"] = first("SELECT item_id, tablename FROM shortage WHERE restaurant_id = " . $Restaurant["id"], false);
-        /*if($Restaurant["shortage"]){
-            foreach($Restaurant["shortage"] as $Index => $Data){
-                if($Data["tablename"] != "menu"){
-                    $Restaurant["shortage"][$Index]["addon"] = first("SELECT name FROM " . $Data["tablename"] . " WHERE id = " . $Data["item_id"])["name"];
-                }
-            }
-        }*/
         return $Restaurant;
     }
 

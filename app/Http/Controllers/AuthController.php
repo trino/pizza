@@ -232,8 +232,6 @@ class AuthController extends Controller {
             $user["mail_subject"] = "Please click the verify button";
         } else {
             $user["mail_subject"] = "You have successfully registered!";
-            //$user["body"] = "Thank you for registering";
-            //$text = $this->sendEMail("email_test", $user);
         }
         $text = $this->sendEMail("email_verify", $user);
         if($text){
