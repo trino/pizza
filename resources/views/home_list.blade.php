@@ -156,7 +156,7 @@
             $fields=array("id", "user_id", "placed_at", "deliverytime", "status", "restaurant_id", "number", "unit", "street", "postalcode", "city", "province", "longitude", "latitude");
             $specialformats=array("placed_at" => "date");
             $namefield="placed_at";
-            $faicon = "dollar";
+            $faicon = "dollar-sign";
             if(isset($_GET["user_id"])){
                 $where = "user_id = " . $_GET["user_id"];
                 if($_GET["user_id"] == read("id")){$adminsonly=false;}
