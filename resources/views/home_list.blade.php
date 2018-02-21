@@ -598,7 +598,6 @@
                                 <div class="col-md-12">
                                     @if($profiletype != 1 && $adminsonly || !read("id"))
                                         You are not authorized to view this page
-                                        <!--a class="loggedout dropdown-item hyperlink" data-toggle="modal" data-target="#loginmodal"> <i class="fa fa-home"></i> Log In</a-->
                                         <?php
                                             if(!read("id")){
                                                 echo view("popups_login")->render();
@@ -703,7 +702,7 @@
                     var itemsperpage = 25;
                     var currentpage = 0;
                     var lastpage = 0;
-                    var table = "<?= $table; ?>"
+                    var table = "<?= $table; ?>";
                     var currentURL = "<?= Request::url(); ?>";
                     var baseURL = currentURL.replace(table, "");
                     var namefield = "{{ $namefield }}";
@@ -836,16 +835,13 @@
 
                     function checkheaders(TableID){
                         var requiredwidth = $(".asc_id").outerWidth();
-                        //var addtottable = 0;
                         $(TableID + " th div").each(function() {
                             var currentwidth = $( this ).width();
                             while($( this ).height() > 40 ){
                                 currentwidth+=requiredwidth;
                                 $( this ).width( currentwidth );
-                                //addtottable += requiredwidth;
                             }
                         });
-                        //$( TableID ).width( $( TableID ).width() + addtottable );
                     }
 
                     function updatesort(source){
@@ -1556,7 +1552,6 @@
                     function deleteitem(ID){
                         var name = $("#" + table + "_" + ID + "_" + namefield).text();
                         confirm2("Are you sure you want to delete item ID: " + ID + " (" + name + ") ?", "Delete Item", function(){
-                            //if(table == "orders"){changeorderstatus(ID, 2);}//done server-side now
                             $.post(currentURL, {
                                 action: "deleteitem",
                                 _token: token,
@@ -1776,7 +1771,7 @@
                         }, function (result) {
                             if(result) {
                                 var button = '<DIV CLASS="col-md-6"><button data-dismiss="modal" class="width-full btn btn-';
-                                var HTML = '<DIV CLASS="row col-md-12" style="padding-left: 25px;">';// + button + 'primary status-confirmed" onclick="changeorderstatus(' + ID + ', 1);">' + statuses[1] + '</button></DIV>';
+                                var HTML = '<DIV CLASS="row col-md-12" style="padding-left: 25px;">';
                                 HTML += button + 'secondary pull-center red status-email" onclick="changeorderstatus(' + ID + ');">Email Receipt To Customer</button></DIV>';
                                 //HTML += button + 'warning pull-right status-delivered" onclick="changeorderstatus(' + ID + ', 3);">' + statuses[3] + '</button></DIV>';
                                 HTML += button + 'danger pull-right status-declined" onclick="changeorderstatus(' + ID + ', 2);">' + statuses[2] + '</button></DIV></DIV>';

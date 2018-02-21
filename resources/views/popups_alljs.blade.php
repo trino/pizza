@@ -2072,7 +2072,7 @@
             }
             totaltoppings += Math.ceil(paidtoppings);
             if (debugmode) {
-                HTML += " (Paid: " + paidtoppings + " Free: " + freetoppings + ')';
+                HTML += " (Paid: " + paidtoppings + " Free: " + freetoppings + ') ';
             }
             HTML += tempstr + '</DIV>';
         }

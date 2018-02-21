@@ -14,3 +14,4 @@ yarn-error.log
 *.json
 public/royslog.txt
 public/royslog.txt
+resources/views/error_log
