@@ -76,8 +76,8 @@
             <br>
             <br>
             <p>The art of delivery is in the team, local restaurants at your footstep in <?= $time; ?> minutes.</p>
-            <p class="lead strong">HOURS OF OPERATION</p>
-            <TABLE>
+            <TABLE STYLE="display: inline">
+                <TR><TD COLSPAN="2"><p class="lead strong">HOURS OF OPERATION</p></TD></TR>
                 <?php
                     $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                     for ($day = 0; $day < 7; $day++) {
@@ -87,11 +87,20 @@
                         if ($open == "-1" || $close == "-1") {
                             echo '<TD COLSPAN="2"">Closed';
                         } else {
-                            echo '<TD>' . GenerateTime($open) . ' to </TD><TD>' . GenerateTime($close);
+                            echo '<TD>' . GenerateTime($open) . ' to&nbsp;</TD><TD>' . GenerateTime($close);
                         }
                         echo '</TD></TR>';
                     }
                 ?>
+            </TABLE>
+            <TABLE STYLE="display: inline;margin-left: 10px;">
+                <TR><TD COLSPAN="2"><p class="lead strong">DISCOUNTS</p></TD></TR>
+            <?php
+                $discounts = select_field_where("additional_toppings", "size like 'over$%'", false);
+                foreach($discounts as $discount){
+                    echo '<TR><TD>Orders ' . str_replace("$", " $", $discount["size"]) . "</TD><TD>&nbsp;get " . $discount["price"] . '% off</TD></TR>';
+                }
+            ?>
             </TABLE>
             <br>
             <i class="lead text-danger strong">"FASTER THAN PICKING UP THE PHONE!"</i><br><br>
