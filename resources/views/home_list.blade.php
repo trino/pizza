@@ -900,7 +900,7 @@
                                         var Address = "[number] [street]<BR>[city] [province]<BR>[postalcode]";
                                         if(table == "settings"){
                                             switch(data.table[i]["keyname"]){
-                                                case "debugmode":           prititle = "Self-explanitory"; break;
+                                                case "debugmode":           prititle = "Enables/Disabled debug mode"; break;
                                                 case "deletetopping":       prititle = "Show the X to delete toppings in the customize item modal"; break;
                                                 case "domenucache":         prititle = "Use the caching system to make the menu load faster"; break;
                                                 case "onlyfiftycents":      prititle = "Force the total to 50 cents for Stripe"; break;
@@ -919,6 +919,16 @@
                                             }
                                             if(data.table[i]["size"].left(5) == "over$"){
                                                 prititle = "The percentage discounted for orders " + data.table[i]["size"].replace("$", " $");
+                                            }
+                                        } else if(table == "actions"){
+                                            switch(data.table[i]["eventname"]){
+                                                case "order_placed":        prititle = "[url] - URL to the order<BR>[name] - Name of the restaurant<T>A customer places an order"; break;
+                                                case "order_declined":case "order_confirmed": prititle = "[reason] - The reason specified by the restaurant<T>The restaurant declines or confirms an order"; break;
+                                                case "user_registered":     prititle = "None<T>A new customer registers on the site"; break;
+                                            }
+                                            if(prititle) {
+                                                prititle = "Text inside [these] will be replaced with the following text<P>Global variables:<BR>[sitename] - the site's name<P>Local variables:<BR>" + prititle;
+                                                prititle = prititle.replaceAll("'", "\\'").replaceAll("<T>", "<P>Triggered when:<BR>").replaceAll("<P>", "<BR><BR>");
                                             }
                                         }
                                         var tempHTML = '<TR ID="' + table + "_" + ID + '">';
@@ -986,7 +996,11 @@
                                         if(profiletype == 1) {
                                             tempHTML += '<A CLASS="btn btn-sm btn-danger cursor-pointer" onclick="deleteitem(' + ID + ');">Delete</A>';
                                             tempHTML += '<label CLASS="btn btn-sm cursor-pointer"><input type="checkbox" class="selitem" index="' + ID + '" onclick="selecttableitem(this, ' + ID + ');"> Select</label>';
-                                            tempHTML += " " + prititle;
+                                            if(table == "actions" && prititle){
+                                                tempHTML += ' <A CLASS="btn btn-sm btn-success cursor-pointer" HREF="#" ONCLICK="alert(' + "'" + prititle + "', 'Help for the " + data.table[i]["eventname"] + " event');" + '">Help</A>';
+                                            } else {
+                                                tempHTML += " " + prititle;
+                                            }
                                         }
                                         HTML += tempHTML + '</TD></TR>';
                                         items++;
