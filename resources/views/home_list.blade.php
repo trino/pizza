@@ -899,15 +899,26 @@
                                         var prititle = "";
                                         var Address = "[number] [street]<BR>[city] [province]<BR>[postalcode]";
                                         if(table == "settings"){
-                                            switch(data.table[i]["keyname"]){//case "": prititle = ""; break;
-                                                case "debugmode": prititle = "Self-explanitory"; break;
-                                                case "deletetopping": prititle = "Show the X to delete toppings in the customize item modal"; break;
-                                                case "domenucache": prititle = "Use the caching system to make the menu load faster"; break;
-                                                case "onlyfiftycents": prititle = "Force the total to 50 cents for Stripe"; break;
-                                                case "localhostdialing": prititle = "Allow calling/texting customers when NOT on the live server"; break;
-                                                case "maxdistance_live": prititle = "How far a store can be away from the customer while on the live server"; break;
-                                                case "maxdistance_local": prititle = "How far a store can be away from the customer while NOT on the live server"; break;
-                                                case "lastupdate": prititle = "Used for auto-updating the SQL file. Set to 0 to force an update"; break;
+                                            switch(data.table[i]["keyname"]){
+                                                case "debugmode":           prititle = "Self-explanitory"; break;
+                                                case "deletetopping":       prititle = "Show the X to delete toppings in the customize item modal"; break;
+                                                case "domenucache":         prititle = "Use the caching system to make the menu load faster"; break;
+                                                case "onlyfiftycents":      prititle = "Force the total to 50 cents for Stripe"; break;
+                                                case "localhostdialing":    prititle = "Allow calling/texting customers when NOT on the live server"; break;
+                                                case "maxdistance_live":    prititle = "How far a store can be away from the customer while on the live server"; break;
+                                                case "maxdistance_local":   prititle = "How far a store can be away from the customer while NOT on the live server"; break;
+                                                case "lastupdate":          prititle = "Used for auto-updating the SQL file. Set to 0 to force an update"; break;
+                                            }
+                                        } else if(table == "additional_toppings"){
+                                            switch(data.table[i]["size"]){
+                                                case "Delivery":            prititle = "The delivery fee. Will be hidden from the receipt if it's zero"; break;
+                                                case "Minimum":             prititle = "The minimum sub-total for delivery orders"; break;
+                                                case "DeliveryTime":        prititle = "The time normal orders are given for delivery"; break;
+                                                case "Panzerotti":          prititle = "The base price for a " + data.table[i]["size"]; break;
+                                                case "Small":case "Medium":case "Large":case "X-Large": prititle = "The base price for a " + data.table[i]["size"] + " pizza"; break;
+                                            }
+                                            if(data.table[i]["size"].left(5) == "over$"){
+                                                prititle = "The percentage discounted for orders " + data.table[i]["size"].replace("$", " $");
                                             }
                                         }
                                         var tempHTML = '<TR ID="' + table + "_" + ID + '">';
