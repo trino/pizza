@@ -914,8 +914,8 @@
                                                 case "Delivery":            prititle = "The delivery fee. Will be hidden from the receipt if it's zero"; break;
                                                 case "Minimum":             prititle = "The minimum sub-total for delivery orders"; break;
                                                 case "DeliveryTime":        prititle = "The time normal orders are given for delivery"; break;
-                                                case "Panzerotti":          prititle = "The base price for a " + data.table[i]["size"]; break;
-                                                case "Small":case "Medium":case "Large":case "X-Large": prititle = "The base price for a " + data.table[i]["size"] + " pizza"; break;
+                                                case "Small": case "Medium": case "Large": case "X-Large": case "Panzerotti":
+                                                    prititle = "The price for a " + data.table[i]["size"] + " topping"; break;
                                             }
                                             if(data.table[i]["size"].left(5) == "over$"){
                                                 prititle = "The percentage discounted for orders " + data.table[i]["size"].replace("$", " $");
