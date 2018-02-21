@@ -529,34 +529,50 @@
     @endif
 
     @if(!isset($JSON))
-        <h2 class="mt-2">Delivery Info</h2>
-        <?php
-            echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
-            if($Order["unit"]){echo $Order["unit"]. '<BR>';}
-            echo formatphone($Order["phone"]);
-        ?>
-
-        <h2 class="mt-2">Order #<span ID="receipt_id"><?= $orderid; ?></span></h2>
-
-        <?php
-            $Restaurant = first("SELECT * FROM restaurants WHERE id = " . $Order["restaurant_id"]);
-            $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
-            echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
-                    $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
-            echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
-                    . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
-                    . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
-        ?>
+        <TABLE WIDTH="100%">
+            <TR>
+                <TD CLASS="cursor-pointer" WIDTH="50%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
+                    <h2 class="mt-2">Delivery Info</h2>
+                    <?php
+                        echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
+                        if($Order["unit"]){echo $Order["unit"]. '<BR>';}
+                        echo formatphone($Order["phone"]);
+                        $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
+                        $Restaurant = first("SELECT * FROM restaurants WHERE id = " . $Order["restaurant_id"]);
+                        $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
+                    ?>
+                </TD>
+                <TD CLASS="cursor-pointer" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
+                    <h2 class="mt-2">Order #<span ID="receipt_id"><?= $orderid; ?></span></h2>
+                    <?php
+                        echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
+                                $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
+                        echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
+                                . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
+                                . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
+                    ?>
+                </TD>
+            </TR>
+            <?php
+                if(isset($isinmodal)){
+                    echo '<TR><TD ALIGN="CENTER"><SPAN ONCLICK="directions(' . "'" . $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"] . ", '";
+                    echo $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"] . ');" CLASS="hyperlink">Directions</SPAN></TD><TD>';
+                    echo '<A TARGET="_blank" HREF="https://www.google.com/maps/dir/?api=1&origin_place_id=' . urlencode($Restaurant["name"]) . '&origin=' . $Raddress["latitude"] . '%2C' . $Raddress["longitude"] . '&destination=' . $Order["latitude"] . '%2C' . $Order["longitude"] . '&destination_place_id=Customer Address (' . urlencode($custaddress) . ')&travelmode=driving&dir_action=navigate">Directions in a new tab</A></TD></TR>';
+                }
+            ?>
+        </TABLE>
     @endif
 
     @if($includeextradata)
-        @if($party != "restaurant")
-            <h2 class="mt-2">Questions about your order?</h2>
-            Please contact the restaurant directly
-            <DIV CLASS="clearfix"></DIV>
-        @endif
-        <br>
-        <a class="pull-left btn-link btn pl-0" href="<?= webroot("help"); ?>">MORE INFO</a>
+        <DIV CLASS="extrainfo">
+            @if($party != "restaurant")
+                <h2 class="mt-2">Questions about your order?</h2>
+                Please contact the restaurant directly
+                <DIV CLASS="clearfix"></DIV>
+            @endif
+            <br>
+            <a class="pull-left btn-link btn pl-0" href="<?= webroot("help"); ?>">MORE INFO</a>
+        </DIV>
     @endif
 
     @if($timer && $place != "getreceipt")

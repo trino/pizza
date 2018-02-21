@@ -548,6 +548,10 @@
                 .container-fluid {
                     max-width: 100% !important;
                 }
+                
+                .extrainfo{
+                    display: none;
+                }
             </STYLE>
             <div class="row m-t-1">
                 <div class="col-md-12">
@@ -666,6 +670,7 @@
                                             $Restaurant = first("SELECT * FROM restaurants WHERE id=" . $_GET["restaurant"]);
                                             if($Restaurant){
                                                 $Address = first("SELECT * FROM useraddresses WHERE id=" . $Restaurant["address_id"]);
+                                                $Address["name"] = "Restaurant's Address";
                                                 echo view("popups_googlemaps", $Address);
                                             }
                                         }
@@ -1767,21 +1772,36 @@
                             action: "getreceipt",
                             _token: token,
                             orderid: ID,
-                            includeextradata: 1
+                            includeextradata: 1,
+                            isinmodal: 1
                         }, function (result) {
                             if(result) {
-                                var button = '<DIV CLASS="col-md-6"><button data-dismiss="modal" class="width-full btn btn-';
                                 var HTML = '<DIV CLASS="row col-md-12" style="padding-left: 25px;">';
-                                HTML += button + 'secondary pull-center red status-email" onclick="changeorderstatus(' + ID + ');">Email Receipt To Customer</button></DIV>';
-                                //HTML += button + 'warning pull-right status-delivered" onclick="changeorderstatus(' + ID + ', 3);">' + statuses[3] + '</button></DIV>';
-                                HTML += button + 'danger pull-right status-declined" onclick="changeorderstatus(' + ID + ', 2);">' + statuses[2] + '</button></DIV></DIV>';
+                                HTML += changestatusbutton(ID, -1);
+                                HTML += changestatusbutton(ID, 2);
+                                HTML += '</DIV>';
                                 $("#ordercontents").html(result + HTML);
                                 $("#ordermodal").modal("show");
                                 @if(!$showmap)
                                     showmap();
                                 @endif
+                                $("#custaddress").click();
                             }
                         });
+                    }
+
+                    function changestatusbutton(OrderID, Status){
+                        var color = "";
+                        var button = '<DIV CLASS="col-md-6"><button data-dismiss="modal" class="width-full btn btn-';
+                        switch(Status){//statuses = [-1="Email Receipt", 0="Pending", 1="Confirmed", 2="Decline Order", 3="Delivered", 4="Canceled"];
+                            case -1: return button + 'secondary pull-center red status-email" onclick="changeorderstatus(' + OrderID + ');">Email Receipt To Customer</button></DIV>';
+                            case 0: color = "primary status-pending"; break;
+                            case 1: color = "secondary status-confirmed"; break;
+                            case 2: color = "danger status-declined"; break;
+                            case 3: color = "warning status-delivered"; break;
+                            case 4: color = "danger status-canceled"; break;
+                        }
+                        return button + color + ' pull-right" onclick="changeorderstatus(' + OrderID + ', ' + Status + ');">' + statuses[Status] + '</button></DIV>';
                     }
 
                     //universal AJAX error handling

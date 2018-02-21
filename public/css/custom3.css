@@ -23,6 +23,14 @@
     margin-top: 12px !important;
 }
 
+.hyperlink{
+    cursor: pointer;
+    color: #007BFF;
+}
+.hyperlink:hover{
+    text-decoration: underline;
+}
+
 .align-middle{
     margin-top: auto;
     margin-bottom: auto;
