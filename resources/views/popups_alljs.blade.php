@@ -3,6 +3,7 @@
     $CURRENT_YEAR = date("Y");
     $STREET_FORMAT = "[number] [street], [city] [postalcode]";
     //["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
+    $MAX_DISTANCE = getsetting(islive() ? "maxdistance_live" : "maxdistance_local");
 ?>
 <STYLE>
     /* STOP MOVING THIS TO THE CSS, IT WON'T WORK! */
@@ -23,7 +24,7 @@
     var is_chrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     var is_firefox_for_android = is_firefox && is_android;
     var currentitemID = -1;
-    var MAX_DISTANCE = 5;//km
+    var MAX_DISTANCE = <?= $MAX_DISTANCE; ?>;//km
     var debugmode = '<?= !islive(); ?>' == '1';
 
     String.prototype.isEqual = function (str) {

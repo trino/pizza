@@ -555,7 +555,8 @@
                         <div class="card-block bg-danger">
                             <h2 class="pull-left text-white h2class">
                                 <div class="dropdown">
-                                    <Button class="btn btn-primary dropdown-toggle text-white" type="button" data-toggle="dropdown" onclick="$('#alllist').toggle();"><i class="fa fa-{{ $faicon }}"></i>
+                                    <Button class="btn btn-primary dropdown-toggle text-white" type="button" data-toggle="dropdown" onclick="$('#alllist').toggle();">
+                                        <i class="fa fa-{{ $faicon }}"></i>
                                         {{ ucfirst($table) . ' ' . $secondword . ' ' . $extratitle }}</Button>
                                     <ul class="dropdown-menu" id="alllist">
                                         <?php
@@ -895,15 +896,27 @@
                                         var ID = data.table[i]["id"];
                                         evenodd = "item_" + ID + ' table-' + evenodd;
                                         var CurrentDate = "";
-
+                                        var prititle = "";
                                         var Address = "[number] [street]<BR>[city] [province]<BR>[postalcode]";
+                                        if(table == "settings"){
+                                            switch(data.table[i]["keyname"]){//case "": prititle = ""; break;
+                                                case "debugmode": prititle = "Self-explanitory"; break;
+                                                case "deletetopping": prititle = "Show the X to delete toppings in the customize item modal"; break;
+                                                case "domenucache": prititle = "Use the caching system to make the menu load faster"; break;
+                                                case "onlyfiftycents": prititle = "Force the total to 50 cents for Stripe"; break;
+                                                case "localhostdialing": prititle = "Allow calling/texting customers when NOT on the live server"; break;
+                                                case "maxdistance_live": prititle = "How far a store can be away from the customer while on the live server"; break;
+                                                case "maxdistance_local": prititle = "How far a store can be away from the customer while NOT on the live server"; break;
+                                                case "lastupdate": prititle = "Used for auto-updating the SQL file. Set to 0 to force an update"; break;
+                                            }
+                                        }
                                         var tempHTML = '<TR ID="' + table + "_" + ID + '">';
                                         if(TableStyle == '1'){tempHTML += '<TR><TD COLSPAN="2" CLASS="' + evenodd + '" ALIGN="CENTER"><B>' + data.table[i][namefield] + '</B></TD></TR>';}
                                         for (var v = 0; v < fields.length; v++) {
                                             var field = data.table[i][fields[v]];
                                             var oldfield = field;
                                             field = getdata(fields[v], field, data.table[i]);
-                                            var title = "";
+                                            var title = "";// prititle;
                                             switch(table + "." + fields[v]){
                                                 case "orders.placed_at":
                                                     CurrentDate = field;
@@ -926,15 +939,6 @@
                                             if(TableStyle == '1'){
                                                 var formatted = tofieldname(fields[v]);
                                                 tempHTML += '<TR><TD NOWRAP CLASS="titlecol ' + evenodd + '"><SPAN CLASS="pull-center"><STRONG>' + formatted + '</STRONG></SPAN></TD>';
-                                                /* OLD STYLE
-                                                if(sort_col == fields[v]){tempHTML += ' selected-th';}
-                                                tempHTML += '"><SPAN CLASS="pull-center"><i class="btn btn-xs btn-primary fa fa-arrow-down pull-left desc_' + fields[v];
-                                                if(sort_col == fields[v] && sort_dir == "DESC"){tempHTML += ' selected-i';}
-                                                tempHTML += '" onclick="sort(' + "'" + fields[v] + "', 'DESC'" + ')" TITLE="Sort by ' + formatted + ' descending"></i><STRONG>' + formatted;
-                                                tempHTML += '</STRONG> <i class="btn btn-xs btn-primary fa fa-arrow-up pull-right asc_' + fields[v];
-                                                if(sort_col == fields[v] && sort_dir == "ASC"){tempHTML += ' selected-i';}
-                                                tempHTML += '" onclick="sort(' + "'" + fields[v] + "', 'ASC'" + ')" TITLE="Sort by ' + formatted + ' ascending"></i></SPAN></TD>';
-                                                */
                                             }
                                             tempHTML += '<TD NOWRAP ID="' + table + "_" + ID + "_" + fields[v] + '" class="field ' + evenodd + '" field="' + fields[v] + '" index="' + ID + '" TITLE="' + title + '" realvalue="' + oldfield + '">' + field + '</TD>';
                                             if(TableStyle == '1'){tempHTML += '</TR>';}
@@ -971,6 +975,7 @@
                                         if(profiletype == 1) {
                                             tempHTML += '<A CLASS="btn btn-sm btn-danger cursor-pointer" onclick="deleteitem(' + ID + ');">Delete</A>';
                                             tempHTML += '<label CLASS="btn btn-sm cursor-pointer"><input type="checkbox" class="selitem" index="' + ID + '" onclick="selecttableitem(this, ' + ID + ');"> Select</label>';
+                                            tempHTML += " " + prititle;
                                         }
                                         HTML += tempHTML + '</TD></TR>';
                                         items++;
@@ -1061,7 +1066,6 @@
                                                                 break;
 
                                                             case "shortage.restaurant_id":
-                                                                log("esiggdjkfsgkjg");
                                                                 @if($profiletype == 2)
                                                                     log("error");
                                                                     return false;
