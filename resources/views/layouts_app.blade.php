@@ -46,7 +46,7 @@
         <link href='<?= $css; ?>/Roboto.css' rel='stylesheet' type='text/css'>
         <link href='<?= $css; ?>/Roboto-slab.css' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
-        <link rel="stylesheet" href="<?= $css . "/custom3.css?v=" . time(); ?>">
+        <link rel="stylesheet" href="<?= $css . "/custom4.css?v=" . time(); ?>">
         <link rel="stylesheet" href="<?= $css . "/google.css?v=" . time(); ?>">
         <script src="<?= $scripts; ?>/jquery.min.js"></script>
         <script src="<?= $scripts; ?>/tether.min.js"></script>
@@ -95,7 +95,7 @@
                     <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
                 @endif
             </ul>
-            <a HREF="<?= webroot("public/index"); ?>" class="align-left text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
+            <a HREF="<?= webroot("public/index"); ?>" class="align-left align-middle text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
             <?php
                 if(!islive()){
                     echo '<SPAN TITLE="This will not show on the live server">&emsp;LOCAL IP IS: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE NAME IS: <B>" . $routename . '</B>';

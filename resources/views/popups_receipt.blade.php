@@ -531,7 +531,7 @@
     @if(!isset($JSON))
         <TABLE WIDTH="100%">
             <TR>
-                <TD CLASS="cursor-pointer" WIDTH="50%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
+                <TD  WIDTH="50%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
                     <h2 class="mt-2">Delivery Info</h2>
                     <?php
                         echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";

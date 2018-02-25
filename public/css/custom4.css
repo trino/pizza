@@ -65,6 +65,7 @@ h1,h2,h3,h4,h5,h6{margin:0;
     float: right;
     border: 0 solid #c8c8c8 !important;
     opacity: 1;
+    padding-right: 1rem;
 }
 
 input[type=checkbox]{
@@ -72,6 +73,7 @@ input[type=checkbox]{
 }
 
 input, select, textarea {
+    height:100% !important;
     /*
     background: transparent !important;
     border-radius: 0 !important;
@@ -185,7 +187,7 @@ h2 {
 }
 
 .list-group-item {
-    background: transparent !important;
+    background: transparent;
     border-radius: 0 !important;
     min-height: 50px;
     margin-bottom: 0 !important;
@@ -207,7 +209,9 @@ h2 {
     padding: .30rem .75rem !important;
     min-height: 50px;
     border: 0 !important;
-    border-bottom: 0 solid #d9534f !important;    background-color: #dcdcdc !important;border-radius: 0;
+    border-bottom: 0 solid #d9534f !important;    background-color: #dcdcdc !important;
+
+    border-radius: 0;
 
 }
 
@@ -254,7 +258,7 @@ h2 {
 }
 
 .thirdwidth {
-    width: 33%;
+    width: 33.33%;
     float: left !important;
     display: inline !important;
 }
@@ -891,7 +895,11 @@ table tr td:last-child, table tr th:last-child {
 .firefox-child {
     background-color: #DCDCDC;
 }
-
+.form-control{
+    padding: .75rem .75rem;
+    margin-top: auto;
+    margin-bottom: auto;
+}
 .fake-form-control {
     height: 37px !important;
     border-radius: 0;

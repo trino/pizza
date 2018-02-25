@@ -2,24 +2,44 @@
 
 <div class="list-group-item">
     <h2 class="top-left"> My Order</h2>
-    <button class="btn-sm dont-show ml-auto align-right bg-transparent cancel-button" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times-circle"></i></button>
+    <button class="btn-sm dont-show ml-auto align-right bg-transparent cancel-button" ONCLICK="confirmclearorder();"
+            id="confirmclearorder"><i class="fa fa-times-circle"></i></button>
 </div>
 
-<div id="myorder" style='font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-weight: bold;font-size: .85rem'></div>
+<div id="myorder"
+     style='font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-weight: bold;font-size: .85rem'></div>
 
 <button id="checkout-btn" class="list-padding btn btn-primary btn-block" onclick="showcheckout();">
     <i class="fa fa-shopping-basket mr-2"></i> CHECKOUT
 </button>
 
-<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="myModalLabel" style="text-transform: uppercase;">Hi, <SPAN CLASS="session_name"></SPAN></h2>
-                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times-circle"></i></button>
+                <h2 id="myModalLabel" class="align-middle" style="text-transform: uppercase;">Hi, <SPAN
+                            CLASS="session_name"></SPAN></h2>
+                <button data-dismiss="modal" data-popup-close="checkoutmodal"
+                        class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times-circle"></i>
+                </button>
             </div>
             <div class="modal-body" style="padding: 0 !important;">
                 <FORM ID="orderinfo" name="orderinfo">
+                    <div class="input_left_icon">
+                        <span class="fa-stack fa-2x">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-clock text-white fa-stack-1x"></i>
+                        </span>
+                    </div>
+
+                    <div class="input_right">
+                        <div>
+                            <SELECT id="deliverytime" TITLE="Delivery Time" class="form-control"/>
+                            <OPTION>Deliver ASAP</OPTION>
+                            </SELECT>
+                        </div>
+                    </div>
                     <div class="input_left_icon" id="red_address">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
@@ -30,9 +50,9 @@
                     <div class="input_right">
                         <div class="clear_loggedout addressdropdown proper-height" id="checkoutaddress"></div>
                         <?php
-                            if (read("id")) {
-                                echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
-                            }
+                        if (read("id")) {
+                            echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
+                        }
                         ?>
                     </div>
 
@@ -49,30 +69,17 @@
                         </SELECT>
                     </div>
 
-                    <div class="input_left_icon">
-                        <span class="fa-stack fa-2x">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-clock text-white fa-stack-1x"></i>
-                        </span>
-                    </div>
-
-                    <div class="input_right">
-                        <div>
-                            <SELECT id="deliverytime" TITLE="Delivery Time" class="form-control"/>
-                            <OPTION>Deliver ASAP</OPTION>
-                            </SELECT>
-                        </div>
-                    </div>
-
                     @if(!read('phone'))
                         <div class="input_left_icon redhighlite" id="red_phone">
                             <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-mobile-phone text-white fa-stack-1x" style="font-size: 1.5rem !important;"></i>
+                              <i class="fa fa-mobile-phone text-white fa-stack-1x"
+                                 style="font-size: 1.5rem !important;"></i>
                             </span>
                         </div>
                         <div class="input_right">
-                            <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true">
+                            <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val"
+                                   placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true">
                         </div>
                     @endif
 
@@ -88,13 +95,15 @@
                     </div>
 
                     <div class="input_right">
-                        <input type="text" size="20" class="form-control credit-info" autored="red_card" data-stripe="number" placeholder="Card Number">
+                        <input type="text" size="20" class="form-control credit-info" autored="red_card"
+                               data-stripe="number" placeholder="Card Number">
                     </div>
 
                     <div class="input_left_icon"></div>
                     <div class="input_right">
                         <div class="thirdwidth">
-                            <SELECT  style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_month">
+                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control"
+                                    data-stripe="exp_month">
                                 <OPTION VALUE="01">01/Jan</OPTION>
                                 <OPTION VALUE="02">02/Feb</OPTION>
                                 <OPTION VALUE="03">03/Mar</OPTION>
@@ -111,21 +120,26 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="thirdwidth">
-                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_year">
+                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control"
+                                    data-stripe="exp_year">
                                 <?php
-                                    $CURRENT_YEAR = date("Y");
-                                    $TOTAL_YEARS = 6;
-                                    for ($year = $CURRENT_YEAR; $year < $CURRENT_YEAR + $TOTAL_YEARS; $year++) {
-                                        echo '<OPTION VALUE="' . right($year, 2) . '">' . $year . '</OPTION>';
-                                    }
+                                $CURRENT_YEAR = date("Y");
+                                $TOTAL_YEARS = 6;
+                                for ($year = $CURRENT_YEAR; $year < $CURRENT_YEAR + $TOTAL_YEARS; $year++) {
+                                    echo '<OPTION VALUE="' . right($year, 2) . '">' . $year . '</OPTION>';
+                                }
                                 ?>
                             </SELECT>
                             <div class="clearfix"></div>
                         </div>
                         <div class="thirdwidth">
-                            <input  style="margin-top: 0 !important;" type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
-                            <INPUT  style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest" id="istest">
-                            @if(!islive()) <a class="credit-info pull-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a> @endif
+                            <input style="margin-top: 0 !important;" type="text" size="4" data-stripe="cvc"
+                                   CLASS="credit-info form-control" autored="red_card" PLACEHOLDER="CVC"
+                                   style="padding: .54rem .75rem;">
+                            <INPUT style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest"
+                                   id="istest">
+                            @if(!islive()) <a class="credit-info pull-right btn" onclick="testcard();"
+                                              TITLE="Don't remove this, I need it!">Test Card</a> @endif
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -137,10 +151,14 @@
                         </span>
                     </div>
                     <div class="input_right">
-                        <textarea placeholder="Order Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
-                    </div>
+                        <textarea placeholder="Order Notes" id="cookingnotes" class="form-control"
+                                  maxlength="255"></textarea>
+                    </div><div class="clearfix"></div>
 
-                    <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder" onclick="payfororder(); return false;"><i class="fa fa-check mr-2"></i> ORDER</button>
+                    <div class="mb-2"></div>
+                    <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder"
+                            onclick="payfororder(); return false;"><i class="fa fa-check mr-2"></i> ORDER
+                    </button>
                     <span class="payment-errors error"></span>
                     <div class="clearfix"></div>
 
@@ -153,7 +171,7 @@
 <SCRIPT>
     //https://stripe.com/docs/custom-form
     @if(read("id"))
-        $(document).ready(function () {
+    $(document).ready(function () {
         getcloseststore = true;
         visible_address(false);
         $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
@@ -171,6 +189,7 @@
             @endif
 
     var shortitems = [];
+
     function restchange() {
         var value = $("#restaurant").val();
         var index = findwhere(closest, "restid", value);
@@ -181,7 +200,7 @@
         }
         if (closest.length > 0) {
             GenerateHours(closest[index].hours);
-           // shortitems = CheckforShortage(closest[index].shortage);
+            // shortitems = CheckforShortage(closest[index].shortage);
             alertshortage();
         }
     }
