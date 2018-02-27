@@ -31,7 +31,8 @@
     @include("popups_editprofile_modal")
     @if(read("id") && read("profiletype") <> 2)
         <div class="fixed-action-btn hidden-lg-up sticky-footer">
-            <button class="fab bg-danger" onclick="window.scrollTo(0,document.body.scrollHeight);">
+            <button class="bg-danger" onclick="window.scrollTo(0,document.body.scrollHeight);" TITLE="Scroll to the top of the page">
+                <I CLASS="fa fa-arrow-up white"></I>
                 <span class="white" id="checkout-total"></span>
             </button>
         </div>
