@@ -145,7 +145,12 @@ class HomeController extends Controller {
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
-            file_put_contents($dir . "/" . $orderid . ".json", json_encode($order, JSON_PRETTY_PRINT));
+
+            $filename = $dir . "/" . $orderid . ".json";
+            file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
+            chown($filename, "hamiltonpizza");
+            chmod($filename, 0755);
+
             $user = $this->order_placed($orderid, $info, -2);//get user data without processing the event
             if ($user["name"] != $_POST["name"] || $user["phone"] != $_POST["phone"]) {
                 $user["name"] = $_POST["name"];

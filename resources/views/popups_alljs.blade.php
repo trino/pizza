@@ -1480,6 +1480,19 @@
             } else {
                 text = request.statusText;
             }
+
+            try {
+                var data = JSON.parse(request.responseText);
+                if (!isUndefined(data["exception"]) && !isUndefined(data["message"])) {
+                    if(debugmode){
+                        text = data["message"] + '<BR>Line: ' + data["line"] + '<BR>File: ' + data["file"];
+                    } else {
+                        text = data["message"];
+                    }
+                }
+            } catch (e) {
+            }
+
             alert(text + "<BR><BR>URL: " + settings.url, "AJAX error code: " + request.status);
         }
         blockerror = false;
