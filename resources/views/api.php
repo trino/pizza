@@ -1,4 +1,9 @@
 <?php
+    $islive=true;
+    $dirroot = getcwd();
+    if (!endswith($dirroot, "/public")){
+        $dirroot = $dirroot . "/public";
+    }
     switch($_SERVER["SERVER_NAME"]){
         case 'scpizza.ca':
             define("serverurl", "scpizza.ca");
@@ -9,21 +14,24 @@
             define("serverurl", "londonpizza.ca");
             define("sitename", "londonpizza.ca");
             define("cityname", "London");
-            break;        case 'hamiltonpizza.ca':
-        define("serverurl", "hamiltonpizza.ca");
-        define("sitename", "hamiltonpizza.ca");
-        define("cityname", "Hamilton");
+            break;
+        case 'hamiltonpizza.ca':
+            $stripefile = $dirroot . "/../vendor/stripe/stripe-php/init.php";
+            require_once($stripefile);
+            define("serverurl", "hamiltonpizza.ca");
+            define("sitename", "hamiltonpizza.ca");
+            define("cityname", "Hamilton");
         break;
         default:
             define("serverurl", "http://" . $_SERVER["SERVER_NAME"] . "/ai/");
             define("sitename", "localhost");
             define("cityname", "local");
+            $islive=false;
     }
     $webroot = webroot();
     date_default_timezone_set("America/Toronto");
     $Filename = base_path() . "/ai.sql";
-
-    function webroot($file = ""){
+    function webroot($file = "", $justroot = false){
         $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
         $webroot = $_SERVER["REQUEST_URI"];
         $start = strpos($webroot, "/", 1) + 1;
@@ -38,11 +46,9 @@
             }
         }
         $public = "public/";
-        if(strpos($file, $public) !== false){$public = "";}
+        if(strpos($file, $public) !== false || $justroot){$public = "";}
         return $protocol . '://' . $_SERVER['HTTP_HOST'] . $webroot . $public . $file;
     }
-
-    $dirroot = getcwd();
 
     //error_reporting(E_ERROR | E_PARSE);//suppress warnings
     //include("../veritas3-1/config/app.php");//config file is not meant to be run without cake, thus error reporting needs to be suppressed
@@ -81,6 +87,9 @@
 
     function right($text, $length){
         return substr($text, -$length);
+    }
+    function endswith($text, $test){
+        return right($text, strlen($test)) == $test;
     }
 
     function mid($text, $start, $length){

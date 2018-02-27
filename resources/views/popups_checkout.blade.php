@@ -304,7 +304,7 @@
 
 <DIV ID="firefoxandroid" class="fullscreen grey-backdrop dont-show">
     <DIV CLASS="centered firefox-child bg-white">
-        <i class="fa fa-firefox"></i> Firefox Address editor
+        <i class="fab fa-firefox"></i> Firefox Address editor
         <DIV ID="gmapffac" class="bg-white"></DIV>
         <BUTTON ONCLICK="fffa();" CLASS="btn btn-primary radius0 btn-full pull-down-right">OK</BUTTON>
     </DIV>

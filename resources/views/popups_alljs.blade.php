@@ -1224,7 +1224,7 @@
                             userdetails = false;
                             if (redirectonlogout) {
                                 log("Logout reload");
-                                window.location = "<?= webroot(""); ?>";
+                                window.location = "<?= webroot("", true); ?>";
                             } else {
                                 switch (currentRoute) {
                                     case "index"://resave order as it's deleted in removeCookie();

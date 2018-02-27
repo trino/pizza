@@ -567,12 +567,12 @@
                                             //show all administratable tables
                                             foreach(array("users" => true, "restaurants" => true, "additional_toppings" => true, "useraddresses" => false, "orders" => $profiletype != 2, "actions" => true, "shortage" => $profiletype != 2, "settings" => true) as $thetable => $onlyadmins){//, "combos" => true
                                                 if(($profiletype == 1 || !$onlyadmins) && $table != $thetable){
-                                                    echo '<LI><A HREF="' . webroot("public/list/" . $thetable) . '" class="dropdown-item"><i class="fa fa-user-plus"></i> ' . str_replace("_", " ", ucfirst($thetable)) . ' list</A></LI>';
+                                                    echo '<LI><A HREF="' . webroot("list/" . $thetable, true) . '" class="dropdown-item"><i class="fa fa-user-plus"></i> ' . str_replace("_", " ", ucfirst($thetable)) . ' list</A></LI>';
                                                 }
                                             }
                                         ?>
-                                        <LI><A HREF="<?= webroot("public/editmenu"); ?>" class="dropdown-item"><i class="fa fa-user-plus"></i> Edit Menu</A></LI>
-                                        <LI><A HREF="<?= webroot("public/list/debug"); ?>" class="dropdown-item"><i class="fa fa-user-plus"></i> Debug log</A></LI>
+                                        <LI><A HREF="<?= webroot("editmenu", true); ?>" class="dropdown-item"><i class="fa fa-user-plus"></i> Edit Menu</A></LI>
+                                        <LI><A HREF="<?= webroot("list/debug", true); ?>" class="dropdown-item"><i class="fa fa-user-plus"></i> Debug log</A></LI>
                                     </ul>
                                 </div>
                             </h2>
@@ -593,7 +593,7 @@
                                         <A onclick="deletetableitems();" href="#"><i class="fa fa-trash"></i> Delete Selected</A>
                                         <!--A onclick="deletetable();" TITLE="Delete the entire table" class="hyperlink" id="deletetable"><i class="fa fa-trash-o"></i></A-->
                                     @endif
-                                    <A HREF="{{ webroot("public/list/all") }}" TITLE="Back"><i class="fa fa-arrow-left"></i></A>
+                                    <A HREF="{{ webroot("list/all", true) }}" TITLE="Back"><i class="fa fa-arrow-left"></i></A>
                                 @endif
                             </h2>
                         </div>
@@ -973,7 +973,7 @@
                                         switch(table){
                                             case "users":
                                                 tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" href="' + baseURL + 'useraddresses?user_id=' + ID + '">Addresses</A> ';
-                                                tempHTML += '<A CLASS="btn btn-sm btn-secondary cursor-pointer" href="{{ webroot("public/user/info/") }}' + ID + '">Edit</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm btn-secondary cursor-pointer" href="{{ webroot("public/user/info/", true) }}' + ID + '">Edit</A> ';
                                                 tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" ONCLICK="changepass(' + ID + ');" TITLE="Change their password">Password</A> ';
                                                 break;
                                             case "useraddresses":
@@ -991,7 +991,7 @@
                                                 }
                                                 break;
                                             case "restaurants":
-                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" HREF="{{ webroot("public/list/orders?restaurant=") }}' + ID + '">View</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" HREF="{{ webroot("public/list/orders?restaurant=", true) }}' + ID + '">View</A> ';
                                                 break;
                                         }
                                         if(profiletype == 1) {
