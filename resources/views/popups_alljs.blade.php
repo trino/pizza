@@ -1549,6 +1549,7 @@
         log("Attempt to pay: " + changecredit());
         if (!changecredit()) {//new card
             log("Stripe data");
+            loading(true, "stripe");
             Stripe.card.createToken($form, stripeResponseHandler);
             log("Stripe data - complete");
         } else {//saved card
@@ -1580,6 +1581,7 @@
                         }//check to be sure
                         userdetails.Stripe.push(getnewcard(response.id));
                     }
+                    loading(false, "stripe");
                     placeorder(response.id);
                 } break;
         }
