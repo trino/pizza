@@ -89,7 +89,7 @@ class Controller extends BaseController {
     }
 
     //https://www.twilio.com/ $0.0075 per SMS, + $1 per month
-    public function sendSMS($Phone, $Message, $Call = false){
+    public function sendSMS($Phone, $Message, $Call = false, $force = false){
         if (is_array($Phone)) {
             foreach ($Phone as $PhoneNumber) {
                 $this->sendSMS($PhoneNumber, $Message, $Call);
@@ -102,7 +102,7 @@ class Controller extends BaseController {
         } else {
             $Phone = filternonnumeric($Phone);
         }
-        if (islive() && $Phone !== "9055123067" && $Phone) {//never call me
+        if (islive() && ($Phone !== "9055123067" || $force) && $Phone) {//never call me
             $sid = 'AC81b73bac3d9c483e856c9b2c8184a5cd';
             $token = "3fd30e06e99b5c9882610a033ec59cbd";
             $fromnumber = "2897685936";

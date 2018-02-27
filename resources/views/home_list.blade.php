@@ -1,6 +1,5 @@
 <?php
     use App\Http\Controllers\HomeController;//used for order "changestatus"
-
     startfile("home_list");
     $RestaurantID= "";
     $extratitle = "";
@@ -584,7 +583,10 @@
                                 @endif
                                 @if($table != "all" && $profiletype == 1)
                                     @if($table == "debug")
-                                        <A onclick="testemail();" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
+                                        <A onclick="testemail(false);" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
+                                        @if(islive())
+                                            <A onclick="testemail(true);" TITLE="Send a test SMS" class="hyperlink" id="testsms" href="#"><i class="fa fa-phone"></i></A>
+                                        @endif
                                         <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
@@ -1591,13 +1593,20 @@
                         getpage(-1, true);
                     }
 
-                    function testemail(){
-                        $("#debuglogcontents").html("Sending email. Please standby");
+                    function testemail(isSMS){
+                        var name = "email";
+                        if(isSMS){
+                            name = "SMS";
+                        }
+                        $("#debuglogcontents").html("Sending " + name + ". Please standby");
                         $.post(currentURL, {
-                            action: "testemail",
+                            action: "test" + name,
                             _token: token
                         }, function (result) {
-                            if(!result){result = "Email sent successfully!";}
+                            if(!result){
+                                result = "Email sent successfully!";
+                                if(isSMS){result = "SMS sent successfully!";}
+                            }
                             $("#debuglogcontents").html(result);
                         });
                     }

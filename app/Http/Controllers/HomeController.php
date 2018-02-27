@@ -25,8 +25,11 @@ class HomeController extends Controller {
                 case "testemail":
                     return $this->sendEMail("email_test", array(
                         'mail_subject' => "test",
-                        "email" => "roy@trinoweb.com"
+                        "email" => read("email")
                     ));
+                    break;
+                case "testSMS":
+                    return $this->sendSMS(read("phone"), "This is a test", false, true);
                     break;
             }
         }
