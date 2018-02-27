@@ -638,7 +638,7 @@
     $GLOBALS["testlive"] = false;
     function initStripe(){
         //Set secret key: remember to change this to live secret key in production
-        if ((!islive() || (isset($_POST["istest"]) && $_POST["istest"])) && !$GLOBALS["testlive"]) {
+        if ((!islive() || (isset($_POST["stripemode"]) && $_POST["stripemode"]) == "test")) {
             \Stripe\Stripe::setApiKey("BJi8zV1i3D90vmaaBoLKywL84HlstXEg"); //test
         } else {
             \Stripe\Stripe::setApiKey("3qL9w2o6A0xePqv8C6ufRKbAqkKTDJAW"); //live

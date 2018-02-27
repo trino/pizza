@@ -940,6 +940,7 @@
                 _token: token,
                 info: addressinfo,
                 stripe: StripeResponse,
+                stripemode: stripemode,
                 order: theorder,
                 name: $("#reg_name").val(),
                 phone: $("#reg_phone").val()
@@ -2391,11 +2392,11 @@
     @if(read("id"))
         $(document).ready(function () {
         <?php
-        if (islive() || $GLOBALS["testlive"]) {
-            echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live')";
-        } else {
-            echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
-        }
+            if (islive()) {
+                echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live')";
+            } else {
+                echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
+            }
         ?>
     });
 
@@ -2411,8 +2412,10 @@
         }
     });
 
+    var stripemode = "";
     function setPublishableKey(Key, mode) {
         try {
+            stripemode = mode;
             Stripe.setPublishableKey(Key);
             @if(!islive())
                 log(mode + " stripe mode");
