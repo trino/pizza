@@ -44,6 +44,8 @@
             if ($isSecure) {
                 $protocol = "https";
             }
+        } else {
+            $justroot = false;
         }
         $public = "public/";
         if(strpos($file, $public) !== false || $justroot){$public = "";}
