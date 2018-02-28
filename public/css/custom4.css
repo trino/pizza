@@ -512,7 +512,7 @@ body {
     font-size: 1.5rem !important;
 }
 
-.fab {
+.circlebutton {
     font-size: .8rem;
     border: none;
     color: white;
@@ -527,7 +527,7 @@ body {
     box-shadow: 2px 3px 3px 0 rgba(41, 41, 41, .3);
 }
 
-.fab:hover {
+.circlebutton:hover {
     background-color: #ff4060;
 }
 
