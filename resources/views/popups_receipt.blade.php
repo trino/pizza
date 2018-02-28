@@ -489,11 +489,10 @@
                 $tax_percent = 0.13;
                 $colspanminus1 = $colspan - 1;
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($subtotal, 2) . '</TD></TR>';
-                $discount = getdiscount($subtotal);
-                if($discount > 0){
-                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount %&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
+                $discountpercent = getdiscount($subtotal);
+                if($discountpercent > 0){
                     $discount = number_format($discount * 0.01 * $subtotal, 2);
-                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount $&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
+                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount (' . $discountpercent . '%) $&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
                     $subtotal = $subtotal - $discount;
                 }
                 $tax = ($subtotal + $deliveryfee) * $tax_percent;

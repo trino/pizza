@@ -649,7 +649,7 @@
             }
             tempHTML += '><div class="pull-right text-normal py-1"><TABLE><TR><TD>Sub-total $</TD><TD>' + subtotal.toFixed(2) + '</TD></TR>';
             if(discount>0){
-                tempHTML += '<TR><TD>Discount %</TD><TD>' + discountpercent + '</TD></TR><TR><TD>Discount $</TD><TD>' + discount + '</TD></TR>';
+                tempHTML += '<TR><TD>Discount (' + discountpercent + '%) $</TD><TD>' + discount + '</TD></TR>';
             }
             if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery $</TD><TD>' + deliveryfee.toFixed(2) + '</TD></TR>';}
             tempHTML += '<TR><TD>Tax $</TD><TD>' + taxes.toFixed(2) + '</TD></TR>';
