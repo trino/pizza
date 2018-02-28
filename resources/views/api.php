@@ -97,8 +97,8 @@ function endswith($text, $test){
 function mid($text, $start, $length){
     return substr($text, $start, $length);
 }
-function textcontains($text, $test){
-    return strpos(strtolower($text), strtolower($test)) !== false;
+function textcontains($text, $searchfor){
+    return strpos(strtolower($text), strtolower($searchfor)) !== false;
 }
 
 function insertdb($Table, $DataArray, $PrimaryKey = "id", $Execute = True){

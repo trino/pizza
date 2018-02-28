@@ -13,12 +13,7 @@
             }
             return $currentsize;
         }
-    
-        //checks if $text contains $searchfor, case insensitive
-        function textcontains($text, $searchfor){
-            return strpos(strtolower($text), strtolower($searchfor)) !== false;
-        }
-    
+
         //process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
         function getaddons($Table, &$isfree, &$qualifiers, &$addons, &$groups){
             $toppings = Query("SELECT * FROM " . $Table . " ORDER BY id asc, type ASC, name ASC", true);
