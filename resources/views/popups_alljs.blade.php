@@ -269,6 +269,7 @@
             }
         }
         alert(arguments[0], Title);
+        $("#exclame").show();
         $("#alert-cancel").show();
         $("#alert-confirm").click(action);
     }
@@ -1259,6 +1260,7 @@
             if (arguments.length > 1) {
                 title = arguments[1];
             }
+            $("#exclame").hide();
             $("#alert-cancel").hide();
             $("#alert-ok").off("click");
             $("#alert-confirm").off("click");
@@ -2437,16 +2439,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="" id="alertmodallabel">Title</h2>
+                <h2 id="alertmodallabel">Title</h2>
                 <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
+                <div class="pull-center" id="exclame"><IMG SRC="<?= webroot("images"); ?>/exclamationmark.png" style="width: 122px;"></div>
                 <DIV ID="alertmodalbody"></DIV>
-                <div CLASS="pull-right">
-                    <button class="btn btn-link text-muted" id="alert-cancel" data-dismiss="modal">
+                <div CLASS="pull-center">
+                    <button class="btn btn-danger text-muted alert-button" id="alert-cancel" data-dismiss="modal">
                         CANCEL
                     </button>
-                    <button class="btn btn-link" id="alert-confirm" data-dismiss="modal">
+                    <button class="btn btn-primary alert-button" id="alert-confirm" data-dismiss="modal">
                         OK
                     </button>
                 </div>

@@ -19,7 +19,7 @@
                     <DIV CLASS="error" id="edituser_error"></DIV>
                     <DIV class="clearfix mt-1"></DIV>
 
-                    <BUTTON CLASS="btn-link pull-right" onclick="return userform_submit(true);">SAVE</BUTTON>
+                    <DIV CLASS="pull-center"><BUTTON CLASS="btn btn-primary alert-button" onclick="return userform_submit(true);">SAVE</BUTTON></DIV>
                 </FORM>
 
 

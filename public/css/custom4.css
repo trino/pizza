@@ -229,7 +229,15 @@ h2 {
 
 .modal-content {
     border: 0 solid #e7e7e7;
-    border-radius: 0 !important;
+    border-radius: 10px;
+}
+
+.pull-center{
+    text-align: center;
+}
+
+.alert-button{
+    min-width: 25%;
 }
 
 .receipt_item {
