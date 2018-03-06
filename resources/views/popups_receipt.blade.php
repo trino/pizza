@@ -189,7 +189,7 @@
 ?>
 
     <div class="alert alert-success text-center text-sm-center mb-0">
-        <h2 style="font-weight: normal !important;">Delivery {{ $duration }}</h2>
+        <h2>Delivery {{ $duration }}</h2>
     </div>
 
     @if($includeextradata)
@@ -240,7 +240,7 @@
                 return $currentsize;
             }
 
-            function textcontains($text, $searchfor){
+            function textcontains999($text, $searchfor){
                 return strpos(strtolower($text), strtolower($searchfor)) !== false;
             }
 
@@ -542,7 +542,7 @@
                     ?>
                 </TD>
                 <TD CLASS="cursor-pointer" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
-                    <h2 class="mt-2">Order #<span ID="receipt_id"><?= $orderid; ?></span></h2>
+                    <h2 class="mt-2">Order ID <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
                                 $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);

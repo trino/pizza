@@ -16,9 +16,7 @@ h1,h2,h3,h4,h5,h6{margin:0;
 .text-right{
     text-align: right;
 }
-.btn-fa{
-    padding-top: 0px;
-}
+
 .top-left{
     position: absolute;
     left: 10px;
@@ -48,7 +46,7 @@ h1,h2,h3,h4,h5,h6{margin:0;
 }
 
 .input_left_icon {
-    width: 16%;
+    width: 15%;
     text-align: center;
     float: left;
     border: 0 solid #c8c8c8 !important;
@@ -63,11 +61,10 @@ h1,h2,h3,h4,h5,h6{margin:0;
 }
 
 .input_right {
-    width: 84%;
+    width: 85%;
     float: right;
     border: 0 solid #c8c8c8 !important;
     opacity: 1;
-    padding-right: 1rem;
 }
 
 input[type=checkbox]{
@@ -177,8 +174,7 @@ button, .btn-sm, a, .btn {
 }
 
 .fa-2x {
-    font-size: 1.5em !important;
-    margin-top: .25rem !important;
+    font-size: 1.45em !important;
 }
 
 h2 {
@@ -189,9 +185,10 @@ h2 {
 }
 
 .list-group-item {
+    padding:.5rem .75rem;
     background: transparent;
     border-radius: 0 !important;
-    min-height: 50px;
+    min-height: 47px;
     margin-bottom: 0 !important;
     border: 0 !important;
 }
@@ -211,8 +208,7 @@ h2 {
     padding: .30rem .75rem !important;
     min-height: 50px;
     border: 0 !important;
-    border-bottom: 0 solid #d9534f !important;    background-color: #dcdcdc !important;
-
+    border-bottom: 0 solid #d9534f !important;
     border-radius: 0;
 
 }
@@ -237,7 +233,8 @@ h2 {
 }
 
 .receipt_item {
-    min-height: 5px !important;
+    min-height: 35px !important;
+    padding: .25rem .75rem !important;
 }
 
 .strong {
@@ -267,6 +264,7 @@ h2 {
 
 .addonlist {
     width: 100%;
+    background: #e6ecf0;
 }
 
 .bg-secondary {
@@ -345,7 +343,6 @@ body.loading {
 }
 
 .receipt-addons {
-    padding: .5rem 0;
     cursor: pointer;
     width: 100% !important;
     float: left;
@@ -375,7 +372,6 @@ body.loading {
 }
 
 .modal-body {
-    background: #dcdcdc;
     padding: .5rem .5rem;
 }
 
@@ -393,7 +389,7 @@ body {
         background-image: linear-gradient(rgba(174,149,86,.45),rgba(255,255,255,0));
         background: rgba(174, 149, 86, .45);
    */
-    background: #d7d7d7;
+    background: #e6ecf0;
 }
 
 .note_green {
@@ -492,7 +488,7 @@ body {
     border-radius: 0
 }
 
-.bg-white {
+.bg-white2 {
     background-color: white
 }
 
@@ -895,7 +891,7 @@ table tr td:last-child, table tr th:last-child {
 }
 
 .firefox-child {
-    background-color: #DCDCDC;
+    background-color: #f5f8fa;
 }
 .form-control{
     padding: .75rem .75rem;

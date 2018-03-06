@@ -106,7 +106,7 @@ class HomeController extends Controller {
                     if ($_POST["status"] == -1) {//email out
                         $info = false;
                         $user = $this->order_placed($_POST["orderid"], $info, 0);
-                        $ret["Reason"] = "Receipt for order ID " . $user["orderid"] . " sent to '" . $user["email"] . "'";
+                        $ret["Reason"] = "Receipt for Order ID " . $user["orderid"] . " sent to '" . $user["email"] . "'";
                     } else {
                         $Status = array("Pending", "Confirmed", "Declined", "Delivered", "Canceled");
                         insertdb("orders", array("id" => $_POST["orderid"], "status" => $_POST["status"]));

@@ -2179,7 +2179,7 @@
         if (currentstyle == 0) {
             $("#addonlist").html(HTML + '</DIV>');
         } else {
-            HTML += '<div style="border:0px solid blue !important;position: absolute; bottom: 0;width:100%">';
+            HTML += '<div style="border:0px solid blue !important;position: absolute; bottom: 0;width:100%;background:white;">';
 
             var breaker_green = 0;
             var breaker_red = 0;
@@ -2199,7 +2199,7 @@
                         breaker_red = 1;
                     }
 
-                    HTML += '<button class="fourthwidth bg-white bg-'+types[i]+ ' ' + breaker_css_green +  breaker_css_red + ' addon-addon list-group-item-action toppings_btn';
+                    HTML += '<button class="fourthwidth bg-white2 bg-'+types[i]+ ' ' + breaker_css_green +  breaker_css_red + ' addon-addon list-group-item-action toppings_btn';
                     if (isaddon_free(String(currentaddontype), String(addon))) {
                         title = "Free addon";
                     }
@@ -2435,8 +2435,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="alertmodallabel">Title</h2>
-                <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-times-circle"></i></button>
+                <h2 class="" id="alertmodallabel">Title</h2>
+                <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <DIV ID="alertmodalbody"></DIV>

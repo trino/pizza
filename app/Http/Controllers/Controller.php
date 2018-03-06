@@ -108,7 +108,7 @@ class Controller extends BaseController {
             $fromnumber = "2897685936";
             if ($Call) {
                 //$Message = "http://" . serverurl . "/call?message=" . urlencode($Message);
-                $Message = "http://www.hamiltonpizza.ca/call?message=" . urlencode($Message);
+                $Message = "https://hamiltonpizza.ca/call?message=" . urlencode($Message);
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Calls";
                 $data = array("From" => $fromnumber, "To" => $Phone, "Url" => $Message);
             } else {

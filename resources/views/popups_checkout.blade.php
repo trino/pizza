@@ -2,7 +2,7 @@
 
 <div class="list-group-item">
     <h2 class="top-left"> My Order</h2>
-    <button class="btn-sm dont-show ml-auto align-right bg-transparent cancel-button" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times-circle"></i></button>
+    <button class="btn-sm dont-show ml-auto align-right bg-transparent cancel-button" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
 
 <div id="myorder" style='font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-weight: bold;font-size: .85rem'></div>
@@ -17,11 +17,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="myModalLabel" class="align-middle" style="text-transform: uppercase;">Hi, <SPAN CLASS="session_name"></SPAN></h2>
-                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times-circle"></i>
+                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body" style="padding: 0 !important;">
                 <FORM ID="orderinfo" name="orderinfo">
+
+                    <div class="modal-body">
+
+
                     <div class="input_left_icon">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
@@ -55,7 +58,7 @@
                     <div class="input_left_icon" id="red_rest">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-utensils text-white fa-stack-1x" style="font-size: .9rem !important;"></i>
+                          <i class="fa fa-utensils text-white fa-stack-1x"></i>
                         </span>
                     </div>
 
@@ -69,7 +72,7 @@
                         <div class="input_left_icon redhighlite" id="red_phone">
                             <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-mobile-phone text-white fa-stack-1x" style="font-size: 1.5rem !important;"></i>
+                              <i class="fa fa-mobile text-white fa-stack-1x" style="font-size: 1.5rem !important;"></i>
                             </span>
                         </div>
                         <div class="input_right">
@@ -80,7 +83,7 @@
                     <div class="input_left_icon" id="red_card">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-credit-card text-white fa-stack-1x" style="font-size: .9rem !important;"></i>
+                          <i class="fa fa-credit-card text-white fa-stack-1x"></i>
                         </span>
                     </div>
 
@@ -145,15 +148,17 @@
                     </div>
                     <div class="clearfix"></div>
 
-                    <div class="mb-2"></div>
-                    <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder"
+                    </div>
+                    <div class="modal-body" style="padding: 0 !important;">
+
+                        <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder"
                             onclick="payfororder(); return false;"><i class="fa fa-check mr-2"></i> ORDER
                     </button>
                     <span class="payment-errors error"></span>
                     <div class="clearfix"></div>
-
+        </div>
                 </FORM>
-            </div>
+
         </div>
     </div>
 </div>
