@@ -532,7 +532,7 @@
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
                 <TD  WIDTH="50%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
-                    <h2 class="mt-2" style="margin-top: 0px;">Delivery Info</h2>
+                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Delivery Info</h2>
                     <?php
                         echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
                         if($Order["unit"]){echo $Order["unit"]. '<BR>';}
@@ -543,7 +543,7 @@
                     ?>
                 </TD>
                 <TD CLASS="cursor-pointer" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
-                    <h2 class="mt-2" style="margin-top: 0px;">Order ID <span ID="receipt_id"><?= $orderid; ?></span></h2>
+                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Order ID <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
                                 $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
