@@ -215,6 +215,7 @@
                 <th align="right">Price</th>
             </TR>
     @else
+        <TABLE WIDTH="100%" class="table table-sm bg-white" style="border: 0px solid #fff !important;" cellspacing="0" cellpadding="0">
     @endif
 
     <?php
