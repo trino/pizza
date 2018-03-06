@@ -149,6 +149,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             $('<label id="reg_address-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#formatted_address");
         }
         redirectonlogin = false;
+        loading(true, "register");
         $('#regform').submit();
     }
 
@@ -220,6 +221,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                             $("#login_password").val(formdata["password"]);
                             redirectonlogin = true;
                             handlelogin('login');
+                            loading(false, "register");
                         } catch (e) {
                             alert(result, "Registration");
                         }

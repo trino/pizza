@@ -2,21 +2,21 @@
 <html lang="en" class="full">
 <head>
     <?php
-    $time = microtime(true);
-    // Gets microseconds
-    if (read("id")) {
-        $user = getuser(false);
-        if (!$user) {
-            //check for deleted user
-            unset($user);
-            write("id", false);
-        } else {
-            unset($user["password"]);
+        $time = microtime(true);
+        // Gets microseconds
+        if (read("id")) {
+            $user = getuser(false);
+            if (!$user) {
+                //check for deleted user
+                unset($user);
+                write("id", false);
+            } else {
+                unset($user["password"]);
+            }
         }
-    }
-    $scripts = webroot("public/scripts");
-    $css = webroot("public/css");
-    $routename = Route::getCurrentRoute()->uri();
+        $scripts = webroot("public/scripts");
+        $css = webroot("public/css");
+        $routename = Route::getCurrentRoute()->uri();
     ?>
 
     <script type="text/javascript">
@@ -61,52 +61,44 @@
 <body>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 <div class="list-group-item container-fluid bg-danger shadow">
-    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent"
-            ONCLICK="$('#dropdown-menu').toggle();">
+    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent" ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white"></i>
     </button>
     <ul class="dropdown-menu dropdown-menu-left" ID="dropdown-menu">
         @if(read("id"))
             <SPAN class="loggedin profiletype profiletype1">
-                        <?php
+                <?php
                 foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings") as $table) {
                     echo '<li><A HREF="' . webroot("list/" . $table, true) . '" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> ' . str_replace("_", " ", ucfirst($table)) . ' list</A></li>';
                 }
                 ?>
-                <li><A HREF="<?= webroot("editmenu", true); ?>" CLASS="dropdown-item"><i
-                                class="fa fa-user-plus icon-width"></i> Edit Menu</A></li>
-                        <li><A HREF="<?= webroot("list/debug", true); ?>" CLASS="dropdown-item"><i
-                                        class="fa fa-user-plus icon-width"></i> Debug log</A></li>
-                    </SPAN>
+                <li><A HREF="<?= webroot("editmenu", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Edit Menu</A></li>
+                <li><A HREF="<?= webroot("list/debug", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Debug log</A></li>
+            </SPAN>
             <SPAN class="loggedin">
-                        <li id="profileinfo">
-                            <A data-toggle="modal" data-target="#profilemodal" href="#" class="dropdown-item">
-                            <i class="fa fa-user icon-width"></i> My Profile</A>
-                        </li>
+                <li id="profileinfo">
+                    <A data-toggle="modal" data-target="#profilemodal" href="#" class="dropdown-item">
+                    <i class="fa fa-user icon-width"></i> My Profile</A>
+                </li>
                 @if($routename != "help")
-                    <li class="profiletype_not profiletype_not2"><A ONCLICK="orders();" class="dropdown-item"
-                                                                    href="#"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
+                    <li class="profiletype_not profiletype_not2"><A ONCLICK="orders();" class="dropdown-item" href="#"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
                 @endif
-                    </SPAN>
+            </SPAN>
         @endif
         @if($routename != "/")
             <SPAN class="loggedout">
-                        <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i
-                                        class="fa fa-user icon-width"></i> Log In</A></LI>
-                    </SPAN>
+                <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa-user icon-width"></i> Log In</A></LI>
+            </SPAN>
         @endif
         @if($routename == "help")
-            <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i
-                            class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
+            <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
         @else
-            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i
-                            class="fa fa-question-circle icon-width"></i> More Info</A></LI>
+            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> More Info</A></LI>
         @endif
         @if(read("id"))
-            <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i
-                            class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
+            <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
         @endif
-
+        <LI><a href="#" onclick="close_window();return false;" CLASS="dropdown-item"><i class="fa fa-times icon-width"></i> Close Tab</a></LI>
     </ul>
 
     <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white"

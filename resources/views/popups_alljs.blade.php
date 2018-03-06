@@ -1772,6 +1772,8 @@
         $("#saveaddresses").attr("autored", "red_address");
         refreshform("#saveaddresses");
         if(needscreditrefresh){changecredit();}
+        $("#orderinfo").valid();
+        if($("#reg_phone").valid()){$("#red_phone").removeClass("redhighlite");}
     }
 
     var daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

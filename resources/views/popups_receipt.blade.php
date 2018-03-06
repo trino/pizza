@@ -491,7 +491,7 @@
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($subtotal, 2) . '</TD></TR>';
                 $discountpercent = getdiscount($subtotal);
                 if($discountpercent > 0){
-                    $discount = number_format($discount * 0.01 * $subtotal, 2);
+                    $discount = number_format($discountpercent * 0.01 * $subtotal, 2);
                     echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount (' . $discountpercent . '%) $&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
                     $subtotal = $subtotal - $discount;
                 }
