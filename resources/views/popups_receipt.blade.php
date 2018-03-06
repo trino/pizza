@@ -215,7 +215,6 @@
                 <th align="right">Price</th>
             </TR>
     @else
-        <TABLE WIDTH="100%" class="table table-sm  bg-white " style="border: 15px solid #fff !important;" cellspacing="0" cellpadding="0">
     @endif
 
     <?php
@@ -386,8 +385,9 @@
                                             }
                                         }
                                     }
+                                    $colspan = $colspan - 2;
                                     // $imagefile = '<img class="pull-left" src="' . $localdir . $imagefile . ".png" . '" style="width:22px;margin-right:5px;">';
-                                    echo '<TR><TD valign="middle" style="font-weight: bold;">' . showifabove1($quantity, 'x&nbsp;') . $item->itemname . '</TD><TD width="1%"></TD><TD width="1%"></TD><TD ALIGN="RIGHT" WIDTH="5%">';
+                                    echo '<TR><TD valign="middle" style="font-weight: bold;">' . showifabove1($quantity, 'x&nbsp;') . $item->itemname . '</TD><TD ALIGN="RIGHT" WIDTH="5%">';
                                     break;
                             }
 
@@ -528,10 +528,10 @@
     @endif
 
     @if(!isset($JSON))
-        <TABLE WIDTH="100%">
+        <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
                 <TD  WIDTH="50%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
-                    <h2 class="mt-2">Delivery Info</h2>
+                    <h2 class="mt-2" style="margin-top: 0px;">Delivery Info</h2>
                     <?php
                         echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
                         if($Order["unit"]){echo $Order["unit"]. '<BR>';}
@@ -542,7 +542,7 @@
                     ?>
                 </TD>
                 <TD CLASS="cursor-pointer" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
-                    <h2 class="mt-2">Order ID <span ID="receipt_id"><?= $orderid; ?></span></h2>
+                    <h2 class="mt-2" style="margin-top: 0px;">Order ID <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
                                 $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
