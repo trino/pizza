@@ -967,7 +967,7 @@
                         if(IsAddressUnique(userdetails.Addresses, Address.id)) {
                             userdetails.Addresses.push(Address);
                             $("#addaddress").remove();
-                            $("#saveaddresses").append(AddressToOption(Address) + '<OPTION VALUE="addaddress" ID="addaddress">never shows ADD ADDRESS</OPTION>');
+                            $("#saveaddresses").append(AddressToOption(Address) + '<OPTION VALUE="addaddress" ID="addaddress">ADD ADDRESS</OPTION>');
                         }
                     }
                     userdetails["Orders"].unshift({
