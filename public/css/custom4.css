@@ -3,6 +3,22 @@ h1,h2,h3,h4,h5,h6{margin:0;
     margin-bottom: auto;
 }
 
+#ajaxerror{
+    color: red;
+    display: none;
+    border: 2px solid red;
+}
+.margin-sm{
+    margin: 5px;
+}
+.ajaxerror-title{
+    color: white;
+    background-color: red;
+}
+.form-error{
+    color:red;
+}
+
 .credit-info{
     height: 49px !important;
 }

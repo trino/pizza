@@ -9,7 +9,7 @@
 
     $q = "'";
     $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
-    $autocompleteblocker = ' ONCLICK="autofix(this);"';
+    $autocompleteblocker = ' ONCLICK="autofix(this);" onkeydown="gmapkeypress(event);" onblur="testaddress(this);"';
     echo '<SPAN ID="mirror"></SPAN>';
 
     switch ($style) {
@@ -19,7 +19,7 @@
             break;
         case 1:
             if($icons) {echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-home text-white fa-stack-1x"></i></span></div><div class="input_right">';}
-            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start by Typing the Address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '></SPAN>';
+            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start by Typing the Address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '"></SPAN>';
             if($icons) {echo '</div>';}
             echo '<STYLE>.address:focus{z-index: 999;}</STYLE>';
             break;
@@ -60,6 +60,21 @@
         }
     //endif
 
+    function getGoogleAddressSelector(){
+        if($("input[autocomplete=really-truly-off]").length > 0){
+            return "input[autocomplete=really-truly-off]";
+        }
+        return "input[name=formatted_address]";
+    }
+
+    function testaddress(element){
+        if(isUndefined(element)){element = $(getGoogleAddressSelector());}
+        log("Google address blur");
+        setTimeout(function () {
+            validateform(getformid($(element)));
+        }, 100);
+    }
+
     function transferdata(value){
         var html = $("#mirror").html();
         if(!html){
@@ -67,6 +82,22 @@
         }
         $('input[autocomplete=really-truly-off]').val(value);
         $("#formatted_address").val(value);
+    }
+
+    function gmapkeypress(e){
+        var event = window.event ? window.event : e;
+        var keycode = event.keyCode;
+        if(keycode == 8 || keycode == 46){
+            clearaddress();
+        }
+        validateform("addform");
+    }
+
+    function clearaddress(){
+        var fields = ["formatted_address", "add_latitude", "add_longitude"];
+        for (i = 0; i < fields.length; i++) {
+            $("#" + fields[i]).val("");
+        }
     }
 
     function autofix(element){

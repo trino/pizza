@@ -98,7 +98,6 @@
         @if(read("id"))
             <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
         @endif
-        <LI><a href="#" onclick="close_window();return false;" CLASS="dropdown-item"><i class="fa fa-times icon-width"></i> Close Tab</a></LI>
     </ul>
 
     <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white"
@@ -118,11 +117,10 @@
         }
         setsetting("lastupdate", $currtime);
 
-        echo " <SPAN ONCLICK=" . '"' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . "'</SPAN>";
         if ($ispass) {
-            echo " - <SPAN ONCLICK=" . '"' . "$('#login_password').val('admin');" . '"' . ">PW ADMIN</SPAN>";
+            echo " <SPAN ONCLICK=" . '"' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
         } else {
-            echo " - Admin password is unknown!";
+            echo " <SPAN ONCLICK=" . '"' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
         }
         if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
             echo " - Not HTTPS";

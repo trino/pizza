@@ -314,7 +314,7 @@
     }, "Invalid phone number");
 
     $.validator.addMethod('validaddress', function (Data, element) {
-        log("TESTING ADDRESS");
+        log("TESTING ADDRESS: " + Data);
     }, "Please check your address");
 
     function isvalidaddress() {
@@ -322,6 +322,7 @@
         //if ($("#add_city").val().toLowerCase() != "london") {return false;}
         for (i = 0; i < fields.length; i++) {
             var value = $("#" + fields[i]).val();
+            if(isUndefined(value)){return false;}
             log(fields[i] + ": " + value.length + " chars = " + value);
             if (value.length == 0 || (value.indexOf("[") > -1 && value.indexOf("]") > -1)) {
                 return false;
@@ -1198,7 +1199,7 @@
                 var data = JSON.parse(result);
                 if (data["Status"] == "false" || !data["Status"]) {
                     data["Reason"] = data["Reason"].replace('[verify]', '<A onclick="handlelogin();" CLASS="hyperlink" TITLE="Click here to resend the email">verify</A>');
-                    alert(data["Reason"], makestring("{error_login}"));
+                    ajaxerror(data["Reason"], makestring("{error_login}"));
                 } else {
                     switch (action) {
                         case "login":
@@ -1207,14 +1208,14 @@
                                 redirectonlogin = false;
                             }
                             $("#loginmodal").modal("hide");
-                            if (redirectonlogin) {
+                            if (redirectonlogin || true) {
                                 log("Login reload");
                                 location.reload();
                             }
                             break;
                         case "forgotpassword":
                         case "verify":
-                            alert(data["Reason"], "Login");
+                            ajaxerror(data["Reason"], "Login");
                             break;
                         case "logout":
                             removeCookie();
@@ -1245,7 +1246,7 @@
                     }
                 }
             } catch (err) {
-                alert(err.message + "<BR>" + result, makestring("{error_login}"));
+                ajaxerror(err.message + "<BR>" + result, makestring("{error_login}"));
             }
         });
     }
@@ -1313,7 +1314,7 @@
 
         @if(isset($user) && $user)
             login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
-                @endif
+        @endif
 
         var HTML = '';
         var todaysdate = isopen(generalhours);
@@ -1376,6 +1377,53 @@
             }
         }
         return true;
+    }
+
+    function validateform(formid, validity){
+        if(formid.length == 0){return false;}
+        if(formid == "addform"){
+            var selector = "#" + formid + " input[name=formatted_address]";
+            if($("#" + formid + " input[autocomplete=really-truly-off]").length > 0){
+                selector = "#" + formid + " input[autocomplete=really-truly-off]";
+            }
+            validity = isvalidaddress();// $(selector).val().length > 0;
+            var ret = validateselector(selector, validity, 2);
+            if(ret){$("#reg_address-error").hide();}
+            return ret;
+        }
+        return validateselector("#" + formid + " input:visible", validity);
+    }
+    function validateselector(selector, validity, parentlevel){
+        var ret = true;
+        $(selector).each(function( index ) {
+            if (!validateinput(this, validity, parentlevel)) {ret = false;}
+        });
+        return ret;
+    }
+    function validateinput(input, validity, parentlevel){
+        if(isUndefined(parentlevel)){parentlevel=1;}
+        var target = $(input).parent();
+        for(var i= 2; i <= parentlevel; i++){
+            target = target.parent();
+        }
+        target = target.prev().find(".fa-stack");
+        if(isUndefined(validity)){validity = $(input).valid();}
+        console.log($(input).attr("name") + ": " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
+        if(validity) {
+            target.removeClass("form-error");
+            return true;
+        }
+        target.addClass("form-error");
+        return false;
+    }
+
+    function getformid(element){
+        var id = "";
+        while(!element.is("form") && !element.is("body")){
+            element = element.parent();
+            id = element.attr("id");
+        }
+        if(element.is("form")){return element.attr("id");}
     }
 
     //convert an address to a dropdown option
@@ -1496,10 +1544,21 @@
             } catch (e) {
             }
 
-            alert(text + "<BR><BR>URL: " + settings.url, "AJAX error code: " + request.status);
+            ajaxerror(text + "<BR><BR>URL: " + settings.url, "AJAX error code: " + request.status);
         }
         blockerror = false;
     });
+
+    function ajaxerror(errortext, title){
+        if(isUndefined(title)){title = "Error";}
+        if (isUndefined(errortext)) {
+            $("#ajaxerror").hide();
+        } else if($("#ajaxerror").length > 0){
+            $("#ajaxerror").html('<DIV CLASS="ajaxerror-title">&nbsp;<i class="fas fa-exclamation-triangle"></i>&nbsp;' + title + '</DIV>' + errortext).show();
+        } else {
+            alert(errortext, title);
+        }
+    }
 
     function rnd(min, max) {
         return Math.round(Math.random() * (max - min) + min);
@@ -2500,6 +2559,7 @@
 
     function loading(state, where) {
         if (state) {
+            ajaxerror();
             log("loading start");
             NProgress.start();
         } else {

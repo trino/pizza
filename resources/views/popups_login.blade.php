@@ -17,11 +17,11 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" id="logintab"
-                       onclick="skiploadingscreen = false;" style="font-weight: bold">LOG IN</a>
+                       onclick="skiploadingscreen = false; ajaxerror();" style="font-weight: bold">LOG IN</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab" id="signuptab"
-                       onclick="skiploadingscreen = true;" style="font-weight: bold">SIGN UP</a>
+                       onclick="skiploadingscreen = true; ajaxerror();" style="font-weight: bold">SIGN UP</a>
                 </li>
             </ul>
             <!-- Tab panes -->
@@ -68,6 +68,8 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             <DIV CLASS="clearfix"></DIV>
         </DIV>
 
+        <DIV ID="ajaxerror" class="margin-sm"></DIV>
+
         <div class="py-3">
             <center>
                 <img src="<?= webroot("images/delivery.jpg"); ?>" style="width: 50%;"/>
@@ -86,8 +88,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             <br>
             <p>The art of delivery is in the team, local restaurants at your footstep in <?= $time; ?> minutes.</p>
 
-
-            <div class="row">
+            <div class="row card-block">
                 <div class="col-md-6">
 
                     <TABLE STYLE="display: inline">
@@ -114,19 +115,17 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
 
 
                 <div class="col-md-6">
-
                     <TABLE STYLE="display: inline;margin-left: 10px;">
                         <TR>
                             <TD COLSPAN="2"><p class="lead strong">DISCOUNTS</p></TD>
                         </TR>
                         <?php
-                        $discounts = select_field_where("additional_toppings", "size like 'over$%'", false);
-                        foreach ($discounts as $discount) {
-                            echo '<TR><TD>Orders ' . str_replace("$", " $", $discount["size"]) . "</TD><TD>&nbsp;get " . $discount["price"] . '% off</TD></TR>';
-                        }
+                            $discounts = select_field_where("additional_toppings", "size like 'over$%'", false);
+                            foreach ($discounts as $discount) {
+                                echo '<TR><TD>Orders ' . str_replace("$", " $", $discount["size"]) . "</TD><TD>&nbsp;get " . $discount["price"] . '% off</TD></TR>';
+                            }
                         ?>
                     </TABLE>
-
                 </div>
             </div>
             <br>
@@ -149,8 +148,13 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             $('<label id="reg_address-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#formatted_address");
         }
         redirectonlogin = false;
-        loading(true, "register");
-        $('#regform').submit();
+        var addform = validateform("addform");
+        if(validateform('regform') && addform) {
+            loading(true, "register");
+            $('#regform').submit();
+        } else {
+            ajaxerror("Data is missing or incomplete", "Invalid data")
+        }
     }
 
     $(".session_email_val").on("keydown", function (e) {
@@ -228,6 +232,9 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                     }
                 });
                 return false;
+            },
+            onfocusout: function(element) {
+                validateform('regform');
             }
         });
     });

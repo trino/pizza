@@ -11,6 +11,8 @@
     <i class="fa fa-shopping-basket mr-2"></i> CHECKOUT
 </button>
 
+<DIV ID="ajaxerror"></DIV>
+
 <div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">

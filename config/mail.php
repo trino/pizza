@@ -56,7 +56,8 @@ return [
     |
     */
 
-    'from' => ['address' => 'roy@trinoweb.com', 'name' => 'Hamilton Pizza'],
+    //'from' => ['address' => 'roy@trinoweb.com', 'name' => 'Hamilton Pizza'],
+    'from' => ['address' => 'hamiltonpizza.ca@gmail.com', 'name' => 'Hamilton Pizza'],
 
     /*
     |--------------------------------------------------------------------------
@@ -82,9 +83,10 @@ return [
     |
     */
 
-    'username' => "roy@trinoweb.com",
-
-    'password' => '316Burloak9056393129',
+    //'username' => "roy@trinoweb.com",
+    //'password' => '316Burloak9056393129',
+    'username' => "hamiltonpizza.ca@gmail.com",
+    'password' => 'Pass1234!',
 
     /*
     |--------------------------------------------------------------------------
