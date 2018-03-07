@@ -92,6 +92,9 @@
                     title = "Success!";
                 }
                 ajaxerror(result, title);
+                if(result.contains("password mismatch")){
+                    validateselector("#reg_oldpassword", false, 1, title);
+                }
                 return true;
             }
         });
