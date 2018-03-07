@@ -1381,17 +1381,20 @@
 
     function validateform(formselector, validity){
         if(formselector.length < 2){return false;}
+        var ret = true;
         if(formselector == "#addform"){
             var selector = formselector + " input[name=formatted_address]";
             if($(formselector + " input[autocomplete=really-truly-off]").length > 0){
                 selector = formselector + " input[autocomplete=really-truly-off]";
             }
             validity = isvalidaddress();// $(selector).val().length > 0;
-            var ret = validateselector(selector, validity, 2);
+            ret = validateselector(selector, validity, 2);
             if(ret){$("#reg_address-error").hide();}
             return ret;
         }
-        return validateselector(formselector + " input:visible", validity);
+        ret = validateselector(formselector + " input:visible", validity);
+        if(!ret) {flash();}
+        return ret;
     }
     function validateselector(selector, validity, parentlevel){
         var ret = true;
@@ -1410,10 +1413,11 @@
         if(isUndefined(validity)){validity = $(input).valid();}
         console.log($(input).attr("name") + ": " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
         if(validity) {
-            target.removeClass("form-error");
+            target.removeClass("redhighlite");
             return true;
         }
-        target.addClass("form-error");
+        target.addClass("redhighlite");
+        if(parentlevel != 1){flash();}
         return false;
     }
 
@@ -1608,6 +1612,7 @@
     }
 
     function flash(delay){
+        if(isUndefined(delay)){delay = 500;}
         $('.redhighlite').fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0); }); }); });
     }
 
@@ -1616,11 +1621,11 @@
         $(".payment-errors").html("");
         if(alertshortage()){return false;}
         if (!canplaceanorder()) {
-            flash(500);
+            flash();
             return cantplaceorder();
         }
         if ($("#orderinfo").find(".error:visible[for]").length > 0) {
-            flash(500);
+            flash();
             return false;
         }
         if(paydisabled){

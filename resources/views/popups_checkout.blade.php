@@ -11,8 +11,6 @@
     <i class="fa fa-shopping-basket mr-2"></i> CHECKOUT
 </button>
 
-<DIV ID="ajaxerror"></DIV>
-
 <div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
@@ -22,11 +20,8 @@
                 <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times"></i>
                 </button>
             </div>
-                <FORM ID="orderinfo" name="orderinfo">
-
-                    <div class="modal-body">
-
-
+            <FORM ID="orderinfo" name="orderinfo">
+                <div class="modal-body">
                     <div class="input_left_icon">
                         <span class="fa-stack fa-2x">
                           <i class="fa fa-circle fa-stack-2x"></i>
@@ -149,18 +144,17 @@
                         <textarea placeholder="Order Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
                     </div>
                     <div class="clearfix"></div>
+                </div>
 
-                    </div>
-                    <div class="modal-body" style="padding: 0 !important;">
-
-                        <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder"
-                            onclick="payfororder(); return false;"><i class="fa fa-check mr-2"></i> ORDER
+                <div class="modal-body" style="padding: 0 !important;">
+                    <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder" onclick="payfororder(); return false;">
+                        <i class="fa fa-check mr-2"></i> ORDER
                     </button>
                     <span class="payment-errors error"></span>
                     <div class="clearfix"></div>
-        </div>
-                </FORM>
-
+                </div>
+            </FORM>
+            <DIV class="ajaxprompt"></DIV>
         </div>
     </div>
 </div>

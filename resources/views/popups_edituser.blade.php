@@ -93,7 +93,7 @@
                 }
                 ajaxerror(result, title);
                 if(result.contains("password mismatch")){
-                    validateselector("#reg_oldpassword", false, 1, title);
+                    validateselector("#reg_oldpassword", false, -1);
                 }
                 return true;
             }
