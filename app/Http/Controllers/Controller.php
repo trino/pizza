@@ -115,6 +115,7 @@ class Controller extends BaseController {
                 $data = array("From" => $fromnumber, "To" => $Phone, "Url" => $Message);
             } else {
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Messages";
+                $Message = str_replace("http:", "https:", $Message);
                 $data = array("From" => $fromnumber, "To" => $Phone, "Body" => $Message);
             }
             // debugprint($ret);

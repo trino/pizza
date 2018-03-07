@@ -2451,11 +2451,7 @@
 
     function visible_address(state) {
         var hasmirror = $("#mirror").html().length > 0;
-        if(hasmirror){
-            visible("input[autocomplete=really-truly-off]", false);
-        } else {
-            visible("#formatted_address", state);
-        }
+        visible(getGoogleAddressSelector(), state);
         visible("#add_unit", state);
     }
 
