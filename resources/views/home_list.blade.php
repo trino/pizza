@@ -513,6 +513,7 @@
                     position: relative;
                     vertical-align: middle;
                     bottom: 1px;
+                    height: 13px !important;
                 }
 
                 .titlecol{

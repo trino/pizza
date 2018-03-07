@@ -543,7 +543,7 @@
                     ?>
                 </TD>
                 <TD CLASS="cursor-pointer" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
-                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Order ID <span ID="receipt_id"><?= $orderid; ?></span></h2>
+                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Order ID #: <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
                                 $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);

@@ -44,8 +44,7 @@ class HomeController extends Controller {
     }
 
     public function robocall(Request $request){
-        echo '<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>';
-        die();
+        die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>');
     }
 
     public function edit(Request $request){
