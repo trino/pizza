@@ -1379,19 +1379,19 @@
         return true;
     }
 
-    function validateform(formid, validity){
-        if(formid.length == 0){return false;}
-        if(formid == "addform"){
-            var selector = "#" + formid + " input[name=formatted_address]";
-            if($("#" + formid + " input[autocomplete=really-truly-off]").length > 0){
-                selector = "#" + formid + " input[autocomplete=really-truly-off]";
+    function validateform(formselector, validity){
+        if(formselector.length < 2){return false;}
+        if(formselector == "#addform"){
+            var selector = formselector + " input[name=formatted_address]";
+            if($(formselector + " input[autocomplete=really-truly-off]").length > 0){
+                selector = formselector + " input[autocomplete=really-truly-off]";
             }
             validity = isvalidaddress();// $(selector).val().length > 0;
             var ret = validateselector(selector, validity, 2);
             if(ret){$("#reg_address-error").hide();}
             return ret;
         }
-        return validateselector("#" + formid + " input:visible", validity);
+        return validateselector(formselector + " input:visible", validity);
     }
     function validateselector(selector, validity, parentlevel){
         var ret = true;

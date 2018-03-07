@@ -66,6 +66,10 @@
     redirectonlogout = true;
 
     function userform_submit(isSelf) {
+        if(!validateform("#userform")){
+            ajaxerror("Data is missing or invalid", "Invalid data");
+            return false;
+        }
         var formdata = getform("#userform");
         $("#edituser_error").text("");
         var keys = ["name", "phone"];//"email",
@@ -92,6 +96,10 @@
 
     $(function () {
         $("form[name='user']").validate({
+            onfocusout: function(element) {
+                validateform("form[name='user']");
+                ajaxerror();
+            },
             rules: {
                 name: "required",
                 phone: {

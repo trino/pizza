@@ -148,8 +148,8 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             $('<label id="reg_address-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#formatted_address");
         }
         redirectonlogin = false;
-        var addform = validateform("addform");
-        if(validateform('regform') && addform) {
+        var addform = validateform("#addform");
+        if(validateform('#regform') && addform) {
             loading(true, "register");
             $('#regform').submit();
         } else {
@@ -234,7 +234,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                 return false;
             },
             onfocusout: function(element) {
-                validateform('regform');
+                validateform('#regform');
             }
         });
     });

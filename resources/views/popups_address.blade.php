@@ -71,7 +71,7 @@
         if(isUndefined(element)){element = $(getGoogleAddressSelector());}
         log("Google address blur");
         setTimeout(function () {
-            validateform(getformid($(element)));
+            validateform("#" + getformid($(element)));
         }, 100);
     }
 
@@ -90,7 +90,7 @@
         if(keycode == 8 || keycode == 46){
             clearaddress();
         }
-        validateform("addform");
+        validateform("#addform");
     }
 
     function clearaddress(){
