@@ -146,15 +146,16 @@
                     <div class="clearfix"></div>
                 </div>
 
+                <DIV class="ajaxprompt"></DIV><P>
+
                 <div class="modal-body" style="padding: 0 !important;">
-                    <button class="btn-block list-padding radius0 btn btn-primary text-white payfororder" onclick="payfororder(); return false;">
+                    <button class="btn-block list-padding radius-bottom btn btn-primary text-white payfororder" onclick="payfororder(); return false;">
                         <i class="fa fa-check mr-2"></i> ORDER
                     </button>
                     <span class="payment-errors error"></span>
                     <div class="clearfix"></div>
                 </div>
             </FORM>
-            <DIV class="ajaxprompt"></DIV>
         </div>
     </div>
 </div>
@@ -168,7 +169,8 @@
         $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
         $(".credit-info").change(function () {
             if (isvalidcreditcard()) {
-                $(".payment-errors").text("");
+                //$(".payment-errors").text("");
+                ajaxerror();
             }
         });
     });

@@ -1456,7 +1456,7 @@
 
     function clearphone() {
         $('#reg_phone').attr("style", "");
-        $(".payment-errors").text("");
+        ajaxerror();
     }
 
     //address dropdown changed
@@ -1577,24 +1577,24 @@
     }
 
     function cantplaceorder() {
-        $(".payment-errors").text("");
+        ajaxerror()
         $(".red").removeClass("red");
         $("#red_card").removeClass("redhighlite");
         if (!validaddress()) {
             //$("#saveaddresses").addClass("red");
             $("#red_address").addClass("redhighlite");
-            $(".payment-errors").text("Please check your address");
+            ajaxerror("Please check your address");
         } else if (!$("#saved-credit-info").val()) {
             if (!isvalidcreditcard()) {
                 $("#red_card").addClass("redhighlite");
                 $("[data-stripe=number]").addClass("red");
-                $(".payment-errors").text("Please select or enter a valid credit card");
+                ajaxerror("Please select or enter a valid credit card");
                 return false;
             }
         }
         if ($("#reg_phone").val().length == 0) {
             $('#reg_phone').attr('style', 'border-bottom: 1px solid red !important;');
-            $(".payment-errors").text("Cell Phone Required");
+            ajaxerror("Cell Phone Required");
         }
     }
 
@@ -1618,7 +1618,7 @@
 
     var paydisabled = false;
     function payfororder() {
-        $(".payment-errors").html("");
+        ajaxerror();
         if(alertshortage()){return false;}
         if (!canplaceanorder()) {
             flash();
@@ -1660,7 +1660,7 @@
             case 500: case 502: case 503: case 504: errormessage = "Server Errors:<BR>Something went wrong on Stripe's end."; break;
             case 200:// - OK	Everything worked as expected.
                 if (response.error) {
-                    $('.payment-errors').html(response.error.message);
+                    ajaxerror(response.error.message);
                 } else {
                     log("Stripe successful");
                     if (!changecredit()) {//save new card to userdetails
@@ -1675,7 +1675,7 @@
         }
         if (errormessage) {
             //$(".payment-errors").html(errormessage + "<BR><BR>" + response["error"]["type"] + ":<BR>" + response["error"]["message"]);
-            $(".payment-errors").html(response["error"]["message"]);
+            ajaxerror(response["error"]["message"]);
         }
     }
 
@@ -1780,7 +1780,7 @@
     }
 
     function changecredit() {
-        $(".payment-errors").html("");
+        ajaxerror();
         $("#saved-credit-info").removeClass("red");
         $("[data-stripe=number]").removeClass("red");
         var val = $("#saved-credit-info").val();
