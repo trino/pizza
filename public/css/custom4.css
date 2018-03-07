@@ -3,17 +3,24 @@ h1,h2,h3,h4,h5,h6{margin:0;
     margin-bottom: auto;
 }
 
-#ajaxerror{
+.ajaxerror{
     color: red;
-    display: none;
     border: 2px solid red;
+}
+.ajaxsuccess{
+    color: blue;
+    border: 2px solid blue;
 }
 .margin-sm{
     margin: 5px;
 }
-.ajaxerror-title{
+.ajaxerror .ajaxtitle{
     color: white;
     background-color: red;
+}
+.ajaxsuccess .ajaxtitle{
+    color: white;
+    background-color: blue;
 }
 .form-error{
     color:red;

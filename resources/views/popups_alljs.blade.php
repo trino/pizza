@@ -1551,10 +1551,18 @@
 
     function ajaxerror(errortext, title){
         if(isUndefined(title)){title = "Error";}
+        var selector = ".ajaxprompt:visible";
         if (isUndefined(errortext)) {
-            $("#ajaxerror").hide();
-        } else if($("#ajaxerror").length > 0){
-            $("#ajaxerror").html('<DIV CLASS="ajaxerror-title">&nbsp;<i class="fas fa-exclamation-triangle"></i>&nbsp;' + title + '</DIV>' + errortext).show();
+            $(selector).removeClass("ajaxsuccess").removeClass("ajaxerror").html("");
+        } else if($(selector).length > 0){
+            var fontawesome = "exclamation-triangle";
+            if(title.contains("success")){
+                $(selector).addClass("ajaxsuccess").removeClass("ajaxerror");
+                fontawesome = "smile";
+            } else {
+                $(selector).addClass("ajaxerror").removeClass("ajaxsuccess");
+            }
+            $(selector).html('<DIV CLASS="ajaxtitle">&nbsp;<i class="fas fa-' + fontawesome + '"></i>&nbsp;' + title + '</DIV>' + errortext).show();
         } else {
             alert(errortext, title);
         }

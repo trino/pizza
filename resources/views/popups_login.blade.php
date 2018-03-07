@@ -68,7 +68,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
             <DIV CLASS="clearfix"></DIV>
         </DIV>
 
-        <DIV ID="ajaxerror" class="margin-sm"></DIV>
+        <DIV class="ajaxprompt margin-sm"></DIV>
 
         <div class="py-3">
             <center>

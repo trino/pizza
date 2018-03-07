@@ -83,7 +83,7 @@
         }, function (result) {
             if (result) {
                 if(result == "Data saved"){result = "Changes to your profile have been saved";}
-                alert(result);
+                ajaxerror(result, "Success!");
                 return true;
             }
         });

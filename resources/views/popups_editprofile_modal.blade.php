@@ -22,6 +22,7 @@
                     <DIV CLASS="pull-center"><BUTTON CLASS="btn btn-primary alert-button" onclick="return userform_submit(true);">SAVE</BUTTON></DIV>
                 </FORM>
 
+                <P><DIV CLASS="ajaxprompt"></DIV><P>
 
                 <div CLASS="editprofilediv">
                     <DIV ID="addresslist"></DIV>
