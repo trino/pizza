@@ -152,8 +152,6 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
         if(validateform('#regform') && addform) {
             loading(true, "register");
             $('#regform').submit();
-        } else {
-            ajaxerror("Data is missing or incomplete", "Invalid data")
         }
     }
 
@@ -199,7 +197,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                     minlength: "Your new password must be at least " + minlength + " characters long"
                 },
                 email: {
-                    required: "Please enter an email address",
+                    required: "Please enter your email address",
                     email: "Please enter a valid email address",
                     remote: "Please enter a unique email address"
                 }/*,

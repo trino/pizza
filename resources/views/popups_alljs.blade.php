@@ -1200,7 +1200,18 @@
                 var data = JSON.parse(result);
                 if (data["Status"] == "false" || !data["Status"]) {
                     data["Reason"] = data["Reason"].replace('[verify]', '<A onclick="handlelogin();" CLASS="hyperlink" TITLE="Click here to resend the email">verify</A>');
-                    ajaxerror(data["Reason"], makestring("{error_login}"));
+                    validateinput();
+                    switch (action) {
+                        case "login":
+                            validateinput("#login_email", false);
+                            validateinput("#login_password", data["Reason"]);
+                            break;
+                        case "forgotpassword": case "verify":
+                            validateinput("#login_email", data["Reason"]);
+                            break;
+                        default:
+                            ajaxerror(data["Reason"], makestring("{error_login}"));
+                    }
                 } else {
                     switch (action) {
                         case "login":
@@ -1214,8 +1225,7 @@
                                 location.reload();
                             }
                             break;
-                        case "forgotpassword":
-                        case "verify":
+                        case "forgotpassword": case "verify":
                             ajaxerror(data["Reason"], "Login");
                             break;
                         case "logout":
@@ -1398,12 +1408,8 @@
         if(!ret) {flash();}
         return ret;
     }
-    function debugundefined(validity){
-        if(isUndefined(validity)){return "[UNDEFINED]";}
-        return validity;
-    }
     function validateselector(selector, validity, parentlevel){
-        //log("Validating selector: " + selector + " validity: " + debugundefined(validity) + " parentlevel: " + debugundefined(parentlevel));
+        //log("Validating selector: " + selector + " validity: " + validity + " parentlevel: " + parentlevel);
         var ret = true;
         $(selector).each(function( index ) {
             if (!validateinput(this, validity, parentlevel)) {ret = false;}
@@ -1411,19 +1417,32 @@
         return ret;
     }
     function validateinput(input, validity, parentlevel){
+        if(isUndefined(input)){
+            $(".error").remove();
+            $(".redhighlite").removeClass("redhighlite");
+            return false;
+        }
         if(isUndefined(parentlevel)){parentlevel=1;}
         var target = $(input).parent();
         for(var i= 2; i <= parentlevel; i++){
             target = target.parent();
         }
         target = target.prev().find(".fa-stack");
+        var ID = $(input).attr("id");
         if(isUndefined(validity)){validity = $(input).valid();}
-        console.log($(input).attr("name") + ": " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
-        if(validity) {
+        console.log("ID:" + ID + " = " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
+        if(validity === true) {
             target.removeClass("redhighlite");
             return true;
         }
         target.addClass("redhighlite");
+        if(validity !== false) {
+            if($("#" + ID + "-error").length == 0){
+                $(input).after('<label id="' + ID + '-error" class="error" for="' + ID + '">' + validity + '</label>');
+            } else {
+                $("#" + ID + "-error").html(validity);
+            }
+        }
         if(parentlevel != 1){flash();}
         return false;
     }
@@ -2070,7 +2089,7 @@
             cat_name: "What name would you like the category to be?\r\nIt will only be saved when you add an item to the category",
             not_placed: "Order was not placed!",
             error_login: "Error logging in",
-            email_needed: "Please enter an email address",
+            email_needed: "Please enter your email address",
             long_lat: "Longitude and/or latitude missing",
             ten_closest: "10 closest restaurants",
             clear_order: "Clear your order?"

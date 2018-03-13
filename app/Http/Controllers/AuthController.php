@@ -191,7 +191,7 @@ class AuthController extends Controller {
                             break;
                         case "forgotpassword":
                             $ret["Status"] = false;
-                            $ret["Reason"] = "The email address '" . $email . "' was not found.";
+                            $ret["Reason"] = "The email address was not found.";
                             break;
                         default:
                             $ret["Status"] = false;
