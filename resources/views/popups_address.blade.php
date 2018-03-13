@@ -9,7 +9,7 @@
 
     $q = "'";
     $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
-    $autocompleteblocker = ' ONCLICK="autofix(this);" onkeydown="gmapkeypress(event);" onblur="testaddress(this);"';
+    $autocompleteblocker = ' ONCLICK="autofix(this);" onkeydown="gmapkeypress(event);"';
     echo '<SPAN ID="mirror"></SPAN>';
 
     switch ($style) {
@@ -69,10 +69,7 @@
 
     function testaddress(element){
         if(isUndefined(element)){element = $(getGoogleAddressSelector());}
-        log("Google address blur");
-        setTimeout(function () {
-            validateform("#" + getformid($(element)));
-        }, 100);
+        validateform("#" + getformid($(element)));
     }
 
     function transferdata(value){
@@ -225,6 +222,7 @@
                 addresshaschanged(place);
             }
         @endif
+        testaddress();
         return place;
     }
 </SCRIPT>

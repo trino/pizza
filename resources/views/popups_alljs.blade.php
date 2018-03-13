@@ -878,6 +878,7 @@
             if (isUndefined(Year)) {Year = $("[data-stripe=exp_year]").val();}
             if (isUndefined(CVV)) {CVV = $("[data-stripe=cvc]").val();}
             CardNumber = CardNumber.replace(/\D/g, '');
+            if (CardNumber.length == 0){return false;}
             var nDigit = 0, bEven = false;
             for (var n = CardNumber.length - 1; n >= 0; n--) {
                 var cDigit = CardNumber.charAt(n);
@@ -1380,6 +1381,7 @@
     }
 
     function validateform(formselector, validity){
+        //log("Validating form: " + formselector);
         if(formselector.length < 2){return false;}
         var ret = true;
         if(formselector == "#addform"){
@@ -1396,7 +1398,12 @@
         if(!ret) {flash();}
         return ret;
     }
+    function debugundefined(validity){
+        if(isUndefined(validity)){return "[UNDEFINED]";}
+        return validity;
+    }
     function validateselector(selector, validity, parentlevel){
+        //log("Validating selector: " + selector + " validity: " + debugundefined(validity) + " parentlevel: " + debugundefined(parentlevel));
         var ret = true;
         $(selector).each(function( index ) {
             if (!validateinput(this, validity, parentlevel)) {ret = false;}
