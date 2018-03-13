@@ -1612,6 +1612,7 @@
     }
 
     function flash(delay){
+        return false;
         if(isUndefined(delay)){delay = 500;}
         $('.redhighlite').fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0); }); }); });
     }
