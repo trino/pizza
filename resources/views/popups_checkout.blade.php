@@ -65,7 +65,7 @@
                         </SELECT>
                     </div>
 
-                    @if(!read('phone'))
+                    <!--if(!read('phone'))-->
                         <div class="input_left_icon redhighlite" id="red_phone">
                             <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x"></i>
@@ -73,9 +73,9 @@
                             </span>
                         </div>
                         <div class="input_right">
-                            <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true">
+                            <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>"  onblur="validateinput(this);">
                         </div>
-                    @endif
+                    <!--endif-->
 
                     <div class="input_left_icon" id="red_card">
                         <span class="fa-stack fa-2x">
@@ -163,25 +163,24 @@
 <SCRIPT>
     //https://stripe.com/docs/custom-form
     @if(read("id"))
-    $(document).ready(function () {
-        getcloseststore = true;
-        visible_address(false);
-        $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
-        $(".credit-info").change(function () {
-            if (isvalidcreditcard()) {
-                //$(".payment-errors").text("");
-                ajaxerror();
-            }
+        $(document).ready(function () {
+            getcloseststore = true;
+            visible_address(false);
+            $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
+            $(".credit-info").change(function () {
+                if (isvalidcreditcard()) {
+                    ajaxerror();
+                }
+            });
         });
-    });
-    $('#reg_phone').keypress(function () {
-        if ($('#reg_phone').valid()) {
-            clearphone();
-        }
-    });
+        //$('#reg_phone').keypress(function () {if ($('#reg_phone').valid()) {clearphone('keypress');}});
     @endif
 
     var shortitems = [];
+
+    function validdeliverytime(){
+        return totimestamp() < $("#deliverytime option:selected").attr("timestamp");
+    }
 
     function restchange() {
         var value = $("#restaurant").val();
@@ -204,7 +203,7 @@
             if (closest.length == 1) {
                 otherstores = "";
             }
-            alert("Sorry, but this restaurant is currently out of:<BR><UL><LI>" + shortitems.join("</LI><LI>") + "</LI></UL><BR>Please remove them from your order" + otherstores, "Product Shortage");
+            ajaxerror("Sorry, but this restaurant is currently out of:<BR><UL><LI>" + shortitems.join("</LI><LI>") + "</LI></UL><BR>Please remove them from your order" + otherstores, "Product Shortage");
             return true;
         }
         return false;

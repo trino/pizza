@@ -107,6 +107,7 @@
                 validateform("form[name='user']");
                 ajaxerror();
             },
+            onkeyup :false,
             rules: {
                 name: "required",
                 phone: {
@@ -165,6 +166,7 @@
         });
 
         $("#orderinfo").validate({
+            onkeyup :false,
             rules: {
                 name: "required",
                 phone: {

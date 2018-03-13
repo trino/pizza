@@ -26,6 +26,8 @@
     var currentitemID = -1;
     var MAX_DISTANCE = <?= $MAX_DISTANCE; ?>;//km
     var debugmode = '<?= !islive(); ?>' == '1';
+    var timestampoffset = 0;
+    timestampoffset = parseInt('<?= time(); ?>') - totimestamp();
 
     String.prototype.isEqual = function (str) {
         if (isUndefined(str)) {
@@ -919,6 +921,7 @@
         if (!selected_rest) {reasons.push("no selected restaurant");}
         if (!phone_number) {reasons.push("phone number missing");}
         if (!valid_address) {reasons.push("valid address");}
+        if (!validdeliverytime()){reasons.push("valid delivery time");}
         if (reasons.length > 0) {
             log("canplaceanorder: " + reasons.join(", "));
             return false;
@@ -1480,14 +1483,15 @@
         return tempHTML + '>' + streetformat + '</OPTION>';
     }
 
-    function clearphone() {
+    function clearphone(why) {
+        log("clearphone: " + why);
         $('#reg_phone').attr("style", "");
         ajaxerror();
     }
 
     //address dropdown changed
     function addresschanged(why) {
-        clearphone();
+        clearphone("addresschanged - " + why);
         var Selected = $("#saveaddresses option:selected");
         var SelectedVal = $(Selected).val();
         var Text = '<?= $STREET_FORMAT; ?>';
@@ -1603,25 +1607,28 @@
     }
 
     function cantplaceorder() {
-        ajaxerror()
+        ajaxerror();
         $(".red").removeClass("red");
         $("#red_card").removeClass("redhighlite");
         if (!validaddress()) {
-            //$("#saveaddresses").addClass("red");
             $("#red_address").addClass("redhighlite");
-            ajaxerror("Please check your address");
-        } else if (!$("#saved-credit-info").val()) {
+            validateinput("#saveaddresses", "Please check your address");
+        }
+        if (!$("#saved-credit-info").val()) {
             if (!isvalidcreditcard()) {
                 $("#red_card").addClass("redhighlite");
                 $("[data-stripe=number]").addClass("red");
-                ajaxerror("Please select or enter a valid credit card");
-                return false;
+                validateinput("#saved-credit-info", "Please select or enter a valid credit card");
             }
         }
-        if ($("#reg_phone").val().length == 0) {
-            $('#reg_phone').attr('style', 'border-bottom: 1px solid red !important;');
-            ajaxerror("Cell Phone Required");
+        if($("#reg_phone").length>0) {
+            validateinput("#reg_phone");
         }
+        if(!validdeliverytime()){
+            GenerateHours(generalhours);
+            validateinput("#deliverytime", "Please select a future delivery time", 2);
+        }
+        return false;
     }
 
     function testcard() {
@@ -1631,9 +1638,9 @@
         $('select[data-stripe=exp_year]').val({{ right($CURRENT_YEAR,2) }} +1).trigger("click");
         @if(islive())
             log("Changing stripe key");
-        $("#istest").val("true");
-        setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
-        log("Stripe key changed");
+            $("#istest").val("true");
+            setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
+            log("Stripe key changed");
         @endif
     }
 
@@ -1866,7 +1873,8 @@
             $("#orderinfo").validate({
                 submitHandler: function (form) {
                     //handled by placeorder
-                }
+                },
+                onkeyup :false
             });
         });
         $("#restaurant").html('<option value="0">Select Restaurant</option>').val("0");
@@ -1978,6 +1986,22 @@
         }
     }
 
+    function toTimestamp(strDate){
+        var datum = Date.parse(strDate);
+        return datum/1000;
+    }
+
+    function fromtimestamp(unix_timestamp){
+        return new Date(unix_timestamp * 1000);
+    }
+    function totimestamp(time, now){
+        if (isUndefined(time)){return Math.floor(Date.now() / 1000);}
+        var timezone = now.getTimezoneOffset() / 60;
+        now.setUTCHours(time / 100 + timezone);
+        now.setUTCMinutes(time % 100);
+        return toTimestamp(now) + timestampoffset;
+    }
+
     function GenerateHours(hours, increments) {
         //doesn't take into account <= because it takes more than 1 minute to place an order
         //now.setMinutes(now.getMinutes() + minutes);//start 40 minutes ahead
@@ -1999,11 +2023,11 @@
         var oldValue = $("#deliverytime").val();
         var HTML = '';
         var temp = gettime(now, minutes, 15, time);
-        log(temp);
+        log("GenerateHours: " + temp + " Today: " + today + " Tomorrow: " + tomorrow);
         now = temp[0];
         time = temp[1];
         if (isopen(hours, dayofweek, temp[2]) > -1) {
-            HTML = '<option value="Deliver Now">Deliver Now (' + GenerateTime(time) + ')</option>';
+            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver Now (' + GenerateTime(time) + ')</option>';
             time = addtotime(time, increments);
         }
         var totalInc = (minutesinaday * totaldays) / increments;
@@ -2013,15 +2037,16 @@
                 if (minutes < 60) {
                     var thetime = GenerateTime(time);
                     var thedayname = daysofweek[dayofweek];
-                    var thedate = monthnames[now.getMonth()] + " " + now.getDate();
                     if (dayofweek == today) {
                         thedayname = today_text;
                     } else if (dayofweek == tomorrow) {
                         thedayname = tomor_text;
+                        now = tomorrowdate;
                     } else {
                         thedayname += " " + thedate;
                     }
-                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '">' + thedayname + " at " + thetime;
+                    var thedate = monthnames[now.getMonth()] + " " + now.getDate();
+                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + totimestamp(time, now) + '">' + thedayname + " at " + thetime;
                     HTML += tempstr + '</OPTION>';
                 }
             }
