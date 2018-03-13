@@ -1391,7 +1391,7 @@
     }
 
     function validateform(formselector, validity){
-        //log("Validating form: " + formselector);
+        log("Validating form: " + formselector);
         if(formselector.length < 2){return false;}
         var ret = true;
         if(formselector == "#addform"){
@@ -1418,7 +1418,7 @@
     }
     function validateinput(input, validity, parentlevel){
         if(isUndefined(input)){
-            $(".error").remove();
+            $("label.error").remove();
             $(".redhighlite").removeClass("redhighlite");
             return false;
         }
@@ -1430,7 +1430,7 @@
         target = target.prev().find(".fa-stack");
         var ID = $(input).attr("id");
         if(isUndefined(validity)){validity = $(input).valid();}
-        console.log("ID:" + ID + " = " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
+        console.log("ID: " + ID + " = " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
         if(validity === true) {
             target.removeClass("redhighlite");
             return true;

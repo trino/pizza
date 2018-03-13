@@ -232,7 +232,8 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                 return false;
             },
             onfocusout: function(element) {
-                validateform('#regform');
+                validateinput();
+                validateform('#regform[value!=""] input:visible');
             }
         });
     });
