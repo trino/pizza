@@ -49,6 +49,8 @@
                                 echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
                             }
                         ?>
+                        <div class="clearfix"></div>
+                        <DIV ID="error-saveaddresses"></DIV>
                     </div>
 
                     <div class="input_left_icon" id="red_rest">
@@ -131,7 +133,13 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+
                     <div class="clearfix"></div>
+
+                    <div class="input_left_icon"></div>
+                    <div class="input_right">
+                    <DIV ID="error-saved-credit-info"></DIV>
+                    </DIV>
 
                     <div class="input_left_icon">
                         <span class="fa-stack fa-2x">

@@ -1444,8 +1444,11 @@
         }
         target.addClass("redhighlite");
         if(validity !== false) {
-            if($("#" + ID + "-error").length == 0){
-                $(input).after('<label id="' + ID + '-error" class="error" for="' + ID + '">' + validity + '</label>');
+            var HTML = '<label id="' + ID + '-error" class="error" for="' + ID + '">' + validity + '</label>';
+            if($("#error-" + ID).length > 0) {
+                $("#error-" + ID).html(HTML);
+            } else if($("#" + ID + "-error").length == 0){
+                $(input).after(HTML);
             } else {
                 $("#" + ID + "-error").html(validity);
             }
@@ -1656,6 +1659,7 @@
     var paydisabled = false;
     function payfororder() {
         ajaxerror();
+        validateinput();
         if(alertshortage()){return false;}
         if (!canplaceanorder()) {
             flash();
@@ -1824,7 +1828,7 @@
         $("#red_card").removeClass("redhighlite");
         if (!val) {
             if (!isvalidcreditcard()) {
-                $("#red_card").addClass("redhighlite");
+                //$("#red_card").addClass("redhighlite");
             }
             $(".credit-info").show();//let cust edit the card
         } else {

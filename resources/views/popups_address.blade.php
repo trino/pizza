@@ -157,16 +157,16 @@
 
     function initAutocomplete() {
         var cityBounds = new google.maps.LatLngBounds(
-                new google.maps.LatLng(42.873863, -81.501312),//southWest
-                new google.maps.LatLng(43.043212, -81.092071)//northEast
-        );//london ontario boundaries
+                //new google.maps.LatLng(42.873863, -81.501312), new google.maps.LatLng(43.043212, -81.092071)//southWest, northEast (LONDON ONTARIO)
+                new google.maps.LatLng(43.164135, -79.981296), new google.maps.LatLng(43.264183, -79.512758)//southWest, northEast (HAMILTON ONTARIO)
+        );//city boundaries
 
         formatted_address = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(document.getElementById('formatted_address')), {
-                    bounds: cityBounds,//limit to London Ontario
-                    types: ['geocode'],
-                    componentRestrictions: {country: "ca"}
-                });
+                bounds: cityBounds,//limit to a specific city
+                types: ['geocode'],
+                componentRestrictions: {country: "ca"}
+        });
         formatted_address.addListener('place_changed', fillInAddress);
     }
 

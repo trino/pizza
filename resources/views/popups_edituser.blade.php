@@ -52,7 +52,8 @@
     }
     if (isset($user_id) || isset($showpass)) {
         printarow("Old Password", $name, array("name" => "oldpassword", "type" => "password", "class" => $class, "placeholder" => "Old Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
-        printarow("New Password", $name, array("name" => "newpassword", "type" => "password", "class" => $class, "placeholder" => "New Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
+        $type = islive() ? "password" : "text";
+        printarow("New Password", $name, array("name" => "newpassword", "type" => $type, "class" => $class, "placeholder" => "New Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
     } else if ($password) {
         printarow("Password", $name, array("name" => "password", "type" => "password", "class" => $class, "placeholder" => "Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
     }
@@ -91,7 +92,7 @@
                     if (result.contains("password mismatch")) {
                         validateselector("#reg_oldpassword", result, -1);
                     } else {
-                        ajaxerror(result, title);
+                        //ajaxerror(result, title);
                     }
                     return true;
                 }
