@@ -66,38 +66,37 @@
     redirectonlogout = true;
 
     function userform_submit(isSelf) {
-        if(!validateform("#userform")){
-            ajaxerror("Data is missing or invalid", "Invalid data");
-            return false;
-        }
-        var formdata = getform("#userform");
-        $("#edituser_error").text("");
-        var keys = ["name", "phone"];//"email",
-        for (var keyid = 0; keyid < keys.length; keyid++) {
-            var key = keys[keyid];
-            var val = formdata[key];
-            createCookieValue("session_" + key, val);
-            $(".session_" + key).text(val);
-            $(".session_" + key + "_val").val(val);
-        }
-        $.post("<?= $currentURL; ?>", {
-            action: "saveitem",
-            _token: token,
-            value: formdata
-        }, function (result) {
-            if (result) {
-                var title = "Invalid data";
-                if(result == "Data saved"){
-                    result = "Changes to your profile have been saved";
-                    title = "Success!";
-                }
-                ajaxerror(result, title);
-                if(result.contains("password mismatch")){
-                    validateselector("#reg_oldpassword", false, -1);
-                }
-                return true;
+        if(validateform("#userform")) {
+            var formdata = getform("#userform");
+            $("#edituser_error").text("");
+            var keys = ["name", "phone"];//"email",
+            for (var keyid = 0; keyid < keys.length; keyid++) {
+                var key = keys[keyid];
+                var val = formdata[key];
+                createCookieValue("session_" + key, val);
+                $(".session_" + key).text(val);
+                $(".session_" + key + "_val").val(val);
             }
-        });
+            $.post("<?= $currentURL; ?>", {
+                action: "saveitem",
+                _token: token,
+                value: formdata
+            }, function (result) {
+                if (result) {
+                    var title = "Invalid data";
+                    if (result == "Data saved") {
+                        result = "Changes to your profile have been saved";
+                        title = "Success!";
+                    }
+                    if (result.contains("password mismatch")) {
+                        validateselector("#reg_oldpassword", result, -1);
+                    } else {
+                        ajaxerror(result, title);
+                    }
+                    return true;
+                }
+            });
+        }
         return false;
     }
 

@@ -69,13 +69,13 @@
 
     function testaddress(element){
         if(isUndefined(element)){element = $(getGoogleAddressSelector());}
-        validateform("#" + getformid($(element)));
+        //validateform("#" + getformid($(element)));
     }
 
     function transferdata(value){
         var html = $("#mirror").html();
         if(!html){
-            $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" STYLE="display:none;">');
+            $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" STYLE="display:none;" class="nevershow">');
         }
         $('input[autocomplete=really-truly-off]').val(value);
         $("#formatted_address").val(value);
@@ -87,7 +87,6 @@
         if(keycode == 8 || keycode == 46){
             clearaddress();
         }
-        validateform("#addform");
     }
 
     function clearaddress(){

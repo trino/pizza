@@ -11,8 +11,7 @@
     <i class="fa fa-shopping-basket mr-2"></i> CHECKOUT
 </button>
 
-<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-     data-keyboard="false" data-backdrop="static">
+<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -248,6 +247,7 @@
         $("#firefoxandroid").hide();
     }
 
+    /*
     $('#orderinfo input').each(function () {
         $(this).click(function () {
             refreshform(this)
@@ -256,6 +256,7 @@
         });
         log("Autored: " + refreshform(this).attr("id"));
     });
+    */
 
     function refreshform(t) {
         var ID = t;

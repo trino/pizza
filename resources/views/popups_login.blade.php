@@ -135,13 +135,14 @@
     blockerror = true;
 
     function register() {
-        if (isvalidaddress()) {
+        var addform2 = isvalidaddress();
+        if (addform2) {
             $("#reg_address-error").remove();
         } else if ($("#reg_address-error").length == 0) {
-            $('<label id="reg_address-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#formatted_address");
+            $('<label id="reg_address-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#gmapc");
         }
         redirectonlogin = false;
-        var addform = validateform("#addform");
+        var addform = validateform("#addform") && addform2;
         if(validateform('#regform') && addform) {
             loading(true, "register");
             $('#regform').submit();
@@ -162,7 +163,7 @@
             },
             messages: {
                 login_email: {
-                    required: "Please enter your email address",
+                    required: "Please enter a valid email address",
                     email: "Please enter a valid email address"
                 }
             },
@@ -195,10 +196,7 @@
                 },
                 password: {
                     minlength: minlength
-                },
-                /*phone: {
-                 phonenumber: true
-                 }*/
+                }
             },
             messages: {
                 name: "Please enter your name",
@@ -213,28 +211,27 @@
                 }
             },
             submitHandler: function (form) {
-                if (!isvalidaddress()) {
-                    return false;
-                }
-                var formdata = getform("#regform");
-                formdata["action"] = "registration";
-                formdata["_token"] = token;
-                formdata["address"] = getform("#addform");
-                $.post(webroot + "auth/login", formdata, function (result) {
-                    if (result) {
-                        try {
-                            var data = JSON.parse(result);
-                            $("#logintab").trigger("click");
-                            $("#login_email").val(formdata["email"]);
-                            $("#login_password").val(formdata["password"]);
-                            redirectonlogin = true;
-                            handlelogin('login');
-                            loading(false, "register");
-                        } catch (e) {
-                            alert(result, "Registration");
+                if (isvalidaddress()) {
+                    var formdata = getform("#regform");
+                    formdata["action"] = "registration";
+                    formdata["_token"] = token;
+                    formdata["address"] = getform("#addform");
+                    $.post(webroot + "auth/login", formdata, function (result) {
+                        if (result) {
+                            try {
+                                var data = JSON.parse(result);
+                                $("#logintab").trigger("click");
+                                $("#login_email").val(formdata["email"]);
+                                $("#login_password").val(formdata["password"]);
+                                redirectonlogin = true;
+                                handlelogin('login');
+                                loading(false, "register");
+                            } catch (e) {
+                                alert(result, "Registration");
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 return false;
             },
             onkeyup :false,

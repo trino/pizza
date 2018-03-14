@@ -118,9 +118,9 @@
         setsetting("lastupdate", $currtime);
 
         if ($ispass) {
-            echo " <SPAN ONCLICK=" . '"' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
+            echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
         } else {
-            echo " <SPAN ONCLICK=" . '"' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
+            echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
         }
         if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
             echo " - Not HTTPS";
@@ -168,6 +168,7 @@
         console.log("Time until DOMready: ", time);
         $("#navbar-text").text("<?= "" . round((microtime(true) - $time), 5) . "s"; ?>");
         $("#servertime").text($("#servertime").text() + " - Javascript time: " + getNow(4));
+        if($("#QUICKLOGIN").length){$("#QUICKLOGIN").click();}
     });
     log("Page has loaded at: " + Date.now());
 </script>

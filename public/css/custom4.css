@@ -599,6 +599,10 @@ body {
     border-radius: 35px;
 }
 
+.nevershow{
+    display: none !important;
+}
+
 .dont-show {
     display: none;
 }

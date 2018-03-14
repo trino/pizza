@@ -1426,6 +1426,8 @@
             $("label.error").remove();
             $(".redhighlite").removeClass("redhighlite");
             return false;
+        } else if(input == "googleaddress"){
+            input = getGoogleAddressSelector();
         }
         if(isUndefined(parentlevel)){parentlevel=1;}
         var target = $(input).parent();
@@ -1530,7 +1532,7 @@
         }
         $("#formatted_address").val(Text);
         $("#restaurant").html('<OPTION VALUE="0" SELECTED>Restaurant</OPTION>');//.addClass("red");
-        $("#red_rest").addClass("redhighlite");
+        //$("#red_rest").addClass("redhighlite");
         addresshaschanged();
     }
 
@@ -1619,7 +1621,6 @@
         if (!$("#saved-credit-info").val()) {
             if (!isvalidcreditcard()) {
                 $("#red_card").addClass("redhighlite");
-                $("[data-stripe=number]").addClass("red");
                 validateinput("#saved-credit-info", "Please select or enter a valid credit card");
             }
         }
@@ -1876,15 +1877,17 @@
                 submitHandler: function (form) {
                     //handled by placeorder
                 },
-                onkeyup :false
+                onkeyup :false,
+                onfocusout: false
             });
         });
         $("#restaurant").html('<option value="0">Select Restaurant</option>').val("0");
-        $("#saveaddresses").attr("autored", "red_address");
+        //$("#saveaddresses").attr("autored", "red_address");
         refreshform("#saveaddresses");
         if(needscreditrefresh){changecredit();}
-        $("#orderinfo").valid();
-        if($("#reg_phone").valid()){$("#red_phone").removeClass("redhighlite");}
+        //$("#orderinfo").valid();
+        //if($("#reg_phone").valid()){$("#red_phone").removeClass("redhighlite");}
+        validateinput();
     }
 
     var daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -2116,7 +2119,7 @@
             cat_name: "What name would you like the category to be?\r\nIt will only be saved when you add an item to the category",
             not_placed: "Order was not placed!",
             error_login: "Error logging in",
-            email_needed: "Please enter your email address",
+            email_needed: "Please enter a valid email address",
             long_lat: "Longitude and/or latitude missing",
             ten_closest: "10 closest restaurants",
             clear_order: "Clear your order?"
