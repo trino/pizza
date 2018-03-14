@@ -1189,9 +1189,10 @@
         if (isUndefined(action)) {
             action = "verify";
         }
-        if (!$("#login_email").val() && action !== "logout") {
-            alert(makestring("{email_needed}"));
-            return;
+        if(action !== "logout" && $("#login_email").length > 0){
+            if (!$("#login_email").valid()) {
+                return validateinput("#login_email", makestring("{email_needed}"));
+            }
         }
         $.post(webroot + "auth/login", {
             action: action,
@@ -1201,6 +1202,7 @@
         }, function (result) {
             try {
                 var data = JSON.parse(result);
+                log("ACTION: " + action + " STATUS: " + data["Status"] + " REASON: " + data["Reason"]);
                 if (data["Status"] == "false" || !data["Status"]) {
                     data["Reason"] = data["Reason"].replace('[verify]', '<A onclick="handlelogin();" CLASS="hyperlink" TITLE="Click here to resend the email">verify</A>');
                     validateinput();

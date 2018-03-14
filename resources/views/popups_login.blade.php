@@ -1,65 +1,60 @@
 <?php
-startfile("popups_login");
-$Additional_Toppings = first("SELECT * FROM additional_toppings", false);
-function getVal($Additional_Toppings, $size)
-{
-    $it = getiterator($Additional_Toppings, "size", $size, false);
-    return $Additional_Toppings[$it]["price"];
-}
-$minimum = number_format(getVal($Additional_Toppings, "Minimum"), 2);
-$delivery = number_format(getVal($Additional_Toppings, "Delivery"), 2);
-$time = getVal($Additional_Toppings, "DeliveryTime");
-$hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
+    startfile("popups_login");
+    $Additional_Toppings = first("SELECT * FROM additional_toppings", false);
+    function getVal($Additional_Toppings, $size) {
+        $it = getiterator($Additional_Toppings, "size", $size, false);
+        return $Additional_Toppings[$it]["price"];
+    }
+    $minimum = number_format(getVal($Additional_Toppings, "Minimum"), 2);
+    $delivery = number_format(getVal($Additional_Toppings, "Delivery"), 2);
+    $time = getVal($Additional_Toppings, "DeliveryTime");
+    $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
 ?>
 <div class="row">
     <DIV CLASS="col-lg-4 col-md-5 bg-white">
         <DIV CLASS="btn-sm-padding bg-white" style="padding-bottom: 1rem !important;padding-top: .5rem !important;">
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" id="logintab"
-                       onclick="skiploadingscreen = false; ajaxerror();" style="font-weight: bold">LOG IN</a>
+                    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();" style="font-weight: bold">LOG IN</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#buzz" role="tab" data-toggle="tab" id="signuptab"
-                       onclick="skiploadingscreen = true; ajaxerror();" style="font-weight: bold">SIGN UP</a>
+                    <a class="nav-link" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();" style="font-weight: bold">SIGN UP</a>
                 </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="profile">
-                    <div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-envelope text-white fa-stack-1x"></i></span></div>
-                    <div class="input_right">
-                        <INPUT TYPE="text" id="login_email" placeholder="Email" class="form-control session_email_val"
-                               onkeydown="enterkey(event, '#login_password');" required>
-                    </div>
-                    <div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-lock text-white fa-stack-1x"></i></span></div>
-                    <div class="input_right">
-                        <INPUT TYPE="password" id="login_password" placeholder="Password" class="form-control"
-                               onkeydown="enterkey(event, 'login');" required>
-                    </div>
-                    <div class="clearfix py-2"></div>
-                    <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login');">LOG IN</BUTTON>
-                    <div class="clearfix py-2"></div>
-
-                    <BUTTON CLASS="btn-block btn-sm btn btn-link" href="#" style="color: #dadada !important;"
-                            onclick="handlelogin('forgotpassword');">FORGOT PASSWORD
-                    </BUTTON>
+                    <FORM id="signform" name="signform">
+                        <div class="input_left_icon">
+                            <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-envelope text-white fa-stack-1x"></i></span>
+                        </div>
+                        <div class="input_right">
+                            <INPUT TYPE="text" id="login_email" name="login_email" placeholder="Email" class="form-control session_email_val" onkeydown="enterkey(event, '#login_password');" required>
+                        </div>
+                        <div class="input_left_icon">
+                            <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-lock text-white fa-stack-1x"></i></span>
+                        </div>
+                        <div class="input_right">
+                            <INPUT TYPE="password" id="login_password" placeholder="Password" class="form-control" onkeydown="enterkey(event, 'login');" required>
+                        </div>
+                        <div class="clearfix py-2"></div>
+                        <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
+                        <div class="clearfix py-2"></div>
+                        <BUTTON CLASS="btn-block btn-sm btn btn-link" href="#" style="color: #dadada !important;" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
+                    </FORM>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="buzz">
                     <FORM id="addform">
                         <?php
-                        if (!read("id")) {
-                            echo view("popups_address", array("style" => 1, "required" => true, "icons" => true, "firefox" => false))->render();
-                        }
+                            if (!read("id")) {
+                                echo view("popups_address", array("style" => 1, "required" => true, "icons" => true, "firefox" => false))->render();
+                            }
                         ?>
                     </FORM>
                     <FORM Name="regform" id="regform">
                         <?= view("popups_edituser", array("phone" => false, "autocomplete" => "new-password", "required" => true, "icons" => true))->render(); ?>
                     </FORM>
                     <div class="clearfix py-2"></div>
-
                     <button class="btn btn-block btn-primary" onclick="register();">
                         SIGN UP
                     </button>
@@ -90,27 +85,25 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
 
             <div class="row card-block">
                 <div class="col-md-6">
-
                     <TABLE STYLE="display: inline">
                         <TR>
                             <TD COLSPAN="2"><p class="lead strong">HOURS OF OPERATION</p></TD>
                         </TR>
                         <?php
-                        $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                        for ($day = 0; $day < 7; $day++) {
-                            echo '<TR><TD>' . $daysofweek[$day] . "&nbsp;&nbsp;&nbsp; </TD>";
-                            $open = $hours[$day . "_open"];
-                            $close = $hours[$day . "_close"];
-                            if ($open == "-1" || $close == "-1") {
-                                echo '<TD COLSPAN="2"">Closed';
-                            } else {
-                                echo '<TD>' . GenerateTime($open) . ' to&nbsp;</TD><TD>' . GenerateTime($close);
+                            $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                            for ($day = 0; $day < 7; $day++) {
+                                echo '<TR><TD>' . $daysofweek[$day] . "&nbsp;&nbsp;&nbsp; </TD>";
+                                $open = $hours[$day . "_open"];
+                                $close = $hours[$day . "_close"];
+                                if ($open == "-1" || $close == "-1") {
+                                    echo '<TD COLSPAN="2"">Closed';
+                                } else {
+                                    echo '<TD>' . GenerateTime($open) . ' to&nbsp;</TD><TD>' . GenerateTime($close);
+                                }
+                                echo '</TD></TR>';
                             }
-                            echo '</TD></TR>';
-                        }
                         ?>
                     </TABLE>
-
                 </div>
 
 
@@ -160,6 +153,23 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
     });
 
     $(function () {
+        $("#signform").validate({
+            rules: {
+                login_email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                login_email: {
+                    required: "Please enter your email address",
+                    email: "Please enter a valid email address"
+                }
+            },
+            onkeyup :false,
+            onfocusout: false
+        });
+
         $("form[name='regform']").validate({
             rules: {
                 name: "required",
@@ -200,11 +210,7 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                     required: "Please enter your email address",
                     email: "Please enter a valid email address",
                     remote: "Please enter a unique email address"
-                }/*,
-                 phone: {
-                 required: "Please enter a cell phone number",
-                 phonenumber: "Please enter a valid cell phone number"
-                 }*/
+                }
             },
             submitHandler: function (form) {
                 if (!isvalidaddress()) {
@@ -231,10 +237,8 @@ $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
                 });
                 return false;
             },
-            onfocusout: function(element) {
-                validateinput();
-                validateform('#regform[value!=""] input:visible');
-            }
+            onkeyup :false,
+            onfocusout: false
         });
     });
     $(document).ready(function () {

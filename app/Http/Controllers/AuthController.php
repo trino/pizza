@@ -196,6 +196,9 @@ class AuthController extends Controller {
                         default:
                             $ret["Status"] = false;
                             $ret["Reason"] = $passwordmismatch;//"Email address not found."
+                            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                $ret["Reason"] = "Email address is not valid";
+                            }
                     }
                 }
             }

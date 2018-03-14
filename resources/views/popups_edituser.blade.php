@@ -104,8 +104,8 @@
     $(function () {
         $("form[name='user']").validate({
             onfocusout: function(element) {
-                validateform("form[name='user']");
-                ajaxerror();
+                //validateform("form[name='user']");
+                //ajaxerror();
             },
             onkeyup :false,
             rules: {
