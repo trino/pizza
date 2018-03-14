@@ -389,6 +389,10 @@ body.loading {
     min-height: 96px;
 }
 
+.debugmode{
+    color: blue;
+}
+
 .toppinglist{
     border: 0px solid blue !important;
     width: 100%;

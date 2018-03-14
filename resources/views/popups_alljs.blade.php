@@ -2225,7 +2225,7 @@
             }
             totaltoppings += Math.ceil(paidtoppings);
             if (debugmode) {
-                HTML += " (Paid: " + paidtoppings + " Free: " + freetoppings + ') ';
+                HTML += '<SPAN TITLE="THIS IS ONLY SHOWN IN DEBUG MODE" CLASS="debugmode">(Paid: ' + paidtoppings + ' Free: ' + freetoppings + ')</SPAN> ';
             }
             HTML += tempstr + '</DIV>';
         }
