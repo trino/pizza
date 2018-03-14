@@ -382,12 +382,21 @@ body.loading {
     width: 100% !important;
     float: left;
     font-size: .85rem;
+    background: #E6ECF0;
 }
 
 .receipt-addons-list {
-    height: 500px;
-    overflow-y: auto;
-    overflow-x: auto;
+    min-height: 96px;
+}
+
+.toppinglist{
+    border: 0px solid blue !important;
+    width: 100%;
+    background:white;
+    /*
+    position: absolute;
+    bottom: 0;
+    */
 }
 
 .halfwidth {

@@ -2316,7 +2316,7 @@
         if (currentstyle == 0) {
             $("#addonlist").html(HTML + '</DIV>');
         } else {
-            HTML += '<div style="border:0px solid blue !important;position: absolute; bottom: 0;width:100%;background:white;">';
+            HTML += '<div class="toppinglist">';
 
             var breaker_green = 0;
             var breaker_red = 0;

@@ -24,6 +24,7 @@
             if (isset($field["max"]))                                       {echo ' max="' . $field["max"] . '" ';}
             if (isset($field["readonly"]))                                  {echo ' readonly';}
             if (isset($field["autocomplete"]) && $field["autocomplete"])    {echo ' autocomplete="' . $field["autocomplete"] . '"';}
+            if (isset($field["title"]) && $field["title"])                  {echo ' title="' . $field["title"] . '"';}
             if (isset($field["placeholder"]))                               {echo ' placeholder="' . $field["placeholder"] . '" ';}
             if (isset($field["corner"]))                                    {echo ' STYLE="border-' . $field["corner"] . '-radius: 5px;"';}
             if (isset($field["required"]) && $field["required"])            {echo ' REQUIRED';}
@@ -53,7 +54,8 @@
     if (isset($user_id) || isset($showpass)) {
         printarow("Old Password", $name, array("name" => "oldpassword", "type" => "password", "class" => $class, "placeholder" => "Old Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
         $type = islive() ? "password" : "text";
-        printarow("New Password", $name, array("name" => "newpassword", "type" => $type, "class" => $class, "placeholder" => "New Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
+        $title = islive() ? "" : "This is only a text field in testing mode. Otherwise it's a password field";
+        printarow("New Password", $name, array("name" => "newpassword", "type" => $type, "class" => $class, "placeholder" => "New Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock", "title" => $title));
     } else if ($password) {
         printarow("Password", $name, array("name" => "password", "type" => "password", "class" => $class, "placeholder" => "Password", "autocomplete" => $autocomplete, "required" => $required, "icon" => "fa-lock"));
     }
