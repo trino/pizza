@@ -24,7 +24,7 @@
                         echo '<!-- menu cache generated at: ' . my_now() . ' --> ' . $menu;
                     }
                 ?>
-                <div class="col-lg-3 col-md-12 bg-inverse" style="background: #fff !important;">
+                <div class="col-lg-3 col-md-12 bg-inverse" style="background: #eee !important;">
                     @include("popups_checkout")
                 </div>
             </div>
@@ -32,7 +32,6 @@
     @if(read("id") && read("profiletype") <> 2)
         <div class="fixed-action-btn hidden-lg-up sticky-footer d-lg-none">
             <button class="circlebutton bg-danger" onclick="window.scrollTo(0,document.body.scrollHeight);" TITLE="Scroll to the top of the page">
-                <I CLASS="fa fa-arrow-up white"></I>
                 <span class="white" id="checkout-total"></span>
             </button>
         </div>

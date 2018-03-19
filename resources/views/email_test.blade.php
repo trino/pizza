@@ -3,6 +3,9 @@
         echo $body;
     }
 ?>
-<HR>
+<br>
+-
+<br>
 Thank you,
+<br>
 The <?= sitename; ?> Team

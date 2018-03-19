@@ -66,7 +66,7 @@
                         </SELECT>
                     </div>
 
-                    <!--if(!read('phone'))-->
+                    @if(!read('phone'))
                         <div class="input_left_icon redhighlite" id="red_phone">
                             <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x"></i>
@@ -76,7 +76,7 @@
                         <div class="input_right">
                             <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>"  onblur="validateinput(this);">
                         </div>
-                    <!--endif-->
+                    @endif
 
                     <div class="input_left_icon" id="red_card">
                         <span class="fa-stack fa-2x">
@@ -95,7 +95,7 @@
 
                     <div class="input_left_icon"></div>
                     <div class="input_right">
-                        <div class="thirdwidth">
+                        <div class="thirdwidth pr-1">
                             <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_month">
                                 <OPTION VALUE="01">01/Jan</OPTION>
                                 <OPTION VALUE="02">02/Feb</OPTION>
@@ -112,7 +112,7 @@
                             </SELECT>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="thirdwidth">
+                        <div class="thirdwidth pr-1">
                             <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_year">
                                 <?php
                                     $CURRENT_YEAR = date("Y");
@@ -153,7 +153,7 @@
                     <div class="clearfix"></div>
                 </div>
 
-                <DIV class="ajaxprompt"></DIV><P>
+                <DIV class="ajaxprompt"></DIV>
 
                 <div class="modal-body" style="padding: 0 !important;">
                     <button class="btn-block list-padding radius-bottom btn btn-primary text-white payfororder" onclick="payfororder(); return false;">

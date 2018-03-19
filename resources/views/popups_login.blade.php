@@ -10,7 +10,13 @@
     $time = getVal($Additional_Toppings, "DeliveryTime");
     $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
 ?>
+
+
+
+
 <div class="row">
+
+
     <DIV CLASS="col-lg-4 col-md-5 bg-white">
         <DIV CLASS="btn-sm-padding bg-white" style="padding-bottom: 1rem !important;padding-top: .5rem !important;">
             <ul class="nav nav-tabs mb-1" role="tablist">
@@ -68,7 +74,7 @@
         <div class="py-3">
             <center>
                 <img src="<?= webroot("images/delivery.jpg"); ?>" style="width: 50%;"/>
-                <h2 class="text-danger" style="text-align: center;">Only the Best Pizza in <?= cityname; ?></h2>
+                <h2 class="text-danger mt-3" style="text-align: center;">Only the Best Pizza in <?= cityname; ?></h2>
                 ${{ $minimum }} Minimum<br>
                 ${{ $delivery }} Delivery<br>
                 Credit/Debit Only
@@ -76,18 +82,15 @@
         </div>
 
     </DIV>
-    <div class="col-lg-8 col-md-7 bg-white py-2 bg-inverse">
-        <div class="btn-sm-padding" style="border-radius: 0;background: transparent !important;"><br>
+    <div class="col-lg-8 col-md-7 py-3 bg-inverse" style="padding-right: 15px;    padding-left: 15px; z-index: 9999">
             <span style=";font-size: 2.5rem; font-weight: bold;line-height: 3.1rem;"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
-            <br>
-            <br>
             <p>The art of delivery is in the team, local restaurants at your footstep in <?= $time; ?> minutes.</p>
-
-            <div class="row card-block">
-                <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6" style="padding-right: 15px;
+    padding-left: 15px;">
                     <TABLE STYLE="display: inline">
                         <TR>
-                            <TD COLSPAN="2"><p class="lead strong">HOURS OF OPERATION</p></TD>
+                            <TD COLSPAN="3"><p class="lead strong">HOURS OF OPERATION</p></TD>
                         </TR>
                         <?php
                             $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -107,8 +110,9 @@
                 </div>
 
 
-                <div class="col-md-6">
-                    <TABLE STYLE="display: inline;margin-left: 10px;">
+
+                <div class="col-md-6" style="padding-right: 15px;    padding-left: 15px;">
+                    <TABLE STYLE="display: inline;">
                         <TR>
                             <TD COLSPAN="2"><p class="lead strong">DISCOUNTS</p></TD>
                         </TR>
@@ -121,12 +125,15 @@
                     </TABLE>
                 </div>
             </div>
-            <br>
-            <i class="lead text-danger strong">"FASTER THAN PICKING UP THE PHONE!"</i><br><br>
-            <a class="btn-link" href="<?= webroot("help"); ?>" role="button">LEARN MORE</a>
-        </div>
+        <br>
+            <i class="lead text-danger strong">"Faster Than Calling The Store!" <a class="btn-link" href="<?= webroot("help"); ?>" role="button"> - </i> LEARN MORE</a></i>
+
     </div>
 </div>
+
+
+
+
 <SCRIPT>
     redirectonlogin = true;
     var minlength = 5;

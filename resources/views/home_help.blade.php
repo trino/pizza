@@ -142,7 +142,7 @@
         <div class="col-sm-6 list-padding">
             <h3>Our Duty </h3>
 
-            <div class="card-block bg-danger text-white">
+            <div class="card-block bg-danger text-white py-2 mt-2">
                 <p>
                     <?= $site_name; ?> is a pizza delivery service that's "faster than picking up the phone".
 
@@ -170,7 +170,7 @@
         <div class="col-sm-6 list-padding">
 
 
-        <h3>FAQ</h3>
+        <h3 class="mb-2">FAQ</h3>
     <?php
         $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
         $minimum = first("SELECT price FROM additional_toppings WHERE size = 'Minimum'")["price"];
@@ -243,7 +243,7 @@
         newlist("Users");
         newitem("Signing in", "Enter your email address and password in the <A HREF='" . webroot("/") . "'>Log In</A> page and click <button class='btn btn-sm btn-primary'>LOG IN</button>");
         newitem("Forgot password", "Enter the email address you registered with, click <button class='btn btn-secondary btn-wide btn-sm'>Forgot Password</button> and a new password will be emailed to you");
-        newitem("Registering", "Click the 'Signup' tab, enter a valid London address into the 'Delivery Address' field (use 'Address Notes' for things like apartment/unit/back door/etc), enter your name/email/password and click <Button class='btn btn-sm btn-primary'>Register</button>");
+        newitem("Registering", "Click the 'Signup' tab, enter a valid London address into the 'Delivery Address' field (use 'Notes/Apt/Buzzer' for things like apartment/unit/back door/etc), enter your name/email/password and click <Button class='btn btn-sm btn-primary'>Register</button>");
         newitem('<i class="fa fa-fw fa-bars"></i> button', "A dropdown menu with various options, located in the top-left corner");
         newitem('<i class="fa fa-fw fa-user"></i> <SPAN CLASS="session_name"></SPAN>', "A popup to edit your user name/phone number/password/credit card numbers/addresses");
         newitem('<i class="fa fa-fw fa-clock"></i> Past Orders', "A popup that shows a list of your previous orders. Clicking <button class='btn btn-sm btn-primary'>Load Order</button> will overwrite the contents of your cart with that order");

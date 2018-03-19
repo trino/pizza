@@ -37,20 +37,14 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
-    <title><?= sitename; ?> - Delivery</title>
-<!--link rel="manifest" href="<?= webroot("resources/assets/manifest.json"); ?>"-->
+    <title><?= sitename; ?> - Pizza Delivery</title>
     <link rel="icon" sizes="128x128" href="<?= webroot("public/images/pizza128.png"); ?>">
     <link rel="icon" sizes="192x192" href="<?= webroot("public/images/pizza192.png"); ?>">
-<!--link href="<?= $css; ?>/font-awesome.min.css" rel='stylesheet' type='text/css'-->
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link href='<?= $css; ?>/Roboto.css' rel='stylesheet' type='text/css'>
     <link href='<?= $css; ?>/Roboto-slab.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
     <link rel="stylesheet" href="<?= $css . "/custom4.css?v=" . time(); ?>">
-    <!--link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet"-->
-    <!--link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"-->
-    <!--link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-    integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"-->
     <link rel="stylesheet" href="<?= $css . "/google.css?v=" . time(); ?>">
     <script src="<?= $scripts; ?>/jquery.min.js"></script>
     <script src="<?= $scripts; ?>/tether.min.js"></script>
@@ -134,7 +128,7 @@
     @yield('content')
 </div>
 
-@if($routename != "help")
+@if($routename != "help" && false)
     <div class="container-fluid d-none d-sm-block list-group-item">
         <div class="row">
             <div class="col-sm-12">

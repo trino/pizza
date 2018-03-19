@@ -18,8 +18,8 @@
             echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '></div></DIV>';
             break;
         case 1:
-            if($icons) {echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-home text-white fa-stack-1x"></i></span></div><div class="input_right">';}
-            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start by Typing the Address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '"></SPAN>';
+            if($icons) {echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-map-marker text-white fa-stack-1x"></i></span></div><div class="input_right">';}
+            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start by typing your address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '"></SPAN>';
             if($icons) {echo '</div>';}
             echo '<STYLE>.address:focus{z-index: 999;}</STYLE>';
             break;
@@ -32,10 +32,20 @@
         z-index: 99999999999 !important;
     }
 </STYLE>
-    @if($form) <FORM ID="googleaddress"> @endif
-        @if($icons) <div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pencil-alt text-white fa-stack-1x"></i></span></div><div class="input_right"> @endif
-        <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Address Notes" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to">
-        @if($icons) </div> @endif
+    @if($form)
+        <FORM ID="googleaddress"> @endif
+        @if($icons)
+            <div class="input_left_icon d-none">
+                <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-pencil-alt text-white fa-stack-1x"></i></span>
+        </div>
+        <div class="input_right">
+            @endif
+        <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Notes/Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to">
+        @if($icons)
+        </div>
+        @endif
         <INPUT TYPE="text" NAME="number" ID="add_number" PLACEHOLDER="Street Number" {{ $required }} CLASS="form-control street_number address dont-show">
         <INPUT TYPE="text" NAME="street" ID="add_street" PLACEHOLDER="Street" {{ $required }} CLASS="form-control route address dont-show">
         <INPUT TYPE="text" NAME="city" ID="add_city" PLACEHOLDER="City" {{ $required }} CLASS="form-control locality address dont-show">

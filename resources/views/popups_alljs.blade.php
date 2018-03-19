@@ -383,7 +383,7 @@
             }
         }
         currentitemID = -1;
-        var title = "<div class='pull-left'><i class='fa fa-check'></i></div><div class='pull-right'>$<SPAN ID='modal-itemtotalprice'></SPAN></div>";
+        var title = "<div class='pull-left d-inline'><i class='fa fa-check mr-2'></i></div><div class='pull-right d-inline'>$<SPAN ID='modal-itemtotalprice'></SPAN></div>";
         if (!isUndefined(notparent)) {
             $("#menumodal").modal("show");
             refreshremovebutton();
@@ -651,13 +651,13 @@
             if (fadein || forcefade) {
                 tempHTML += 'class="dont-show"';
             }
-            tempHTML += '><div class="pull-right text-normal py-1"><TABLE><TR><TD>Sub-total $</TD><TD>' + subtotal.toFixed(2) + '</TD></TR>';
+            tempHTML += '><div class="pull-right text-normal py-1"><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
             if(discount>0){
-                tempHTML += '<TR><TD>Discount (' + discountpercent + '%) $</TD><TD>' + discount + '</TD></TR>';
+                tempHTML += '<TR><TD>Discount (' + discountpercent + '%) &nbsp;</TD><TD> $' + discount + '</TD></TR>';
             }
-            if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery $</TD><TD>' + deliveryfee.toFixed(2) + '</TD></TR>';}
-            tempHTML += '<TR><TD>Tax $</TD><TD>' + taxes.toFixed(2) + '</TD></TR>';
-            tempHTML += '<TR><TD class="strong">Total $</TD><TD class="strong">' + totalcost.toFixed(2) + '</TD></TR>';
+            if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery &nbsp;</TD><TD> $' + deliveryfee.toFixed(2) + '</TD></TR>';}
+            tempHTML += '<TR><TD>Tax &nbsp;</TD><TD> $' + taxes.toFixed(2) + '</TD></TR>';
+            tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong"> $' + totalcost.toFixed(2) + '</TD></TR>';
             tempHTML += '</TABLE><div class="clearfix py-2"></div></DIV></DIV>';
             $("#confirmclearorder").show();
             $("#checkout-total").text('$' + totalcost.toFixed(2));
@@ -1088,7 +1088,7 @@
                 if (!First) {
                     First = ID;
                 }
-                HTML += '<li ONCLICK="orders(' + ID + ');"><span class="text-danger strong">ORDER # ' + ID + ' </span><br>' + order["placed_at"] + '<DIV ID="pastreceipt' + ID + '"></DIV></li>';
+                HTML += '<li ONCLICK="orders(' + ID + ');"><span class="text-danger strong">ORDER # ' + ID + ' </span><br>' + order["placed_at"] + '<br><DIV ID="pastreceipt' + ID + '"></DIV></li>';
             }
             HTML += '</ul>';
             if (!First) {
@@ -1741,7 +1741,7 @@
     var closest = false;
     function addresshaschanged(place) {
         if (!getcloseststore) {return;}
-        var HTML = '<OPTION VALUE="0">No restaurant is within range</OPTION>';
+        var HTML = '<OPTION VALUE="0">No restaurant within range</OPTION>';
         if(isUndefined(place)) {
             var value = $("#saveaddresses").val();
             if (value == "0" || value == "addaddress"){
@@ -2036,7 +2036,7 @@
         now = temp[0];
         time = temp[1];
         if (isopen(hours, dayofweek, temp[2]) > -1) {
-            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver Now (' + GenerateTime(time) + ')</option>';
+            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver ASAP (' + GenerateTime(time) + ')</option>';
             time = addtotime(time, increments);
         }
         var totalInc = (minutesinaday * totaldays) / increments;
@@ -2055,7 +2055,7 @@
                         thedayname += " " + thedate;
                     }
                     var thedate = monthnames[now.getMonth()] + " " + now.getDate();
-                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + totimestamp(time, now) + '">' + thedayname + " at " + thetime;
+                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + totimestamp(time, now) + '">' + thedayname + " " + thetime;
                     HTML += tempstr + '</OPTION>';
                 }
             }
@@ -2572,10 +2572,16 @@
                 <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <div class="pull-center" id="exclame"><IMG SRC="<?= webroot("images"); ?>/exclamationmark.png" style="width: 122px;"></div>
+                <div class="pull-center mb-2" id="exclame">
+
+                    <span class="fa-stack fa-3x">
+                          <i class="text-muted fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-exclamation text-white fa-stack-1x"></i>
+                        </span>
+                </div>
                 <DIV ID="alertmodalbody"></DIV>
                 <div CLASS="pull-center">
-                    <button class="btn btn-danger text-muted alert-button" id="alert-cancel" data-dismiss="modal">
+                    <button class="btn btn-danger text-white alert-button" id="alert-cancel" data-dismiss="modal">
                         CANCEL
                     </button>
                     <button class="btn btn-primary alert-button" id="alert-confirm" data-dismiss="modal">

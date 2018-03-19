@@ -188,7 +188,7 @@
     $onlydebug = "Only shows in debug mode! - ";
 ?>
 
-    <div class="alert alert-success text-center text-sm-center mb-0">
+    <div class="alert alert-success text-center text-sm-center mb-2">
         <h2>Delivery {{ $duration }}</h2>
     </div>
 
@@ -215,7 +215,7 @@
                 <th align="right">Price</th>
             </TR>
     @else
-        <TABLE WIDTH="100%" class="table table-sm bg-white" style="border: 0px solid #fff !important;" cellspacing="0" cellpadding="0">
+        <TABLE WIDTH="100%" class="mb-2" style="border-collapse: collapse;">
     @endif
 
     <?php
@@ -489,18 +489,18 @@
 
                 $tax_percent = 0.13;
                 $colspanminus1 = $colspan - 1;
-                echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($subtotal, 2) . '</TD></TR>';
+                echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($subtotal, 2) . '</TD></TR>';
                 $discountpercent = getdiscount($subtotal);
                 if($discountpercent > 0){
                     $discount = number_format($discountpercent * 0.01 * $subtotal, 2);
-                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount (' . $discountpercent . '%) $&nbsp;</TD><TD ALIGN="RIGHT">' . $discount . '</TD></TR>';
+                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Discount (' . $discountpercent . '%) &nbsp;</TD><TD ALIGN="RIGHT"> $' . $discount . '</TD></TR>';
                     $subtotal = $subtotal - $discount;
                 }
                 $tax = ($subtotal + $deliveryfee) * $tax_percent;
                 $total = $subtotal + $deliveryfee + $tax;
-                if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($deliveryfee, 2) . '</TD></TR>';}
-                echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($tax, 2) . '</TD></TR>';
-                echo '<TR style="font-weight: bold;"><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Total $&nbsp;</TD><TD ALIGN="RIGHT">' . number_format($total, 2) . '</TD></TR>';
+                if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
+                echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($tax, 2) . '</TD></TR>';
+                echo '<TR style="font-weight: bold;"><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($total, 2) . '</TD></TR>';
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';
 
                 insertdb("orders", array("id" => $orderid, "price" => $total));//saved for stripe
@@ -509,9 +509,9 @@
                 echo $filename;
             }
             if ($style == 2 && !$includeextradata) {
-                echo '<TR><TD COLSPAN="' . $colspan . '">';
+                echo '<TR><TD COLSPAN="' . 2 . '">';
                 if (isset($JSON)) {
-                    echo '<BUTTON CLASS="btn btn-block btn-primary mb-3" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
+                    echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
                 } else {
                     echo $Order["name"] . " - " . $Order["email"] . "<BR>" . formatphone($Order["phone"]) . " " . formatphone($Order["cell"]) . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . ", " . $Order["province"] . "<BR>" . $Order["postalcode"] . '<BR>' . $Order["unit"];
                 }
@@ -529,9 +529,10 @@
     @endif
 
     @if(!isset($JSON))
+        <hr>
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
-                <TD  WIDTH="50%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
+                <TD WIDTH="49%" style="font-size: 85%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
                     <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Delivery Info</h2>
                     <?php
                         echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
@@ -542,8 +543,9 @@
                         $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
                     ?>
                 </TD>
-                <TD CLASS="cursor-pointer" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
-                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Order ID #: <span ID="receipt_id"><?= $orderid; ?></span></h2>
+                <TD WIDTH="2%"></TD>
+                <TD WIDTH="49%" style="font-size: 85%" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
+                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px;">Order # <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
                                 $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
@@ -570,8 +572,7 @@
                 Please contact the restaurant directly
                 <DIV CLASS="clearfix"></DIV>
             @endif
-            <br>
-            <a class="pull-left btn-link btn pl-0" href="<?= webroot("help"); ?>">MORE INFO</a>
+            <a class="btn-link btn mt-3 pl-0" href="<?= webroot("help"); ?>">MORE INFO</a>
         </DIV>
     @endif
 
