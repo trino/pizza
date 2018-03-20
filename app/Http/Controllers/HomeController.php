@@ -74,6 +74,23 @@ class HomeController extends Controller {
         return view("home_privacy")->render();
     }
 
+    public function contact(Request $request){
+        if(isset($_POST["contact_text"])){
+            $message = "Message:<P>" . $_POST["contact_text"] . '<P>IP Address: ' . str_replace("::1", "localhost", $_SERVER['REMOTE_ADDR']) . '<P>User: ';
+            if(read("id")){
+                $message .= read("id") . " - " . read("email") . " - " . read("name");
+            } else if(isset($_POST["contact_email"])) {
+                $message .= "Anonymous - " . $_POST["contact_email"];
+            }
+            $this->sendEMail("email_test", [
+                "email" => "admin",
+                "mail_subject" => "Contact Us form used",
+                "body" => $message
+            ]);
+        }
+        return view("home_contact")->render();
+    }
+
     public function placeorder($POST = ""){
         if (!read("id")) {
             return array("Status" => false, "Reason" => "You are not logged in");

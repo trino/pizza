@@ -98,8 +98,9 @@
 
     <A HREF="<?= webroot("ourstory"); ?>" class="align-left align-middle text-white"><?= getsetting("aboutus"); ?>,</A>&nbsp;
     <A HREF="<?= webroot("help"); ?>" class="align-left align-middle text-white">FAQs,</A>&nbsp;
-    <A HREF="<?= webroot("tos"); ?>" class="align-left align-middle text-white">TOS,</A>
-    <A HREF="<?= webroot("privacy"); ?>" class="align-left align-middle text-white">Privacy Policy</A>
+    <A HREF="<?= webroot("tos"); ?>" class="align-left align-middle text-white">TOS,</A>&nbsp;
+    <A HREF="<?= webroot("privacy"); ?>" class="align-left align-middle text-white">Privacy Policy,</A>&nbsp;
+    <A HREF="<?= webroot("contact"); ?>" class="align-left align-middle text-white">Contact Us</A>
 
     <?php
         if (!islive()) {
