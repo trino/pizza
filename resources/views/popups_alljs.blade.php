@@ -1029,7 +1029,7 @@
 
     //generate a list of addresses and send it to the alert modal
     function addresses() {
-        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>Address</h2>';
+        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2><?= getsetting("myaddress"); ?></h2>';
         var number = $("#add_number").val();
         var street = $("#add_street").val();
         var city = $("#add_city").val();
@@ -1043,15 +1043,15 @@
             }
         });
         if (!AddNew) {
-            HTML += 'No Addresses';
+            HTML += '<?= getsetting("noaddresses"); ?>';
         }
         return HTML + "</DIV>";
     }
 
     function creditcards() {
-        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>Credit Card</h2>';
+        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2><?= getsetting("mycreditcard"); ?></h2>';
         if (userdetails.Stripe.length == 0) {
-            return HTML + "No Credit Cards";
+            return HTML + "<?= getsetting("nocreditcards"); ?>";
         }
         for (var i = 0; i < userdetails.Stripe.length; i++) {
             var card = userdetails.Stripe[i];

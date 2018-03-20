@@ -99,14 +99,16 @@
             return $timestamp + ($DIFFERENCEminutes * 60);
         }
 
-        function GenerateDate($Date){
+        function GenerateDate($Date, $timer = true){
             $today = date("F j");
             if (isset($_GET["day"]) && is_numeric($_GET["day"]) && $_GET["day"] >= 0 && $_GET["day"] <= 6) {
 
             }
-            $Date = str_replace($today, "Today (" . $today . ")", $Date);
-            $tomorrow = date("F j", strtotime("+ 1 day"));
-            $Date = str_replace($tomorrow, "Tomorrow (" . $tomorrow . ")", $Date);
+            if($timer){
+                $Date = str_replace($today, "Today (" . $today . ")", $Date);
+                $tomorrow = date("F j", strtotime("+ 1 day"));
+                $Date = str_replace($tomorrow, "Tomorrow (" . $tomorrow . ")", $Date);
+            }
             return $Date;
         }
 
@@ -145,7 +147,6 @@
                 $CurrentTime = $_GET["time"];
             }
             $date = str_replace(" at ", "", left($Order["deliverytime"], strlen($Order["deliverytime"]) - 4));
-            $duration = GenerateDate($date) . " at " . GenerateTime(intval($Time));
             $tomorrow = date("F j", strtotime("+ 1 day"));
             if ($date == $tomorrow) {
                 $DeliveryTime = strtotime("midnight tomorrow") + tomin($Time) * 60;
@@ -155,6 +156,7 @@
             } else {
                 $timer = false;
             }
+            $duration = GenerateDate($date, $timer) . " at " . GenerateTime(intval($Time));
         } else if ($Order["deliverytime"] == "Deliver Now") {
             $time = strtotime($Order["placed_at"]) + ($minutes * 60);
             $open = parsetime(gethours($Order["restaurant_id"])[$day_of_week]["open"]) + ($minutes * 60);
@@ -162,12 +164,12 @@
                 $time = $open;
             }
             $time = roundTime($time);
-            $duration = GenerateDate(date("F j ", $time)) . "at " . date("g:i A", $time);
             if (time() > $time) {
                 $timer = false;//expired
             } else {
                 $minutes = ceil(($time - time()) / 60);
             }
+            $duration = GenerateDate(date("F j ", $time), $timer) . "at " . date("g:i A", $time);
         } else {
             $timer = false;
         }
@@ -177,7 +179,9 @@
         $minutes = $minutes % 60;
     }
     $time = '';
+    $Delivery = "Delivered on ";
     if ($timer) {
+        $Delivery = "Delivery at ";
         if ($minutes < 60) {
             $time = $minutes;
         } else {
@@ -189,7 +193,7 @@
 ?>
 
     <div class="alert alert-success text-center text-sm-center mb-2">
-        <h2>Delivery {{ $duration }}</h2>
+        <h2>{{ $Delivery . $duration }}</h2>
     </div>
 
     @if($includeextradata)
@@ -540,7 +544,26 @@
                         echo formatphone($Order["phone"]);
                         $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
                         $Restaurant = first("SELECT * FROM restaurants WHERE id = " . $Order["restaurant_id"]);
-                        $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
+                        if(isset($Restaurant["address_id"])){
+                            $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
+                        } else {
+                            $unknown = "UNKNOWN";
+                            $Restaurant = [
+                                "name" => $unknown,
+                                "phone" => "",
+                            ];
+                            $Raddress = [
+                                "name" => $unknown,
+                                "number" => $unknown,
+                                "street" => $unknown,
+                                "city" => $unknown,
+                                "province" => $unknown,
+                                "postalcode" => $unknown,
+                                "unit" => $unknown,
+                                "latitude" => "0",
+                                "longitude" => "0"
+                            ];
+                        }
                     ?>
                 </TD>
                 <TD WIDTH="2%"></TD>
@@ -572,7 +595,7 @@
                 Please contact the restaurant directly
                 <DIV CLASS="clearfix"></DIV>
             @endif
-            <a class="btn-link btn mt-3 pl-0" href="<?= webroot("help"); ?>">MORE INFO</a>
+            <a class="btn-link btn mt-3 pl-0" href="<?= webroot("help"); ?>"><?= getsetting("aboutus"); ?></a>
         </DIV>
     @endif
 

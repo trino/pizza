@@ -140,7 +140,7 @@
     ?>
     <DIV class="row py-3 bg-white">
         <div class="col-sm-6 list-padding">
-            <h3>Our Duty </h3>
+            <h3><?= getsetting("aboutus"); ?></h3>
 
             <div class="card-block bg-danger text-white py-2 mt-2">
                 <p>
@@ -240,7 +240,7 @@
             }
         }
 
-        newlist("Users");
+        newlist("Your Account");
         newitem("Signing in", "Enter your email address and password in the <A HREF='" . webroot("/") . "'>Log In</A> page and click <button class='btn btn-sm btn-primary'>LOG IN</button>");
         newitem("Forgot password", "Enter the email address you registered with, click <button class='btn btn-secondary btn-wide btn-sm'>Forgot Password</button> and a new password will be emailed to you");
         newitem("Registering", "Click the 'Signup' tab, enter a valid London address into the 'Delivery Address' field (use 'Notes/Apt/Buzzer' for things like apartment/unit/back door/etc), enter your name/email/password and click <Button class='btn btn-sm btn-primary'>Register</button>");
@@ -249,7 +249,7 @@
         newitem('<i class="fa fa-fw fa-clock"></i> Past Orders', "A popup that shows a list of your previous orders. Clicking <button class='btn btn-sm btn-primary'>Load Order</button> will overwrite the contents of your cart with that order");
         newitem('<i class="fa fa-fw fa-sign-out-alt"></i> Log Out', "Logs you out and returns to the login/register page");
 
-        newlist('How to order');
+        newlist('Your Order');
         newitem("Add an item to your cart", "Click the item on the menu. If it has a + next to the price, there will be a popup allowing you to edit the item options before adding it to the receipt");
         newitem("Topping/sauces popup", 'If the menu item contains more than 1 item (ie: 2 pizzas), there will be a list at the top of this popup to select which item to edit. Clicking any of the options from the list will add it to the selected item. Some options are part of a group and only 1 option in that group can be added to an item (ie: well done and lightly done will conflict, so only 1 can be added to a pizza). The price will update automatically when you add options.<BR><button class="btn btn-sm mt-0 toppings_btn bg-secondary flat-border"><i class="fa fa-check"></i><SPAN CLASS="pull-right">$X.XX</SPAN></button> will add the item with the options you selected to the receipt.<BR><button class="btn btn-sm bg-secondary toppings_btn"><i class="fa fa-fw fa-arrow-left"></i></button> will remove the last option added to the selected item, if it is not dimmed');
         newitem("Editing an item in your cart", 'Click <button class="btn-sm"><i class="fa fa-pencil-alt"></i></button> to the right of the item in the receipt, the same popup you used to add the item will appear');

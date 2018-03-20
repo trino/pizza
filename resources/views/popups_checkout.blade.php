@@ -21,135 +21,136 @@
             </div>
             <FORM ID="orderinfo" name="orderinfo">
                 <div class="modal-body">
-                    <div class="input_left_icon">
-                        <span class="fa-stack fa-2x">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-clock text-white fa-stack-1x"></i>
-                        </span>
-                    </div>
-
-                    <div class="input_right">
-                        <div>
-                            <SELECT id="deliverytime" TITLE="Delivery Time" class="form-control"/>
-                                <OPTION>Deliver ASAP</OPTION>
-                            </SELECT>
-                        </div>
-                    </div>
-                    <div class="input_left_icon" id="red_address">
-                        <span class="fa-stack fa-2x">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-map-marker text-white fa-stack-1x"></i>
-                        </span>
-                    </div>
-
-                    <div class="input_right">
-                        <div class="clear_loggedout addressdropdown proper-height" id="checkoutaddress"></div>
-                        <?php
-                            if (read("id")) {
-                                echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
+                    <?php
+                        $order = ["restaurant", "deliverytime", "useraddress", "userphone", "creditcard", "notes"];
+                        foreach($order as $key){
+                            switch($key){
+                                case "deliverytime": ?>
+                                    <div class="input_left_icon">
+                                        <span class="fa-stack fa-2x">
+                                           <i class="fa fa-circle fa-stack-2x"></i>
+                                           <i class="fa fa-clock text-white fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="input_right">
+                                        <div>
+                                            <SELECT id="deliverytime" TITLE="Delivery Time" class="form-control"/>
+                                                <OPTION>Deliver ASAP</OPTION>
+                                            </SELECT>
+                                        </div>
+                                    </div>
+                                <?php break; case "useraddress": ?>
+                                    <div class="input_left_icon" id="red_address">
+                                        <span class="fa-stack fa-2x">
+                                           <i class="fa fa-circle fa-stack-2x"></i>
+                                           <i class="fa fa-map-marker text-white fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="input_right">
+                                        <div class="clear_loggedout addressdropdown proper-height" id="checkoutaddress"></div>
+                                        <?php
+                                            if (read("id")) {
+                                                echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
+                                            }
+                                        ?>
+                                        <div class="clearfix"></div>
+                                        <DIV ID="error-saveaddresses"></DIV>
+                                    </div>
+                                <?php break; case "userphone": ?>
+                                    <div class="input_left_icon redhighlite" id="red_phone">
+                                        <span class="fa-stack fa-2x">
+                                           <i class="fa fa-circle fa-stack-2x"></i>
+                                           <i class="fa fa-mobile text-white fa-stack-1x" style="font-size: 1.5rem !important;"></i>
+                                        </span>
+                                    </div>
+                                    <div class="input_right">
+                                        <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>"  onblur="validateinput(this);">
+                                    </div>
+                                <?php break; case "restaurant": ?>
+                                    <div class="input_left_icon" id="red_rest">
+                                        <span class="fa-stack fa-2x">
+                                           <i class="fa fa-circle fa-stack-2x"></i>
+                                           <i class="fa fa-utensils text-white fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="input_right">
+                                        <SELECT class="form-control" ID="restaurant" ONCHANGE="restchange();">
+                                            <OPTION VALUE="0" SELECTED>Select Restaurant</OPTION>
+                                        </SELECT>
+                                    </div>
+                                <?php break; case "notes": ?>
+                                    <div class="input_left_icon">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-pencil-alt text-white fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="input_right">
+                                        <textarea placeholder="Order Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
+                                    </div>
+                                <?php break; case "creditcard": ?>
+                                    <div class="input_left_icon" id="red_card">
+                                        <span class="fa-stack fa-2x">
+                                           <i class="fa fa-circle fa-stack-2x"></i>
+                                           <i class="fa fa-credit-card text-white fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="input_right">
+                                        <DIV ID="credit-info"></DIV>
+                                    </div>
+                                    <div class="input_right">
+                                        <input type="text" size="20" class="form-control credit-info" autored="red_card" data-stripe="number" placeholder="Card Number">
+                                    </div>
+                                    <div class="input_left_icon"></div>
+                                    <div class="input_right">
+                                        <div class="thirdwidth pr-1">
+                                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_month">
+                                                <OPTION VALUE="01">01/Jan</OPTION>
+                                                <OPTION VALUE="02">02/Feb</OPTION>
+                                                <OPTION VALUE="03">03/Mar</OPTION>
+                                                <OPTION VALUE="04">04/Apr</OPTION>
+                                                <OPTION VALUE="05">05/May</OPTION>
+                                                <OPTION VALUE="06">06/Jun</OPTION>
+                                                <OPTION VALUE="07">07/Jul</OPTION>
+                                                <OPTION VALUE="08">08/Aug</OPTION>
+                                                <OPTION VALUE="09">09/Sep</OPTION>
+                                                <OPTION VALUE="10">10/Oct</OPTION>
+                                                <OPTION VALUE="11">11/Nov</OPTION>
+                                                <OPTION VALUE="12">12/Dec</OPTION>
+                                            </SELECT>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="thirdwidth pr-1">
+                                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_year">
+                                                <?php
+                                                    $CURRENT_YEAR = date("Y");
+                                                    $TOTAL_YEARS = 6;
+                                                    for ($year = $CURRENT_YEAR; $year < $CURRENT_YEAR + $TOTAL_YEARS; $year++) {
+                                                        echo '<OPTION VALUE="' . right($year, 2) . '">' . $year . '</OPTION>';
+                                                    }
+                                                ?>
+                                            </SELECT>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="thirdwidth">
+                                            <input style="margin-top: 0 !important;" type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
+                                            <INPUT style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest" id="istest">
+                                            @if(!islive() || read("profiletype") == 1)
+                                                <a class="credit-info pull-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
+                                            @endif
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="input_left_icon"></div>
+                                    <div class="input_right">
+                                        <DIV ID="error-saved-credit-info"></DIV>
+                                    </DIV>
+                                <?php break; default:
+                                    echo 'ERROR: ' . $key . ' is not defined!';
                             }
-                        ?>
-                        <div class="clearfix"></div>
-                        <DIV ID="error-saveaddresses"></DIV>
-                    </div>
-
-                    <div class="input_left_icon" id="red_rest">
-                        <span class="fa-stack fa-2x">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-utensils text-white fa-stack-1x"></i>
-                        </span>
-                    </div>
-
-                    <div class="input_right">
-                        <SELECT class="form-control" ID="restaurant" ONCHANGE="restchange();">
-                            <OPTION VALUE="0" SELECTED>Select Restaurant</OPTION>
-                        </SELECT>
-                    </div>
-
-                    @if(!read('phone'))
-                        <div class="input_left_icon redhighlite" id="red_phone">
-                            <span class="fa-stack fa-2x">
-                              <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-mobile text-white fa-stack-1x" style="font-size: 1.5rem !important;"></i>
-                            </span>
-                        </div>
-                        <div class="input_right">
-                            <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>"  onblur="validateinput(this);">
-                        </div>
-                    @endif
-
-                    <div class="input_left_icon" id="red_card">
-                        <span class="fa-stack fa-2x">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-credit-card text-white fa-stack-1x"></i>
-                        </span>
-                    </div>
-
-                    <div class="input_right">
-                        <DIV ID="credit-info"></DIV>
-                    </div>
-
-                    <div class="input_right">
-                        <input type="text" size="20" class="form-control credit-info" autored="red_card" data-stripe="number" placeholder="Card Number">
-                    </div>
-
-                    <div class="input_left_icon"></div>
-                    <div class="input_right">
-                        <div class="thirdwidth pr-1">
-                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_month">
-                                <OPTION VALUE="01">01/Jan</OPTION>
-                                <OPTION VALUE="02">02/Feb</OPTION>
-                                <OPTION VALUE="03">03/Mar</OPTION>
-                                <OPTION VALUE="04">04/Apr</OPTION>
-                                <OPTION VALUE="05">05/May</OPTION>
-                                <OPTION VALUE="06">06/Jun</OPTION>
-                                <OPTION VALUE="07">07/Jul</OPTION>
-                                <OPTION VALUE="08">08/Aug</OPTION>
-                                <OPTION VALUE="09">09/Sep</OPTION>
-                                <OPTION VALUE="10">10/Oct</OPTION>
-                                <OPTION VALUE="11">11/Nov</OPTION>
-                                <OPTION VALUE="12">12/Dec</OPTION>
-                            </SELECT>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="thirdwidth pr-1">
-                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_year">
-                                <?php
-                                    $CURRENT_YEAR = date("Y");
-                                    $TOTAL_YEARS = 6;
-                                    for ($year = $CURRENT_YEAR; $year < $CURRENT_YEAR + $TOTAL_YEARS; $year++) {
-                                        echo '<OPTION VALUE="' . right($year, 2) . '">' . $year . '</OPTION>';
-                                    }
-                                ?>
-                            </SELECT>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="thirdwidth">
-                            <input style="margin-top: 0 !important;" type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
-                            <INPUT style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest" id="istest">
-                            @if(!islive() || read("profiletype") == 1)
-                                <a class="credit-info pull-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
-                            @endif
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <div class="input_left_icon"></div>
-                    <div class="input_right">
-                    <DIV ID="error-saved-credit-info"></DIV>
-                    </DIV>
-
-                    <div class="input_left_icon">
-                        <span class="fa-stack fa-2x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-pencil-alt text-white fa-stack-1x"></i>
-                        </span>
-                    </div>
-                    <div class="input_right">
-                        <textarea placeholder="Order Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
-                    </div>
+                        }
+                    ?>
                     <div class="clearfix"></div>
                 </div>
 

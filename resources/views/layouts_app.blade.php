@@ -62,9 +62,9 @@
         @if(read("id"))
             <SPAN class="loggedin profiletype profiletype1">
                 <?php
-                foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings") as $table) {
-                    echo '<li><A HREF="' . webroot("list/" . $table, true) . '" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> ' . str_replace("_", " ", ucfirst($table)) . ' list</A></li>';
-                }
+                    foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings") as $table) {
+                        echo '<li><A HREF="' . webroot("list/" . $table, true) . '" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> ' . str_replace("_", " ", ucfirst($table)) . ' list</A></li>';
+                    }
                 ?>
                 <li><A HREF="<?= webroot("editmenu", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Edit Menu</A></li>
                 <li><A HREF="<?= webroot("list/debug", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Debug log</A></li>
@@ -87,40 +87,39 @@
         @if($routename == "help")
             <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
         @else
-            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> More Info</A></LI>
+            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs <!-- Shouldn't it be <?= getsetting("aboutus"); ?> ?--></A></LI>
         @endif
         @if(read("id"))
             <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
         @endif
     </ul>
 
-    <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white"
-       style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
+    <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
     <?php
-    if (!islive()) {
-        echo '<SPAN TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
-        $user = first("SELECT * FROM users WHERE profiletype = 1");
-        $ispass = \Hash::check("admin", $user["password"]);
+        if (!islive()) {
+            echo '<SPAN TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
+            $user = first("SELECT * FROM users WHERE profiletype = 1");
+            $ispass = \Hash::check("admin", $user["password"]);
 
-        $currtime = millitime();
-        $lasttime = getsetting("lastupdate", 0);
-        $delay = $currtime - $lasttime;
-        echo " Curr: " . $currtime . " Last: " . $lasttime . " Between: " . $delay;
-        if ($delay < 1000) {
-            echo " - Likely refreshed!";
-        }
-        setsetting("lastupdate", $currtime);
+            $currtime = millitime();
+            $lasttime = getsetting("lastupdate", 0);
+            $delay = $currtime - $lasttime;
+            echo " Curr: " . $currtime . " Last: " . $lasttime . " Between: " . $delay;
+            if ($delay < 1000) {
+                echo " - Likely refreshed!";
+            }
+            setsetting("lastupdate", $currtime);
 
-        if ($ispass) {
-            echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
-        } else {
-            echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
+            if ($ispass) {
+                echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
+            } else {
+                echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
+            }
+            if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
+                echo " - Not HTTPS";
+            }
+            echo '</SPAN>';
         }
-        if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
-            echo " - Not HTTPS";
-        }
-        echo '</SPAN>';
-    }
     ?>
 </div>
 
@@ -132,11 +131,13 @@
     <div class="container-fluid d-none d-sm-block list-group-item">
         <div class="row">
             <div class="col-sm-12">
-                <a CLASS="btn btn-sm text-muted" href="<?= webroot("help"); ?>"> <i style="font-size: 1rem !important;"
-                                                                                    class="fa fa-question-circle icon-width"></i>
-                    More Info</a>
-                @if(isset($_GET["time"])) <SPAN id="servertime"
-                                                CLASS="text-muted pull-right">Server time: <?= my_now(); ?></SPAN> @endif
+                <a CLASS="btn btn-sm text-muted" href="<?= webroot("help"); ?>">
+                    <i style="font-size: 1rem !important;" class="fa fa-question-circle icon-width"></i>
+                    <?= getsetting("aboutus"); ?>
+                </a>
+                @if(isset($_GET["time"]))
+                    <SPAN id="servertime" CLASS="text-muted pull-right">Server time: <?= my_now(); ?></SPAN>
+                @endif
             </div>
         </div>
     </div>
@@ -148,7 +149,7 @@
     @if(isset($_GET["time"]) && is_numeric($_GET["time"]) && $_GET["time"] >= 0 && $_GET["time"] < 2400)
         newtime = Number("<?= $_GET["time"]; ?>");
     @endif
-            @if(isset($_GET["day"]) && is_numeric($_GET["day"]) && $_GET["day"] >= 0 && $_GET["day"] <= 6)
+    @if(isset($_GET["day"]) && is_numeric($_GET["day"]) && $_GET["day"] >= 0 && $_GET["day"] <= 6)
         newday = Number("<?= $_GET["day"]; ?>");
     @endif
     $(window).load(function () {
@@ -169,32 +170,32 @@
 
 <div style="display: none;">
     <?php
-    if (isset($GLOBALS["filetimes"])) {
-        // && !islive()){
-        echo '<TABLE><TR><TH COLSPAN="2">File times</TH></TR>';
-        $total = 0;
-        foreach ($GLOBALS["filetimes"] as $Index => $Values) {
-            echo '<TR><TD>' . $Index . '</TD><TD>';
-            if (isset($Values["start"]) && isset($Values["end"])) {
-                $val = round($Values["end"] - $Values["start"], 4);
-                if (strpos($val, ".") === false) {
-                    $val .= ".000";
+        if (isset($GLOBALS["filetimes"])) {
+            // && !islive()){
+            echo '<TABLE><TR><TH COLSPAN="2">File times</TH></TR>';
+            $total = 0;
+            foreach ($GLOBALS["filetimes"] as $Index => $Values) {
+                echo '<TR><TD>' . $Index . '</TD><TD>';
+                if (isset($Values["start"]) && isset($Values["end"])) {
+                    $val = round($Values["end"] - $Values["start"], 4);
+                    if (strpos($val, ".") === false) {
+                        $val .= ".000";
+                    } else {
+                        $val = str_pad($val, 4, "0");
+                    }
+                    echo $val . "s";
+                    $total += $val;
                 } else {
-                    $val = str_pad($val, 4, "0");
+                    echo "Unended";
                 }
-                echo $val . "s";
-                $total += $val;
-            } else {
-                echo "Unended";
+                echo '</TD></TR>';
             }
-            echo '</TD></TR>';
+            $total = str_pad(round($total, 4), 5, "0");
+            echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
+            echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
+            echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
+            echo '</TABLE>';
         }
-        $total = str_pad(round($total, 4), 5, "0");
-        echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
-        echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
-        echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
-        echo '</TABLE>';
-    }
     ?>
 </div>
 

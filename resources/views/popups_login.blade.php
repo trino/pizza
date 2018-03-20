@@ -15,14 +15,15 @@
 
 
 <div class="row">
-
-
     <DIV CLASS="col-lg-4 col-md-5 bg-white">
         <DIV CLASS="btn-sm-padding bg-white" style="padding-bottom: 1rem !important;padding-top: .5rem !important;">
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();" style="font-weight: bold">LOG IN</a>
                 </li>
+                <A class="nav-link">
+                    &nbsp;or&nbsp;
+                </A>
                 <li class="nav-item">
                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();" style="font-weight: bold">SIGN UP</a>
                 </li>
@@ -83,51 +84,49 @@
 
     </DIV>
     <div class="col-lg-8 col-md-7 py-3 bg-inverse" style="padding-right: 15px;    padding-left: 15px; z-index: 9999">
-            <span style=";font-size: 2.5rem; font-weight: bold;line-height: 3.1rem;"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
-            <p>The art of delivery is in the team, local restaurants at your footstep within <?= $time; ?> minutes.</p>
-            <div class="row">
-                <div class="col-md-6" style="padding-right: 15px;
-    padding-left: 15px;">
-                    <TABLE STYLE="display: inline">
-                        <TR>
-                            <TD COLSPAN="3"><p class="lead strong">HOURS OF OPERATION</p></TD>
-                        </TR>
-                        <?php
-                            $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                            for ($day = 0; $day < 7; $day++) {
-                                echo '<TR><TD>' . $daysofweek[$day] . "&nbsp;&nbsp;&nbsp; </TD>";
-                                $open = $hours[$day . "_open"];
-                                $close = $hours[$day . "_close"];
-                                if ($open == "-1" || $close == "-1") {
-                                    echo '<TD COLSPAN="2"">Closed';
-                                } else {
-                                    echo '<TD>' . GenerateTime($open) . ' to&nbsp;</TD><TD>' . GenerateTime($close);
-                                }
-                                echo '</TD></TR>';
+        <span style=";font-size: 2.5rem; font-weight: bold;line-height: 3.1rem;"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
+        <p>The art of delivery is in the team, local restaurants at your footstep within <?= $time; ?> minutes.</p>
+        <P><I class="lead text-danger strong">Feed yourself plus someone else! - <a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= getsetting("aboutus"); ?></a></i></P>
+
+        <div class="row">
+            <div class="col-md-6 padleftright15">
+                <TABLE STYLE="display: inline">
+                    <TR>
+                        <TD COLSPAN="3"><p class="lead strong">HOURS OF OPERATION</p></TD>
+                    </TR>
+                    <?php
+                        $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                        for ($day = 0; $day < 7; $day++) {
+                            echo '<TR><TD>' . $daysofweek[$day] . "&nbsp;&nbsp;&nbsp; </TD>";
+                            $open = $hours[$day . "_open"];
+                            $close = $hours[$day . "_close"];
+                            if ($open == "-1" || $close == "-1") {
+                                echo '<TD COLSPAN="2"">Closed';
+                            } else {
+                                echo '<TD>' . GenerateTime($open) . ' to&nbsp;</TD><TD>' . GenerateTime($close);
                             }
-                        ?>
-                    </TABLE>
-                </div>
-
-
-
-                <div class="col-md-6" style="padding-right: 15px;    padding-left: 15px;">
-                    <TABLE STYLE="display: inline;">
-                        <TR>
-                            <TD COLSPAN="2"><p class="lead strong">DISCOUNTS</p></TD>
-                        </TR>
-                        <?php
-                            $discounts = select_field_where("additional_toppings", "size like 'over$%'", false);
-                            foreach ($discounts as $discount) {
-                                echo '<TR><TD>Orders ' . str_replace("$", " $", $discount["size"]) . "</TD><TD>&nbsp;get " . $discount["price"] . '% off</TD></TR>';
-                            }
-                        ?>
-                    </TABLE>
-                </div>
+                            echo '</TD></TR>';
+                        }
+                    ?>
+                </TABLE>
             </div>
-        <br>
-            <i class="lead text-danger strong">"Faster Than Calling The Store!" <a class="btn-link" href="<?= webroot("help"); ?>" role="button"> - </i> LEARN MORE</a></i>
 
+
+
+            <div class="col-md-6 padleftright15" style="display: none;">
+                <TABLE STYLE="display: inline;">
+                    <TR>
+                        <TD COLSPAN="2"><p class="lead strong">DISCOUNTS</p></TD>
+                    </TR>
+                    <?php
+                        $discounts = select_field_where("additional_toppings", "size like 'over$%'", false);
+                        foreach ($discounts as $discount) {
+                            echo '<TR><TD>Orders ' . str_replace("$", " $", $discount["size"]) . "</TD><TD>&nbsp;get " . $discount["price"] . '% off</TD></TR>';
+                        }
+                    ?>
+                </TABLE>
+            </div>
+        </div>
     </div>
 </div>
 

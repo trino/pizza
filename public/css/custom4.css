@@ -399,6 +399,11 @@ body.loading {
     color: blue;
 }
 
+.padleftright15{
+    padding-right: 15px !important;
+    padding-left: 15px !important;;
+}
+
 .toppinglist {
     border: 0px solid blue !important;
     width: 100%;
