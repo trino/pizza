@@ -1,7 +1,7 @@
 <HTML>
-    <table border="0" cellpadding="0" cellspacing="0" style="background-color: #dc3545; border: 1px solid #dcdcdc; border-radius: 3px !important; margin: auto; max-width: 600px;">
+    <table border="0" cellpadding="0" cellspacing="0" style="background-color: #fff; border: 1px solid #dcdcdc; border-radius: 3px !important; margin: auto; max-width: 600px;">
         <tr>
-            <td style="padding: 20px; display:block; background-color: red;">
+            <td style="padding: 20px; display:block; background-color: #dc3545;">
                 <h1 style="color:#ffffff;font-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 30px; font-weight: 300; line-height: 150%; margin: 0; text-align: left;">
                     Customer order
                 </h1>
