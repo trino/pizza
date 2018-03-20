@@ -19,12 +19,12 @@ switch($_SERVER["SERVER_NAME"]){
         $stripefile = $dirroot . "/../vendor/stripe/stripe-php/init.php";
         require_once($stripefile);
         define("serverurl", "hamiltonpizza.ca");
-        define("sitename", "hamiltonpizza.ca");
+        define("sitename", "Hamilton Pizza");
         define("cityname", "Hamilton");
     break;
     default:
         define("serverurl", "http://" . $_SERVER["SERVER_NAME"] . "/ai/");
-        define("sitename", "localhost");
+        define("sitename", "Hamilton Pizza (localhost)");
         define("cityname", "local");
         $islive=false;
 }

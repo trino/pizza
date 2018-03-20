@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('/call',                 'HomeController@robocall');
     Route::any('/test',                 'HomeController@index');
     Route::any('/help',                 'HomeController@help');
+    Route::any('/tos',                  'HomeController@termsofservice');
     Route::any('/editmenu',             'HomeController@editmenu');
 
     Route::any('/list/{table}',         'HomeController@tablelist');

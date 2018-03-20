@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2018 at 09:36 PM
+-- Generation Time: Mar 20, 2018 at 08:47 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -76,7 +76,7 @@ INSERT INTO `additional_toppings` (`id`, `size`, `price`) VALUES
 (3, 'Large', 1.5),
 (4, 'X-Large', 1.7),
 (6, 'Panzerotti', 0.95),
-(7, 'Delivery', 3),
+(7, 'Delivery', 4),
 (8, 'Minimum', 15),
 (10, 'DeliveryTime', 45),
 (11, 'over$20', 10),
@@ -236,7 +236,15 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `placed_at`, `number`, `unit`, `buzzcode`, `street`, `postalcode`, `city`, `province`, `latitude`, `longitude`, `accepted_at`, `restaurant_id`, `type`, `payment_type`, `phone`, `cell`, `paid`, `stripeToken`, `deliverytime`, `cookingnotes`, `status`, `price`, `email`) VALUES
-(271, 1, '2018-02-20 19:07:04', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 1, 0, 0, '9055123067', '', 1, 'tok_CMP8nPP3di3v5a', 'Deliver Now', '', 0, '25.81', NULL);
+(272, 1, '2018-03-20 18:30:49', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 1, 0, 0, '9055123067', '', 1, '', 'Deliver Now', '', 0, '70.60', NULL),
+(273, 1, '2018-03-20 18:39:37', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 1, 0, 0, '9055123067', '', 1, '', 'Deliver Now', '', 0, '28.28', NULL),
+(274, 74, '2018-03-06 18:57:11', 9554, '', '', 'Gold Creek Dr', 'N0L 1R0', 'Komoka', 'Ontario', '42.9601505', '-81.4849633', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, 'tok_CReGYyb2udYLeZ', 'Deliver Now', '', 0, '32.82', NULL),
+(275, 74, '2018-03-06 19:00:56', 9554, '', '', 'Gold Creek Dr', 'N0L 1R0', 'Komoka', 'Ontario', '42.9601505', '-81.4849633', '0000-00-00 00:00:00', 1, 0, 0, '9055315331', '', 1, 'tok_CReKIcxKdnl3ep', 'Deliver Now', '', 0, '34.35', NULL),
+(276, 1, '2018-03-20 18:31:13', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 3, 0, 0, '9055315332', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL),
+(277, 1, '2018-03-20 18:41:27', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 3, 0, 0, '9055315332', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL),
+(278, 1, '2018-03-20 18:41:41', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, 'tok_CUcHyeI7umScRE', 'Deliver Now', '', 0, '25.93', NULL),
+(279, 1, '2018-03-14 17:07:18', 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, 'tok_CUcIsWVursyMHW', 'Deliver Now', '', 0, '24.80', NULL),
+(280, 1, '2018-03-20 14:59:29', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'March 20 at 1145', '', 0, '144.78', NULL);
 
 -- --------------------------------------------------------
 
@@ -295,7 +303,6 @@ CREATE TABLE `restaurants` (
 --
 
 INSERT INTO `restaurants` (`id`, `name`, `slug`, `email`, `phone`, `cuisine`, `website`, `description`, `logo`, `is_delivery`, `is_pickup`, `max_delivery_distance`, `delivery_fee`, `minimum`, `is_complete`, `lastorder_id`, `franchise`, `address_id`) VALUES
-(1, 'Fabulous 2 for 1 Pizza', '', '5194397779', '5194397779', '', '', '', '', 1, 0, 100, 0, 0, 0, 0, 0, 1),
 (2, 'INACTIVE Marvellous Pizza', '', '(519) 452-1044', '', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 2),
 (3, 'Test Pizza Store', 'Quality Pizza & Wings', '(905) 573-8800', '9055315331', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 0, 97),
 (4, 'King Pizza', '', '(905) 662-6672', '', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 108),
@@ -326,25 +333,31 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
-(1, 'lastSQL', '1519158727'),
-(20, 'orders', '1519151188'),
-(24, 'menucache', '1519153619'),
+(1, 'lastSQL', '1519159029'),
+(20, 'orders', '1519239848'),
+(24, 'menucache', '1521573702'),
 (25, 'useraddresses', '1495910443'),
 (37, 'users', '1495489938'),
-(38, 'additional_toppings', '1487175322'),
-(43, 'actions', '1493735344'),
+(38, 'additional_toppings', '1521567842'),
+(43, 'actions', '1519230780'),
 (87, 'restaurants', '1489588141'),
 (1398, 'shortage', '1493135529'),
 (1537, 'combos', '1493826841'),
 (1552, 'debugmode', '0'),
 (1553, 'domenucache', '1'),
-(1554, 'settings', '1494344646'),
+(1554, 'settings', '1521569174'),
 (1560, 'onlyfiftycents', '1'),
 (1579, 'deletetopping', '0'),
 (1582, 'localhostdialing', '0'),
 (1593, 'maxdistance_live', '5'),
 (1594, 'maxdistance_local', '20'),
-(1600, 'lastupdate', '1519158035742');
+(1600, 'lastupdate', '1521575099782'),
+(2316, 'headercolor', '#DC3545'),
+(2454, 'myaddress', 'My Saved Address List'),
+(2461, 'noaddresses', 'No Addresses Saved'),
+(2467, 'mycreditcard', 'My Saved Credit Card List'),
+(2470, 'nocreditcards', 'No Credit Cards'),
+(2478, 'aboutus', 'Our Story');
 
 -- --------------------------------------------------------
 
@@ -446,7 +459,7 @@ INSERT INTO `useraddresses` (`id`, `user_id`, `number`, `unit`, `buzzcode`, `str
 (97, 50, 2372, '', '', 'Barton St E', 'L8E 2W7', 'Hamilton', 'Ontario', '43.2376467', '-79.765102399999', ''),
 (103, 54, 18, 'side door', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', ''),
 (104, 55, 1001, '', '', 'Fanshawe College Blvd', 'N5V 2A5', 'London', 'Ontario', '43.013414', '-81.199466000000', ''),
-(105, 1, 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', ''),
+(105, -1, 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', ''),
 (106, 56, 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304400000000', '-79.7693198', ''),
 (107, 57, 2227, '', '', 'Wharncliffe Rd S', 'N6P 1K9', 'London', 'Ontario', '42.9137999999999', '-81.289999999999', ''),
 (108, 60, 0, '', '', '44 King St E, Stoney Creek, ON L8G 1K1\r\n', '', '', '', '43.2162632', '-79.755773899999', ''),
@@ -461,7 +474,12 @@ INSERT INTO `useraddresses` (`id`, `user_id`, `number`, `unit`, `buzzcode`, `str
 (117, 69, 0, '', '', '6-15 Lockport Way, Stoney Creek, ON L8E 0H8 ', '', '', '', '43.2180072', '-79.633158799999', ''),
 (118, 70, 400, '123', '', 'Richmond St', 'N6A 3C7', 'London', 'Ontario', '42.9834744', '-81.249403499999', ''),
 (120, 71, 300, '', '', 'Dundas St', 'N6B 1T6', 'London', 'Ontario', '42.9854177', '-81.244139099999', ''),
-(121, 0, 2396, '', '', 'Sinclair Cir', 'L7P 3C3', 'Burlington', 'Ontario', '43.3658326', '-79.836305199999', '');
+(121, 0, 2396, '', '', 'Sinclair Cir', 'L7P 3C3', 'Burlington', 'Ontario', '43.3658326', '-79.836305199999', ''),
+(122, 72, 2396, '', '', 'Sinclair Cir', 'L7P 3C3', 'Burlington', 'Ontario', '43.3658326', '-79.836305199999', ''),
+(123, 73, 2396, '', '', 'Asima Dr', 'N6M 0B3', 'London', 'Ontario', '42.9505', '-81.1735999', ''),
+(124, 74, 9554, '', '', 'Gold Creek Dr', 'N0L 1R0', 'Komoka', 'Ontario', '42.9601505', '-81.4849633', ''),
+(125, 75, 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', ''),
+(126, 1, 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '');
 
 -- --------------------------------------------------------
 
@@ -490,9 +508,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `lastlogin`, `loginattempts`, `profiletype`, `authcode`, `stripecustid`) VALUES
-(1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '0000-00-00 00:00:00', '2017-04-25 17:52:10', '9055123067', 1487608084, 0, 1, '', 'cus_CMP8XVe641qT0g'),
+(1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$rKLl0XAZWkS1b1bxKHE6l.MitqKf2mCS5VlcxVPhTf1a7CUTJqgsO', '', '0000-00-00 00:00:00', '2018-03-20 19:19:33', '9055315331', 1487608084, 0, 1, '', 'cus_CMP8XVe641qT0g'),
 (2, 'Roy Test', 'roy+test@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:20:28', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
-(3, 'thanhtrungtran@live.com', 'thanhtrungtran@live.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:49:31', '0000-00-00 00:00:00', '9055555555', 1481048458, 0, 2, '', 'cus_9yYE78hosPbuGH'),
 (4, 'Marvellous', 'info+mar@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2017-02-14 20:28:50', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
 (48, 'Van Trinh', 'info@trinoweb.com', '$2y$10$.0DQCK8l9YOr49mc3AcEr.8zemyiRmUa1j69p5MJO4vf6PCIAOip.', '', '2017-04-01 21:18:32', '2017-04-22 17:15:53', '', 1516924073, 1, 0, '', ''),
 (50, 'Quality Pizza & Wings', 'odealyonline@gmail.com', '$2y$10$S5SNVTZgWk9Ufe.kLdtaMOOMo2VxRqkXUpv1k/af09Bn1c32UUrcq', '', '2017-04-01 22:20:18', '0000-00-00 00:00:00', '', 1494703615, 1, 2, '', ''),
@@ -507,8 +524,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `creat
 (67, 'Venice Beach Pizzeria\'s', '8', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
 (68, 'Carlo\'s Pizza & Grill', '9', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
 (69, 'D & A Pizza', '10', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', NULL, NULL, NULL, '', 0, 0, 2, '', ''),
-(70, 'van man', 'info+123@trinoweb.com', '$2y$10$aNnSkhs6W2dT.bXDmvbMBeS/IiTu/GeIdbOjS0RdIBEzGTzR1TEV6', '', '2017-05-14 02:46:02', '0000-00-00 00:00:00', '9055555555', 0, 0, 0, '', 'cus_AeOFan6Dkhx1z3'),
-(71, 'Van Trinh', 'info+1@trinoweb.com', '$2y$10$7WYvtqX7bYXkQ2HNuGSwhOSTerMLnMg9avpx7uWR.qoFry/0Ctq56', '', '2017-05-17 08:52:31', '0000-00-00 00:00:00', '9055315331', 0, 0, 0, '', 'cus_AfbdK2a7UF5t9R');
+(75, 'Tanya Myoko', 'roy+test23@trinoweb.com', '$2y$10$WzkzhZG5z0ZAJPxPZMfjj.ecNFwsgzrjQGONy187W/aDeC3OpbA/i', '', '2018-03-14 17:31:48', '0000-00-00 00:00:00', '', 0, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -660,7 +676,7 @@ ALTER TABLE `combos`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=272;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=281;
 
 --
 -- AUTO_INCREMENT for table `presets`
@@ -678,7 +694,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1881;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2542;
 
 --
 -- AUTO_INCREMENT for table `shortage`
@@ -690,13 +706,13 @@ ALTER TABLE `shortage`
 -- AUTO_INCREMENT for table `useraddresses`
 --
 ALTER TABLE `useraddresses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -62,6 +62,10 @@ class HomeController extends Controller {
         return view("home_editmenu")->render();
     }
 
+    public function termsofservice(Request $request){
+        return view("home_tos")->render();
+    }
+
     public function placeorder($POST = ""){
         if (!read("id")) {
             return array("Status" => false, "Reason" => "You are not logged in");

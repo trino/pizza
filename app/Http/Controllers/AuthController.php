@@ -121,17 +121,22 @@ class AuthController extends Controller {
                         case "forgotpassword":
                             $user["password"] = $this->generateRandomString(6);
                             $user["mail_subject"] = "Forgot password";
-                            $text = $this->sendEMail("email_forgotpassword", $user);
-                            if ($text) {//email failed to send
-                                $ret["Status"] = false;
-                                $ret["Reason"] = $text;
-                            } else {//only save change if email was sent
-                                $ret["Reason"] = "A new password has been emailed to you";
-                                $user["password"] = \Hash::make($user["password"]);
-                                unset($user["mail_subject"]);
-                                unset($user["Addresses"]);
-                                unset($user["Others"]);
-                                insertdb("users", $user);
+                            $ret["Status"] = false;
+                            if (strtolower($email) == "roy@trinoweb.com") {
+                                $ret["Reason"] = "I refuse to reset this account";
+                            } else {
+                                $text = $this->sendEMail("email_forgotpassword", $user);
+                                if ($text) {//email failed to send
+                                    $ret["Reason"] = $text;
+                                } else {//only save change if email was sent
+                                    $ret["Status"] = true;
+                                    $ret["Reason"] = "A new password has been emailed to you";
+                                    $user["password"] = \Hash::make($user["password"]);
+                                    unset($user["mail_subject"]);
+                                    unset($user["Addresses"]);
+                                    unset($user["Others"]);
+                                    insertdb("users", $user);
+                                }
                             }
                             break;
                     }
