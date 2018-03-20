@@ -44,6 +44,9 @@ class HomeController extends Controller {
     }
 
     public function robocall(Request $request){
+        if(!isset($_GET["message"]) && isset($_POST["message"])){
+            $_GET["message"] = $_POST["message"];
+        }
         die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>');
     }
 
@@ -143,7 +146,7 @@ class HomeController extends Controller {
                 $info["phone"] = read("phone");
             }
             $orderid = insertdb("orders", $info);
-            $dir = resource_path("orders");//no / at the end
+            $dir = public_path("orders");//no / at the end
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }

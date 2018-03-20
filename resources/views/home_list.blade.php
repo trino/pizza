@@ -306,7 +306,7 @@
                         case "orders":
                             //$actions = actions("order_declined");
                             changeorderstatus($id, 2, "Order was deleted");//ID gets deleted somehow...
-                            deletefile(resource_path("orders") . "/" . $id . ".json");//deletes the order file
+                            deletefile(public_path("orders") . "/" . $id . ".json");//deletes the order file
                             break;
                         case "useraddresses":
                             Query("UPDATE restaurants SET address_id = 0 WHERE address_id = " . $id);//unbinds any restaurant from this address
@@ -551,7 +551,16 @@
                 .extrainfo{
                     display: none;
                 }
+
+                INPUT[TYPE=COLOR]{
+                    width: 100px !important;
+                    height: 31px !important;
+                    margin-right: 5px;
+                    float: right;
+                    padding-left: 2px !important;
+                }
             </STYLE>
+            <SCRIPT SRC="https://www.w3schools.com/lib/w3color.js"></SCRIPT>
             <div class="row m-t-1">
                 <div class="col-md-12">
                     <div class="card">
@@ -560,7 +569,8 @@
                                 <div class="dropdown">
                                     <Button class="btn btn-primary dropdown-toggle text-white" type="button" data-toggle="dropdown" onclick="$('#alllist').toggle();">
                                         <i class="fa fa-{{ $faicon }}"></i>
-                                        {{ ucfirst($table) . ' ' . $secondword . ' ' . $extratitle }}</Button>
+                                        {{ ucfirst($table) . ' ' . $secondword . ' ' . $extratitle }}
+                                    </Button>
                                     <ul class="dropdown-menu" id="alllist">
                                         <?php
                                             //show all administratable tables
@@ -823,7 +833,7 @@
                             case "settings.value":
                                 var keyname = getcolumn(alldata, "keyname");
                                 switch(keyname){
-                                    case "debugmode":case "domenucache":case "onlyfiftycents":
+                                    case "debugmode": case "domenucache": case "onlyfiftycents":
                                         return iif(data == 1, "Yes", "No");
                                         break;
                                 }
@@ -838,6 +848,11 @@
                         } else if(isObject(alldata)){
                             return alldata[column];
                         }
+                    }
+
+                    function convertcolor(color){
+                        c = w3color(color.toLowerCase());
+                        return c.toHexString();
                     }
 
                     function checkheaders(TableID){
@@ -911,6 +926,7 @@
                                                 case "maxdistance_live":    prititle = "How far a store can be away from the customer while on the live server"; break;
                                                 case "maxdistance_local":   prititle = "How far a store can be away from the customer while NOT on the live server"; break;
                                                 case "lastupdate":          prititle = "Used for auto-updating the SQL file. Set to 0 to force an update"; break;
+                                                case "headercolor":         prititle = "What color to use for the titlebar"; break;
                                             }
                                         } else if(table == "additional_toppings"){
                                             switch(data.table[i]["size"]){
@@ -947,6 +963,14 @@
                                                     break;
                                                 case "orders.deliverytime":
                                                     field = DeliveryTime(field, CurrentDate);
+                                                    break;
+                                                case "settings.value":
+                                                    var keyname = getcolumn(data.table[i], "keyname");
+                                                    switch(keyname){
+                                                        case "headercolor":
+                                                            prititle += '<INPUT TYPE="COLOR" ID="' + ID + "_" + keyname + '" VALUE="' + convertcolor(getcolumn(data.table[i], "value")) + '" TITLE="Type: ' + keyname + '" ONCHANGE="edititem(' + ID + ", 'value', $(this).val()" + ');">';
+                                                            break;
+                                                    }
                                                     break;
                                             }
                                             if (fields[v] == "phone"){
@@ -1100,7 +1124,7 @@
                                                                 @endif
                                                                 log("GOT HERE");
                                                                 HTML = makeselect(ID + "_" + field, "selectfield form-control", colname, HTML, itemlist2select(ID, "restaurants") );
-                                                            break;
+                                                                break;
 
                                                             case "shortage.item_id":
                                                                 isSelect=true;
@@ -1108,7 +1132,7 @@
                                                                 break;
 
                                                             default:
-                                                                title= "Type: " + colname;
+                                                                title = "Type: " + colname;
                                                                 HTML = '<INPUT TYPE="NUMBER" ID="' + ID + "_" + field + '" VALUE="' + HTML + '" CLASS="textfield" TITLE="' + title + '" MIN="';
                                                                 HTML += min + '" MAX="' + max + '" COLNAME="' + colname + '">';
                                                         }
@@ -1137,7 +1161,7 @@
                                                                 break;
                                                             case "settings.value":
                                                                 switch(getcolumn(ID, "keyname")){
-                                                                    case "debugmode":case "domenucache":case "onlyfiftycents":
+                                                                    case "debugmode": case "domenucache": case "onlyfiftycents":
                                                                         isSelect=true;
                                                                         HTML = makeselect(ID + "_" + field, "selectfield form-control", colname, HTML, [{value: 0, text: "No"}, {value: 1, text: "Yes"}]   );
                                                                         break;
@@ -1698,6 +1722,15 @@
                                 case "shortage.tablename":
                                     var itemid = "#shortage_" + ID + "_item_id";
                                     $(itemid).text(getdata("item_id", $(itemid).attr("realvalue"), ID));
+                                    break;
+                                case "settings.value":
+                                    var fieldname = $("#settings_" + ID + "_keyname").attr("realvalue");
+                                    switch(fieldname){
+                                        case "headercolor":
+                                            $("#" + ID + "_headercolor").val(convertcolor(data));
+                                            $("#headerbar").attr("style", "background-color: " + data + ";");
+                                            break;
+                                    }
                                     break;
                             }
                             log("Verifying: " + colname + " = '" + data + "' (" + datatype + ")");

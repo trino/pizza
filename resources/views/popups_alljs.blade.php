@@ -1189,6 +1189,9 @@
         if (isUndefined(action)) {
             action = "verify";
         }
+        if($("#login_email").length > 0) {
+            $("#login_email").val($("#login_email").val().trim());
+        }
         if(action !== "logout" && $("#login_email").length > 0){
             if (!$("#login_email").valid()) {
                 return validateinput("#login_email", makestring("{email_needed}"));
@@ -1231,7 +1234,7 @@
                             }
                             break;
                         case "forgotpassword": case "verify":
-                            ajaxerror(data["Reason"], "Login");
+                            validateinput("#login_email", data["Reason"]);
                             break;
                         case "logout":
                             removeCookie();
