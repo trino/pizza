@@ -66,6 +66,14 @@ class HomeController extends Controller {
         return view("home_tos")->render();
     }
 
+    public function ourstory(Request $request){
+        return view("home_ourstory")->render();
+    }
+
+    public function privacy(Request $request){
+        return view("home_privacy")->render();
+    }
+
     public function placeorder($POST = ""){
         if (!read("id")) {
             return array("Status" => false, "Reason" => "You are not logged in");

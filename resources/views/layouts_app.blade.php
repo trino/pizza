@@ -87,7 +87,7 @@
         @if($routename == "help")
             <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
         @else
-            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs <!-- Shouldn't it be <?= getsetting("aboutus"); ?> ?--></A></LI>
+            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
         @endif
         @if(read("id"))
             <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
@@ -95,9 +95,15 @@
     </ul>
 
     <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
+
+    <A HREF="<?= webroot("ourstory"); ?>" class="align-left align-middle text-white"><?= getsetting("aboutus"); ?>,</A>&nbsp;
+    <A HREF="<?= webroot("help"); ?>" class="align-left align-middle text-white">FAQs,</A>&nbsp;
+    <A HREF="<?= webroot("tos"); ?>" class="align-left align-middle text-white">TOS,</A>
+    <A HREF="<?= webroot("privacy"); ?>" class="align-left align-middle text-white">Privacy Policy</A>
+
     <?php
         if (!islive()) {
-            echo '<SPAN TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
+            echo '<BR><SPAN TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
             $user = first("SELECT * FROM users WHERE profiletype = 1");
             $ispass = \Hash::check("admin", $user["password"]);
 
@@ -133,7 +139,7 @@
             <div class="col-sm-12">
                 <a CLASS="btn btn-sm text-muted" href="<?= webroot("help"); ?>">
                     <i style="font-size: 1rem !important;" class="fa fa-question-circle icon-width"></i>
-                    <?= getsetting("aboutus"); ?>
+                    FAQs
                 </a>
                 @if(isset($_GET["time"]))
                     <SPAN id="servertime" CLASS="text-muted pull-right">Server time: <?= my_now(); ?></SPAN>

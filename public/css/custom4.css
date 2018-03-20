@@ -404,6 +404,10 @@ body.loading {
     padding-left: 15px !important;;
 }
 
+.list-card{
+    min-height: 500px;
+}
+
 .toppinglist {
     border: 0px solid blue !important;
     width: 100%;

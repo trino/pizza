@@ -595,7 +595,7 @@
                 Please contact the restaurant directly
                 <DIV CLASS="clearfix"></DIV>
             @endif
-            <a class="btn-link btn mt-3 pl-0" href="<?= webroot("help"); ?>"><?= getsetting("aboutus"); ?></a>
+            <a class="btn-link btn mt-3 pl-0" href="<?= webroot("help"); ?>">FAQs</a>
         </DIV>
     @endif
 

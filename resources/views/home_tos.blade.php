@@ -5,8 +5,9 @@
         margin-bottom: 5px;
     }
 </STYLE>
-<H4 CLASS="title">Terms of use</H4>
-<div id="terms">
+<div class="row">
+    <DIV CLASS="col-lg-12 bg-white list-padding list-card">
+        <H4 CLASS="title">Terms of use</H4>
     <?php
         $site_name = sitename;
         $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
@@ -248,5 +249,6 @@
     <p>However, it is the restaurants that prepares the dishes, please use the notes section on the receipt to specify particular allergies.</p>
     <p>If you are in any doubt about the presence of allergens, you should confirm with the restaurant.</p>
     <p>Last updated: February 15, 2017</p>
+    </div>
 </div>
 @endsection
