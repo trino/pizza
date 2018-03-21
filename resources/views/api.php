@@ -4,6 +4,7 @@ $dirroot = getcwd();
 if (!endswith($dirroot, "/public")){
     $dirroot = $dirroot . "/public";
 }
+define("headercolor", "#DC3545");
 switch($_SERVER["SERVER_NAME"]){
     case 'scpizza.ca':
         define("serverurl", "scpizza.ca");

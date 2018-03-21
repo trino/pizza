@@ -54,7 +54,7 @@
 </head>
 <body>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
-<div ID="headerbar" class="list-group-item container-fluid shadow" style="background-color: <?= getsetting("headercolor") ?>;">
+<div ID="headerbar" class="list-group-item container-fluid shadow" style="background-color: <?= headercolor ?>;">
     <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent" ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white"></i>
     </button>
