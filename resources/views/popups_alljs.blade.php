@@ -969,8 +969,8 @@
                 phone: $("#order_phone").val()
             }, function (result) {
                 paydisabled=false;
-                $("#checkoutmodal").modal("hide");
                 if (result.contains("ordersuccess")) {
+                    $("#checkoutmodal").modal("hide");
                     handleresult(result, "ORDER RECEIPT");
                     if ($("#saveaddresses").val() == "addaddress") {
                         var Address = {
@@ -998,6 +998,8 @@
                         placed_at: $("#receipt_placed_at").text(),
                     });
                     clearorder();
+                } else if(result.contains("[STRIPE]")) {
+                    validateinput("#saved-credit-info", result.replace("[STRIPE]", ""));
                 } else {
                     ajaxerror("Error:" + result, makestring("{not_placed}"));
                 }
