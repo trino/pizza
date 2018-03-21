@@ -136,7 +136,8 @@
                                             <input style="margin-top: 0 !important;" type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
                                             <INPUT style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest" id="istest">
                                             @if(!islive() || read("profiletype") == 1)
-                                                <a class="credit-info pull-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
+                                                <a class="credit-info pull-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>,
+                                                <a class="credit-info pull-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear Restaurant</a>
                                             @endif
                                             <div class="clearfix"></div>
                                         </div>

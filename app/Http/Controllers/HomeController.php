@@ -105,7 +105,7 @@ class HomeController extends Controller {
             $_POST = $POST;
         }
         if (isset($_POST["action"])) {
-            $ret = array("Status" => true, "Reason" => "");
+            $ret = array("Status" => true, "Reason" => "", "Type" => "System");
             switch ($_POST["action"]) {
                 case "deletecard":
                     initStripe();
@@ -118,6 +118,8 @@ class HomeController extends Controller {
                         $ret["Status"] = true;
                     } catch (\Stripe\Error\InvalidRequest $e) {
                         $ret["Reason"] = $e->getMessage();
+                        $ret["Type"] = "stripe";
+                        $ret["Status"] = false;
                     }
                     break;
                 case "closestrestaurant":

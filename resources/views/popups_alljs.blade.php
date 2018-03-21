@@ -867,6 +867,16 @@
         return true;
     }
 
+    //1=American Express, 2=Visa, 3=MasterCard
+    function cardtype(CardNumber){
+        CardNumber = CardNumber.replace(/\D/g, '');
+        var digits1 = Number(CardNumber.left(1)), digits2 = Number(CardNumber.left(2)), digits4 = Number(CardNumber.left(4));
+        if(digits2 == 34 || digits2 == 37){return 1;}//American Express
+        if(digits1 == 4){return 2;}//Visa
+        if((digits4 >= 2221 && digits4 <= 2720) || (digits2 >= 51 && digits2 <= 55)){return 3;}//MasterCard
+    }
+
+    //returns -1=unknown, 0=success, 1=bad card number, 2=bad expiry date, 3=bad CVV, 4=bad card type
     function isvalidcreditcard(CardNumber, Month, Year, CVV) {
         var nCheck = 0, value = $("#saved-credit-info").val();
         if(value.length > 0){
@@ -880,15 +890,18 @@
             if (isUndefined(Year)) {Year = $("[data-stripe=exp_year]").val();}
             if (isUndefined(CVV)) {CVV = $("[data-stripe=cvc]").val();}
             CardNumber = CardNumber.replace(/\D/g, '');
-            if (CardNumber.length == 0){return false;}
+            switch(cardtype(CardNumber)){
+                case 1: if (CardNumber.length != 15){return 5;} break;//American Express
+                case 2: if (CardNumber.length != 13 && CardNumber.length != 16 && CardNumber.length != 19){return 5;} break;//Visa
+                case 3: if (CardNumber.length != 16){return 5;}//MasterCard
+                default: return 4;
+            }
             var nDigit = 0, bEven = false;
             for (var n = CardNumber.length - 1; n >= 0; n--) {
                 var cDigit = CardNumber.charAt(n);
                 var nDigit = parseInt(cDigit, 10);
                 if (bEven) {
-                    if ((nDigit *= 2) > 9) {
-                        nDigit -= 9;
-                    }
+                    if ((nDigit *= 2) > 9) {nDigit -= 9;}
                 }
                 nCheck += nDigit;
                 bEven = !bEven;
@@ -899,18 +912,22 @@
             var d = new Date();
             var CurrentDate = (d.getYear() % 100) * 100 + d.getMonth();
             if (ExpiryDate > CurrentDate) {
-                return Number(CVV) > 99;
+                if(Number(CVV)<100){return 3;}
+                return 0;
             } else {
                 log("Failed expiry date check: " + ExpiryDate + " <= " + CurrentDate);
+                return 2;
             }
         } else {
             log("Failed card number check: " + CardNumber);
+            return 1;
         }
+        return -1;
     }
 
     function canplaceanorder() {
         var valid_creditcard = true;
-        if (!$("#saved-credit-info").val() && !isvalidcreditcard()) {valid_creditcard = false;}
+        if (!$("#saved-credit-info").val() && isvalidcreditcard() != 0) {valid_creditcard = false;}
         var visible_errors = $(".error:visible").text().length == 0;
         var selected_rest = $("#restaurant").val() > 0;
         var phone_number = $("#order_phone").val().length > 0;
@@ -1623,10 +1640,20 @@
             $("#red_address").addClass("redhighlite");
             validateinput("#saveaddresses", "Please check your address");
         }
+        if($("#restaurant").val() == 0){
+            validateinput("#restaurant", "Please select your desired restaurant");
+        }
         if (!$("#saved-credit-info").val()) {
-            if (!isvalidcreditcard()) {
+            var validcreditcard = isvalidcreditcard();
+            if (validcreditcard != 0) {
                 $("#red_card").addClass("redhighlite");
-                validateinput("#saved-credit-info", "Please select or enter a valid credit card");
+                switch (validcreditcard){//-1=unknown, 0=success, 1=bad card number, 2=bad expiry date, 3=bad CVV
+                    case 1: validateinput("#saved-credit-info", "Please select or enter a valid credit card"); break;
+                    case 2: validateinput("#saved-credit-info", "Please select a valid expiry date"); break;
+                    case 3: validateinput("#saved-credit-info", "Please enter a valid CVV number"); break;
+                    case 4: validateinput("#saved-credit-info", "Please enter a Visa, MasterCard or American Express card number"); break;
+                    case 5: validateinput("#saved-credit-info", "The credit card number is not the correct amount of digits"); break;
+                }
             }
         }
         if($("#order_phone").length>0) {
@@ -1719,6 +1746,7 @@
         if (errormessage) {
             //$(".payment-errors").html(errormessage + "<BR><BR>" + response["error"]["type"] + ":<BR>" + response["error"]["message"]);
             ajaxerror(response["error"]["message"]);
+            loading(false, "stripe");
         }
     }
 
@@ -1829,7 +1857,7 @@
         var val = $("#saved-credit-info").val();
         $("#red_card").removeClass("redhighlite");
         if (!val) {
-            if (!isvalidcreditcard()) {
+            if (isvalidcreditcard() != 0) {
                 //$("#red_card").addClass("redhighlite");
             }
             $(".credit-info").show();//let cust edit the card
