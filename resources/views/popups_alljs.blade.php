@@ -575,7 +575,7 @@
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
                 }
 
-                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto force-right">';
+                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto force-right receipt-buttons">';
                 tempHTML += '<span id="cost_' + itemid + '" class="dont-float-right">$' + totalcost +'</span>';
                 tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
@@ -913,7 +913,7 @@
         if (!$("#saved-credit-info").val() && !isvalidcreditcard()) {valid_creditcard = false;}
         var visible_errors = $(".error:visible").text().length == 0;
         var selected_rest = $("#restaurant").val() > 0;
-        var phone_number = $("#reg_phone").val().length > 0;
+        var phone_number = $("#order_phone").val().length > 0;
         var valid_address = validaddress();
         var reasons = new Array();
         if (!valid_creditcard) {reasons.push("valid credit card");}
@@ -949,7 +949,7 @@
                 stripemode: stripemode,
                 order: theorder,
                 name: $("#reg_name").val(),
-                phone: $("#reg_phone").val()
+                phone: $("#order_phone").val()
             }, function (result) {
                 paydisabled=false;
                 $("#checkoutmodal").modal("hide");
@@ -963,7 +963,7 @@
                             latitude: $("#add_latitude").val(),
                             longitude: $("#add_longitude").val(),
                             number: $("#add_number").val(),
-                            phone: $("#reg_phone").val(),
+                            phone: $("#order_phone").val(),
                             postalcode: $("#add_postalcode").val(),
                             province: $("#add_province").val(),
                             street: $("#add_street").val(),
@@ -982,7 +982,7 @@
                     });
                     clearorder();
                 } else {
-                    alert("Error:" + result, makestring("{not_placed}"));
+                    ajaxerror("Error:" + result, makestring("{not_placed}"));
                 }
             });
         } else {
@@ -1029,7 +1029,7 @@
 
     //generate a list of addresses and send it to the alert modal
     function addresses() {
-        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2><?= getsetting("myaddress"); ?></h2>';
+        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2>';
         var number = $("#add_number").val();
         var street = $("#add_street").val();
         var city = $("#add_city").val();
@@ -1043,15 +1043,15 @@
             }
         });
         if (!AddNew) {
-            HTML += '<?= getsetting("noaddresses"); ?>';
+            HTML += makestring("{noaddresses}");
         }
         return HTML + "</DIV>";
     }
 
     function creditcards() {
-        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2><?= getsetting("mycreditcard"); ?></h2>';
+        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2>';
         if (userdetails.Stripe.length == 0) {
-            return HTML + "<?= getsetting("nocreditcards"); ?>";
+            return HTML + makestring("{nocreditcards}");
         }
         for (var i = 0; i < userdetails.Stripe.length; i++) {
             var card = userdetails.Stripe[i];
@@ -1495,7 +1495,7 @@
 
     function clearphone(why) {
         log("clearphone: " + why);
-        $('#reg_phone').attr("style", "");
+        $('#order_phone').attr("style", "");
         ajaxerror();
     }
 
@@ -1587,7 +1587,6 @@
                 }
             } catch (e) {
             }
-
             ajaxerror(text + "<BR><BR>URL: " + settings.url, "AJAX error code: " + request.status);
         }
         blockerror = false;
@@ -1630,8 +1629,8 @@
                 validateinput("#saved-credit-info", "Please select or enter a valid credit card");
             }
         }
-        if($("#reg_phone").length>0) {
-            validateinput("#reg_phone");
+        if($("#order_phone").length>0) {
+            validateinput("#order_phone");
         }
         if(!validdeliverytime()){
             GenerateHours(generalhours);
@@ -2129,7 +2128,11 @@
             email_needed: "Please enter a valid email address",
             long_lat: "Longitude and/or latitude missing",
             ten_closest: "10 closest restaurants",
-            clear_order: "Clear your order?"
+            clear_order: "Clear your order?",
+            myaddress: "My Saved Address List",
+            noaddresses: 'No Addresses Saved',
+            mycreditcard: 'My Saved Credit Card List',
+            nocreditcards: 'No Credit Cards',
         };
     }
 

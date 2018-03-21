@@ -18,6 +18,10 @@ if(strpos($server, ".") !== false){
     }
 }
 
+if(strpos($_SERVER['REQUEST_URI'], "call?") !== false){
+    die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>');
+}
+
 //if($_SERVER["SERVER_NAME"] == "londonpizza.ca") {
 if($islive) {
     if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {

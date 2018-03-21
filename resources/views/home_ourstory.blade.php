@@ -21,7 +21,7 @@
     ?>
     <div class="row">
         <DIV CLASS="col-lg-12 bg-white list-padding list-card">
-            <h3><?= getsetting("aboutus"); ?></h3>
+            <h3><?= makestring("{aboutus}"); ?></h3>
             <p>
                 <?= $site_name; ?> is a pizza delivery service that's "faster than picking up the phone".
 

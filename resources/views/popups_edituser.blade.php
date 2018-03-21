@@ -169,6 +169,7 @@
 
         $("#orderinfo").validate({
             onkeyup :false,
+            onfocusout: false,
             rules: {
                 name: "required",
                 phone: {

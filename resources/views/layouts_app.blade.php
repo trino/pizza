@@ -95,16 +95,16 @@
     </ul>
 
     <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
-
-    <A HREF="<?= webroot("ourstory"); ?>" class="align-left align-middle text-white"><?= getsetting("aboutus"); ?>,</A>&nbsp;
-    <A HREF="<?= webroot("help"); ?>" class="align-left align-middle text-white">FAQs,</A>&nbsp;
-    <A HREF="<?= webroot("tos"); ?>" class="align-left align-middle text-white">TOS,</A>&nbsp;
-    <A HREF="<?= webroot("privacy"); ?>" class="align-left align-middle text-white">Privacy Policy,</A>&nbsp;
-    <A HREF="<?= webroot("contact"); ?>" class="align-left align-middle text-white">Contact Us</A>
-
+    <SPAN STYLE="float: right; margin-top: 4px !important;">
+        <A HREF="<?= webroot("ourstory"); ?>" class="align-left align-middle text-white"><?= makestring("{aboutus}"); ?>,</A>&nbsp;
+        <A HREF="<?= webroot("help"); ?>" class="align-left align-middle text-white">FAQs,</A>&nbsp;
+        <A HREF="<?= webroot("tos"); ?>" class="align-left align-middle text-white">TOS,</A>&nbsp;
+        <A HREF="<?= webroot("privacy"); ?>" class="align-left align-middle text-white">Privacy Policy,</A>&nbsp;
+        <A HREF="<?= webroot("contact"); ?>" class="align-left align-middle text-white">Contact Us</A>
+    </SPAN>
     <?php
         if (!islive()) {
-            echo '<BR><SPAN TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
+            echo '<BR><SPAN ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
             $user = first("SELECT * FROM users WHERE profiletype = 1");
             $ispass = \Hash::check("admin", $user["password"]);
 
@@ -125,7 +125,7 @@
             if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
                 echo " - Not HTTPS";
             }
-            echo '</SPAN>';
+            echo '<BUTTON CLASS="float-right btn-danger" ONCLICK="$(' . "'#debugbar'" . ').remove();"><I CLASS="fas fa-times cursor-pointer" STYLE="margin-top: 4px;"></I></BUTTON></SPAN>';
         }
     ?>
 </div>

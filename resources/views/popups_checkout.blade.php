@@ -22,7 +22,7 @@
             <FORM ID="orderinfo" name="orderinfo">
                 <div class="modal-body">
                     <?php
-                        $order = ["restaurant", "deliverytime", "useraddress", "userphone", "creditcard", "notes"];
+                        $order = ["deliverytime", "useraddress", "restaurant", "userphone", "creditcard", "notes"];
                         foreach($order as $key){
                             switch($key){
                                 case "deliverytime": ?>
@@ -64,7 +64,7 @@
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <input type="tel" name="phone" id="reg_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>"  onblur="validateinput(this);">
+                                        <input type="tel" name="phone" id="order_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>">
                                     </div>
                                 <?php break; case "restaurant": ?>
                                     <div class="input_left_icon" id="red_rest">

@@ -93,7 +93,7 @@
     $CurrentCol = 1;
     $CurrentCat = 0;
 ?>
-<div class="col-lg-3 col-md-12 bg-white">
+<div class="col-lg-3 col-md-12 bg-white ismenu">
     @foreach ($categories as $category)
         <?php
             $toppings_extra = '+';
@@ -165,7 +165,7 @@
         @if($catclass=="dips" || $catclass=="sides")
 </div>
 
-<div class="col-lg-3 col-md-12 bg-white">
+<div class="col-lg-3 col-md-12 bg-white ismenu">
     @endif
     @endforeach
 </div>

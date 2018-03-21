@@ -44,12 +44,14 @@ function webroot($file = "", $justroot = false){
         if ($isSecure) {
             $protocol = "https";
         }
+        $public = "";
     } else {
         $justroot = false;
+        $public = "public/";
+        if(strpos($file, $public) !== false || $justroot){$public = "";}
     }
-    $public = "public/";
-    if(strpos($file, $public) !== false || $justroot){$public = "";}
-    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $webroot . $public . $file;
+    $public = $protocol . '://' . $_SERVER['HTTP_HOST'] . $webroot . $public . $file;
+    return $public;
 }
 
 //error_reporting(E_ERROR | E_PARSE);//suppress warnings
@@ -64,7 +66,7 @@ function connectdb($database = "ai", $username = "root", $password = ""){
     }
     if (islive()) {
         switch (sitename) {
-            case "londonpizza.ca": case "hamiltonpizza.ca": case "scpizza.ca":
+            case "londonpizza.ca": case "Hamilton Pizza": case "scpizza.ca":
                 $database = "hamilton_db";
                 $username = "hamilton_user";
                 $password = "Pass1234!";
@@ -760,5 +762,20 @@ function formatphone($phone){
         return preg_replace('/(\d{3})(\d{3})(\d{4})/', "($1) $2-$3", $phone);
     }
     return $phone;
+}
+
+$GLOBALS["strings"] = [
+    "aboutus" => 'Our Story'
+];
+function makestring($string, $variables = []){
+    if(startswith($string, "{") && endswith($string, "}")){
+        $string = mid($string, 1, strlen($string) - 2);
+        if(!isset($GLOBALS["strings"][$string])){return false;}
+        $string = $GLOBALS["strings"][$string];
+    }
+    foreach($variables as $key => $value){
+        $string = str_replace("[" . $key . "]", $value, $string);
+    }
+    return $string;
 }
 ?>

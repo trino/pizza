@@ -237,8 +237,7 @@ h2 {
 }
 
 .modal-header, .list-padding {
-
-    padding: .50rem 1rem 0 1rem !important;
+    /*padding: .50rem 1rem 0 1rem !important;*/
     border: 0 !important;
     min-height: 45px;
 }
@@ -1024,24 +1023,40 @@ table tr td:last-child, table tr th:last-child {
     z-index: 999;
 }
 
+.receipt-buttons{
+    position: absolute;
+    top: -4px;
+}
+
 /* firefox specific */
 @-moz-document url-prefix() {
-    .list-group-item {
-
+    .ismenu > .list-group-item {
+        height: 58px;
+    }
+    .item-icon{
+        position: absolute;
+        top: 10px;
     }
     .item-name {
         position: absolute;
-        left: 50px;
-        top: 11px;
+        left: 60px;
+        top: 15px;
     }
     .item-cost {
         position: absolute;
         right: 10px;
-        top: 7px;
+        top: 11px;
     }
+    /*.receipt-itemname, .item_qty{margin-top: 10px !important; }*/
     .receipt-icon {
         position: relative;
         top: 12px;
+    }
+    #debugbar{
+        display: none;
+    }
+    #myorder{
+        overflow-y: auto;
     }
 }
 
