@@ -1214,6 +1214,8 @@
                 return validateinput("#login_email", makestring("{email_needed}"));
             }
         }
+        skipunloadingscreen = true;
+        var allowredirect = true;
         $.post(webroot + "auth/login", {
             action: action,
             _token: token,
@@ -1222,6 +1224,7 @@
         }, function (result) {
             try {
                 var data = JSON.parse(result);
+                skipunloadingscreen=false;
                 log("ACTION: " + action + " STATUS: " + data["Status"] + " REASON: " + data["Reason"]);
                 if (data["Status"] == "false" || !data["Status"]) {
                     data["Reason"] = data["Reason"].replace('[verify]', '<A onclick="handlelogin();" CLASS="hyperlink" TITLE="Click here to resend the email">verify</A>');
@@ -1246,8 +1249,8 @@
                             }
                             $("#loginmodal").modal("hide");
                             if (redirectonlogin || true) {
-                                log("Login reload");
-                                location.reload();
+                                skipunloadingscreen=true;
+                                if(allowredirect){location.reload();}
                             }
                             break;
                         case "forgotpassword": case "verify":
@@ -1262,8 +1265,8 @@
                             $(".profiletype").hide();
                             userdetails = false;
                             if (redirectonlogout) {
-                                log("Logout reload");
-                                window.location = "<?= webroot("", true); ?>";
+                                skipunloadingscreen=true;
+                                if(allowredirect){window.location = "<?= webroot("", true); ?>";}
                             } else {
                                 switch (currentRoute) {
                                     case "index"://resave order as it's deleted in removeCookie();
@@ -1333,9 +1336,7 @@
                 }
             },
             ajaxStop: function () {
-                if (skipunloadingscreen) {
-                    skipunloadingscreen = false;
-                } else {
+                if (!skipunloadingscreen) {
                     loading(false, "ajaxStop");
                     if (previoushash) {
                         if(previoushash.left(1) != "#"){previoushash = "#" + previoushash;}
@@ -1573,11 +1574,7 @@
     //universal AJAX error handling
     var blockerror = false;
     $(document).ajaxComplete(function (event, request, settings) {
-        if (skipunloadingscreen) {
-            skipunloadingscreen = false;
-        } else {
-            loading(false, "ajaxComplete");
-        }
+        loading(false, "ajaxComplete");
         if (request.status != 200 && request.status > 0 && !blockerror) {//not OK, or aborted
             var text = request.responseText;
             if (text.indexOf('Whoops, looks like something went wrong.') > -1 && text.indexOf('<span class="exception_title">') > -1) {
@@ -1614,6 +1611,7 @@
         var selector = ".ajaxprompt:visible";
         if (isUndefined(errortext)) {
             $(selector).removeClass("ajaxsuccess").removeClass("ajaxerror").html("");
+            return false;
         } else if($(selector).length > 0){
             var fontawesome = "exclamation-triangle";
             if(title.contains("success")){
@@ -1626,6 +1624,8 @@
         } else {
             alert(errortext, title);
         }
+        skipunloadingscreen=false;
+        loading(false, "ajaxerror");
     }
 
     function rnd(min, max) {
@@ -2670,10 +2670,10 @@
     function loading(state, where) {
         if (state) {
             ajaxerror();
-            log("loading start");
+            log("loading start " + where);
             NProgress.start();
-        } else {
-            log("loading end");
+        } else if(!skipunloadingscreen) {
+            log("loading end " + where);
             NProgress.done();
         }
     }
