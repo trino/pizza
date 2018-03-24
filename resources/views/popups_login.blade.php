@@ -42,10 +42,10 @@
                         </div>
                         <div class="clearfix py-2"></div>
                         <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
+                        <!--div class="clearfix py-2"></div>
+                        <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
                         <div class="clearfix py-2"></div>
-                        <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A>
-                        <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-block btn-sm btn btn-link btn-secondary" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
+                        <BUTTON CLASS=" btn-sm btn btn-secondary-outline" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
                     </FORM>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="buzz">

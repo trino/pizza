@@ -569,35 +569,36 @@
                     sprite += " sprite-" + toclassname(item["itemname"].trim()).replaceAll("_", "-").replace(/\./g, '');
                 }
 
-                tempHTML = '<DIV ID="receipt_item_' + itemid + '" style="padding-top:0 !important;padding-bottom:0 !important;" class="receipt_item list-group-item">';
+                tempHTML = '<DIV ID="receipt_item_' + itemid + '" style="" class="receipt_item list-group-item">';
 
                 if(quantity > 1) {
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
                 }
 
-                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto force-right receipt-buttons">';
-                tempHTML += '<span id="cost_' + itemid + '" class="dont-float-right">$' + totalcost +'</span>';
-                tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
+                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto  receipt-buttons">';
+                tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
+                tempHTML += '<button class="   bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
-                    tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
+                    tempHTML += '<button class="   bg-transparent " onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
                 } else {
-                    tempHTML += '<button class="bg-transparent text-normal btn-sm btn-fa" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
+                    tempHTML += '<button class="  bg-transparent  " onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
                 }
                 tempHTML += '</SPAN></div>';
 
                 var itemname = "";
                 if (hasaddons) {
-                    tempHTML += '<DIV class="btn-sm-padding text-muted item_addons list-group-item">';
+               //     tempHTML += '<DIV class="text-muted">';
                     var tablename = item["itemaddons"][0]["tablename"];
                     if (item["itemaddons"].length > 1) {
                         itemname = itemnames[tablename];
                     }
                     for (var currentitem = 0; currentitem < item["itemaddons"].length; currentitem++) {
+
                         var addons = item["itemaddons"][currentitem];
                         if (itemname) {
-                            tempHTML += '<DIV CLASS="col-md-12 item_title">' + ordinals[currentitem] + " " + itemname + ': ';
+                            tempHTML += '<DIV CLASS=" list-group-item text-muted">' + ordinals[currentitem] + " " + itemname + ': ';
                         } else {
-                            tempHTML += '<DIV>';
+                            tempHTML += '<DIV CLASS=" list-group-item text-muted">';
                         }
                         if(addons.hasOwnProperty("addons")) {
                             if (addons["addons"].length == 0) {
@@ -620,9 +621,10 @@
                                 }
                             }
                         }
-                        tempHTML += '</DIV><DIV CLASS="clearfix"></DIV>';
+                        tempHTML += '</DIV>';
+
                     }
-                    tempHTML += '</DIV>';
+                 //   tempHTML += '</DIV>';
                 }
                 HTML += tempHTML;
             }
@@ -651,7 +653,7 @@
             if (fadein || forcefade) {
                 tempHTML += 'class="dont-show"';
             }
-            tempHTML += '><div class="pull-right text-normal py-1"><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
+            tempHTML += '><div class=""><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
             if(discount>0){
                 tempHTML += '<TR><TD>Discount (' + discountpercent + '%) &nbsp;</TD><TD> $' + discount + '</TD></TR>';
             }
@@ -670,7 +672,7 @@
                 $("#checkout-btn").show();
             } else {
                 $("#checkout-btn").hide();
-                tempHTML += '<button CLASS="list-padding bg-secondary btn-block text-normal no-icon">Minimum $' + minimumfee + ' to Order</button>';
+                tempHTML += '<button CLASS="list-padding bg-secondary btn-block  no-icon">Minimum $' + minimumfee + ' to Order</button>';
             }
         }
         $("#myorder").html(HTML + tempHTML);
@@ -1056,7 +1058,7 @@
         $("#saveaddresses option").each(function () {
             var ID = $(this).val();
             if (ID > 0) {
-                HTML += '<DIV ID="add_' + ID + '"><A TITLE="Delete this address" onclick="deleteaddress(' + ID + ');" class="cursor-pointer"><i class="fa fa-fw fa-times error"></i></A> ';
+                HTML += '<DIV class="list-group-item" ID="add_' + ID + '"><A TITLE="Delete this address" onclick="deleteaddress(' + ID + ');" class="cursor-pointer"><i class="fa fa-fw fa-times error"></i></A> ';
                 HTML += $(this).text() + '</DIV>';
                 AddNew = true;
             }
@@ -1075,7 +1077,7 @@
         for (var i = 0; i < userdetails.Stripe.length; i++) {
             var card = userdetails.Stripe[i];
             //id,object=card,brand,country,customer,cvc_check=pass,exp_month,exp_year=2018,funding=credit,last4=4242
-            HTML += '<DIV id="card_' + i + '"><A ONCLICK="deletecard(' + i + ", '" + card.id + "', " + card.last4 + ", '" + card.exp_month.pad(2) + "', " + right(card.exp_year, 2) + ');" CLASS="cursor-pointer">';
+            HTML += '<DIV id="card_' + i + '" class="list-group-item"><A ONCLICK="deletecard(' + i + ", '" + card.id + "', " + card.last4 + ", '" + card.exp_month.pad(2) + "', " + right(card.exp_year, 2) + ');" CLASS="cursor-pointer">';
             HTML += '<i class="fa fa-fw fa-times error"></i></A> ' + card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2) + '</DIV>';
         }
         return HTML + '</DIV>';
@@ -2159,9 +2161,9 @@
             long_lat: "Longitude and/or latitude missing",
             ten_closest: "10 closest restaurants",
             clear_order: "Clear your order?",
-            myaddress: "My Saved Address List",
+            myaddress: "My Addresses",
             noaddresses: 'No Addresses Saved',
-            mycreditcard: 'My Saved Credit Card List',
+            mycreditcard: 'My Credit Cards',
             nocreditcards: 'No Credit Cards',
         };
     }
@@ -2605,7 +2607,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="alertmodallabel">Title</h2>
-                <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
+                <button data-dismiss="modal" class="btn  ml-auto  align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <div class="pull-center mb-2" id="exclame">

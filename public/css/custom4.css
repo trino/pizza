@@ -3,7 +3,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: auto;
     margin-bottom: auto;
 }
-
+*{border:0;}
 .ajaxerror {
     color: red;
     border: 2px solid red;
@@ -57,7 +57,6 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     right: 0px;
 }
-
 .hyperlink {
     cursor: pointer;
     color: #007BFF;
@@ -68,8 +67,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .align-middle {
-    margin-top: auto;
-    margin-bottom: auto;
+
 }
 
 .close-button, .cancel-button {
@@ -216,16 +214,27 @@ h2 {
     font-weight: bold !important;
 }
 
-.list-group-item {
+
+
+#newvalues, #oldvalues {
+    text-align: right;    padding: .4rem .75rem;
+
+}
+.list-group-item ,.list-group-item-action {
+
+
+    display: flex!important;
+    -webkit-box-align: center!important;
+    -ms-flex-align: center!important;
+    align-items: center!important;
+
+
     padding: .4rem .75rem;
     background: transparent;
-    min-height: 45px;
+    min-height: 50px;
     margin-bottom: 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
-}
-
-.list-group-item-action {
     border-right: 1px solid #eceeef !important;
     border-bottom: 1px solid #eceeef !important;
     font-weight: normal !important;
@@ -272,8 +281,7 @@ h2 {
 }
 
 .receipt_item {
-    min-height: 35px !important;
-    padding: .25rem .75rem !important;
+
 }
 
 .strong {
@@ -530,12 +538,7 @@ ul {
     clear: both !important;
 }
 
-#newvalues, #oldvalues {
-    color: white;
-    padding-right: 10px;
-    padding-top: 6px;
-    text-align: right;
-}
+
 
 .white {
     color: white;
@@ -1024,8 +1027,7 @@ table tr td:last-child, table tr th:last-child {
 }
 
 .receipt-buttons{
-    position: absolute;
-    top: -4px;
+
 }
 
 /* firefox specific */

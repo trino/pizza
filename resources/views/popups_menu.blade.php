@@ -107,7 +107,7 @@
                 //echo '</DIV><div class="col-md-4" style="background:white;">';
             }
             $itemsInCol += $menuitemcount;
-            echo '<div class="border-category text-danger strong list-group-item d-flex justify-content-start" ID="category_' . $CurrentCat . '">
+            echo '<div class="text-danger strong list-group-item" ID="category_' . $CurrentCat . '">
 <h2 CLASS="pull-left align-middle h2-middle">' . $category['category'] . '</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
             $CurrentCat +=1;
         ?>
@@ -187,7 +187,7 @@
                     <SPAN ID="modal-itemname"></SPAN><br>
                     <small ID="toppingcost" class="nowrap text-muted">$<SPAN id="modal-toppingcost"></SPAN> per topping</small>
                 </h2>
-                <button data-dismiss="modal" class="btn btn-sm ml-auto bg-transparent text-normal close-button"><i class="fa fa-times"></i></button>
+                <button data-dismiss="modal" class="btn align-middle ml-auto bg-transparent"><i class="fa fa-times"></i></button>
             </div>
 
             <div class="modal-body" style="padding: 0 !important;background: #E6ECF0;">

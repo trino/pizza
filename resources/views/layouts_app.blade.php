@@ -2,21 +2,21 @@
 <html lang="en" class="full">
 <head>
     <?php
-        $time = microtime(true);
-        // Gets microseconds
-        if (read("id")) {
-            $user = getuser(false);
-            if (!$user) {
-                //check for deleted user
-                unset($user);
-                write("id", false);
-            } else {
-                unset($user["password"]);
-            }
+    $time = microtime(true);
+    // Gets microseconds
+    if (read("id")) {
+        $user = getuser(false);
+        if (!$user) {
+            //check for deleted user
+            unset($user);
+            write("id", false);
+        } else {
+            unset($user["password"]);
         }
-        $scripts = webroot("public/scripts");
-        $css = webroot("public/css");
-        $routename = Route::getCurrentRoute()->uri();
+    }
+    $scripts = webroot("public/scripts");
+    $css = webroot("public/css");
+    $routename = Route::getCurrentRoute()->uri();
     ?>
 
     <script type="text/javascript">
@@ -54,20 +54,27 @@
 </head>
 <body>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
+
+
 <div ID="headerbar" class="list-group-item container-fluid shadow" style="background-color: <?= headercolor ?>;">
-    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent" ONCLICK="$('#dropdown-menu').toggle();">
+
+    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent"
+            ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white"></i>
     </button>
+
     <ul class="dropdown-menu dropdown-menu-left" ID="dropdown-menu">
         @if(read("id"))
             <SPAN class="loggedin profiletype profiletype1">
                 <?php
-                    foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings") as $table) {
-                        echo '<li><A HREF="' . webroot("list/" . $table, true) . '" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> ' . str_replace("_", " ", ucfirst($table)) . ' list</A></li>';
-                    }
+                foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings") as $table) {
+                    echo '<li><A HREF="' . webroot("list/" . $table, true) . '" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> ' . str_replace("_", " ", ucfirst($table)) . ' list</A></li>';
+                }
                 ?>
-                <li><A HREF="<?= webroot("editmenu", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Edit Menu</A></li>
-                <li><A HREF="<?= webroot("list/debug", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Debug log</A></li>
+                <li><A HREF="<?= webroot("editmenu", true); ?>" CLASS="dropdown-item"><i
+                                class="fa fa-user-plus icon-width"></i> Edit Menu</A></li>
+                <li><A HREF="<?= webroot("list/debug", true); ?>" CLASS="dropdown-item"><i
+                                class="fa fa-user-plus icon-width"></i> Debug log</A></li>
             </SPAN>
             <SPAN class="loggedin">
                 <li id="profileinfo">
@@ -75,7 +82,8 @@
                     <i class="fa fa-user icon-width"></i> My Profile</A>
                 </li>
                 @if($routename != "help")
-                    <li class="profiletype_not profiletype_not2"><A ONCLICK="orders();" class="dropdown-item" href="#"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
+                    <li class="profiletype_not profiletype_not2"><A ONCLICK="orders();" class="dropdown-item"
+                                                                    href="#"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
                 @endif
             </SPAN>
         @endif
@@ -85,49 +93,55 @@
             </SPAN>
         @endif
         @if($routename == "help")
-            <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
+            <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i
+                            class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
         @else
-            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
+            <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i
+                            class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
         @endif
+
         @if(read("id"))
-            <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
+            <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i
+                            class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
         @endif
+
+        <LI><A CLASS="dropdown-item" HREF="<?= webroot("ourstory"); ?>"><?= makestring("{aboutus}"); ?></A></LI>
+        <LI><A CLASS="dropdown-item" HREF="<?= webroot("help"); ?>">FAQs</A></LI>
+        <LI><A CLASS="dropdown-item" HREF="<?= webroot("tos"); ?>">TOS</A></LI>
+        <LI><A CLASS="dropdown-item" HREF="<?= webroot("privacy"); ?>">Privacy Policy</A></LI>
+        <LI><A CLASS="dropdown-item" HREF="<?= webroot("contact"); ?>">Contact Us</A></LI>
     </ul>
 
-    <a HREF="<?= webroot("index"); ?>" class="align-left align-middle text-white" style="margin-left:22px;font-weight: bold;font-size: 1rem !important;" href="/"><?= strtoupper(sitename); ?></a>
-    <SPAN STYLE="float: right; margin-top: 4px !important;">
-        <A HREF="<?= webroot("ourstory"); ?>" class="align-left align-middle text-white"><?= makestring("{aboutus}"); ?>,</A>&nbsp;
-        <A HREF="<?= webroot("help"); ?>" class="align-left align-middle text-white">FAQs,</A>&nbsp;
-        <A HREF="<?= webroot("tos"); ?>" class="align-left align-middle text-white">TOS,</A>&nbsp;
-        <A HREF="<?= webroot("privacy"); ?>" class="align-left align-middle text-white">Privacy Policy,</A>&nbsp;
-        <A HREF="<?= webroot("contact"); ?>" class="align-left align-middle text-white">Contact Us</A>
-    </SPAN>
+    <a HREF="<?= webroot("index"); ?>" style="color:white;" href="/"><?= strtoupper(sitename); ?></a>
+
     <?php
-        if (!islive()) {
-            echo '<BR><SPAN ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
-            $user = first("SELECT * FROM users WHERE profiletype = 1");
-            $ispass = \Hash::check("admin", $user["password"]);
+    if (!islive()) {
+        echo '<SPAN style="font-size: 12px" ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
+        $user = first("SELECT * FROM users WHERE profiletype = 1");
+        $ispass = \Hash::check("admin", $user["password"]);
 
-            $currtime = millitime();
-            $lasttime = getsetting("lastupdate", 0);
-            $delay = $currtime - $lasttime;
-            echo " Curr: " . $currtime . " Last: " . $lasttime . " Between: " . $delay;
-            if ($delay < 1000) {
-                echo " - Likely refreshed!";
-            }
-            setsetting("lastupdate", $currtime);
-
-            if ($ispass) {
-                echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
-            } else {
-                echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
-            }
-            if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
-                echo " - Not HTTPS";
-            }
-            echo '<BUTTON CLASS="float-right btn-danger" ONCLICK="$(' . "'#debugbar'" . ').remove();"><I CLASS="fas fa-times cursor-pointer" STYLE="margin-top: 4px;"></I></BUTTON></SPAN>';
+        $currtime = millitime();
+        $lasttime = getsetting("lastupdate", 0);
+        $delay = $currtime - $lasttime;
+        echo " Curr: " . $currtime . " Last: " . $lasttime . " Between: " . $delay;
+        if ($delay < 1000) {
+            echo " - Likely refreshed!";
         }
+        setsetting("lastupdate", $currtime);
+
+        if ($ispass) {
+            echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');$('#login_password').val('admin');" . '"' . ">Admin: '" . $user["email"] . " PW: admin'</SPAN>";
+        } else {
+            echo ' <SPAN ID="QUICKLOGIN" ONCLICK="' . "$('#login_email').val('" . $user["email"] . "');" . '"' . ">Admin: '" . $user["email"] . " PW: [UNKNOWN]'</SPAN>";
+        }
+        if (!isset($_SERVER['HTTPS']) or $_SERVER['HTTPS'] == 'off') {
+            echo " - Not HTTPS";
+        }
+        echo '<BUTTON CLASS="float-right btn-danger" ONCLICK="$(' . "'#debugbar'" . ').remove();"><I CLASS="fas fa-times cursor-pointer"></I></BUTTON></SPAN>';
+    }
     ?>
+
+
 </div>
 
 <div class="container-fluid shadow">
@@ -156,7 +170,7 @@
     @if(isset($_GET["time"]) && is_numeric($_GET["time"]) && $_GET["time"] >= 0 && $_GET["time"] < 2400)
         newtime = Number("<?= $_GET["time"]; ?>");
     @endif
-    @if(isset($_GET["day"]) && is_numeric($_GET["day"]) && $_GET["day"] >= 0 && $_GET["day"] <= 6)
+            @if(isset($_GET["day"]) && is_numeric($_GET["day"]) && $_GET["day"] >= 0 && $_GET["day"] <= 6)
         newday = Number("<?= $_GET["day"]; ?>");
     @endif
     $(window).load(function () {
@@ -170,39 +184,41 @@
         console.log("Time until DOMready: ", time);
         $("#navbar-text").text("<?= "" . round((microtime(true) - $time), 5) . "s"; ?>");
         $("#servertime").text($("#servertime").text() + " - Javascript time: " + getNow(4));
-        if($("#QUICKLOGIN").length){$("#QUICKLOGIN").click();}
+        if ($("#QUICKLOGIN").length) {
+            $("#QUICKLOGIN").click();
+        }
     });
     log("Page has loaded at: " + Date.now());
 </script>
 
 <div style="display: none;">
     <?php
-        if (isset($GLOBALS["filetimes"])) {
-            // && !islive()){
-            echo '<TABLE><TR><TH COLSPAN="2">File times</TH></TR>';
-            $total = 0;
-            foreach ($GLOBALS["filetimes"] as $Index => $Values) {
-                echo '<TR><TD>' . $Index . '</TD><TD>';
-                if (isset($Values["start"]) && isset($Values["end"])) {
-                    $val = round($Values["end"] - $Values["start"], 4);
-                    if (strpos($val, ".") === false) {
-                        $val .= ".000";
-                    } else {
-                        $val = str_pad($val, 4, "0");
-                    }
-                    echo $val . "s";
-                    $total += $val;
+    if (isset($GLOBALS["filetimes"])) {
+        // && !islive()){
+        echo '<TABLE><TR><TH COLSPAN="2">File times</TH></TR>';
+        $total = 0;
+        foreach ($GLOBALS["filetimes"] as $Index => $Values) {
+            echo '<TR><TD>' . $Index . '</TD><TD>';
+            if (isset($Values["start"]) && isset($Values["end"])) {
+                $val = round($Values["end"] - $Values["start"], 4);
+                if (strpos($val, ".") === false) {
+                    $val .= ".000";
                 } else {
-                    echo "Unended";
+                    $val = str_pad($val, 4, "0");
                 }
-                echo '</TD></TR>';
+                echo $val . "s";
+                $total += $val;
+            } else {
+                echo "Unended";
             }
-            $total = str_pad(round($total, 4), 5, "0");
-            echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
-            echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
-            echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
-            echo '</TABLE>';
+            echo '</TD></TR>';
         }
+        $total = str_pad(round($total, 4), 5, "0");
+        echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
+        echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
+        echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
+        echo '</TABLE>';
+    }
     ?>
 </div>
 
