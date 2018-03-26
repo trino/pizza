@@ -575,15 +575,15 @@
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
                 }
 
-                tempHTML += ' <span class="receipt-itemname">' + item["itemname"] + '</SPAN> <span class="ml-auto  receipt-buttons">';
-                tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
-                tempHTML += '<button class="   bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
+                tempHTML += ' <span class="mr-auto">' + item["itemname"] + '</SPAN>';
+                tempHTML += '<span class="" id="cost_' + itemid + '" >$' + totalcost +'</span>';
+                tempHTML += '<button class=" bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
-                    tempHTML += '<button class="   bg-transparent " onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
+                    tempHTML += '<button class="  bg-transparent " onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
                 } else {
-                    tempHTML += '<button class="  bg-transparent  " onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
+                    tempHTML += '<button class="   bg-transparent  " onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
                 }
-                tempHTML += '</SPAN></div>';
+                tempHTML += '</div>';
 
                 var itemname = "";
                 if (hasaddons) {

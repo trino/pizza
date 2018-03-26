@@ -3,7 +3,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: auto;
     margin-bottom: auto;
 }
-*{border:0;}
+
 .ajaxerror {
     color: red;
     border: 2px solid red;
@@ -1073,6 +1073,7 @@ table tr td:last-child, table tr th:last-child {
     BORDER: 1PX SOLID #dadada;
     PADDING: 0;
 }
+
 
 
 /*

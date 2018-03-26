@@ -153,9 +153,8 @@
                             <INPUT style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest"
                                    id="istest">
                             @if(!islive() || read("profiletype") == 1)
-                                <a class="credit-info pull-right btn" onclick="testcard();"
-                                   TITLE="Don't remove this, I need it!">Test Card</a>,
-                                <a class="credit-info pull-right btn"
+                                <a class="credit-info float-right btn" onclick="testcard();"
+                                   TITLE="Don't remove this, I need it!">Test Card</a> <a class="credit-info float-right btn"
                                    onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear
                                     Restaurant</a>
                             @endif
