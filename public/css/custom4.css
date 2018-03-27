@@ -120,10 +120,12 @@ input, textarea {
     padding-left: 15px !important;
 }
 
+/* this code removes the scrollbar
 ::-webkit-scrollbar {
     width: 0; /* remove scrollbar space */
-    background: transparent; /* optional: just make scrollbar invisible */
-}
+/*    background: transparent; /* optional: just make scrollbar invisible */
+/*}*/
+
 
 /* optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
@@ -347,7 +349,7 @@ h2 {
 
 /* When the body has the loading class, we turn the scrollbar off with overflow:hidden */
 body.loading {
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .text-normal {

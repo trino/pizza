@@ -108,10 +108,25 @@
         }
     }
 
+    function randomString(len, charSet) {
+        len = len || 20;
+        charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var randomString = '';
+        for (var i = 0; i < len; i++) {
+            var randomPoz = Math.floor(Math.random() * charSet.length);
+            randomString += charSet.substring(randomPoz,randomPoz+1);
+        }
+        return randomString;
+    }
+
     function autofix(element){
         if(is_chrome) {
-            element.setAttribute("name", "");
-            element.setAttribute("id", "");
+            var randomid = "";
+            if(is_android){
+                randomid = randomString();
+            }
+            element.setAttribute("name", randomid);
+            element.setAttribute("id", randomid);
             element.setAttribute("class", "form-control");
             element.setAttribute("autocomplete", "really-truly-off");
         }

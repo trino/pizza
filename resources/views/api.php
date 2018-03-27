@@ -46,6 +46,7 @@ function webroot($file = "", $justroot = false){
             $protocol = "https";
         }
         $public = "";
+        if(strpos($file, "images/") !== false){$public = "public/";}
     } else {
         $justroot = false;
         $public = "public/";
