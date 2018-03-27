@@ -79,7 +79,7 @@
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <SELECT class="form-control" ID="restaurant" ONCHANGE="restchange();">
+                                        <SELECT class="form-control" ID="restaurant" ONCHANGE="restchange('elementchange');">
                                             <OPTION VALUE="0" SELECTED>Select Restaurant</OPTION>
                                         </SELECT>
                                     </div>
@@ -198,14 +198,33 @@
         return totimestamp() < $("#deliverytime option:selected").attr("timestamp");
     }
 
-    function restchange() {
+    function addressstatus(){
+        if (validaddress()) {
+            $("#red_address").removeClass("redhighlite");
+            validateinput("#saveaddresses", true);
+        } else {
+            $("#red_address").addClass("redhighlite");
+            validateinput("#saveaddresses", "Please check your address");
+        }
+        if ($("#restaurant").val() != 0) {
+            $("#red_rest").removeClass("redhighlite");
+            validateinput("#restaurant", true);
+        } else {
+            $("#red_rest").addClass("redhighlite");
+            validateinput("#restaurant", "Please select your desired restaurant");
+        }
+    }
+
+    function restchange(where) {
+        var abort = false;
+        switch(where){
+            case "addresshaschanged": abort = true; break;
+        }
+        log("restchange: " + where + iif(abort, " [ABORTED]"));
+        if(abort){return;}
         var value = $("#restaurant").val();
         var index = findwhere(closest, "restid", value);
-        if (value == 0) {
-            $("#red_rest").addClass("redhighlite");
-        } else {
-            $("#red_rest").removeClass("redhighlite");
-        }
+        addressstatus();
         if (closest.length > 0) {
             GenerateHours(closest[index].hours);
             // shortitems = CheckforShortage(closest[index].shortage);

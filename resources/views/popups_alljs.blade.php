@@ -1466,6 +1466,7 @@
         console.log("ID: " + ID + " = " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
         if(validity === true) {
             target.removeClass("redhighlite");
+            $("#" + ID + "-error").remove();
             return true;
         }
         target.addClass("redhighlite");
@@ -1641,13 +1642,7 @@
         ajaxerror();
         $(".red").removeClass("red");
         $("#red_card").removeClass("redhighlite");
-        if (!validaddress()) {
-            $("#red_address").addClass("redhighlite");
-            validateinput("#saveaddresses", "Please check your address");
-        }
-        if($("#restaurant").val() == 0){
-            validateinput("#restaurant", "Please select your desired restaurant");
-        }
+        addressstatus();
         if (!$("#saved-credit-info").val()) {
             var validcreditcard = isvalidcreditcard();
             if (validcreditcard != 0) {
@@ -1825,7 +1820,7 @@
                     smallest = 0;
                 }
                 $("#restaurant").html(HTML).val(smallest);
-                restchange();
+                restchange("addresshaschanged");
             }
         });
     }
