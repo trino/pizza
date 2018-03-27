@@ -576,12 +576,12 @@
                 }
 
                 tempHTML += ' <span class="mr-auto">' + item["itemname"] + '</SPAN>';
-                tempHTML += '<span class="" id="cost_' + itemid + '" >$' + totalcost +'</span>';
-                tempHTML += '<button class=" bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
+                tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
+                tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
-                    tempHTML += '<button class="  bg-transparent " onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
+                    tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
                 } else {
-                    tempHTML += '<button class="   bg-transparent  " onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
+                    tempHTML += '<button class="bg-transparent" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
                 }
                 tempHTML += '</div>';
 
@@ -596,9 +596,9 @@
 
                         var addons = item["itemaddons"][currentitem];
                         if (itemname) {
-                            tempHTML += '<DIV CLASS=" list-group-item text-muted">' + ordinals[currentitem] + " " + itemname + ': ';
+                            tempHTML += '<DIV CLASS="list-group-item text-muted">' + ordinals[currentitem] + " " + itemname + ': ';
                         } else {
-                            tempHTML += '<DIV CLASS=" list-group-item text-muted">';
+                            tempHTML += '<DIV CLASS="list-group-item text-muted">';
                         }
                         if(addons.hasOwnProperty("addons")) {
                             if (addons["addons"].length == 0) {
@@ -653,7 +653,7 @@
             if (fadein || forcefade) {
                 tempHTML += 'class="dont-show"';
             }
-            tempHTML += '><div class=""><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
+            tempHTML += '><div><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
             if(discount>0){
                 tempHTML += '<TR><TD>Discount (' + discountpercent + '%) &nbsp;</TD><TD> $' + discount + '</TD></TR>';
             }
@@ -672,7 +672,7 @@
                 $("#checkout-btn").show();
             } else {
                 $("#checkout-btn").hide();
-                tempHTML += '<button CLASS="list-padding bg-secondary btn-block  no-icon">Minimum $' + minimumfee + ' to Order</button>';
+                tempHTML += '<button CLASS="list-padding bg-secondary btn-block no-icon">Minimum $' + minimumfee + ' to Order</button>';
             }
         }
         $("#myorder").html(HTML + tempHTML);
