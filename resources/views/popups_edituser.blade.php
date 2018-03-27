@@ -105,11 +105,12 @@
 
     $(function () {
         $("form[name='user']").validate({
-            onfocusout: function(element) {
-                //validateform("form[name='user']");
-                //ajaxerror();
-            },
-            onkeyup :false,
+            /*onfocusout: function(element) {
+                validateform("form[name='user']");
+                ajaxerror();
+            },*/
+            onfocusout: false,
+            onkeyup: false,
             rules: {
                 name: "required",
                 phone: {

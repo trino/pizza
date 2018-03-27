@@ -159,8 +159,12 @@ class AuthController extends Controller {
                             $_POST["updated_at"] = 0;
 
                             $_POST["password"] = \Hash::make($_POST["password"]);
-                            $address["user_id"] = insertdb("users", $_POST);
-                            insertdb("useraddresses", $address);
+                            if(!islive() && strtolower($_POST["name"]) == "test"){
+                                $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1")["id"];
+                            } else {
+                                $address["user_id"] = insertdb("users", $_POST);
+                                insertdb("useraddresses", $address);
+                            }
 
                             $actions = actions("user_registered");//phone sms email
                             foreach ($actions as $action) {

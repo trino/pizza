@@ -384,7 +384,7 @@ body.loading {
 }
 
 .z-index-9999 {
-    z-index: 9999;
+    z-index: 99999;
 }
 
 .card-columns {
@@ -415,6 +415,7 @@ body.loading {
 
 .list-card{
     min-height: 500px;
+    padding: 10px !important;
 }
 
 .toppinglist {
