@@ -9,7 +9,7 @@
 
     $q = "'";
     $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
-    $autocompleteblocker = ' ONCLICK="autofix(this);" onkeydown="gmapkeypress(event);"';
+    $autocompleteblocker = ' ONCLICK="autofix(this);" onkeydown="gmapkeypress(event);" parentlevel="2"';
     echo '<SPAN ID="mirror"></SPAN>';
 
     switch ($style) {
@@ -33,19 +33,20 @@
     }
 </STYLE>
     @if($form)
-        <FORM ID="googleaddress"> @endif
-        @if($icons)
-            <div class="input_left_icon d-none">
-                <span class="fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-pencil-alt text-white fa-stack-1x"></i></span>
+        <FORM ID="googleaddress">
+    @endif
+    @if($icons)
+        <div class="input_left_icon d-none">
+            <span class="fa-stack fa-2x">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-pencil-alt text-white fa-stack-1x"></i></span>
         </div>
         <div class="input_right">
-            @endif
+    @endif
         <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to">
-        @if($icons)
-        </div>
-        @endif
+    @if($icons)
+            </div>
+    @endif
         <INPUT TYPE="text" NAME="number" ID="add_number" PLACEHOLDER="Street Number" {{ $required }} CLASS="form-control street_number address dont-show">
         <INPUT TYPE="text" NAME="street" ID="add_street" PLACEHOLDER="Street" {{ $required }} CLASS="form-control route address dont-show">
         <INPUT TYPE="text" NAME="city" ID="add_city" PLACEHOLDER="City" {{ $required }} CLASS="form-control locality address dont-show">
@@ -250,6 +251,32 @@
         @endif
         testaddress();
         return place;
+    }
+
+    function addressstatus(checkaddress, checkrestaurant, forceaddress, forcerestaurant){
+        if(isUndefined(checkaddress)){checkaddress = true;}
+        if(isUndefined(checkrestaurant)){checkrestaurant = true;}
+        if(isUndefined(forceaddress)){forceaddress = false;}
+        if(isUndefined(forcerestaurant)){forcerestaurant = false;}
+        if(checkaddress) {
+            if (validaddress() || forceaddress) {
+                $("#red_address").removeClass("redhighlite");
+                validateinput("#saveaddresses", true);
+                $("#reg_address-error").remove();
+            } else {
+                $("#red_address").addClass("redhighlite");
+                validateinput("#saveaddresses", "Please check your address");
+            }
+        }
+        if(checkrestaurant) {
+            if ($("#restaurant").val() != 0 || forcerestaurant) {
+                $("#red_rest").removeClass("redhighlite");
+                validateinput("#restaurant", true);
+            } else {
+                $("#red_rest").addClass("redhighlite");
+                validateinput("#restaurant", "Please select your desired restaurant");
+            }
+        }
     }
 </SCRIPT>
 <?php

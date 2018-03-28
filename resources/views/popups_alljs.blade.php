@@ -932,13 +932,13 @@
         if (!$("#saved-credit-info").val() && isvalidcreditcard() != 0) {valid_creditcard = false;}
         var visible_errors = $(".error:visible").text().length == 0;
         var selected_rest = $("#restaurant").val() > 0;
-        var phone_number = $("#order_phone").val().length > 0;
+        var phone_number = validphonenumber($("#order_phone").val());
         var valid_address = validaddress();
         var reasons = new Array();
         if (!valid_creditcard) {reasons.push("valid credit card");}
         if (!visible_errors) {reasons.push("errors in form");}
         if (!selected_rest) {reasons.push("no selected restaurant");}
-        if (!phone_number) {reasons.push("phone number missing");}
+        if (!phone_number) {reasons.push("phone number missing or invalid");}
         if (!valid_address) {reasons.push("valid address");}
         if (!validdeliverytime()){reasons.push("valid delivery time");}
         if (reasons.length > 0) {
@@ -946,6 +946,11 @@
             return false;
         }
         return true;
+    }
+
+    function validphonenumber(text){
+        text = text.replace(/\D/g,'');
+        if (text.length != 9){return false;}
     }
 
     //send an order to the server
@@ -1456,15 +1461,23 @@
             input = getGoogleAddressSelector();
         }
         if(isUndefined(parentlevel)){parentlevel=1;}
+        var ID = $(input).attr("id");
+        if($(input).length == 0){
+            log("ERROR: " + ID);
+            return false;
+        }
+        if($(input)[0].hasAttribute("parentlevel")){
+            parentlevel = $(input).attr("parentlevel");
+        }
         var target = $(input).parent();
         for(var i= 2; i <= parentlevel; i++){
             target = target.parent();
         }
         target = target.prev().find(".fa-stack");
-        var ID = $(input).attr("id");
         if(isUndefined(validity)){validity = $(input).valid();}
         console.log("ID: " + ID + " = " + validity + " found: " + target.length + " parentlevel: " + parentlevel);
         if(validity === true) {
+            $(input).removeClass("error");
             target.removeClass("redhighlite");
             $("#" + ID + "-error").remove();
             return true;
@@ -1661,7 +1674,7 @@
         }
         if(!validdeliverytime()){
             GenerateHours(generalhours);
-            validateinput("#deliverytime", "Please select a future delivery time", 2);
+            validateinput("#deliverytime", "Please select a future delivery time");
         }
         return false;
     }
@@ -2556,17 +2569,33 @@
         return iffalse;
     }
 
-    @if(read("id"))
-        $(document).ready(function () {
+    $(document).ready(function () {
         <?php
-            if (islive()) {
-                echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live')";
-            } else {
-                echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
+            if(read("id")){
+                if (islive()) {
+                    echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live')";
+                } else {
+                    echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
+                }
             }
         ?>
+        $("input").blur(function() {
+            var ID = $(this).attr("id");
+            if(ID.length == 0){
+                if($(this)[0].hasAttribute("autocomplete")){
+                    if($(this).attr("autocomplete") == "really-truly-off"){
+                        ID = "address [no id]";
+                        addressstatus(true, false, true, false);
+                    }
+                }
+            }
+            log("Attempting to force validate " + ID + " to true");
+
+            validateinput(this, true);
+        });
     });
 
+    @if(read("id"))
     $(document).on( "click", function() {
         if($(".dropdown-menu").is(":visible")){
             $(".dropdown-menu").hide();

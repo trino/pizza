@@ -1,13 +1,10 @@
 <?php startfile("popups_checkout"); ?>
 
-
-
 <div class="list-group-item">
     <h2 CLASS="float-left">My Order</h2>
     <span style="visibility: hidden;" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span>
     <button class="ml-auto bg-transparent" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
-
 
 <div id="myorder" style='font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;'></div>
 
@@ -39,8 +36,8 @@
                                     </div>
                                     <div class="input_right">
                                         <div>
-                                            <SELECT id="deliverytime" TITLE="Delivery Time" class="form-control"/>
-                                            <OPTION>Deliver ASAP</OPTION>
+                                            <SELECT id="deliverytime" TITLE="Delivery Time" class="form-control" parentlevel="2"/>
+                                                <OPTION>Deliver ASAP</OPTION>
                                             </SELECT>
                                         </div>
                                     </div>
@@ -196,23 +193,6 @@
 
     function validdeliverytime() {
         return totimestamp() < $("#deliverytime option:selected").attr("timestamp");
-    }
-
-    function addressstatus(){
-        if (validaddress()) {
-            $("#red_address").removeClass("redhighlite");
-            validateinput("#saveaddresses", true);
-        } else {
-            $("#red_address").addClass("redhighlite");
-            validateinput("#saveaddresses", "Please check your address");
-        }
-        if ($("#restaurant").val() != 0) {
-            $("#red_rest").removeClass("redhighlite");
-            validateinput("#restaurant", true);
-        } else {
-            $("#red_rest").addClass("redhighlite");
-            validateinput("#restaurant", "Please select your desired restaurant");
-        }
     }
 
     function restchange(where) {
