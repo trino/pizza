@@ -165,6 +165,7 @@ button, .btn-sm, a, .btn {
 
 .nav-tabs .nav-link {
     margin-bottom: .75rem;
+    padding:.25rem;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -222,12 +223,9 @@ h2 {
 .form-control {
     margin-top: auto;
     margin-bottom: auto;
-    min-height: 45px;
+    min-height: 50px;
     margin-bottom: 5px;
 }
-
-
-
 .list-group-item, .list-group-item-action {
     display: flex !important;
     -webkit-box-align: center !important;
@@ -235,7 +233,7 @@ h2 {
     align-items: center !important;
     padding: .25rem .5rem;
     background: transparent;
-    min-height: 45px;
+    min-height: 50px;
     margin-bottom: 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -253,7 +251,7 @@ h2 {
 .modal-header, .list-padding {
     /*padding: .50rem 1rem 0 1rem !important;*/
     border: 0 !important;
-    min-height: 45px;
+    min-height: 50px;
 }
 
 .border-category {

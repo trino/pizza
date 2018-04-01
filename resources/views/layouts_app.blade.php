@@ -104,12 +104,13 @@
             <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i
                             class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
         @endif
-
+@if(false)
         <LI><A CLASS="dropdown-item" HREF="<?= webroot("ourstory"); ?>"><?= makestring("{aboutus}"); ?></A></LI>
         <LI><A CLASS="dropdown-item" HREF="<?= webroot("help"); ?>">FAQs</A></LI>
         <LI><A CLASS="dropdown-item" HREF="<?= webroot("tos"); ?>">TOS</A></LI>
         <LI><A CLASS="dropdown-item" HREF="<?= webroot("privacy"); ?>">Privacy Policy</A></LI>
         <LI><A CLASS="dropdown-item" HREF="<?= webroot("contact"); ?>">Contact Us</A></LI>
+    @endif
     </ul>
 
     <a HREF="<?= webroot("index"); ?>" style="color:white;" href="/"><?= strtoupper(sitename); ?></a>

@@ -18,7 +18,7 @@
                     <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();" style="font-weight: bold">LOG IN</a>
                 </li>
                 <A class="nav-link">
-                    &nbsp;or&nbsp;
+                    &nbsp;OR&nbsp;
                 </A>
                 <li class="nav-item">
                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();" style="font-weight: bold">SIGN UP</a>
@@ -45,7 +45,7 @@
                         <!--div class="clearfix py-2"></div>
                         <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
                         <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-sm btn btn-secondary-outline" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
+                        <BUTTON CLASS="btn-sm btn" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
                     </FORM>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="buzz">

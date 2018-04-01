@@ -390,7 +390,7 @@
         }
         // $("#removelist").text("");
         $("#additemtoorder").html(title);
-        $("#modal-itemtotalprice").text(itemcost);
+        $("#modal-itemtotalprice").text(Number(itemcost).toFixed(2));
     }
 
     function refreshremovebutton() {
@@ -2237,7 +2237,7 @@
             var tempstr = '';
             var classname = 'itemcontents itemcontents' + itemindex;
 
-            HTML += '<DIV ONCLICK="selectitem(event, ' + itemindex + ');" CLASS="list-group-item receipt-addons currentitem currentitem' + itemindex;
+            HTML += '<DIV ONCLICK="selectitem(event, ' + itemindex + ');" CLASS="list-group-item d-flex flex-wrap receipt-addons currentitem currentitem' + itemindex;
             if (currentitemindex == itemindex) {
                 HTML += ' thisside';
             }
@@ -2250,11 +2250,12 @@
                 var currentaddon = currentaddonlist[itemindex][i];
                 var qualifier = "";
                 if(isfirstinstance(itemindex, i)) {
-                    tempstr += '<DIV CLASS="' + classname + '" id="topping_' + itemindex + '_' + i + '">' + countaddons(itemindex, i) + currentaddon.name + '</div>';
+                    tempstr += '<DIV CLASS="' + classname + '" id="topping_' + itemindex + '_' + i + '">' + countaddons(itemindex, i) + currentaddon.name ;
                     //<!--span ONCLICK="removelistitem(' + itemindex + ', ' + i + ');">&nbsp; <i CLASS="fa fa-times"></i> </span-->
                     if(!islasttopping(itemindex, i)){
-                        tempstr += ', ';
+                        tempstr += ',&nbsp;';
                     }
+                    tempstr+= '</div>';
                     if(ismatch(itemindex, ToppingIndex, i) && itemindex == ItemIndex){
                         ToppingIndex = i;
                     }
@@ -2374,6 +2375,7 @@
                     var title = "";
                     var breaker_css_green = "";
                     var breaker_css_red = "";
+
 
                     if(types[i] == 'Vegetable' && breaker_green == 0){
                         breaker_css_green = ' note_green ';
@@ -2633,7 +2635,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="alertmodallabel">Title</h2>
-                <button data-dismiss="modal" class="btn  ml-auto  align-middle"><i class="fa fa-times"></i></button>
+                <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <div class="pull-center mb-2" id="exclame">
