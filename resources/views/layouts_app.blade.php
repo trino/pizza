@@ -58,7 +58,7 @@
 
 <div ID="headerbar" class="list-group-item container-fluid shadow" style="background-color: <?= headercolor ?>;">
 
-    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent"
+    <button style="margin-right:.75rem !important" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent"
             ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white"></i>
     </button>

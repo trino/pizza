@@ -1724,6 +1724,7 @@
             Stripe.card.createToken($form, stripeResponseHandler);
             log("Stripe data - complete");
         } else {//saved card
+
             log("Use saved data");
             placeorder("");//no stripe token, use customer ID on the server side
         }
@@ -2573,7 +2574,7 @@
         <?php
             if(read("id")){
                 if (islive()) {
-                    echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live')";
+                    echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live');";
                 } else {
                     echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
                 }

@@ -59,6 +59,7 @@
                                         <DIV ID="error-saveaddresses"></DIV>
                                     </div>
                                 <?php break; case "userphone": ?>
+
                                     <div class="input_left_icon redhighlite" id="red_phone">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
@@ -68,6 +69,8 @@
                                     <div class="input_right">
                                         <input type="tel" name="phone" id="order_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>">
                                     </div>
+
+
                                 <?php break; case "restaurant": ?>
                                     <div class="input_left_icon" id="red_rest">
                                         <span class="fa-stack fa-2x">
@@ -198,7 +201,7 @@
     function restchange(where) {
         var abort = false;
         switch(where){
-            case "addresshaschanged": abort = true; break;
+         //   case "addresshaschanged": abort = true; break;
         }
         log("restchange: " + where + iif(abort, " [ABORTED]"));
         if(abort){return;}
