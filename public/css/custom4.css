@@ -43,6 +43,40 @@ h1, h2, h3, h4, h5, h6 {
     float: right;
 }
 
+.font-size-85rem{
+    font-size: .85rem
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.no-top-margin{
+    margin-top: 0 !important;
+}
+
+.orderfont{
+    font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-size: 85%
+}
+
+.toppinglistitem{
+    background: #fff !important;
+    border-bottom: 0px solid #d9534f !important;
+}
+
+.uppercase{
+    text-transform: uppercase;
+}
+
+.no-padding{
+    padding: 0 !important;
+}
+
+.menumodal{
+    padding: 0 !important;
+    background: #E6ECF0;
+}
+
 .text-right {
     text-align: right;
 }
@@ -254,6 +288,14 @@ h2 {
     min-height: 50px;
 }
 
+.bold{
+    font-weight: bold;
+}
+
+.width-50{
+    width: 50%;
+}
+
 .border-category {
     border-right: 1px solid #eceeef !important;
     border-bottom: 1px solid #eceeef !important;
@@ -276,12 +318,27 @@ h2 {
 
 }
 
-.radius-bottom {
+.medtext{
+    font-size: 1.5rem !important;
+}
 
+.bigtext{
+    font-size: 2.5rem;
+    line-height: 3.1rem;
 }
 
 .pull-center {
     text-align: center;
+}
+
+.padding-tb{
+    padding-bottom: 1rem !important;
+    padding-top: .5rem !important;
+}
+
+.padding-lr-15{
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .alert-button {
@@ -320,6 +377,7 @@ h2 {
 .addonlist {
     width: 100%;
     background: #e6ecf0;
+    border: 3px solid green !important;
 }
 
 .bg-secondary {
@@ -551,6 +609,18 @@ ul {
     color: white;
 }
 
+.togglemenu{
+    margin-right:.75rem !important;
+}
+
+.helpbtn{
+    font-size: 1rem !important;
+}
+
+#debugbar{
+    font-size: 12px;
+}
+
 .centered {
     position: fixed;
     top: 50%;
@@ -662,6 +732,10 @@ ul {
 
 .dont-show {
     display: none;
+}
+
+.bg-grey{
+    background: #eee !important;
 }
 
 .sprite-none {
@@ -821,6 +895,10 @@ ul {
 
 .dropdown-item {
     padding: .75rem 1rem
+}
+
+.inline{
+    display: inline;
 }
 
 .loader {

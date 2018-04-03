@@ -104,11 +104,10 @@
             if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
                 $itemsInCol = 0;
                 $CurrentCol += 1;
-                //echo '</DIV><div class="col-md-4" style="background:white;">';
             }
             $itemsInCol += $menuitemcount;
             echo '<div class="text-danger strong list-group-item" ID="category_' . $CurrentCat . '">
-<h2 CLASS="pull-left align-middle h2-middle">' . $category['category'] . '</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
+<h2 CLASS="pull-left align-middle h2-middle">' . $category['category'] . '</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
             $CurrentCat +=1;
         ?>
         @foreach ($menuitems as $menuitem)
@@ -182,7 +181,7 @@
                 <SPAN ID="modal-itemcat"></SPAN>
             </div>
 
-            <div class="list-group-item" style="background: #fff !important; border-bottom: 0px solid #d9534f !important;" >
+            <div class="list-group-item toppinglistitem">
                 <h2 class="text-normal" id="myModalLabel">
                     <SPAN ID="modal-itemname"></SPAN><br>
                     <small ID="toppingcost" class="nowrap text-muted">$<SPAN id="modal-toppingcost"></SPAN> per topping</small>
@@ -190,7 +189,7 @@
                 <button data-dismiss="modal" class="btn align-middle ml-auto bg-transparent"><i class="fa fa-times"></i></button>
             </div>
 
-            <div class="modal-body" style="padding: 0 !important;background: #E6ECF0;">
+            <div class="modal-body menumodal">
                 <DIV ID="addonlist" class="addonlist"></DIV>
             </div>
         </div>

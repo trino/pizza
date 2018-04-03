@@ -58,7 +58,7 @@
 
 <div ID="headerbar" class="list-group-item container-fluid shadow" style="background-color: <?= headercolor ?>;">
 
-    <button style="margin-right:.75rem !important" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent" ONCLICK="$('#dropdown-menu').toggle();">
+    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white"></i>
     </button>
 
@@ -107,11 +107,11 @@
         @endif
     </ul>
 
-    <a HREF="<?= webroot("index"); ?>" style="color:white;" href="/"><?= strtoupper(sitename); ?></a>
+    <a HREF="<?= webroot("index"); ?>" class="white" href="/"><?= strtoupper(sitename); ?></a>
 
     <?php
         if (!islive()) {
-            echo '<SPAN style="font-size: 12px" ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
+            echo '<SPAN ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
             $user = first("SELECT * FROM users WHERE profiletype = 1");
             $ispass = \Hash::check("admin", $user["password"]);
 
@@ -146,7 +146,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a CLASS="btn btn-sm text-muted" href="<?= webroot("help"); ?>">
-                    <i style="font-size: 1rem !important;" class="fa fa-question-circle icon-width"></i>
+                    <i class="fa fa-question-circle icon-width helpbtn"></i>
                     FAQs
                 </a>
                 @if(isset($_GET["time"]))
@@ -184,7 +184,7 @@
     log("Page has loaded at: " + Date.now());
 </script>
 
-<div style="display: none;">
+<div class="dont-show">
     <?php
     if (isset($GLOBALS["filetimes"])) {
         // && !islive()){

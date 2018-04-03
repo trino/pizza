@@ -2,11 +2,11 @@
 
 <div class="list-group-item">
     <h2 CLASS="float-left">My Order</h2>
-    <span style="visibility: hidden;" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span>
+    <span class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium hidden"></span>
     <button class="ml-auto bg-transparent" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
 
-<div id="myorder" style='font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-size: 85%'></div>
+<div id="myorder" class="orderfont"></div>
 
 <button id="checkout-btn" class="list-padding btn btn-primary btn-block" onclick="showcheckout();">
     <i class="fa fa-shopping-basket mr-2"></i> CHECKOUT
@@ -17,7 +17,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="myModalLabel" class="align-middle" style="text-transform: uppercase;">Hi, <SPAN CLASS="session_name"></SPAN></h2>
+                <h2 id="myModalLabel" class="align-middle uppercase">Hi, <SPAN CLASS="session_name"></SPAN></h2>
                 <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times"></i>
                 </button>
             </div>
@@ -63,7 +63,7 @@
                                     <div class="input_left_icon redhighlite" id="red_phone">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                           <i class="fa fa-mobile text-white fa-stack-1x" style="font-size: 1.5rem !important;"></i>
+                                           <i class="fa fa-mobile text-white fa-stack-1x medtext"></i>
                                         </span>
                                     </div>
                                     <div class="input_right">
@@ -109,7 +109,7 @@
                                     <div class="input_left_icon"></div>
                                     <div class="input_right">
                                         <div class="thirdwidth pr-1">
-                                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_month">
+                                            <SELECT CLASS="credit-info form-control no-top-margin" data-stripe="exp_month">
                                                 <OPTION VALUE="01">01/Jan</OPTION>
                                                 <OPTION VALUE="02">02/Feb</OPTION>
                                                 <OPTION VALUE="03">03/Mar</OPTION>
@@ -126,7 +126,7 @@
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="thirdwidth pr-1">
-                                            <SELECT style="margin-top: 0 !important;" CLASS="credit-info form-control" data-stripe="exp_year">
+                                            <SELECT CLASS="credit-info form-control no-top-margin" data-stripe="exp_year">
                                                 <?php
                                                     $CURRENT_YEAR = date("Y");
                                                     $TOTAL_YEARS = 6;
@@ -138,8 +138,8 @@
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="thirdwidth">
-                                            <input style="margin-top: 0 !important;" type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
-                                            <INPUT style="margin-top: 0 !important;" class="credit-info" TYPE="hidden" name="istest" id="istest">
+                                            <input type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control no-top-margin" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
+                                            <INPUT class="credit-info no-top-margin" TYPE="hidden" name="istest" id="istest">
                                             @if(!islive() || read("profiletype") == 1)
                                                 <a class="credit-info float-right btn" onclick="testcard();"
                                                    TITLE="Don't remove this, I need it!">Test Card</a> <a class="credit-info float-right btn"
@@ -164,7 +164,7 @@
 
                 <DIV class="ajaxprompt"></DIV>
 
-                <div class="modal-body" style="padding: 0 !important;">
+                <div class="modal-body no-padding">
                     <button class="btn-block list-padding radius-bottom btn btn-primary text-white payfororder" onclick="payfororder(); return false;">
                         <i class="fa fa-check mr-2"></i> ORDER
                     </button>

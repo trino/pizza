@@ -576,7 +576,7 @@
                     sprite += " sprite-" + toclassname(item["itemname"].trim()).replaceAll("_", "-").replace(/\./g, '');
                 }
 
-                tempHTML = '<DIV ID="receipt_item_' + itemid + '" style="" class="receipt_item list-group-item">';
+                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item list-group-item">';
 
                 if(quantity > 1) {
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
@@ -656,7 +656,7 @@
             $("#checkout-total").text('$0.00');
         } else {
             tempHTML = "";
-            tempHTML += '<DIV id="newvalues" style="float: right;" ';
+            tempHTML += '<DIV id="newvalues" class="float-right" ';
             if (fadein || forcefade) {
                 tempHTML += 'class="dont-show"';
             }
@@ -672,7 +672,7 @@
             $("#checkout-total").text('$' + totalcost.toFixed(2));
         }
         if (fadein || forcefade) {
-            tempHTML += '<DIV id="oldvalues" style="float: right;">' + oldvalues + '</div>';
+            tempHTML += '<DIV id="oldvalues" class="float-right">' + oldvalues + '</div>';
         }
         if (theorder.length > 0) {
             if (totalcost >= minimumfee) {
@@ -1329,6 +1329,10 @@
         };
     })();
 
+    function reseturl(){
+        history.pushState("", document.title, window.location.pathname);
+    }
+
     var generalhours = <?= json_encode(gethours()) ?>;
 
     var lockloading = false, previoushash = "", $body = "";
@@ -1361,7 +1365,7 @@
                         if(previoushash.left(1) != "#"){previoushash = "#" + previoushash;}
                         window.history.pushState({}, document.title, previoushash);
                     } else {
-                        history.pushState("", document.title, window.location.pathname);
+                        reseturl();
                     }
                 }
                 skipone = Date.now() + 100;//
@@ -2363,7 +2367,7 @@
         currentaddontype = table;
         var HTML = '<DIV class="receipt-addons-list"><DIV id="theaddons"></DIV></DIV>';
         if (currentstyle == 0) {
-            HTML += '<DIV CLASS="addonlist" style="border:3px solid green !important;" ID="addontypes">';
+            HTML += '<DIV CLASS="addonlist" ID="addontypes">';
         }
         var types = Object.keys(alladdons[table]);
         if (currentstyle == 0) {
@@ -2577,6 +2581,7 @@
     }
 
     $(document).ready(function () {
+        reseturl();
         <?php
             if(read("id")){
                 if (islive()) {

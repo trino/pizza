@@ -24,7 +24,7 @@
                         echo '<!-- menu cache generated at: ' . my_now() . ' --> ' . $menu;
                     }
                 ?>
-                <div class="col-lg-3 col-md-12 bg-inverse" style="background: #eee !important;">
+                <div class="col-lg-3 col-md-12 bg-inverse bg-grey">
                     @include("popups_checkout")
                 </div>
             </div>

@@ -27,7 +27,7 @@
                         <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa far fa-edit text-white fa-stack-1x"></i></span>
                     </div>
                     <div class="input_right">
-                        <TEXTAREA STYLE="width:100%" rows="10" NAME="contact_text" id="contact_text"></TEXTAREA>
+                        <TEXTAREA CLASS="width-full" rows="10" NAME="contact_text" id="contact_text"></TEXTAREA>
                     </div>
                     <INPUT TYPE="submit" CLASS="btn-block btn btn-primary" VALUE="SEND">
                 </FORM>

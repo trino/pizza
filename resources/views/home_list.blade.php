@@ -399,6 +399,10 @@
                     cursor: pointer;
                 }
 
+                .padding-l{
+                    padding-left: 25px;
+                }
+
                 .textfield{
                     width:100%;
                 }
@@ -558,6 +562,14 @@
                     margin-right: 5px;
                     float: right;
                     padding-left: 2px !important;
+                }
+
+                #comboname{
+                    background-color: white !important;
+                }
+
+                .margin-top{
+                    margin-top: 20px;
                 }
             </STYLE>
             <SCRIPT SRC="https://www.w3schools.com/lib/w3color.js"></SCRIPT>
@@ -1818,7 +1830,7 @@
                             isinmodal: 1
                         }, function (result) {
                             if(result) {
-                                var HTML = '<DIV CLASS="row col-md-12" style="padding-left: 25px;">';
+                                var HTML = '<DIV CLASS="row col-md-12 padding-l">';
                                 HTML += changestatusbutton(ID, -1);
                                 HTML += changestatusbutton(ID, 2);
                                 HTML += '</DIV>';
@@ -2250,7 +2262,7 @@
                             <button onclick="closecombo();" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button>
                         </div>
                         <div class="modal-body">
-                            Name: <INPUT TYPE="text" id="comboname" class="form-control" style="background-color: white !important;" onchange="comboChanged=true;">
+                            Name: <INPUT TYPE="text" id="comboname" class="form-control" onchange="comboChanged=true;">
                             Base price: $<SPAN ID="comboprice"></SPAN><P>
                             Item IDs: <SPAN ID="comboitems"></SPAN><P>
                             <SPAN ID="combocontents">
@@ -2284,7 +2296,7 @@
                                 ?>
                             </SPAN>
                             <div class="clearfix"></div>
-                            <BUTTON onclick="savecombo();" class="btn btn-sm btn-primary pull-right" STYLE="margin-top: 20px;">Save Changes</BUTTON>
+                            <BUTTON onclick="savecombo();" class="btn btn-sm btn-primary pull-right margin-top">Save Changes</BUTTON>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 @extends(isset($isGET) ? 'layouts_app' : 'layouts_blank')
 @section('content')
     <?php
+    //do not in-line the styles as this is used in emails
     //http://localhost/ai/public/list/orders?action=getreceipt&orderid=224
     startfile("popups_receipt");
     $debugmode = !islive();

@@ -59,7 +59,7 @@
 
 <SCRIPT>
     //if($firefox)
-    /*
+    /*  why is this commented out?
         if(is_firefox_for_android) {
             $(window).load(function () {
                 var HTML = $("#gmapc").html();
@@ -88,7 +88,7 @@
     function transferdata(value){
         var html = $("#mirror").html();
         if(!html){
-            $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" STYLE="display:none;" class="nevershow">');
+            $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" class="nevershow">');
         }
         $('input[autocomplete=really-truly-off]').val(value);
         $("#formatted_address").val(value);

@@ -12,16 +12,16 @@
 ?>
 <div class="row">
     <DIV CLASS="col-lg-4 col-md-5 bg-white">
-        <DIV CLASS="btn-sm-padding bg-white" style="padding-bottom: 1rem !important;padding-top: .5rem !important;">
+        <DIV CLASS="btn-sm-padding bg-white padding-tb">
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();" style="font-weight: bold">LOG IN</a>
+                    <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">LOG IN</a>
                 </li>
                 <A class="nav-link">
                     &nbsp;OR&nbsp;
                 </A>
                 <li class="nav-item">
-                    <a class="nav-link" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();" style="font-weight: bold">SIGN UP</a>
+                    <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">SIGN UP</a>
                 </li>
             </ul>
             <!-- Tab panes -->
@@ -72,8 +72,8 @@
 
         <div class="py-3">
             <center>
-                <img src="<?= webroot("images/delivery.jpg"); ?>" style="width: 50%;"/>
-                <h2 class="text-danger mt-3" style="text-align: center;">Only the Best Pizza in <?= cityname; ?></h2>
+                <img src="<?= webroot("images/delivery.jpg"); ?>" class="width-50"/>
+                <h2 class="text-danger mt-3 pull-center">Only the Best Pizza in <?= cityname; ?></h2>
                 ${{ $minimum }} Minimum<br>
                 ${{ $delivery }} Delivery<br>
                 Credit/Debit Only
@@ -81,14 +81,14 @@
         </div>
 
     </DIV>
-    <div class="col-lg-8 col-md-7 py-3 bg-inverse" style="padding-right: 15px; padding-left: 15px;">
-        <span style=";font-size: 2.5rem; font-weight: bold;line-height: 3.1rem;"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
+    <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
+        <span class="bold bigtext"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
         <p>The art of delivery is in the team, local restaurants at your footstep within <?= $time; ?> minutes.</p>
         <P><I class="lead text-danger strong">Feed yourself plus someone else! - <a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a></i></P>
 
         <div class="row">
             <div class="col-md-6 padleftright15">
-                <TABLE STYLE="display: inline">
+                <TABLE class="inline">
                     <TR>
                         <TD COLSPAN="3"><p class="lead strong">HOURS OF OPERATION</p></TD>
                     </TR>
@@ -111,8 +111,8 @@
 
 
 
-            <div class="col-md-6 padleftright15" style="display: none;">
-                <TABLE STYLE="display: inline;">
+            <div class="col-md-6 padleftright15 dont-show">
+                <TABLE class="inline">
                     <TR>
                         <TD COLSPAN="2"><p class="lead strong">DISCOUNTS</p></TD>
                     </TR>
