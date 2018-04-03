@@ -941,6 +941,8 @@
         if (!phone_number) {reasons.push("phone number missing or invalid");}
         if (!valid_address) {reasons.push("valid address");}
         if (!validdeliverytime()){reasons.push("valid delivery time");}
+        if ($("#orderinfo").find(".error:visible[for]").length > 0) {reasons.push("jquery validation errors");}
+        if (paydisabled){reasons.push("Already placing an order");}
         if (reasons.length > 0) {
             log("canplaceanorder: " + reasons.join(", "));
             return false;
@@ -950,7 +952,7 @@
 
     function validphonenumber(text){
         text = text.replace(/\D/g,'');
-        if (text.length != 9){return false;}
+        if (text.length != 10){return false;}
     }
 
     //send an order to the server
@@ -1705,15 +1707,8 @@
         if(alertshortage()){return false;}
         if (!canplaceanorder()) {
             flash();
+            log("Can't pay for order");
             return cantplaceorder();
-        }
-        if ($("#orderinfo").find(".error:visible[for]").length > 0) {
-            flash();
-            return false;
-        }
-        if(paydisabled){
-            log("Already placing an order");
-            return false;
         }
         paydisabled=true;
         var $form = $('#orderinfo');
