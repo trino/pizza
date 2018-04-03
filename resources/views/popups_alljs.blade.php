@@ -238,7 +238,7 @@
     }
 
     function log(text) {
-        console.log(text);
+        @if(islive()) console.log(text); @endif
     }
 
     function getform(ID) {
@@ -2657,7 +2657,7 @@
 
 <?php $nprog = "#F0AD4E"; ?>
 <STYLE>
-    #loading {z-index: 9999;}
+    #loading {z-index: 999999;}
     #nprogress{pointer-events:none;}
     #nprogress .bar{background:<?= $nprog; ?>;position:fixed;z-index:10000;top:0;left:0;width:100%;height:10px;}
     #nprogress .peg{display:block;position:absolute;right:0px;width:100px;height:100%;box-shadow:0 0 10px <?= $nprog; ?>,0 0 5px <?= $nprog; ?>;opacity:1.0;-webkit-transform:rotate(3deg) translate(0px,-4px);-ms-transform:rotate(3deg) translate(0px,-4px);transform:rotate(3deg) translate(0px,-4px);}
