@@ -228,7 +228,6 @@
                     $.post(webroot + "auth/login", formdata, function (result) {
                         if (result) {
                             try {
-                                //var data = JSON.parse(result);
                                 $("#logintab").trigger("click");
                                 @if(!islive())
                                     if(formdata["name"] == "test") {

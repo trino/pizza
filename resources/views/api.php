@@ -39,8 +39,6 @@ function webroot($file = "", $justroot = false){
     $webroot = substr($webroot, 0, $start);
     $protocol = "http";
     if (islive()) {
-        //$webroot = str_replace("application/", "", $webroot);
-        //$webroot = str_replace("public/", "", $webroot);
         $webroot = "/";
         if ($isSecure) {
             $protocol = "https";
@@ -317,7 +315,6 @@ function iif($value, $istrue, $isfalse = ""){
     return $isfalse;
 }
 
-//DOC2018: this function apparently exists in PHP so I had to add the error check //
 if(!function_exists("is_iterable")) {
     function is_iterable($var) {
         return (is_array($var) || $var instanceof Traversable);

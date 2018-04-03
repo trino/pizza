@@ -374,7 +374,6 @@
                                     if ($debugmode) {
                                         $debug = ' TITLE="' . $onlydebug . var_export($item, true) . '"';
                                     }
-                                    //echo '<TR><TD>' . ($ID + 1) . '</TD><TD' . $debug . '>' . $item->itemname . '</TD>';
                                     echo '<TR><TD>' . showifabove1($quantity) . '</TD><TD' . $debug . '>' . $item->itemname . '</TD>';
                                     if ($debugmode) {
                                         $debug = ' TITLE="' . $onlydebug . print_r($menuitem, true) . '"';
@@ -394,7 +393,6 @@
                                         }
                                     }
                                     $colspan = $colspan - 2;
-                                    // $imagefile = '<img class="pull-left" src="' . $localdir . $imagefile . ".png" . '" style="width:22px;margin-right:5px;">';
                                     echo '<TR><TD valign="middle" style="font-weight: bold;">' . showifabove1($quantity, 'x&nbsp;') . $item->itemname . '</TD><TD ALIGN="RIGHT" WIDTH="5%">';
                                     break;
                             }

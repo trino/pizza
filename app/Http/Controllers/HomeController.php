@@ -193,7 +193,7 @@ class HomeController extends Controller {
                 $user["phone"] = $_POST["phone"];
                 insertdb("users", array("id" => $info["user_id"], "name" => $_POST["name"], "phone" => $_POST["phone"]));//attempt to update user profile
             }
-            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user"))->render();                     //generate total
+            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user"))->render();
             //if ($text) {return $text;} //shows email errors. Uncomment when email works
             if (isset($info["stripeToken"]) || $user["stripecustid"]) {//process stripe payment here
                 $amount = select_field_where("orders", "id=" . $orderid, "price");
@@ -336,11 +336,6 @@ class HomeController extends Controller {
         return $user;
     }
 
-    /**
-     * @param $data
-     * @param bool|false $gethours
-     * @return array|bool|\mysqli_result
-     */
     function closestrestaurant($data, $gethours = false, $includesql = true){
         //if(!isset($data['radius'])){$data['radius'] = 100;}//default radius
         $SQL = "SELECT address_id FROM restaurants WHERE address_id > 0 AND is_delivery = 1";
@@ -359,7 +354,6 @@ class HomeController extends Controller {
             $SQL .= " HAVING distance <= " . $data['radius'];
         }
         $SQL .= " ORDER BY distance ASC" . $limit;
-
         $Restaurants = Query($SQL, true);//useraddresses
         if ($Restaurants) {
             if ($gethours) {
@@ -393,7 +387,6 @@ class HomeController extends Controller {
     }
 
     function processaddress($info){
-        //autosave address changes
         $address = first("SELECT * FROM useraddresses WHERE user_id = " . $info["user_id"] . " AND number = '" . $info["number"] . "' AND street = '" . $info["street"] . "' AND city = '" . $info["city"] . "'");
         if (!$address) {
             $address = array(

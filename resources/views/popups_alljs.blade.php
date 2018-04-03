@@ -395,16 +395,12 @@
             $("#menumodal").modal("show");
             refreshremovebutton();
         }
-        // $("#removelist").text("");
         $("#additemtoorder").html(title);
         $("#modal-itemtotalprice").text(Number(itemcost).toFixed(2));
     }
 
     function refreshremovebutton() {
-        if (currentaddonlist[currentitemindex].length == 0) {
-            //   $(".removeitemarrow").fadeTo("fast", 0.50);
-            //   $("#removeitemfromorder").attr("title", "").attr("onclick", "").attr("style", "cursor: not-allowed");
-        } else {
+        if (currentaddonlist[currentitemindex].length > 0) {
             var index = currentaddonlist[currentitemindex].length - 1;
             var lastitem = currentaddonlist[currentitemindex][index];
             $(".removeitemarrow").fadeTo("fast", 1.00);
@@ -419,8 +415,6 @@
         // Add the "show" class to DIV
         //  x.className = "show";
         // After 3 seconds, remove the show class from DIV
-        //  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1200);
-
         var itemid = 0, itemname = "", itemprice = 0.00, itemaddons = new Array, itemsize = "", toppingcost = 0.00, toppingscount = 0, itemcat = "", oldcost = "";
         if (!isUndefined(Index)) {currentitemID = Index;}
         if (isUndefined(element)) {//modal with addons
@@ -594,7 +588,6 @@
 
                 var itemname = "";
                 if (hasaddons) {
-               //     tempHTML += '<DIV class="text-muted">';
                     var tablename = item["itemaddons"][0]["tablename"];
                     if (item["itemaddons"].length > 1) {
                         itemname = itemnames[tablename];
@@ -631,7 +624,6 @@
                         tempHTML += '</DIV>';
 
                     }
-                 //   tempHTML += '</DIV>';
                 }
                 HTML += tempHTML;
             }
@@ -1575,12 +1567,9 @@
         if (SelectedVal == 0) {
             Text = '';
         } else {
-            //$("#saveaddresses").removeClass("red");
-            //$("#red_address").removeClass("redhighlite");
             $("#formatted_address").hide();
             if (SelectedVal == "addaddress") {
                 visible_address(true);
-                //refreshform("#formatted_address");
                 $("#add_unit").show();
                 focuson(getGoogleAddressSelector());
                 Text = "";
@@ -1588,8 +1577,7 @@
             }
         }
         $("#formatted_address").val(Text);
-        $("#restaurant").html('<OPTION VALUE="0" SELECTED>Restaurant</OPTION>');//.addClass("red");
-        //$("#red_rest").addClass("redhighlite");
+        $("#restaurant").html('<OPTION VALUE="0" SELECTED>Restaurant</OPTION>');
         addresshaschanged();
     }
 
@@ -1731,7 +1719,6 @@
             Stripe.card.createToken($form, stripeResponseHandler);
             log("Stripe data - complete");
         } else {//saved card
-
             log("Use saved data");
             placeorder("");//no stripe token, use customer ID on the server side
         }
@@ -1765,7 +1752,6 @@
                 } break;
         }
         if (errormessage) {
-            //$(".payment-errors").html(errormessage + "<BR><BR>" + response["error"]["type"] + ":<BR>" + response["error"]["message"]);
             ajaxerror(response["error"]["message"]);
             loading(false, "stripe");
         }
@@ -1878,9 +1864,6 @@
         var val = $("#saved-credit-info").val();
         $("#red_card").removeClass("redhighlite");
         if (!val) {
-            if (isvalidcreditcard() != 0) {
-                //$("#red_card").addClass("redhighlite");
-            }
             $(".credit-info").show();//let cust edit the card
             focuson("input[data-stripe=number]");
         } else {
@@ -1890,7 +1873,6 @@
     }
 
     function showcheckout() {
-        //canplaceorder=false;
         if (userdetails["Addresses"].length == 0) {
             setTimeout(function () {
                 $("#saveaddresses").val("addaddress");
@@ -1938,11 +1920,8 @@
             });
         });
         $("#restaurant").html('<option value="0">Select Restaurant</option>').val("0");
-        //$("#saveaddresses").attr("autored", "red_address");
         refreshform("#saveaddresses");
         if(needscreditrefresh){changecredit();}
-        //$("#orderinfo").valid();
-        //if($("#reg_phone").valid()){$("#red_phone").removeClass("redhighlite");}
         validateinput();
     }
 
@@ -2252,7 +2231,7 @@
             HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ' #' + (itemindex + 1) + '</strong>';
 
             if(currentaddonlist[itemindex].length == 0){
-                tempstr += ' No ' + addonname; /* trust me, some users have a hard time figuring this out. If they don't explicitly see this, some will assume we picked toppings for them; */
+                tempstr += ' No ' + addonname; //leave for the users who assume we'll pick toppings for them
             }
             for (var i = 0; i < currentaddonlist[itemindex].length; i++) {
                 var currentaddon = currentaddonlist[itemindex][i];

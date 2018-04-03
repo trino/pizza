@@ -3,7 +3,6 @@
 <head>
     <?php
         $time = microtime(true);
-        // Gets microseconds
         if (read("id")) {
             $user = getuser(false);
             if (!$user) {
@@ -187,7 +186,6 @@
 <div class="dont-show">
     <?php
     if (isset($GLOBALS["filetimes"])) {
-        // && !islive()){
         echo '<TABLE><TR><TH COLSPAN="2">File times</TH></TR>';
         $total = 0;
         foreach ($GLOBALS["filetimes"] as $Index => $Values) {

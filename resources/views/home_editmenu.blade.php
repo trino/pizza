@@ -263,8 +263,7 @@
                 $("#table_" + current_table).show();
             }
 
-            $(window).load(function () {
-                //$( document ).ready(function() {
+            $(window).load(function () {//or document
                 processAll();
                 $(".main").first().trigger("click");
             });

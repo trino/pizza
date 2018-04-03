@@ -56,7 +56,6 @@
         echo ' ascending"><I CLASS="fa fa-arrow-up"></I></i></DIV></TH>';
     }
     function changeorderstatus($ID, $Status, $Reason){
-        //HomeController::placeorder(["action" => "changestatus", "orderid" => $ID, "status" => $Status, "reason" => $Reason]);
         App::make('App\Http\Controllers\HomeController')->placeorder(["action" => "changestatus", "orderid" => $ID, "status" => $Status, "reason" => $Reason]);
         return $ID;
     }
@@ -634,7 +633,6 @@
                                     @elseif($table == "debug")
                                         <DIV id="debugmessage"></DIV>
                                         <PRE id="debuglogcontents"><?php
-                                            //show debug file
                                             $Contents = "";
                                             $filedate = 0;
                                             if (file_exists("royslog.txt")){
@@ -786,7 +784,6 @@
                     }
 
                     $(window).load(function () {
-                    //$(document).ready(function() {
                         getpage(0);
                         $("#profileinfo").remove();
                     });

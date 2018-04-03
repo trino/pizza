@@ -11,7 +11,6 @@
     }
     if (!function_exists("printarow")) {
         function printarow($Name, $Prepend, $field) {
-            //if ($field["type"] != "hidden") {echo '';}
             if($GLOBALS["icons"]){
                 if(!isset($field["icon"])){$field["icon"] = "fa-user";}
                 echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa ' . $field["icon"] . ' text-white fa-stack-1x"></i></span></div><div class="input_right">';
@@ -93,8 +92,6 @@
                     }
                     if (result.contains("password mismatch")) {
                         validateselector("#reg_oldpassword", result, -1);
-                    } else {
-                        //ajaxerror(result, title);
                     }
                     return true;
                 }

@@ -8,7 +8,6 @@
             ?>
             <div class="row">
                 <?php
-                    //menu caching
                     $doCache = $GLOBALS["settings"]["domenucache"];
                     $menucache_filename = resource_path() . "/menucache.html";
                     $menublade_filename = resource_path() . "/views/popups_menu.blade.php";

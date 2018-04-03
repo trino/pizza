@@ -110,7 +110,6 @@ class Controller extends BaseController {
                 //$Message = "http://" . serverurl . "/call?message=" . urlencode($Message);
                 //do not change this to https, http is required for twilio to actually work
                 $Message = "http://hamiltonpizza.ca/call?message=" . urlencode($Message);
-                //do not change this to https, http is required for twilio to actually work
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Calls";
                 $data = array("From" => $fromnumber, "To" => $Phone, "Url" => $Message);
             } else {
@@ -118,7 +117,6 @@ class Controller extends BaseController {
                 $Message = str_replace("http:", "https:", $Message);
                 $data = array("From" => $fromnumber, "To" => $Phone, "Body" => $Message);
             }
-            // debugprint($ret);
             return $this->cURL($URL, http_build_query($data), $sid, $token);
         }
         debugprint('ERROR - ' . $ret . " - Is not live/valid or is a blocked number, did not contact");

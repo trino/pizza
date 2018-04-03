@@ -106,7 +106,6 @@
                 }
             });
             $("#profileinfo").remove();
-            //$(".sticky-footer").remove();
 
             $('a[href=#top]').click(function(event){
                 event.preventDefault();

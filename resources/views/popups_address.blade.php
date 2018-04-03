@@ -213,14 +213,13 @@
 
         var componentForm = {
             street_number: 'short_name',
-            //route: 'long_name',//street name
             route: 'short_name',//street name
             locality: 'long_name',//ON Canada
             administrative_area_level_1: 'long_name',
             country: 'long_name',
             postal_code: 'short_name'
         };
-        //2396 Kingsway, locality: Vancouver, administrative_area_level_1: British Columbia, country: Canada, postal_code: V5R 5G9
+        //Example: 2396 Kingsway, locality: Vancouver, administrative_area_level_1: British Columbia, country: Canada, postal_code: V5R 5G9
         var streetformat = "[street_number] [route], [locality], [administrative_area_level_1_s]";// [postal_code]";
         for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];

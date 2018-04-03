@@ -179,18 +179,17 @@
 <SCRIPT>
     //https://stripe.com/docs/custom-form
     @if(read("id"))
-    $(document).ready(function () {
-        getcloseststore = true;
-        visible_address(false);
-        $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
-        $(".credit-info").change(function () {
-            if (isvalidcreditcard()) {
-                ajaxerror();
-            }
+        $(document).ready(function () {
+            getcloseststore = true;
+            visible_address(false);
+            $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
+            $(".credit-info").change(function () {
+                if (isvalidcreditcard()) {
+                    ajaxerror();
+                }
+            });
         });
-    });
-    //$('#reg_phone').keypress(function () {if ($('#reg_phone').valid()) {clearphone('keypress');}});
-            @endif
+    @endif
 
     var shortitems = [];
 
@@ -210,7 +209,7 @@
         addressstatus();
         if (closest.length > 0) {
             GenerateHours(closest[index].hours);
-            // shortitems = CheckforShortage(closest[index].shortage);
+            shortitems = CheckforShortage(closest[index].shortage);
             alertshortage();
         }
     }
