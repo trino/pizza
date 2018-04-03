@@ -63,22 +63,25 @@
                 echo $website . ' blocks downloads';
                 break;
             default:
+                downloadstate($url);
                 $HTML = file_get_contents($url);
+                downloadstate();
         }
         if($HTML) {
             switch ($_GET["action"]) {
                 case "storelist":
                     $stores = enumstores($url, $HTML);
+                    echo '<TITLE>Harvesting: ' . $website . '</TITLE>';
                     foreach ($stores as $store) {
                         if(needsstore($website, $store)) {
                             $store["menu"] = enummenu($store["url"], $website);
                             processstore($website, $store);
                             if (!isset($_GET["all"])) {
                                 vardump($store);
-                                die();
+                                footer();
                             }
                         } else {
-                            echo $website . ": " . $store["name"] . " is already saved to the HTML file. Skipping<BR>";
+                            echo '<DIV CLASS="skipped">' . $website . ": " . $store["name"] . " is already saved to the HTML file. Skipping</DIV>";
                         }
                     }
                     break;
@@ -91,16 +94,23 @@
         return getcwd() . "/harvester.html";
     }
 
+    function iniharvesterhtml(){
+        appendtofile('<link rel="stylesheet" href="harvester.css">');
+    }
+
     function processfile(){
         if(!isset($GLOBALS["harvester"])) {
             if (file_exists(harvesterfile())) {
                 $HTML = file_get_contents(harvesterfile());
+                if (strpos($HTML, "stylesheet") === false){iniharvesterhtml();}
                 $HTML = explode('<TABLE BORDER="1">', $HTML);
                 foreach($HTML as $store){
                     $website = getbetween($store, "<TR><TD>Source:</TD><TD>", '</TD></TR>');
                     $name = getbetween($store, "<TR><TD>Name:</TD><TD>", '</TD></TR>');
                     $GLOBALS["harvester"][$website . ":" . $name] = true;
                 }
+            } else {
+                iniharvesterhtml();
             }
         }
     }
@@ -185,6 +195,22 @@
         return $stores;
     }
 
+    function downloadstate($url = false){
+        if($url){
+            echo '<DIV ID="downloading"><IMG SRC="images/loader.gif"><BR>Downloading page</DIV>';
+        } else {
+            ?>
+                <SCRIPT LANGUAGE="JAVASCRIPT">
+                    var elem = document.getElementById("downloading");
+                    elem.parentElement.removeChild(elem);
+                </SCRIPT>
+            <?php
+        }
+        ob_flush();
+        ob_implicit_flush(1);
+        flush();
+    }
+
     function get_data($url, $cookie = false) {
         $ch = curl_init();
         $timeout = 5;
@@ -204,9 +230,13 @@
         //$header[] = "Host: " . getwebsite($url, true);
         //$header[] = "Upgrade-Insecure-Requests: 1";
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-
+        downloadstate($url);
         $data = curl_exec($ch);
+        downloadstate();
         curl_close($ch);
+        if($data === false){
+            die($url . " took too long to download");
+        }
         return $data;
     }
 
@@ -271,30 +301,35 @@
         }
     }
 
-    $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    if(strpos($actual_link, "?") !== false){
-        $actual_link = left($actual_link, strpos($actual_link, "?"));
-    }
-?>
-
-<STYLE>
-    .html{
-        width: 100%;
-        height: 400px;
-    }
-</STYLE>
-
-<H2>Source list:</H2>
-<UL>
-    <LI><A HREF="?url=https://www.skipthedishes.com/hamilton/restaurants/all?gclid=Cj0KCQjw-uzVBRDkARIsALkZAdkCaIOtVqPUOjdXeXMvxMM-fWEgVT5oH1840DCaLzffxBC6_XY7jMwaAphHEALw_wcB&action=storelist">skipthedishes hamilton (single store)</A></LI>
-    <LI><A HREF="?url=https://www.skipthedishes.com/hamilton/restaurants/all?gclid=Cj0KCQjw-uzVBRDkARIsALkZAdkCaIOtVqPUOjdXeXMvxMM-fWEgVT5oH1840DCaLzffxBC6_XY7jMwaAphHEALw_wcB&action=storelist&all">skipthedishes hamilton (all stores)</A></LI>
-    <LI><A HREF="?url=https://www.just-eat.ca/area/l8m-hamilton/?lat=43.2426058&long=-79.8210626&action=storelist">just-eat hamilton (single store)</A></LI>
-    <LI><A HREF="?url=https://www.just-eat.ca/area/l8m-hamilton/?lat=43.2426058&long=-79.8210626&action=storelist&all">just-eat hamilton (all stores)</A></LI>
-    <LI>ubereats does not allow downloading via this method<!--A HREF="?url=https://www.ubereats.com/stores/&action=storelist">ubereats</A--></LI>
-    <?php
-        if (file_exists(harvesterfile())) {
-            echo '<LI><A HREF="' . str_replace(".php", ".html", $actual_link) . '">Harvested data</A></LI>';
+    function footer(){
+        $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        if(strpos($actual_link, "?") !== false){
+            $actual_link = left($actual_link, strpos($actual_link, "?"));
         }
-    ?>
-    <LI><A HREF="<?= $actual_link; ?>">Back to the main screen</A></LI>
-</UL>
+        ?>
+            <STYLE>
+                .html{
+                    width: 100%;
+                    height: 400px;
+                }
+            </STYLE>
+            <H2>Source list:</H2>
+            <UL>
+                <LI><A HREF="?url=https://www.skipthedishes.com/hamilton/restaurants/all?gclid=Cj0KCQjw-uzVBRDkARIsALkZAdkCaIOtVqPUOjdXeXMvxMM-fWEgVT5oH1840DCaLzffxBC6_XY7jMwaAphHEALw_wcB&action=storelist">skipthedishes hamilton (single store)</A></LI>
+                <LI><A HREF="?url=https://www.skipthedishes.com/hamilton/restaurants/all?gclid=Cj0KCQjw-uzVBRDkARIsALkZAdkCaIOtVqPUOjdXeXMvxMM-fWEgVT5oH1840DCaLzffxBC6_XY7jMwaAphHEALw_wcB&action=storelist&all">skipthedishes hamilton (all stores)</A></LI>
+                <LI><A HREF="?url=https://www.just-eat.ca/area/l8m-hamilton/?lat=43.2426058&long=-79.8210626&action=storelist">just-eat hamilton (single store)</A></LI>
+                <LI><A HREF="?url=https://www.just-eat.ca/area/l8m-hamilton/?lat=43.2426058&long=-79.8210626&action=storelist&all">just-eat hamilton (all stores)</A></LI>
+                <LI>ubereats does not allow downloading via this method<!--A HREF="?url=https://www.ubereats.com/stores/&action=storelist">ubereats</A--></LI>
+                <?php
+                if (file_exists(harvesterfile())) {
+                    echo '<LI><A HREF="' . str_replace(".php", ".html", $actual_link) . '">Harvested data</A></LI>';
+                }
+                ?>
+                <LI><A HREF="<?= $actual_link; ?>">Back to the main screen</A></LI>
+            </UL>
+        <?php
+        die();
+    }
+
+    footer();
+?>
