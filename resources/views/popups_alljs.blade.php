@@ -231,6 +231,13 @@
         }
     }
 
+    function focuson(selector){
+        $(selector).focus();
+        $('html, body').animate({
+            scrollTop: $(selector).offset().top
+        }, 1000);
+    }
+
     //creates a cookie value that expires in 1 year
     function createCookieValue(cname, cvalue) {
         //log("Creating cookie value: '" + cname + "' with: " + cvalue);
@@ -1571,6 +1578,7 @@
                 visible_address(true);
                 //refreshform("#formatted_address");
                 $("#add_unit").show();
+                focuson(getGoogleAddressSelector());
                 Text = "";
                 handlefirefox("addresschanged:" + why);
             }
@@ -1870,6 +1878,7 @@
                 //$("#red_card").addClass("redhighlite");
             }
             $(".credit-info").show();//let cust edit the card
+            focuson("input[data-stripe=number]");
         } else {
             $(".credit-info").hide();//use saved card info
         }
