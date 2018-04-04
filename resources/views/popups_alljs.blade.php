@@ -245,7 +245,7 @@
     }
 
     function log(text) {
-        @if(islive()) console.log(text); @endif
+        @if(!islive()) console.log(text); @endif
     }
 
     function getform(ID) {
@@ -926,7 +926,7 @@
         return -1;
     }
 
-    function canplaceanorder() {
+    function canplaceanorder(checkpaydisabled, where) {
         var valid_creditcard = true;
         if (!$("#saved-credit-info").val() && isvalidcreditcard() != 0) {valid_creditcard = false;}
         var visible_errors = $(".error:visible").text().length == 0;
@@ -941,9 +941,10 @@
         if (!valid_address) {reasons.push("valid address");}
         if (!validdeliverytime()){reasons.push("valid delivery time");}
         if ($("#orderinfo").find(".error:visible[for]").length > 0) {reasons.push("jquery validation errors");}
-        if (paydisabled){reasons.push("Already placing an order");}
+        if (paydisabled && checkpaydisabled){reasons.push("Already placing an order");}
+        if(alertshortage()){reasons.push("Product shortage");}
         if (reasons.length > 0) {
-            log("canplaceanorder: " + reasons.join(", "));
+            log("canplaceanorder: " + where + " - " + reasons.join(", "));
             return false;
         }
         return true;
@@ -951,12 +952,12 @@
 
     function validphonenumber(text){
         text = text.replace(/\D/g,'');
-        if (text.length != 10){return false;}
+        return text.length = 10;
     }
 
     //send an order to the server
     function placeorder(StripeResponse) {
-        if (!canplaceanorder()) {
+        if (!canplaceanorder(false, "placeorder")) {
             return cantplaceorder();
         }
         if (isUndefined(StripeResponse)) {
@@ -976,7 +977,7 @@
                 name: $("#reg_name").val(),
                 phone: $("#order_phone").val()
             }, function (result) {
-                paydisabled=false;
+                placeorderstate(false);
                 if (result.contains("ordersuccess")) {
                     $("#checkoutmodal").modal("hide");
                     handleresult(result, "ORDER RECEIPT");
@@ -1662,6 +1663,7 @@
             var validcreditcard = isvalidcreditcard();
             if (validcreditcard != 0) {
                 $("#red_card").addClass("redhighlite");
+                log("CREDIT CARD FAIL");
                 switch (validcreditcard){//-1=unknown, 0=success, 1=bad card number, 2=bad expiry date, 3=bad CVV
                     case 1: validateinput("#saved-credit-info", "Please select or enter a valid credit card"); break;
                     case 2: validateinput("#saved-credit-info", "Please select a valid expiry date"); break;
@@ -1671,10 +1673,12 @@
                 }
             }
         }
-        if($("#order_phone").length>0) {
-            validateinput("#order_phone");
+        if(!validphonenumber($("#order_phone").val())) {
+            log("PHONE FAIL");
+            validateinput("#order_phone", "Please enter a valid phone number");
         }
         if(!validdeliverytime()){
+            log("HOUR FAIL");
             GenerateHours(generalhours);
             validateinput("#deliverytime", "Please select a future delivery time");
         }
@@ -1700,22 +1704,32 @@
         $('.redhighlite').fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0); }); }); });
     }
 
+    function placeorderstate(state){
+        if(state){
+            $(".payfororder").removeClass("disabled");
+        } else {
+            $(".payfororder").addClass("disabled");
+        }
+        paydisabled = state;
+    }
+
     var paydisabled = false;
     function payfororder() {
+        log("PAYFORORDER");
         ajaxerror();
         validateinput();
-        if(alertshortage()){return false;}
-        if (!canplaceanorder()) {
+        if (!canplaceanorder(true, "payfororder")) {
             flash();
             log("Can't pay for order");
             return cantplaceorder();
         }
-        paydisabled=true;
+        placeorderstate(true);
         var $form = $('#orderinfo');
         log("Attempt to pay: " + changecredit());
         if (!changecredit()) {//new card
             log("Stripe data");
             loading(true, "stripe");
+            placeorderstate(false);
             Stripe.card.createToken($form, stripeResponseHandler);
             log("Stripe data - complete");
         } else {//saved card
@@ -2581,7 +2595,6 @@
                 }
             }
             log("Attempting to force validate " + ID + " to true");
-
             validateinput(this, true);
         });
     });

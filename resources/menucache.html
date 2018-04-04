@@ -1,6 +1,6 @@
 <div class="col-lg-3 col-md-12 bg-white ismenu">
             <div class="text-danger strong list-group-item" ID="category_0">
-<h2 CLASS="pull-left align-middle h2-middle">Pizza</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_pizza"
+<h2 CLASS="pull-left align-middle h2-middle">Pizza</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_pizza"
                  itemid="1"
                  itemname="Small Pizza"
                  itemprice="4.95"
@@ -113,7 +113,7 @@
                 <span class="text-muted ml-auto align-middle btn-sm-padding item-cost"> $18.95+</span>
             </button>
                             <div class="text-danger strong list-group-item" ID="category_1">
-<h2 CLASS="pull-left align-middle h2-middle">Dips</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_dips"
+<h2 CLASS="pull-left align-middle h2-middle">Dips</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_dips"
                  itemid="9"
                  itemname="Tomato Dip"
                  itemprice="0.7"
@@ -201,7 +201,7 @@
 
 <div class="col-lg-3 col-md-12 bg-white ismenu">
                 <div class="text-danger strong list-group-item" ID="category_2">
-<h2 CLASS="pull-left align-middle h2-middle">Wings</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_wings"
+<h2 CLASS="pull-left align-middle h2-middle">Wings</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_wings"
                  itemid="15"
                  itemname="1 lb Wings"
                  itemprice="6.99"
@@ -272,7 +272,7 @@
                 <span class="text-muted ml-auto align-middle btn-sm-padding item-cost"> $28.99</span>
             </button>
                             <div class="text-danger strong list-group-item" ID="category_3">
-<h2 CLASS="pull-left align-middle h2-middle">Sides</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_sides"
+<h2 CLASS="pull-left align-middle h2-middle">Sides</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_sides"
                  itemid="20"
                  itemname="Panzerotti"
                  itemprice="5.99"
@@ -374,7 +374,7 @@
 
 <div class="col-lg-3 col-md-12 bg-white ismenu">
                 <div class="text-danger strong list-group-item" ID="category_4">
-<h2 CLASS="pull-left align-middle h2-middle">Drinks</h2><span style="visibility: hidden" class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_drinks"
+<h2 CLASS="pull-left align-middle h2-middle">Drinks</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_drinks"
                  itemid="32"
                  itemname="Coca-Cola"
                  itemprice="0.95"
@@ -570,7 +570,7 @@
                 <SPAN ID="modal-itemcat"></SPAN>
             </div>
 
-            <div class="list-group-item" style="background: #fff !important; border-bottom: 0px solid #d9534f !important;" >
+            <div class="list-group-item toppinglistitem">
                 <h2 class="text-normal" id="myModalLabel">
                     <SPAN ID="modal-itemname"></SPAN><br>
                     <small ID="toppingcost" class="nowrap text-muted">$<SPAN id="modal-toppingcost"></SPAN> per topping</small>
@@ -578,7 +578,7 @@
                 <button data-dismiss="modal" class="btn align-middle ml-auto bg-transparent"><i class="fa fa-times"></i></button>
             </div>
 
-            <div class="modal-body" style="padding: 0 !important;background: #E6ECF0;">
+            <div class="modal-body menumodal">
                 <DIV ID="addonlist" class="addonlist"></DIV>
             </div>
         </div>
@@ -587,7 +587,7 @@
 
 <script>
     var tables = ["toppings","wings_sauce"];
-    var alladdons = {"toppings":{"Meat":[["Anchovies"],["Bacon"],["Beef Salami"],["Chicken"],["Ground Beef"],["Ham"],["Hot Italian Sausage"],["Hot Sausage"],["Italian Sausage"],["Mild Sausage"],["Pepperoni"]],"Vegetable":[["Black Olives"],["Broccoli"],["Green Olives"],["Green Peppers"],["Hot Banana Peppers"],["Hot Peppers"],["Mushrooms"],["Onions"],["Pineapple"],["Red Onions"],["Red Peppers"],["Spinach"],["Sundried Tomatoes"],["Tomatoes"],["Extra Cheese"]],"zPreparation":[["Well Done"]]},"toppings_id":{"1":"Anchovies","2":"Bacon","3":"Beef Salami","4":"Chicken","5":"Ground Beef","6":"Ham","7":"Hot Italian Sausage","8":"Hot Sausage","9":"Italian Sausage","10":"Mild Sausage","11":"Pepperoni","14":"Black Olives","15":"Broccoli","16":"Green Olives","17":"Green Peppers","18":"Hot Banana Peppers","19":"Hot Peppers","21":"Mushrooms","22":"Onions","23":"Pineapple","24":"Red Onions","25":"Red Peppers","26":"Spinach","27":"Sundried Tomatoes","28":"Tomatoes","29":"Extra Cheese","31":"Well Done"},"wings_sauce":{"Sauce":[["Honey Garlic"],["BBQ"],["Hot"],["Suicide"]],"zPreparation":[["Sauce on Side"],["Well Done"]]},"wings_sauce_id":{"1":"Honey Garlic","3":"BBQ","4":"Hot","5":"Suicide","6":"Sauce on Side","7":"Well Done"}};
+    var alladdons = {"toppings":{"Meat":[["Anchovies"],["Bacon"],["Beef Salami"],["Chicken"],["Ground Beef"],["Ham"],["Hot Italian Sausage"],["Hot Sausage"],["Italian Sausage"],["Mild Sausage"],["Pepperoni"],["Salami"]],"Vegetable":[["Artichoke Heart"],["Black Olives"],["Broccoli"],["Green Olives"],["Green Peppers"],["Hot Banana Peppers"],["Hot Peppers"],["Jalapeno Peppers"],["Mushrooms"],["Onions"],["Pineapple"],["Red Onions"],["Red Peppers"],["Spinach"],["Sundried Tomatoes"],["Tomatoes"],["Extra Cheese"]],"zPreparation":[["Well Done"]]},"toppings_id":{"1":"Anchovies","2":"Bacon","3":"Beef Salami","4":"Chicken","5":"Ground Beef","6":"Ham","7":"Hot Italian Sausage","8":"Hot Sausage","9":"Italian Sausage","10":"Mild Sausage","11":"Pepperoni","12":"Salami","13":"Artichoke Heart","14":"Black Olives","15":"Broccoli","16":"Green Olives","17":"Green Peppers","18":"Hot Banana Peppers","19":"Hot Peppers","20":"Jalapeno Peppers","21":"Mushrooms","22":"Onions","23":"Pineapple","24":"Red Onions","25":"Red Peppers","26":"Spinach","27":"Sundried Tomatoes","28":"Tomatoes","29":"Extra Cheese","31":"Well Done"},"wings_sauce":{"Sauce":[["Honey Garlic"],["BBQ"],["Hot"],["Suicide"]],"zPreparation":[["Sauce on Side"],["Well Done"]]},"wings_sauce_id":{"1":"Honey Garlic","3":"BBQ","4":"Hot","5":"Suicide","6":"Sauce on Side","7":"Well Done"}};
     var freetoppings = {"Small":"0.95","Medium":"1.2","Large":"1.5","X-Large":"1.7","Panzerotti":"0.95","Delivery":"4","Minimum":"15","DeliveryTime":"45","over$20":"10","over$30":"20","over$40":"30","toppings":["Well Done"],"isall":{"toppings":["Well Done"],"wings_sauce":["Honey Garlic","BBQ","Hot","Suicide","Sauce on Side","Well Done"]},"wings_sauce":["Sauce on Side","Well Done"]};
     var qualifiers = {"DEFAULT":["1\/2","1x","2x","3x"]};
     var groups = {"toppings":{"Well Done":"1"},"wings_sauce":{"Honey Garlic":"1","BBQ":"1","Hot":"1","Suicide":"1","Sauce on Side":"2","Well Done":"3"}};
