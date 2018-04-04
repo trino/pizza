@@ -121,9 +121,11 @@ function insertdb($Table, $DataArray, $PrimaryKey = "id", $Execute = True){
         $query .= " ON DUPLICATE KEY UPDATE";
         $delimeter = " ";
         foreach ($DataArray as $Key => $Value) {
-            if ($Key != $PrimaryKey) {
-                $query .= $delimeter . $Key . "='" . $Value . "'";
-                $delimeter = ", ";
+            if(!startswith($Key, "omit_")) {
+                if ($Key != $PrimaryKey) {
+                    $query .= $delimeter . $Key . "='" . $Value . "'";
+                    $delimeter = ", ";
+                }
             }
         }
     }

@@ -250,7 +250,9 @@
         var data = $(ID).serializeArray();
         var ret = {};
         for (var i = 0; i < data.length; i++) {
-            ret[data[i].name] = data[i].value.trim();
+            if(!data[i].name.startswith("omit_")) {
+                ret[data[i].name] = data[i].value.trim();
+            }
         }
         return ret;
     }
@@ -1084,8 +1086,8 @@
     }
 
     function creditcards() {
-        var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2>';
-        if (userdetails.Stripe.length == 0) {
+        var HTML = '<DIV CLASS="se23ction"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2>';
+        if (!loadsavedcreditinfo()) {
             return HTML + makestring("{nocreditcards}");
         }
         for (var i = 0; i < userdetails.Stripe.length; i++) {
@@ -1872,7 +1874,9 @@
 
     function loadsavedcreditinfo() {
         if (userdetails.stripecustid.length > 0) {
-            return userdetails.Stripe.length > 0;
+            if(userdetails.hasOwnProperty("Stripe")) {
+                return userdetails.Stripe.length > 0;
+            }
         }
         return false;
     }

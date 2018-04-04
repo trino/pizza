@@ -128,7 +128,7 @@
         if(is_chrome) {
             var randomid = "";
             if(is_android){
-                randomid = randomString();
+                randomid = "omit_" + randomString();
             }
             element.setAttribute("name", randomid);
             element.setAttribute("id", randomid);
