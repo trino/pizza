@@ -73,7 +73,11 @@
         */
     //endif
 
-    function getGoogleAddressSelector(){
+    function getGoogleAddressSelector(clear){
+        if(isUndefined(clear)){clear = false;}
+        if(clear){
+            //formatted_address.set('place',null);
+        }
         if($("input[autocomplete=really-truly-off]").length > 0){
             return "input[autocomplete=really-truly-off]";
         }
@@ -81,7 +85,7 @@
     }
 
     function testaddress(element){
-        if(isUndefined(element)){element = $(getGoogleAddressSelector());}
+        //if(isUndefined(element)){element = $(getGoogleAddressSelector());}
         //validateform("#" + getformid($(element)));
     }
 

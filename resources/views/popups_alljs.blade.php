@@ -1580,7 +1580,7 @@
             if (SelectedVal == "addaddress") {
                 visible_address(true);
                 $("#add_unit").show();
-                focuson(getGoogleAddressSelector());
+                //focuson(getGoogleAddressSelector(true));
                 Text = "";
                 handlefirefox("addresschanged:" + why);
             }
@@ -1591,6 +1591,7 @@
     }
 
     function handlefirefox(why){
+        /* see "why is this commented out?" in popups_address.blade.php
         if(why == "addresschanged:showcheckout"){return false;}
         if(is_firefox_for_android){
             log("handlefirefox Why: " + why);
@@ -1598,7 +1599,7 @@
             $("#formatted_address").show();
             $("#checkoutmodal").modal("hide");
             $("#firefoxandroid").show();
-        }
+        } */
     }
 
     //universal AJAX error handling
