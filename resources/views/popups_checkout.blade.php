@@ -16,7 +16,7 @@
      data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header">00000
                 <h2 id="myModalLabel" class="align-middle uppercase">Hi, <SPAN CLASS="session_name"></SPAN></h2>
                 <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times"></i>
                 </button>
@@ -25,6 +25,7 @@
                 <div class="modal-body">
                     <?php
                         $order = ["deliverytime", "useraddress", "restaurant", "userphone", "creditcard", "notes"];
+                        $needsphone = needsphonenumber();
                         foreach($order as $key){
                             switch($key){
                                 case "deliverytime": ?>
@@ -58,8 +59,7 @@
                                         <div class="clearfix"></div>
                                         <DIV ID="error-saveaddresses"></DIV>
                                     </div>
-                                <?php break; case "userphone": ?>
-
+                                <?php break; case "userphone": if($needsphone){ ?>
                                     <div class="input_left_icon redhighlite" id="red_phone">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
@@ -69,9 +69,7 @@
                                     <div class="input_right">
                                         <input type="tel" name="phone" id="order_phone" class="form-control session_phone_val" placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>">
                                     </div>
-
-
-                                <?php break; case "restaurant": ?>
+                                <?php } break; case "restaurant": ?>
                                     <div class="input_left_icon" id="red_rest">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>

@@ -233,9 +233,7 @@
 
     function focuson(selector){
         $(selector).focus();
-        $('html, body').animate({
-            scrollTop: $(selector).offset().top
-        }, 1000);
+        //$('html, body').animate({scrollTop: $(selector).offset().top}, 1000);
     }
 
     //creates a cookie value that expires in 1 year
@@ -570,7 +568,7 @@
                     sprite += " sprite-" + toclassname(item["itemname"].trim()).replaceAll("_", "-").replace(/\./g, '');
                 }
 
-                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item list-group-item">';
+                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item">';//can't use list-group-item
 
                 if(quantity > 1) {
                     tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
@@ -650,7 +648,7 @@
             tempHTML = "";
             tempHTML += '<DIV id="newvalues" class="float-right" ';
             if (fadein || forcefade) {
-                tempHTML += 'class="dont-show"';
+                tempHTML += 'style="display:none;"';
             }
             tempHTML += '><div><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
             if(discount>0){
@@ -677,6 +675,7 @@
         $("#myorder").html(HTML + tempHTML);
         if (fadein || forcefade) {
             if (fadein) {
+                log("Should fadein: " + fadein);
                 $(fadein).hide().fadeIn();
             }
             $("#oldvalues").show().fadeOut("slow", function () {$("#newvalues").fadeIn();});
@@ -931,7 +930,7 @@
         if (!$("#saved-credit-info").val() && isvalidcreditcard() != 0) {valid_creditcard = false;}
         var visible_errors = $(".error:visible").text().length == 0;
         var selected_rest = $("#restaurant").val() > 0;
-        var phone_number = validphonenumber($("#order_phone").val());
+        var phone_number = validphonenumber(userphonenumber());
         var valid_address = validaddress();
         var reasons = new Array();
         if (!valid_creditcard) {reasons.push("valid credit card");}
@@ -953,6 +952,14 @@
     function validphonenumber(text){
         text = text.replace(/\D/g,'');
         return text.length = 10;
+    }
+
+    function userphonenumber(){
+        @if(needsphonenumber())
+            return $("#order_phone").val();
+        @else
+            return "<?= read("phone"); ?>";
+        @endif
     }
 
     //send an order to the server
@@ -989,7 +996,7 @@
                             latitude: $("#add_latitude").val(),
                             longitude: $("#add_longitude").val(),
                             number: $("#add_number").val(),
-                            phone: $("#order_phone").val(),
+                            phone: userphonenumber(),
                             postalcode: $("#add_postalcode").val(),
                             province: $("#add_province").val(),
                             street: $("#add_street").val(),
@@ -1490,6 +1497,7 @@
         }
         target.addClass("redhighlite");
         if(validity !== false) {
+            log("Error for: " + ID + ": " + validity);
             var HTML = '<label id="' + ID + '-error" class="error" for="' + ID + '">' + validity + '</label>';
             if($("#error-" + ID).length > 0) {
                 $("#error-" + ID).html(HTML);
@@ -1663,7 +1671,6 @@
             var validcreditcard = isvalidcreditcard();
             if (validcreditcard != 0) {
                 $("#red_card").addClass("redhighlite");
-                log("CREDIT CARD FAIL");
                 switch (validcreditcard){//-1=unknown, 0=success, 1=bad card number, 2=bad expiry date, 3=bad CVV
                     case 1: validateinput("#saved-credit-info", "Please select or enter a valid credit card"); break;
                     case 2: validateinput("#saved-credit-info", "Please select a valid expiry date"); break;
@@ -1673,12 +1680,10 @@
                 }
             }
         }
-        if(!validphonenumber($("#order_phone").val())) {
-            log("PHONE FAIL");
+        if(!validphonenumber(userphonenumber())) {
             validateinput("#order_phone", "Please enter a valid phone number");
         }
         if(!validdeliverytime()){
-            log("HOUR FAIL");
             GenerateHours(generalhours);
             validateinput("#deliverytime", "Please select a future delivery time");
         }

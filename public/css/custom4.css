@@ -250,9 +250,7 @@ h2 {
 #newvalues, #oldvalues {
     text-align: right;
     padding: .4rem .75rem;
-
 }
-
 
 .form-control {
     margin-top: auto;
@@ -260,6 +258,21 @@ h2 {
     min-height: 50px;
     margin-bottom: 5px;
 }
+
+.receipt_item {
+    display: flex;
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+    padding: .25rem .5rem;
+    background: transparent;
+    margin-bottom: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #eceeef !important;
+    font-weight: normal !important;
+}
+
 .list-group-item, .list-group-item-action {
     display: flex !important;
     -webkit-box-align: center !important;
@@ -277,7 +290,6 @@ h2 {
 
 @media screen and (min-width: 400px) {
     .list-group-item, .list-group-item-action {
-
         border-right: 1px solid #eceeef !important;
     }
 }
@@ -343,10 +355,6 @@ h2 {
 
 .alert-button {
     min-width: 25%;
-}
-
-.receipt_item {
-
 }
 
 .strong {

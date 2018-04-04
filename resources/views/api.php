@@ -82,6 +82,13 @@ function connectdb($database = "ai", $username = "root", $password = ""){
     return $con;
 }
 
+function needsphonenumber(){
+    $always = false;
+    if($always){return true;}
+    if(read("id")){if(strlen(filternonnumeric(read("phone"))) == 10){return false;}}
+    return true;
+}
+
 function left($text, $length){
     return substr($text, 0, $length);
 }
