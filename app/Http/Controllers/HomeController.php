@@ -188,6 +188,7 @@ class HomeController extends Controller {
             chmod($filename, 0755);
 
             $user = $this->order_placed($orderid, $info, -2);//get user data without processing the event
+            if(!isset($_POST["phone"])){$_POST["phone"] = $user["phone"];}
             if ($user["name"] != $_POST["name"] || $user["phone"] != $_POST["phone"]) {
                 $user["name"] = $_POST["name"];
                 $user["phone"] = $_POST["phone"];
