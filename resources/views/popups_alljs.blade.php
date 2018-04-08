@@ -596,9 +596,9 @@
 
                         var addons = item["itemaddons"][currentitem];
                         if (itemname) {
-                            tempHTML += '<DIV CLASS="list-group-item text-muted">' + ordinals[currentitem] + " " + itemname + ': ';
+                            tempHTML += '<DIV CLASS="receipt_item font-italic">' + ordinals[currentitem] + " " + itemname + ': ';
                         } else {
-                            tempHTML += '<DIV CLASS="list-group-item text-muted">';
+                            tempHTML += '<DIV CLASS="receipt_item font-italic">';
                         }
                         if(addons.hasOwnProperty("addons")) {
                             if (addons["addons"].length == 0) {
@@ -613,7 +613,7 @@
                                         var isfree = isaddon_free(tablename, addonname);
                                         addonname = countaddons2(addons["addons"], addonid) + addonname;
                                         if (isfree) {
-                                            tempHTML += '<I TITLE="Free addon">' + addonname + '</I>';
+                                            tempHTML += '' + addonname + '';
                                         } else {
                                             tempHTML += addonname;
                                         }
@@ -671,7 +671,7 @@
                 $("#checkout-btn").show();
             } else {
                 $("#checkout-btn").hide();
-                tempHTML += '<button CLASS="list-padding bg-secondary btn-block no-icon">Minimum $' + minimumfee + ' to Order</button>';
+                tempHTML += '<button CLASS="list-padding bg-secondary btn-block no-icon text-dark">Minimum $' + minimumfee + ' to Order</button>';
             }
         }
         $("#myorder").html(HTML + tempHTML);
@@ -2389,12 +2389,12 @@
 
 
                     if(types[i] == 'Vegetable' && breaker_green == 0){
-                        breaker_css_green = ' note_green ';
-                        breaker_green = 1;
+                     //   breaker_css_green = ' note_green ';
+                     //   breaker_green = 1;
                     }
                     if(types[i] == 'Meat' && breaker_red == 0){
-                        breaker_css_red = ' note_red ';
-                        breaker_red = 1;
+                    //    breaker_css_red = ' note_red ';
+                     //   breaker_red = 1;
                     }
 
                     HTML += '<button class="fourthwidth bg-white2 bg-'+types[i]+ ' ' + breaker_css_green +  breaker_css_red + ' addon-addon list-group-item-action toppings_btn';
@@ -2649,7 +2649,7 @@
                 <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <div class="pull-center mb-2" id="exclame">
+                <div class="pull-center mb-4" id="exclame">
 
                     <span class="fa-stack fa-3x">
                           <i class="text-muted fa fa-circle fa-stack-2x"></i>

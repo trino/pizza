@@ -55,7 +55,7 @@
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
 
-<div ID="headerbar" class="list-group-item container-fluid shadow" style="background-color: <?= headercolor ?>;">
+<div class="list-group-item container-fluid shadow bg-danger">
 
     <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white"></i>
@@ -106,7 +106,7 @@
         @endif
     </ul>
 
-    <a HREF="<?= webroot("index"); ?>" class="white" href="/"><?= strtoupper(sitename); ?></a>
+    <a HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
 
     <?php
         if (!islive()) {
@@ -136,7 +136,7 @@
     ?>
 </div>
 
-<div class="container-fluid shadow">
+<div class="container-fluid shadow menu">
     @yield('content')
 </div>
 

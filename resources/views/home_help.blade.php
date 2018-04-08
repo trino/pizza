@@ -257,10 +257,10 @@
     ?>
     </DIV>
     </DIV>
-    <div class="btn-group" CLASS="dont-show">
+    <!--div class="btn-group" CLASS="dont-show">
         <button id="gototop" class="btn btn-sm btn-primary "><A HREF="#top"><i class="fa fa-arrow-up"></i> Go to the top</A></button>
         <button id="expandall" class="btn btn-sm btn-primary footer" onclick="expandall(true);"><i class="fa fa-expand"></i> Expand all</button>
         <button id="contractall" class="btn btn-sm btn-primary footer" onclick="expandall(false);"><i class="fa fa-compress"></i> Contract all</button>
         <button id="gotobottom" class="btn btn-sm btn-primary footer"><A HREF="#bottom"><i class="fa fa-arrow-down"></i> Go to the bottom</A></button>
-    </div>
+    </div-->
 @endsection

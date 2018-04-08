@@ -43,36 +43,37 @@ h1, h2, h3, h4, h5, h6 {
     float: right;
 }
 
-.font-size-85rem{
+.font-size-85rem {
     font-size: .85rem
 }
 
-.hidden{
+.hidden {
     visibility: hidden;
 }
 
-.no-top-margin{
+.no-top-margin {
     margin-top: 0 !important;
 }
 
-.orderfont{
-    font-family:sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;font-size: 85%
+.orderfont {
+    font-family: sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+    font-size: 85%
 }
 
-.toppinglistitem{
+.toppinglistitem {
     background: #fff !important;
     border-bottom: 0px solid #d9534f !important;
 }
 
-.uppercase{
+.uppercase {
     text-transform: uppercase;
 }
 
-.no-padding{
+.no-padding {
     padding: 0 !important;
 }
 
-.menumodal{
+.menumodal {
     padding: 0 !important;
     background: #E6ECF0;
 }
@@ -199,7 +200,7 @@ button, .btn-sm, a, .btn {
 
 .nav-tabs .nav-link {
     margin-bottom: .75rem;
-    padding:.25rem;
+    padding: .25rem;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -255,7 +256,7 @@ h2 {
 .form-control {
     margin-top: auto;
     margin-bottom: auto;
-    min-height: 50px;
+    min-height: 43px;
     margin-bottom: 5px;
 }
 
@@ -284,27 +285,47 @@ h2 {
     margin-bottom: 0 !important;
     border: 0 !important;
     border-radius: 0 !important;
+    /*
     border-bottom: 1px solid #eceeef !important;
+    border-right: 1px solid #eceeef !important;
+*/
     font-weight: normal !important;
 }
 
 @media screen and (min-width: 400px) {
-    .list-group-item, .list-group-item-action {
-        border-right: 1px solid #eceeef !important;
+    .menu {
+        border-bottom: 7px solid #d7d7d7;
     }
+}
+
+@media screen and (max-width: 400px) {
+    .list-group-item {
+        font-size: .85rem !important;
+    }
+
+}
+
+.modal-body {
+    padding-top: 0;
 }
 
 .modal-header, .list-padding {
     /*padding: .50rem 1rem 0 1rem !important;*/
     border: 0 !important;
     min-height: 50px;
+    border-radius: 0 !important;
 }
 
-.bold{
+.modal-content {
+    border: 0 solid #e7e7e7;
+    border-radius: 0;
+}
+
+.bold {
     font-weight: bold;
 }
 
-.width-50{
+.width-50 {
     width: 50%;
 }
 
@@ -325,16 +346,11 @@ h2 {
     max-width: 1240px !important;
 }
 
-.modal-content {
-    border: 0 solid #e7e7e7;
-
-}
-
-.medtext{
+.medtext {
     font-size: 1.5rem !important;
 }
 
-.bigtext{
+.bigtext {
     font-size: 2.5rem;
     line-height: 3.1rem;
 }
@@ -343,14 +359,14 @@ h2 {
     text-align: center;
 }
 
-.padding-tb{
+.padding-tb {
     padding-bottom: 1rem !important;
     padding-top: .5rem !important;
 }
 
-.padding-lr-15{
-    padding-right: 15px;
-    padding-left: 15px;
+.padding-lr-15 {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
 }
 
 .alert-button {
@@ -385,7 +401,6 @@ h2 {
 .addonlist {
     width: 100%;
     background: #e6ecf0;
-    border: 3px solid green !important;
 }
 
 .bg-secondary {
@@ -516,9 +531,6 @@ body.loading {
     padding-top: 3px;
 }
 
-.modal-body {
-}
-
 body {
     /*  prevents horizontal scroll for full width container-fluid */
     overflow-x: hidden;
@@ -581,12 +593,14 @@ ul {
 
     .modal.modal-fullscreen .modal-dialog,
     .modal.modal-fullscreen .modal-content {
+        /*
         border: 0 !important;
         bottom: 0;
         left: 0;
         position: absolute;
         right: 0;
         top: 0;
+        */
     }
 
     .modal-dialog {
@@ -615,17 +629,18 @@ ul {
 
 .white {
     color: white;
+
 }
 
-.togglemenu{
-    margin-right:.75rem !important;
+.togglemenu {
+    margin-right: .75rem !important;
 }
 
-.helpbtn{
+.helpbtn {
     font-size: 1rem !important;
 }
 
-#debugbar{
+#debugbar {
     font-size: 12px;
 }
 
@@ -742,7 +757,7 @@ ul {
     display: none;
 }
 
-.bg-grey{
+.bg-grey {
     background: #eee !important;
 }
 
@@ -854,19 +869,19 @@ ul {
     background-position: -2400px 0;
 }
 
-.sprite-7-up{
+.sprite-7-up {
     background-position: -2496px 0;
 }
 
-.sprite-root-beer{
+.sprite-root-beer {
     background-position: -2592px 0;
 }
 
-.sprite-iced-tea{
+.sprite-iced-tea {
     background-position: -2688px 0;
 }
 
-.sprite-orange{
+.sprite-orange {
     background-position: -2784px 0;
 }
 
@@ -905,7 +920,7 @@ ul {
     padding: .75rem 1rem
 }
 
-.inline{
+.inline {
     display: inline;
 }
 

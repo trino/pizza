@@ -592,7 +592,7 @@
     @if($includeextradata)
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
-                <h2 class="mt-2">Questions about your order?</h2>
+                <h2 class="mt-4">Questions about your order?</h2>
                 Please contact the restaurant directly
                 <DIV CLASS="clearfix"></DIV>
             @endif

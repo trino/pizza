@@ -52,7 +52,7 @@ INSERT INTO `actions` (`id`, `eventname`, `party`, `sms`, `phone`, `email`, `mes
 (7, 'user_registered', 0, 0, 0, 1, '[sitename] - Thank you for registering'),
 (9, 'user_registered', 1, 0, 0, 1, '[sitename] - Thank you for registering'),
 (10, 'order_placed', 1, 0, 0, 0, '[sitename] - A new order was placed [url]'),
-(11, 'order_placed', 2, 0, 1, 0, 'Hello [name], you have an order on [sitename]');
+(11, 'order_placed', 2, 0, 1, 0, 'Hello [name], you have an order on [sitename], please check your email');
 
 -- --------------------------------------------------------
 
