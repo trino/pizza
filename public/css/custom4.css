@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .input_left_icon {
-    width: 13%;
+    width: 15%;
     float: left;
     border: 0 solid #c8c8c8 !important;
     opacity: 1;
@@ -127,7 +127,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .input_right {
-    width: 87%;
+    width: 85%;
     float: right;
     border: 0 solid #c8c8c8 !important;
     opacity: 1;
@@ -343,7 +343,7 @@ h2 {
 }
 
 .container-fluid {
-    max-width: 1240px !important;
+    max-width: 1140px !important;
 }
 
 .medtext {
