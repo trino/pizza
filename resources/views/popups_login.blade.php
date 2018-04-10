@@ -84,7 +84,7 @@
     <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
         <span class="bold bigtext"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
         <p>The art of delivery is in the team, local restaurants at your footstep within <?= $time; ?> minutes.</p>
-        <P><I class="lead text-danger strong">Feed yourself plus someone else! - <a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a></i></P>
+        <P><I class="lead text-danger strong">Feed yourself plus someone else! <!--a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a--></i></P>
 
         <div class="row">
             <div class="col-md-6 padleftright15">
