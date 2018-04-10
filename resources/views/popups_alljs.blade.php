@@ -1733,8 +1733,8 @@
         }
         placeorderstate(true);
         var $form = $('#orderinfo');
-        log("Attempt to pay: " + changecredit());
-        if (!changecredit()) {//new card
+        log("Attempt to pay: " + changecredit(true));
+        if (!changecredit(true)) {//new card
             log("Stripe data");
             loading(true, "stripe");
             placeorderstate(false);
@@ -1763,7 +1763,7 @@
                     ajaxerror(response.error.message);
                 } else {
                     log("Stripe successful");
-                    if (!changecredit()) {//save new card to userdetails
+                    if (!changecredit(true)) {//save new card to userdetails
                         if (!isArray(userdetails.Stripe)) {
                             userdetails.Stripe = new Array();
                         }//check to be sure
@@ -1881,7 +1881,7 @@
         return false;
     }
 
-    function changecredit() {
+    function changecredit(focus) {
         ajaxerror();
         $("#saved-credit-info").removeClass("red");
         $("[data-stripe=number]").removeClass("red");
@@ -1889,7 +1889,7 @@
         $("#red_card").removeClass("redhighlite");
         if (!val) {
             $(".credit-info").show();//let cust edit the card
-            focuson("input[data-stripe=number]");
+            if(focus){focuson("input[data-stripe=number]");}
         } else {
             $(".credit-info").hide();//use saved card info
         }
@@ -1917,7 +1917,7 @@
         var needscreditrefresh = false;
         if (loadsavedcreditinfo()) {
             $(".credit-info").hide();
-            var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit();" class="form-control proper-height">';
+            var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true);" class="form-control proper-height">';
             for (var i = 0; i < userdetails.Stripe.length; i++) {
                 var card = userdetails.Stripe[i];
                 creditHTML += '<OPTION value="' + card.id + '" id="card_' + card.id + '"';
@@ -1945,7 +1945,7 @@
         });
         $("#restaurant").html('<option value="0">Select Restaurant</option>').val("0");
         refreshform("#saveaddresses");
-        if(needscreditrefresh){changecredit();}
+        if(needscreditrefresh){changecredit(false);}
         validateinput();
     }
 
