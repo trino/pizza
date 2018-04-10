@@ -464,11 +464,31 @@
             var ret = currentitemID;
         }
         generatereceipt(true);
-        $("#receipt_item_" + ret).hide().fadeIn("fast");
+        if($("#receipt_item_" + ret).length == 0){
+            log("Should fade: #receipt_item_" + ret + " but wasn't found");
+            ret = findfirstofclone(ret);
+        }
+        fadereceiptitem(ret);
         if (oldcost) {
             refreshcost(index, oldcost);
         }
         return ret;
+    }
+
+    function fadereceiptitem(itemindex){
+        $("#receipt_item_" + itemindex).hide().fadeIn();
+    }
+
+    function findfirstofclone(itemindex){
+        for (var itemid = 0; itemid < theorder.length; itemid++) {
+            if (theorder[itemid]["itemid"] == theorder[itemindex]["itemid"]){
+                if (theorder[itemid]["itemname"] == theorder[itemindex]["itemname"]) {
+                    if (theorder[itemid]["category"] == theorder[itemindex]["category"]) {
+                        return itemid;
+                    }
+                }
+            }
+        }
     }
 
     function unclone() {
@@ -844,6 +864,7 @@
             var oldcost = $('#cost_' + index).text();
             unclone();
             refreshcost(index, oldcost);
+            fadereceiptitem(index);
         }
     }
 
