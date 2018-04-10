@@ -83,10 +83,14 @@ function connectdb($database = "ai", $username = "root", $password = ""){
 }
 
 function needsphonenumber(){
-    $always = false;
+    $always = false;//should be set to true, customers are really bad at keeping the phone number up to date
     if($always){return true;}
-    if(read("id")){if(strlen(filternonnumeric(read("phone"))) == 10){return false;}}
+    if(read("id")){if(isvalidphone("phone")){return false;}}
     return true;
+}
+
+function isvalidphone($text){
+    return strlen(filternonnumeric($text)) == 10;
 }
 
 function left($text, $length){

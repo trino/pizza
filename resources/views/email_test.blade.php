@@ -1,4 +1,5 @@
 <?php
+    //Remember, no CSS can be used
     if(isset($body)){
         echo $body;
     }

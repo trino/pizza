@@ -953,7 +953,7 @@
 
     function validphonenumber(text){
         text = text.replace(/\D/g,'');
-        return text.length = 10;
+        return text.length == 10;
     }
 
     function userphonenumber(){
