@@ -389,8 +389,8 @@ function filternonnumeric($text, $withwhat = ''){
     return preg_replace('/[^0-9]/', $withwhat, $text);
 }
 
-function filternonalphanumeric($text, $withwhat = ''){
-    return preg_replace("/[^A-Za-z0-9 ]/", $withwhat, $text);
+function filternonalphanumeric($text, $withwhat = '', $anythingelse = ''){
+    return preg_replace("/[^A-Za-z0-9 " . $anythingelse . "]/", $withwhat, $text);
 }
 
 function setsetting($Key, $Value){

@@ -5,9 +5,15 @@
             foreach($_POST["changes"] as $tablename => $table){
                 foreach($table as $row){
                     if(!is_numeric( $row["id"] )){unset($row["id"]);}//is a new entry
+                    foreach($row as $key => $value){
+                        if($key == "enabled"){//convert boolean to integer
+                            $row[$key] = $value ? 1 : 0;
+                        }
+                    }
                     insertdb($tablename, $row);//save data
                 }
             }
+            deletecache();
         }
         if(isset($_POST["deleted"])){
             foreach($_POST["deleted"] as $row){
@@ -15,8 +21,16 @@
                     deleterow($row["table"], "id=" . $row["keyid"]);//deleted item
                 }
             }
+            deletecache();
         }
         die();
+    }
+
+    function deletecache(){
+        $menucache_filename = resource_path() . "/menucache.html";
+        if(file_exists($menucache_filename)){
+            unlink($menucache_filename);
+        }
     }
 ?>
 @extends("layouts_app")
@@ -411,6 +425,7 @@
                         HTML += makeinput2(cols, table_name, data, "Category", "type", "category");
                         HTML += makeinput2(cols, table_name, data, "Is Free", "isfree", "checkbox", "For free addons like 'well done', or 'easy on the sauce'");
                         HTML += makeinput2(cols, table_name, data, "Group #", "groupid", "number", "If the Group # is above 0, only 1 item in this group can be added to the menu item");
+                        HTML += makeinput2(cols, table_name, data, "Enabled", "enabled", "checkbox", "Will it show in the menu?");
                         break;
                     case 'menu':
                         var cols = 2 + <?= count($addon_tables); ?>;
@@ -423,6 +438,7 @@
                         ?>
                         HTML += makeinput2(cols, table_name, data, "Calories", "calories", "text", "for 2 items, separate with a / (ie: 200/400). For more items, use a - (ie: 200-400)");
                         HTML += makeinput2(cols, table_name, data, "Allergens", "allergens", "allergens");
+                        HTML += makeinput2(cols, table_name, data, "Enabled", "enabled", "checkbox", "Will it show in the menu?");
                         break;
                     default:
                         HTML = table_name + " is unhandled";

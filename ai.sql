@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2018 at 06:32 PM
+-- Generation Time: Apr 10, 2018 at 08:19 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -149,53 +149,54 @@ CREATE TABLE `menu` (
   `toppings` tinyint(1) NOT NULL,
   `wings_sauce` tinyint(4) NOT NULL,
   `calories` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'for 2 items, separate with a /. For more, use a -',
-  `allergens` varchar(1024) COLLATE utf8_unicode_ci NOT NULL
+  `allergens` varchar(1024) COLLATE utf8_unicode_ci NOT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`id`, `category_id`, `category`, `item`, `price`, `toppings`, `wings_sauce`, `calories`, `allergens`) VALUES
-(1, 1, 'Pizza', 'Small Pizza', 4.95, 1, 0, '', ''),
-(2, 1, 'Pizza', 'Medium Pizza', 5.75, 1, 0, '', ''),
-(3, 1, 'Pizza', 'Large Pizza', 6.95, 1, 0, '', ''),
-(4, 1, 'Pizza', 'X-Large Pizza', 9.95, 1, 0, '', ''),
-(5, 1, 'Pizza', '2 Small Pizzas', 9.95, 2, 0, '', ''),
-(6, 1, 'Pizza', '2 Medium Pizzas', 14.95, 2, 0, '', ''),
-(7, 1, 'Pizza', '2 Large Pizzas', 16.95, 2, 0, '', ''),
-(8, 1, 'Pizza', '2 X-Large Pizzas', 18.95, 2, 0, '', ''),
-(9, 3, 'Dips', 'Tomato Dip', 0.7, 0, 0, '', ''),
-(10, 3, 'Dips', 'Hot Dip', 0.7, 0, 0, '', ''),
-(11, 3, 'Dips', 'Cheddar Dip', 0.7, 0, 0, '', ''),
-(12, 3, 'Dips', 'Marinara Dip', 0.7, 0, 0, '', ''),
-(13, 3, 'Dips', 'Ranch Dip', 0.7, 0, 0, '', ''),
-(14, 3, 'Dips', 'Blue Cheese Dip', 0.7, 0, 0, '', ''),
-(15, 4, 'Wings', '1 lb Wings', 6.99, 0, 1, '', ''),
-(16, 4, 'Wings', '2 lb Wings', 12.99, 0, 2, '', ''),
-(17, 4, 'Wings', '3 lb Wings', 17.99, 0, 3, '', ''),
-(18, 4, 'Wings', '4 lb Wings', 24.99, 0, 4, '', ''),
-(19, 4, 'Wings', '5 lb Wings', 28.99, 0, 5, '', ''),
-(20, 5, 'Sides', 'Panzerotti', 5.99, 1, 0, '', ''),
-(21, 5, 'Sides', 'Garlic Bread', 2.25, 0, 0, '', ''),
-(22, 5, 'Sides', 'French Fries', 3.99, 0, 0, '', ''),
-(23, 5, 'Sides', 'Potato Wedges', 3.99, 0, 0, '', ''),
-(27, 5, 'Sides', 'Chicken Salad ', 5.99, 0, 0, '', ''),
-(28, 5, 'Sides', 'Caesar Salad', 3.99, 0, 0, '', ''),
-(29, 5, 'Sides', 'Garden Salad', 3.99, 0, 0, '', ''),
-(32, 6, 'Drinks', 'Coca-Cola', 0.95, 0, 0, '', ''),
-(33, 6, 'Drinks', 'Diet Coca-Cola', 0.95, 0, 0, '', ''),
-(34, 6, 'Drinks', 'Pepsi', 0.95, 0, 0, '', ''),
-(35, 6, 'Drinks', 'Diet Pepsi', 0.95, 0, 0, '', ''),
-(36, 6, 'Drinks', 'Sprite', 0.95, 0, 0, '', ''),
-(37, 6, 'Drinks', 'Crush Orange', 0.95, 0, 0, '', ''),
-(38, 6, 'Drinks', 'Dr. Pepper', 0.95, 0, 0, '', ''),
-(39, 6, 'Drinks', 'Ginger Ale', 0.95, 0, 0, '', ''),
-(40, 6, 'Drinks', 'Nestea', 0.95, 0, 0, '', ''),
-(41, 6, 'Drinks', 'Water Bottle', 0.95, 0, 0, '', ''),
-(45, 6, 'Drinks', '2L Coca-Cola', 2.99, 0, 0, '', ''),
-(46, 6, 'Drinks', '2L Sprite', 2.99, 0, 0, '', ''),
-(47, 6, 'Drinks', '2L Brisk Iced Tea', 2.99, 0, 0, '', '');
+INSERT INTO `menu` (`id`, `category_id`, `category`, `item`, `price`, `toppings`, `wings_sauce`, `calories`, `allergens`, `enabled`) VALUES
+(1, 1, 'Pizza', 'Small Pizza', 4.95, 1, 0, '', '', 1),
+(2, 1, 'Pizza', 'Medium Pizza', 5.75, 1, 0, '', '', 1),
+(3, 1, 'Pizza', 'Large Pizza', 6.95, 1, 0, '', '', 1),
+(4, 1, 'Pizza', 'X-Large Pizza', 9.95, 1, 0, '', '', 1),
+(5, 1, 'Pizza', '2 Small Pizzas', 9.95, 2, 0, '', '', 1),
+(6, 1, 'Pizza', '2 Medium Pizzas', 14.95, 2, 0, '', '', 1),
+(7, 1, 'Pizza', '2 Large Pizzas', 16.95, 2, 0, '', '', 1),
+(8, 1, 'Pizza', '2 X-Large Pizzas', 18.95, 2, 0, '', '', 1),
+(9, 3, 'Dips', 'Tomato Dip', 0.7, 0, 0, '', '', 1),
+(10, 3, 'Dips', 'Hot Dip', 0.7, 0, 0, '', '', 1),
+(11, 3, 'Dips', 'Cheddar Dip', 0.7, 0, 0, '', '', 1),
+(12, 3, 'Dips', 'Marinara Dip', 0.7, 0, 0, '', '', 1),
+(13, 3, 'Dips', 'Ranch Dip', 0.7, 0, 0, '', '', 1),
+(14, 3, 'Dips', 'Blue Cheese Dip', 0.7, 0, 0, '', '', 1),
+(15, 4, 'Wings', '1 lb Wings', 6.99, 0, 1, '', '', 1),
+(16, 4, 'Wings', '2 lb Wings', 12.99, 0, 2, '', '', 1),
+(17, 4, 'Wings', '3 lb Wings', 17.99, 0, 3, '', '', 1),
+(18, 4, 'Wings', '4 lb Wings', 24.99, 0, 4, '', '', 1),
+(19, 4, 'Wings', '5 lb Wings', 28.99, 0, 5, '', '', 1),
+(20, 5, 'Sides', 'Panzerotti', 5.99, 1, 0, '', '', 1),
+(21, 5, 'Sides', 'Garlic Bread', 2.25, 0, 0, '', '', 1),
+(22, 5, 'Sides', 'French Fries', 3.99, 0, 0, '', '', 1),
+(23, 5, 'Sides', 'Potato Wedges', 3.99, 0, 0, '', '', 1),
+(27, 5, 'Sides', 'Chicken Salad ', 5.99, 0, 0, '', '', 1),
+(28, 5, 'Sides', 'Caesar Salad', 3.99, 0, 0, '', '', 1),
+(29, 5, 'Sides', 'Garden Salad', 3.99, 0, 0, '', '', 1),
+(32, 6, 'Drinks', 'Coca-Cola', 0.95, 0, 0, '', '', 1),
+(33, 6, 'Drinks', 'Diet Coca-Cola', 0.95, 0, 0, '', '', 1),
+(34, 6, 'Drinks', 'Pepsi', 0.95, 0, 0, '', '', 1),
+(35, 6, 'Drinks', 'Diet Pepsi', 0.95, 0, 0, '', '', 1),
+(36, 6, 'Drinks', 'Sprite', 0.95, 0, 0, '', '', 1),
+(37, 6, 'Drinks', 'Crush Orange', 0.95, 0, 0, '', '', 1),
+(38, 6, 'Drinks', 'Dr. Pepper', 0.95, 0, 0, '', '', 1),
+(39, 6, 'Drinks', 'Ginger Ale', 0.95, 0, 0, '', '', 1),
+(40, 6, 'Drinks', 'Nestea', 0.95, 0, 0, '', '', 1),
+(41, 6, 'Drinks', 'Water Bottle', 0.95, 0, 0, '', '', 1),
+(45, 6, 'Drinks', '2L Coca-Cola', 2.99, 0, 0, '', '', 1),
+(46, 6, 'Drinks', '2L Sprite', 2.99, 0, 0, '', '', 1),
+(47, 6, 'Drinks', '2L Brisk Iced Tea', 2.99, 0, 0, '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,8 @@ INSERT INTO `orders` (`id`, `user_id`, `placed_at`, `number`, `unit`, `buzzcode`
 (280, 1, '2018-03-20 14:59:29', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'March 20 at 1145', '', 0, '144.78', NULL),
 (281, 1, '2018-03-20 20:26:56', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL),
 (282, 1, '2018-03-20 20:28:51', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL),
-(283, 1, '2018-03-20 20:30:19', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL);
+(283, 1, '2018-03-20 20:30:19', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '9055315331', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL),
+(284, 1, '2018-04-10 17:54:05', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'Ontario', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 3, 0, 0, '905', '', 1, '', 'Deliver Now', '', 0, '25.93', NULL);
 
 -- --------------------------------------------------------
 
@@ -336,9 +338,9 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
-(1, 'lastSQL', '1521575221'),
+(1, 'lastSQL', '1523382349'),
 (20, 'orders', '1519239848'),
-(24, 'menucache', '1521653376'),
+(24, 'menucache', '1523382835'),
 (25, 'useraddresses', '1495910443'),
 (37, 'users', '1495489938'),
 (38, 'additional_toppings', '1521567842'),
@@ -354,7 +356,7 @@ INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
 (1582, 'localhostdialing', '0'),
 (1593, 'maxdistance_live', '5'),
 (1594, 'maxdistance_local', '20'),
-(1600, 'lastupdate', '1521653376381');
+(1600, 'lastupdate', '1523382836028');
 
 -- --------------------------------------------------------
 
@@ -382,44 +384,45 @@ CREATE TABLE `toppings` (
   `isfree` tinyint(1) NOT NULL,
   `qualifiers` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'comma delimited list of the names for 1/2,x1,x2 if applicable',
   `isall` tinyint(4) NOT NULL DEFAULT '0',
-  `groupid` int(11) NOT NULL
+  `groupid` int(11) NOT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `toppings`
 --
 
-INSERT INTO `toppings` (`id`, `name`, `type`, `isfree`, `qualifiers`, `isall`, `groupid`) VALUES
-(1, 'Anchovies', 'Meat', 0, '', 0, 0),
-(2, 'Bacon', 'Meat', 0, '', 0, 0),
-(3, 'Beef Salami', 'Meat', 0, '', 0, 0),
-(4, 'Chicken', 'Meat', 0, '', 0, 0),
-(5, 'Ground Beef', 'Meat', 0, '', 0, 0),
-(6, 'Ham', 'Meat', 0, '', 0, 0),
-(7, 'Hot Italian Sausage', 'Meat', 0, '', 0, 0),
-(8, 'Hot Sausage', 'Meat', 0, '', 0, 0),
-(9, 'Italian Sausage', 'Meat', 0, '', 0, 0),
-(10, 'Mild Sausage', 'Meat', 0, '', 0, 0),
-(11, 'Pepperoni', 'Meat', 0, '', 0, 0),
-(12, 'Salami', 'Meat', 0, '', 0, 0),
-(13, 'Artichoke Heart', 'Vegetable', 0, '', 0, 0),
-(14, 'Black Olives', 'Vegetable', 0, '', 0, 0),
-(15, 'Broccoli', 'Vegetable', 0, '', 0, 0),
-(16, 'Green Olives', 'Vegetable', 0, '', 0, 0),
-(17, 'Green Peppers', 'Vegetable', 0, '', 0, 0),
-(18, 'Hot Banana Peppers', 'Vegetable', 0, '', 0, 0),
-(19, 'Hot Peppers', 'Vegetable', 0, '', 0, 0),
-(20, 'Jalapeno Peppers', 'Vegetable', 0, '', 0, 0),
-(21, 'Mushrooms', 'Vegetable', 0, '', 0, 0),
-(22, 'Onions', 'Vegetable', 0, '', 0, 0),
-(23, 'Pineapple', 'Vegetable', 0, '', 0, 0),
-(24, 'Red Onions', 'Vegetable', 0, '', 0, 0),
-(25, 'Red Peppers', 'Vegetable', 0, '', 0, 0),
-(26, 'Spinach', 'Vegetable', 0, '', 0, 0),
-(27, 'Sundried Tomatoes', 'Vegetable', 0, '', 0, 0),
-(28, 'Tomatoes', 'Vegetable', 0, '', 0, 0),
-(29, 'Extra Cheese', 'Vegetable', 0, '', 0, 0),
-(31, 'Well Done', 'zPreparation', 1, '', 1, 1);
+INSERT INTO `toppings` (`id`, `name`, `type`, `isfree`, `qualifiers`, `isall`, `groupid`, `enabled`) VALUES
+(1, 'Anchovies', 'Meat', 0, '', 0, 0, 1),
+(2, 'Bacon', 'Meat', 0, '', 0, 0, 1),
+(3, 'Beef Salami', 'Meat', 0, '', 0, 0, 1),
+(4, 'Chicken', 'Meat', 0, '', 0, 0, 1),
+(5, 'Ground Beef', 'Meat', 0, '', 0, 0, 1),
+(6, 'Ham', 'Meat', 0, '', 0, 0, 1),
+(7, 'Hot Italian Sausage', 'Meat', 0, '', 0, 0, 1),
+(8, 'Hot Sausage', 'Meat', 0, '', 0, 0, 1),
+(9, 'Italian Sausage', 'Meat', 0, '', 0, 0, 1),
+(10, 'Mild Sausage', 'Meat', 0, '', 0, 0, 1),
+(11, 'Pepperoni', 'Meat', 0, '', 0, 0, 1),
+(12, 'Salami', 'Meat', 0, '', 0, 0, 1),
+(13, 'Artichoke Heart', 'Vegetable', 0, '', 0, 0, 1),
+(14, 'Black Olives', 'Vegetable', 0, '', 0, 0, 1),
+(15, 'Broccoli', 'Vegetable', 0, '', 0, 0, 1),
+(16, 'Green Olives', 'Vegetable', 0, '', 0, 0, 1),
+(17, 'Green Peppers', 'Vegetable', 0, '', 0, 0, 1),
+(18, 'Hot Banana Peppers', 'Vegetable', 0, '', 0, 0, 1),
+(19, 'Hot Peppers', 'Vegetable', 0, '', 0, 0, 1),
+(20, 'Jalapeno Peppers', 'Vegetable', 0, '', 0, 0, 1),
+(21, 'Mushrooms', 'Vegetable', 0, '', 0, 0, 1),
+(22, 'Onions', 'Vegetable', 0, '', 0, 0, 1),
+(23, 'Pineapple', 'Vegetable', 0, '', 0, 0, 1),
+(24, 'Red Onions', 'Vegetable', 0, '', 0, 0, 1),
+(25, 'Red Peppers', 'Vegetable', 0, '', 0, 0, 1),
+(26, 'Spinach', 'Vegetable', 0, '', 0, 0, 1),
+(27, 'Sundried Tomatoes', 'Vegetable', 0, '', 0, 0, 1),
+(28, 'Tomatoes', 'Vegetable', 0, '', 0, 0, 1),
+(29, 'Extra Cheese', 'Vegetable', 0, '', 0, 0, 1),
+(31, 'Well Done', 'zPreparation', 1, '', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -506,7 +509,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `lastlogin`, `loginattempts`, `profiletype`, `authcode`, `stripecustid`) VALUES
-(1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$rKLl0XAZWkS1b1bxKHE6l.MitqKf2mCS5VlcxVPhTf1a7CUTJqgsO', '', '0000-00-00 00:00:00', '2018-03-20 19:19:33', '9055315331', 1487608084, 0, 1, '', 'cus_CMP8XVe641qT0g'),
+(1, 'Roy Wall', 'roy@trinoweb.com', '$2y$10$rKLl0XAZWkS1b1bxKHE6l.MitqKf2mCS5VlcxVPhTf1a7CUTJqgsO', '', '0000-00-00 00:00:00', '2018-03-20 19:19:33', '9055123067', 1487608084, 0, 1, '', 'cus_CMP8XVe641qT0g'),
 (2, 'Roy Test', 'roy+test@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2016-11-16 20:20:28', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
 (4, 'Marvellous', 'info+mar@trinoweb.com', '$2y$10$440weczzi7gl8OpXQJROPey1Eiyx1BQWk4dFEj9pAHWO2FmagZQ52', '', '2017-02-14 20:28:50', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
 (48, 'Van Trinh', 'info@trinoweb.com', '$2y$10$.0DQCK8l9YOr49mc3AcEr.8zemyiRmUa1j69p5MJO4vf6PCIAOip.', '', '2017-04-01 21:18:32', '2017-04-22 17:15:53', '', 1516924073, 1, 0, '', ''),
@@ -538,20 +541,21 @@ CREATE TABLE `wings_sauce` (
   `isfree` tinyint(1) NOT NULL,
   `qualifiers` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'comma delimited list of the names for 1/2,x1,x2 if applicable',
   `isall` tinyint(4) NOT NULL DEFAULT '1',
-  `groupid` int(11) NOT NULL
+  `groupid` int(11) NOT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `wings_sauce`
 --
 
-INSERT INTO `wings_sauce` (`id`, `name`, `type`, `isfree`, `qualifiers`, `isall`, `groupid`) VALUES
-(1, 'Honey Garlic', 'Sauce', 0, '', 1, 1),
-(3, 'BBQ', 'Sauce', 0, '', 1, 1),
-(4, 'Hot', 'Sauce', 0, '', 1, 1),
-(5, 'Suicide', 'Sauce', 0, '', 1, 1),
-(6, 'Sauce on Side', 'zPreparation', 1, '', 1, 2),
-(7, 'Well Done', 'zPreparation', 1, '', 1, 3);
+INSERT INTO `wings_sauce` (`id`, `name`, `type`, `isfree`, `qualifiers`, `isall`, `groupid`, `enabled`) VALUES
+(1, 'Honey Garlic', 'Sauce', 0, '', 1, 1, 1),
+(3, 'BBQ', 'Sauce', 0, '', 1, 1, 1),
+(4, 'Hot', 'Sauce', 0, '', 1, 1, 1),
+(5, 'Suicide', 'Sauce', 0, '', 1, 1, 1),
+(6, 'Sauce on Side', 'zPreparation', 1, '', 1, 2, 1),
+(7, 'Well Done', 'zPreparation', 1, '', 1, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -675,7 +679,7 @@ ALTER TABLE `combos`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=285;
 
 --
 -- AUTO_INCREMENT for table `presets`
@@ -693,7 +697,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2725;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2740;
 
 --
 -- AUTO_INCREMENT for table `shortage`

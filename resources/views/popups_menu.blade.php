@@ -16,7 +16,7 @@
 
         //process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
         function getaddons($Table, &$isfree, &$qualifiers, &$addons, &$groups){
-            $toppings = Query("SELECT * FROM " . $Table . " ORDER BY id asc, type ASC, name ASC", true);
+            $toppings = Query("SELECT * FROM " . $Table . " WHERE enabled = '1' ORDER BY id asc, type ASC, name ASC", true);
             $toppings_display = '';
             $currentsection = "";
             $isfree[$Table] = array();
@@ -76,7 +76,7 @@
     }
     
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
-    $categories = Query("SELECT * FROM menu GROUP BY category ORDER BY id", true);
+    $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true);
     $isfree = collapsearray(Query("SELECT * FROM additional_toppings", true), "price", "size");
     $deliveryfee = $isfree["Delivery"];
     $minimum = $isfree["Minimum"];
