@@ -480,7 +480,7 @@
             return text;
         }
         $(id + "item_qty").text(text[0]);
-        $(id + "itemname").text(text[1]);
+        if(text[1]){$(id + "itemname").text(text[1]);}
         return $("#receipt_item_" + itemindex);
     }
 
@@ -494,12 +494,15 @@
     function fadereceiptitem(itemindex, oldtext){
         itemindex = getsrcid(itemindex);
         var newtext = getitemtext(itemindex);
-        //$("#receipt_item_" + itemindex).fadeOut().fadeIn();
-        getitemtext(itemindex, oldtext).fadeOut(
-                function () {
-                    getitemtext(itemindex, newtext).fadeIn();
-                }
-        );
+        if(oldtext[1]) {
+            getitemtext(itemindex, oldtext).fadeOut(
+                    function () {
+                        getitemtext(itemindex, newtext).fadeIn();
+                    }
+            );
+        } else {
+            getitemtext(itemindex, newtext).fadeIn();
+        }
     }
 
     function findfirstofclone(itemindex){
@@ -615,7 +618,7 @@
                     sprite += " sprite-" + toclassname(item["itemname"].trim()).replaceAll("_", "-").replace(/\./g, '');
                 }
 
-                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item"><SPAN CLASS="item_qty">';
+                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item"><SPAN CLASS="item_qty" onclick="removeall(' + itemid + ');" title="Remove All">';
                 if(quantity > 1) {
                     tempHTML += quantity + ' x&nbsp;';
                 }
@@ -865,6 +868,11 @@
         return freetoppings["isall"][Table].indexOf(Addon) > -1;
     }
 
+    function removeall(index){
+        removeorderitem(index, -1);
+        removeorderitem(index, 1);
+    }
+
     //remove an item from the order
     var removeorderitemdisabled = false;
     function removeorderitem(index, quantity) {
@@ -872,23 +880,25 @@
         if (quantity == 1) {
             removeindex(theorder, index);
             removeorderitemdisabled = true;
-            $("#receipt_item_" + index).fadeOut("fast", function () {
+            $("#receipt_item_" + index).fadeOut("slow", function () {
                 removeorderitemdisabled = false;
                 generatereceipt();
             });
         } else {
             var original = theorder[index];
             var oldtext = getitemtext(index);
-            for (var i = index + 1; i < theorder.length; i++) {
+            for (var i = theorder.length - 1; i > index; i--) {
                 if (original.itemid == theorder[i].itemid) {
                     removeindex(theorder, i);
-                    i = theorder.length;
+                    if(quantity > -1){i = 0;}
                 }
             }
-            var oldcost = $('#cost_' + index).text();
-            unclone();
-            refreshcost(index, oldcost);
-            fadereceiptitem(index, oldtext);
+            if(quantity > -1){
+                var oldcost = $('#cost_' + index).text();
+                unclone();
+                refreshcost(index, oldcost);
+                fadereceiptitem(index, oldtext);
+            }
         }
     }
 

@@ -460,10 +460,8 @@ body.loading {
     color: #d9534f !important
 }
 
-.cursor-pointer, .btn:not(.no-icon), button:not(.no-icon), .hyperlink {
-    /* !!!!!!!!!!!!!stop removing this!!!!!!!!!!!! */
+.cursor-pointer, .btn:not(.no-icon), button:not(.no-icon), .item_qty {
     cursor: pointer;
-    /* !!!!!!!!!!!!!stop removing this!!!!!!!!!!!! */
 }
 
 .nowrap {
