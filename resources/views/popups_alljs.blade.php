@@ -1643,11 +1643,15 @@
             } else {
                 text = request.statusText;
             }
-
+            var reload = false;
             try {
                 var data = JSON.parse(request.responseText);
                 if (!isUndefined(data["exception"]) && !isUndefined(data["message"])) {
-                    if(debugmode){
+                    data["file"] = data["file"].replace(/\\/g,"/");
+                    if(data["line"] == 203 && data["file"].endswith("vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php")){
+                        text = "Your session has expired.<BR>Refreshing the page automatically.";
+                        reload = true;
+                    } else if(debugmode){
                         text = data["message"] + '<BR>Line: ' + data["line"] + '<BR>File: ' + data["file"];
                     } else {
                         text = data["message"];
@@ -1656,6 +1660,7 @@
             } catch (e) {
             }
             ajaxerror(text + "<BR><BR>URL: " + settings.url, "AJAX error code: " + request.status);
+            if (reload){location.reload();}
         }
         blockerror = false;
     });
