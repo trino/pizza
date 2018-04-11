@@ -464,10 +464,6 @@
             var ret = currentitemID;
         }
         generatereceipt(true);
-        if($("#receipt_item_" + ret).length == 0){
-            log("Should fade: #receipt_item_" + ret + " but wasn't found");
-            ret = findfirstofclone(ret);
-        }
         fadereceiptitem(ret);
         if (oldcost) {
             refreshcost(index, oldcost);
@@ -476,7 +472,11 @@
     }
 
     function fadereceiptitem(itemindex){
-        $("#receipt_item_" + itemindex).hide().fadeIn();
+        if($("#receipt_item_" + itemindex).length == 0){
+            log("Should fade: #receipt_item_" + itemindex + " but wasn't found");
+            itemindex = findfirstofclone(itemindex);
+        }
+        $("#receipt_item_" + itemindex).fadeOut().fadeIn();
     }
 
     function findfirstofclone(itemindex){
@@ -504,6 +504,7 @@
         theorder.push(clone);
         var oldcost = $('#cost_' + itemid).text();
         generatereceipt(true);
+        fadereceiptitem(itemid);
         refreshcost(itemid, oldcost);
     }
 
@@ -1416,7 +1417,11 @@
 
     //handle a user login
     function login(user, isJSON) {
-        userdetails = user;
+        if(isUndefined(user)){
+            user = userdetails;
+        } else {
+            userdetails = user;
+        }
         var keys = Object.keys(user);
         for (var i = 0; i < keys.length; i++) {
             var key = keys[i];
@@ -1651,6 +1656,7 @@
                     if(data["line"] == 203 && data["file"].endswith("vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php")){
                         text = "Your session has expired.<BR>Refreshing the page automatically.";
                         reload = true;
+                        login();
                     } else if(debugmode){
                         text = data["message"] + '<BR>Line: ' + data["line"] + '<BR>File: ' + data["file"];
                     } else {
