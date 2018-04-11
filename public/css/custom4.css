@@ -464,6 +464,10 @@ body.loading {
     cursor: pointer;
 }
 
+.sub_item{
+    padding-left: 24px;
+}
+
 .nowrap {
     white-space: nowrap;
 }

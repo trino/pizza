@@ -558,7 +558,7 @@
         if ($("#myorder").length == 0) {
             return false;
         }
-        var HTML = '<div class="clearfix"></div>', tempHTML = "", subtotal = 0, fadein = false, oldvalues = "";
+        var HTML = '<div class="clearfix"></div>', tempHTML = "", subtotal = 0, fadein = false, oldvalues = "", fadein2 = false;
         if (isUndefined(forcefade)) {
             forcefade = false;
         }
@@ -601,6 +601,7 @@
                     if (item["isnew"]) {
                         item["isnew"] = false;
                         fadein = "#receipt_item_" + itemid;
+                        fadein2 = "#subitem_" + itemid
                     }
                 }
                 subtotal += Number(totalcost);
@@ -639,12 +640,10 @@
                         itemname = itemnames[tablename];
                     }
                     for (var currentitem = 0; currentitem < item["itemaddons"].length; currentitem++) {
-
                         var addons = item["itemaddons"][currentitem];
+                        tempHTML += '<DIV CLASS="receipt_item sub_item font-italic" ID="subitem_' + itemid + '">';
                         if (itemname) {
-                            tempHTML += '<DIV CLASS="receipt_item font-italic">' + ordinals[currentitem] + " " + itemname + ': ';
-                        } else {
-                            tempHTML += '<DIV CLASS="receipt_item font-italic">';
+                            tempHTML += ordinals[currentitem] + " " + itemname + ': ';
                         }
                         if(addons.hasOwnProperty("addons")) {
                             if (addons["addons"].length == 0) {
@@ -725,6 +724,7 @@
             if (fadein) {
                 log("Should fadein: " + fadein);
                 $(fadein).hide().fadeIn();
+                $(fadein2).hide().fadeIn();
             }
             $("#oldvalues").show().fadeOut("slow", function () {$("#newvalues").fadeIn();});
         }
@@ -880,6 +880,7 @@
         if (quantity == 1) {
             removeindex(theorder, index);
             removeorderitemdisabled = true;
+            $("#subitem_" + index).fadeOut();
             $("#receipt_item_" + index).fadeOut("slow", function () {
                 removeorderitemdisabled = false;
                 generatereceipt();
