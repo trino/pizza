@@ -463,20 +463,43 @@
             theorder[currentitemID] = data;
             var ret = currentitemID;
         }
+        var oldtext = getitemtext(ret);
         generatereceipt(true);
-        fadereceiptitem(ret);
+        fadereceiptitem(ret, oldtext);
         if (oldcost) {
             refreshcost(index, oldcost);
         }
         return ret;
     }
 
-    function fadereceiptitem(itemindex){
+    function getitemtext(itemindex, text){
+        itemindex = getsrcid(itemindex);
+        var id = "#receipt_item_" + itemindex + " .";
+        if(isUndefined(text)) {
+            text = [$(id + "item_qty").text(), $(id + "itemname").text()];
+            return text;
+        }
+        $(id + "item_qty").text(text[0]);
+        $(id + "itemname").text(text[1]);
+        return $("#receipt_item_" + itemindex);
+    }
+
+    function getsrcid(itemindex){
         if($("#receipt_item_" + itemindex).length == 0){
-            log("Should fade: #receipt_item_" + itemindex + " but wasn't found");
             itemindex = findfirstofclone(itemindex);
         }
-        $("#receipt_item_" + itemindex).fadeOut().fadeIn();
+        return itemindex;
+    }
+
+    function fadereceiptitem(itemindex, oldtext){
+        itemindex = getsrcid(itemindex);
+        var newtext = getitemtext(itemindex);
+        //$("#receipt_item_" + itemindex).fadeOut().fadeIn();
+        getitemtext(itemindex, oldtext).fadeOut(
+                function () {
+                    getitemtext(itemindex, newtext).fadeIn();
+                }
+        );
     }
 
     function findfirstofclone(itemindex){
@@ -502,9 +525,10 @@
         var clone = JSON.parse(JSON.stringify(theorder[itemid]));
         clone.clone = true;
         theorder.push(clone);
+        var oldtext = getitemtext(itemid);
         var oldcost = $('#cost_' + itemid).text();
         generatereceipt(true);
-        fadereceiptitem(itemid);
+        fadereceiptitem(itemid, oldtext);
         refreshcost(itemid, oldcost);
     }
 
@@ -591,13 +615,11 @@
                     sprite += " sprite-" + toclassname(item["itemname"].trim()).replaceAll("_", "-").replace(/\./g, '');
                 }
 
-                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item">';//can't use list-group-item
-
+                tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item"><SPAN CLASS="item_qty">';
                 if(quantity > 1) {
-                    tempHTML += '<SPAN CLASS="item_qty">' + quantity + ' x&nbsp;</SPAN> ';
+                    tempHTML += quantity + ' x&nbsp;';
                 }
-
-                tempHTML += ' <span class="mr-auto">' + item["itemname"] + '</SPAN>';
+                tempHTML += '</SPAN> <span class="mr-auto itemname">' + item["itemname"] + '</SPAN>';
                 tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
                 tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
                 if (hasaddons) {
@@ -856,6 +878,7 @@
             });
         } else {
             var original = theorder[index];
+            var oldtext = getitemtext(index);
             for (var i = index + 1; i < theorder.length; i++) {
                 if (original.itemid == theorder[i].itemid) {
                     removeindex(theorder, i);
@@ -865,7 +888,7 @@
             var oldcost = $('#cost_' + index).text();
             unclone();
             refreshcost(index, oldcost);
-            fadereceiptitem(index);
+            fadereceiptitem(index, oldtext);
         }
     }
 
