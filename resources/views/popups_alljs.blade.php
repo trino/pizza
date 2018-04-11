@@ -556,6 +556,7 @@
     //convert the order to an HTML receipt
     function generatereceipt(forcefade) {
         if ($("#myorder").length == 0) {
+            log("ABORT");
             return false;
         }
         var HTML = '<div class="clearfix"></div>', tempHTML = "", subtotal = 0, fadein = false, oldvalues = "", fadein2 = false;
@@ -682,8 +683,10 @@
         visible("#checkout", userdetails);
         createCookieValue("theorder", JSON.stringify(theorder));
 
+        oldvalues = '<DIV id="oldvalues" class="float-right">' + oldvalues + '</div>';
+
         if (theorder.length == 0) {
-            HTML = '<div CLASS="list-padding py-3 btn-block radius0"><div class="d-flex justify-content-center"><i class="fa fa-shopping-basket empty-shopping-cart fa-2x pb-1 text-muted"></i></div><div class="d-flex justify-content-center text-muted">Empty</div></div>';
+            HTML = oldvalues + '<DIV CLASS="clearfix"></DIV><div CLASS="list-padding py-3 btn-block radius0"><div class="d-flex justify-content-center"><i class="fa fa-shopping-basket empty-shopping-cart fa-2x pb-1 text-muted"></i></div><div class="d-flex justify-content-center text-muted">Empty</div></div>';
             $("#checkout").hide();
             $("#checkoutbutton").hide();
             $("#confirmclearorder").hide();
@@ -691,6 +694,7 @@
             collapsecheckout();
             $("#checkout-btn").hide();
             $("#checkout-total").text('$0.00');
+            forcefade = true;
         } else {
             tempHTML = "";
             tempHTML += '<DIV id="newvalues" class="float-right" ';
@@ -707,11 +711,9 @@
             tempHTML += '</TABLE><div class="clearfix py-2"></div></DIV></DIV>';
             $("#confirmclearorder").show();
             $("#checkout-total").text('$' + totalcost.toFixed(2));
-        }
-        if (fadein || forcefade) {
-            tempHTML += '<DIV id="oldvalues" class="float-right">' + oldvalues + '</div>';
-        }
-        if (theorder.length > 0) {
+            if (fadein || forcefade) {
+                tempHTML += oldvalues;
+            }
             if (totalcost >= minimumfee) {
                 $("#checkout-btn").show();
             } else {
@@ -722,7 +724,6 @@
         $("#myorder").html(HTML + tempHTML);
         if (fadein || forcefade) {
             if (fadein) {
-                log("Should fadein: " + fadein);
                 $(fadein).hide().fadeIn();
                 $(fadein2).hide().fadeIn();
             }
@@ -883,7 +884,7 @@
             $("#subitem_" + index).fadeOut();
             $("#receipt_item_" + index).fadeOut("slow", function () {
                 removeorderitemdisabled = false;
-                generatereceipt();
+                generatereceipt(true);
             });
         } else {
             var original = theorder[index];
