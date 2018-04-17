@@ -150,6 +150,9 @@ class HomeController extends Controller {
                         }
                         $info = false;
                         $this->order_placed($_POST["orderid"], $info, -1, "order_" . strtolower($Status), $_POST["reason"]);
+                        if($_POST["delete"]){
+                            deletefile(orderpath($_POST["orderid"]));
+                        }
                     }
                     break;
                 default:
@@ -177,11 +180,10 @@ class HomeController extends Controller {
                 $info["phone"] = read("phone");
             }
             $orderid = insertdb("orders", $info);
-            $dir = public_path("orders");//no / at the end
+            $dir = public_path("orders/user" . $info["user_id"]);//no / at the end
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
-
             $filename = $dir . "/" . $orderid . ".json";
             file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
             chown($filename, "hamiltonpizza");

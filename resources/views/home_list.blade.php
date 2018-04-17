@@ -19,9 +19,6 @@
     function remove_brackets($text){
         return preg_replace('/\(([^()]*+|(?R))*\)\s*/', '', $text);
     }
-    function deletefile($file){
-        if(file_exists($file)){unlink($file);}
-    }
     //change a field name into a column name (upper case first letter of each word, switch underscores to a space, add a space before "code")
     function formatfield($field){
         $field = explode(" ", str_replace("code", " code", str_replace("_", " ", $field)));
@@ -55,8 +52,8 @@
         echo ' descending"><I CLASS="fa fa-arrow-down"></I></i>' . $formatted . ' <i class="btn btn-sm btn-primary pull-right asc_' . $field . '" onclick="sort(' . "'" . $field . "', 'ASC'" . ')" TITLE="Sort by ' . $formatted;
         echo ' ascending"><I CLASS="fa fa-arrow-up"></I></i></DIV></TH>';
     }
-    function changeorderstatus($ID, $Status, $Reason){
-        App::make('App\Http\Controllers\HomeController')->placeorder(["action" => "changestatus", "orderid" => $ID, "status" => $Status, "reason" => $Reason]);
+    function changeorderstatus($ID, $Status, $Reason, $DeleteFile = false){
+        App::make('App\Http\Controllers\HomeController')->placeorder(["action" => "changestatus", "orderid" => $ID, "status" => $Status, "reason" => $Reason, "delete" => $DeleteFile]);
         return $ID;
     }
 
@@ -303,9 +300,7 @@
                 foreach($IDS as $id){
                     switch($table){
                         case "orders":
-                            //$actions = actions("order_declined");
-                            changeorderstatus($id, 2, "Order was deleted");//ID gets deleted somehow...
-                            deletefile(public_path("orders") . "/" . $id . ".json");//deletes the order file
+                            changeorderstatus($id, 2, "Order was deleted", true);//ID gets deleted somehow...
                             break;
                         case "useraddresses":
                             Query("UPDATE restaurants SET address_id = 0 WHERE address_id = " . $id);//unbinds any restaurant from this address

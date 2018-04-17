@@ -7,7 +7,7 @@
     $debugmode = !islive();
     $debug = "";
     $Order = first("SELECT orders.*, users.name, users.id as userid, users.email FROM orders, users WHERE orders.id = " . $orderid . " HAVING user_id = users.id");
-    $filename = public_path("orders") . "/" . $orderid . ".json";
+    $filename = orderpath($orderid);//
     if (!isset($includeextradata)) {
         $includeextradata = false;
     }

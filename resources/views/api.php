@@ -530,6 +530,28 @@ function debugprint($text, $path = "royslog.txt", $DeleteFirst = false){
     return $text;
 }
 
+function orderpath($OrderID){
+    $userid = first("SELECT user_id FROM orders WHERE id = " . $OrderID);
+    if($userid) {
+        $userid = $userid["user_id"];
+        $oldfilename = public_path("orders") . "/" . $OrderID . ".json";
+        $dir = public_path("orders/user" . $userid);//no / at the end
+        $newfilename = $dir . "/" . $OrderID . ".json";
+        if (!is_dir($dir)) {mkdir($dir, 0777, true);}
+        if (file_exists($oldfilename)) {rename($oldfilename, $newfilename);}
+        return $newfilename;
+    }
+    return "";
+}
+
+function deletefile($file){
+    if(file_exists($file)){
+        unlink($file);
+        return true;
+    }
+    return false;
+}
+
 function getdirectory($path){
     return pathinfo(str_replace("\\", "/", $path), PATHINFO_DIRNAME);
 }
