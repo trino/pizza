@@ -27,7 +27,7 @@ class Controller extends BaseController {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
             }
             if ($array['email'] == "admin") {
-                $array['email'] = first("SELECT email FROM users WHERE profiletype = 1")["email"];
+                $array['email'] = first("SELECT email FROM users WHERE profiletype = 1", true, "Controller.SendEmail")["email"];
             }
             try {
                 \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
@@ -98,7 +98,7 @@ class Controller extends BaseController {
         }
         $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . $Phone . " - " . $Message;
         if ($Phone == "admin") {
-            $Phone = first("SELECT phone FROM users WHERE profiletype = 1");
+            $Phone = first("SELECT phone FROM users WHERE profiletype = 1", true, "Controller.sendSMS");
         } else {
             $Phone = filternonnumeric($Phone);
         }

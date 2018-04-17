@@ -69,7 +69,7 @@ class AuthController extends Controller {
                 }
                 \Session::save();
             } else if ($action == "verify" && isset($_POST["code"])) {//verification code URL clicked
-                $user = first("SELECT * FROM users WHERE authcode = '" . $_POST["code"] . "'");
+                $user = first("SELECT * FROM users WHERE authcode = '" . $_POST["code"] . "'", true, "AuthController.login");
                 if ($user) {
                     $user["authcode"] = "";
                     insertdb("users", $user);
@@ -160,7 +160,7 @@ class AuthController extends Controller {
 
                             $_POST["password"] = \Hash::make($_POST["password"]);
                             if(!islive() && strtolower($_POST["name"]) == "test"){
-                                $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1")["id"];
+                                $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1", true, "AuthController.login")["id"];
                             } else {
                                 $address["user_id"] = insertdb("users", $_POST);
                                 insertdb("useraddresses", $address);
@@ -237,7 +237,7 @@ class AuthController extends Controller {
     }
     //sends the verification email to the user
     function sendverifemail($email, $RequireAuthorization, $oldpassword){
-        $user = first("SELECT * FROM users WHERE email = '" . $email . "'");
+        $user = first("SELECT * FROM users WHERE email = '" . $email . "'", true, "AuthController.sendverifemail");
         $user["password"] = $oldpassword;
         $user["requiresauth"] = $RequireAuthorization;
         if($RequireAuthorization) {

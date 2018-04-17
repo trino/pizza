@@ -95,7 +95,7 @@
             $return .= "\n\nUNLOCK TABLES;\n\n";
         } else {
             $return = "-- Internal data dump \n" . 'SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";' . "\n" . 'SET time_zone = "+00:00";' . "\n\n";
-            $tables = enum_tables();
+            $tables = enum_tables("", "home_list");
             foreach($tables as $tablename) {
                 $return .= exporttable($tablename);
             }

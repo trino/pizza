@@ -16,7 +16,7 @@
 
         //process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
         function getaddons($Table, &$isfree, &$qualifiers, &$addons, &$groups){
-            $toppings = Query("SELECT * FROM " . $Table . " WHERE enabled = '1' ORDER BY id asc, type ASC, name ASC", true);
+            $toppings = Query("SELECT * FROM " . $Table . " WHERE enabled = '1' ORDER BY id asc, type ASC, name ASC", true, "popups_menu.getaddons");
             $toppings_display = '';
             $currentsection = "";
             $isfree[$Table] = array();
@@ -76,8 +76,8 @@
     }
     
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
-    $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true);
-    $isfree = collapsearray(Query("SELECT * FROM additional_toppings", true), "price", "size");
+    $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true, "popups_menu.categories");
+    $isfree = collapsearray(Query("SELECT * FROM additional_toppings", true, "popups_menu.isfree"), "price", "size");
     $deliveryfee = $isfree["Delivery"];
     $minimum = $isfree["Minimum"];
     $addons = array();
@@ -99,7 +99,7 @@
             $toppings_extra = '+';
             $catclass = toclass($category['category']);
             $classlist[] = $catclass;
-            $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' order by id", true);
+            $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' order by id", true, "popups_menu.foreach");
             $menuitemcount = count($menuitems);
             if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
                 $itemsInCol = 0;

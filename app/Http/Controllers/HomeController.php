@@ -272,8 +272,8 @@ class HomeController extends Controller {
         if (!$info) {
             $info = first("SELECT * FROM orders WHERE id = " . $orderid);
         }
-        $user = first("SELECT * FROM users WHERE id = " . $info["user_id"]);
-        $admin = first("SELECT * FROM users WHERE profiletype = 1");
+        $user = first("SELECT * FROM users WHERE id = " . $info["user_id"], true, "HomeController.order_placed1");
+        $admin = first("SELECT * FROM users WHERE profiletype = 1", true, "HomeController.order_placed2");
         if ($party > -2) {
             $actions = actions($event, $party);
             if ($party > -1) {
@@ -345,7 +345,7 @@ class HomeController extends Controller {
         if (isset($data["restaurant_id"])) {
             $SQL .= " AND id = " . $data["restaurant_id"];
         }
-        $owners = implode(",", collapsearray(Query($SQL, true), "address_id"));
+        $owners = implode(",", collapsearray(Query($SQL, true, "HomeController.closestrestaurant1"), "address_id"));
         $limit = "";
         if (isset($data["limit"])) {
             $limit = " LIMIT " . $data["limit"];
@@ -357,7 +357,7 @@ class HomeController extends Controller {
             $SQL .= " HAVING distance <= " . $data['radius'];
         }
         $SQL .= " ORDER BY distance ASC" . $limit;
-        $Restaurants = Query($SQL, true);//useraddresses
+        $Restaurants = Query($SQL, true, "HomeController.closestrestaurant2");//useraddresses
         if ($Restaurants) {
             if ($gethours) {
                 if ($data["limit"] == 1) {

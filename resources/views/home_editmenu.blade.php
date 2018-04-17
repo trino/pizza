@@ -122,7 +122,7 @@
                                                 Menu:
                                                 <LI class="category hyperlink" onclick="newcategory();">[New Category]</LI>
                                                 <?php
-                                                    $categories = collapsearray(Query('SELECT category FROM `menu` GROUP BY category_id ORDER BY category ASC', true), "category");
+                                                    $categories = collapsearray(Query('SELECT category FROM `menu` GROUP BY category_id ORDER BY category ASC', true, "home_editmenu"), "category");
                                                     foreach($categories as $category){
                                                         echo '<LI class="category hyperlink" onclick="cat_click(this);">' . $category . '</LI>';
                                                     }
@@ -248,11 +248,11 @@
                 $CRLF = ";\r\n\t\t";
                 echo 'categories["menu"] = ' . json_encode($categories) . $CRLF;
                 foreach($addon_tables as $table){
-                    echo 'categories["' . $table . '"] = ' . json_encode(collapsearray(Query('SELECT type FROM ' . $table . ' GROUP BY type ORDER BY type ASC', true), "type")) . $CRLF;
+                    echo 'categories["' . $table . '"] = ' . json_encode(collapsearray(Query('SELECT type FROM ' . $table . ' GROUP BY type ORDER BY type ASC', true, "home_editmenu.foreach1"), "type")) . $CRLF;
                     echo 'makecategories("' . $table . '")' . $CRLF;
                 }
                 foreach($tables as $table){
-                    echo 'alldata["' . $table . '"] = ' . json_encode(Query("SELECT * FROM " . $table, true)) . $CRLF;
+                    echo 'alldata["' . $table . '"] = ' . json_encode(Query("SELECT * FROM " . $table, true, "home_editmenu.foreach2")) . $CRLF;
                 }
             ?>
 

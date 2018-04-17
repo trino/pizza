@@ -15,7 +15,7 @@
                     if ($menucache_uptodate && $doCache) {
                         echo '<!-- menu cache pre-generated at: ' . filemtime($menucache_filename) . ' --> ' . file_get_contents($menucache_filename);
                     } else {
-                        $menu = view("popups_menu");
+                        $menu = view("popups_menu")->render();
                         if ($doCache) {
                             file_put_contents($menucache_filename, $menu);
                             setsetting("menucache", filemtime($menucache_filename));

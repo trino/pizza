@@ -305,7 +305,7 @@
         //check all data again, do not trust the prices from the user!!
         $tables = array("toppings", "wings_sauce", "additional_toppings");
         foreach ($tables as $ID => $table) {
-            $tables[$table] = Query("SELECT * FROM " . $table, true);
+            $tables[$table] = Query("SELECT * FROM " . $table, true, "popups_receipt.foreach");
             unset($tables[$ID]);
         }
 
@@ -332,7 +332,7 @@
                     die("Order is empty");
                 }
 
-                $menu = Query("SELECT * FROM menu WHERE id IN(" . $itemIDs . ")", true);
+                $menu = Query("SELECT * FROM menu WHERE id IN(" . $itemIDs . ")", true, "popups_receipt.menu");
                 $localdir = webroot("public/images/icon-");
                 if ($place == "email" && !islive()) {
                     $localdir = "http://" . serverurl . "/public/images/icon-";

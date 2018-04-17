@@ -26,7 +26,7 @@
                 echo 'Data has been saved to ' . $_GET["table"] . '<BR>';
             }
             echo '<A HREF="' . $backURL . '">Go Up</A>';
-            $results = Query($query, true);
+            $results = Query($query, true, "home_edittable.results");
             $firstresult = true;
             echo '<INPUT TYPE="HIDDEN" NAME="table" VALUE="' . $_GET["table"] . '">';
             if(isset($_GET["id"]) && !$_GET["id"]){
@@ -40,7 +40,7 @@
                         }
                     }
                     if(in_array($_GET["table"], array("toppings", "wings_sauce"))){
-                        $categories = Query("SELECT DISTINCT(type) FROM " . $_GET["table"],true);
+                        $categories = Query("SELECT DISTINCT(type) FROM " . $_GET["table"],true, "home_edittable.foreach");
                         foreach($categories as $index => $category){
                             $categories[$index] = '<option value="' . $category["type"] .'">';
                         }
@@ -70,7 +70,7 @@
                 echo '<TR><TD COLSPAN="' . $cols . '"></TD><TD><A HREF="' . $currentURL . '&id=0">New</A></TD></TR>';
             }
         } else {
-            foreach(enum_tables() as $table){
+            foreach(enum_tables("", "home_edittable") as $table){
                 echo '<TR><TD><A HREF="?table=' . $table . '">' . $table . '</A></TD></TR>';
             }
         }

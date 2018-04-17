@@ -189,7 +189,7 @@ function select_field_where($Table, $Where, $getcol = "", $OrderBy = "", $Dir = 
         if ($Start) {$query .= " OFFSET " . $Start;}
     }
     if ($getcol === true) {return $query;}
-    $result = Query($query);
+    $result = Query($query, false, "API.select_field_where");
     if ($getcol !== false) {
         if ($getcol == "COUNT()") {
             return iterator_count($result);
@@ -204,17 +204,17 @@ function select_field_where($Table, $Where, $getcol = "", $OrderBy = "", $Dir = 
 }
 
 function describe($table){
-    return Query("DESCRIBE " . $table, true);
+    return Query("DESCRIBE " . $table, true, "API.describe");
 }
 
 function deleterow($Table, $Where = false){
     if ($Where) {$Where = " WHERE " . $Where;}
-    Query("DELETE FROM " . $Table . $Where);
+    Query("DELETE FROM " . $Table . $Where, false, "API.deleterow");
 }
 
-function first($query, $Only1 = true){
+function first($query, $Only1 = true, $Why = "Unknown"){
     global $con;
-    if (!is_object($query)) {$query = Query($query);}
+    if (!is_object($query)) {$query = Query($query, false, $Why);}
     if ($query) {
         $ret = array();
         while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
@@ -264,8 +264,8 @@ function flattenarray($arr, $key){
     return $arr;
 }
 
-function enum_tables($table = ""){
-    return flattenarray(Query("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "'" . iif($table, "AND TABLE_NAME='" . $table . "'"), true), "TABLE_NAME");
+function enum_tables($table = "", $Why = "UNKNOWN"){
+    return flattenarray(Query("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "'" . iif($table, "AND TABLE_NAME='" . $table . "'"), true, "API.enum_tables: " . $Why), "TABLE_NAME");
 }
 
 if (!function_exists("mysqli_fetch_all")) {
@@ -280,17 +280,27 @@ if (!function_exists("mysqli_fetch_all")) {
     }
 }
 
-function Query($query, $all = false){
+function Query($query, $all = false, $Where = "Unknown"){
     global $con;//use while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { to get results
+    $ret = false;
+    $debugmode = defined('debugmode');
+    if($debugmode){$debugmode = debugmode;}
+    if($debugmode){$now = millitime();}
     if ($all) {
         $result = $con->query($query);
         if (is_object($result)) {
-            return mysqli_fetch_all($result, MYSQLI_ASSOC);// or die ('Unable to execute query. '. mysqli_error($con) . "<P>Query: " . $query);
+            $ret = true;
+            $data = mysqli_fetch_all($result, MYSQLI_ASSOC);// or die ('Unable to execute query. '. mysqli_error($con) . "<P>Query: " . $query);
         } else {
             debugprint($query . " returned no results");
         }
     }
-    return $con->query($query);
+    if(!$ret) {$data = $con->query($query);}
+    if($debugmode){
+        $now = millitime() - $now;
+        $GLOBALS["SQL"][] = ["Time" => $now, "Query" => $query, "Where" => $Where];
+    }
+    return $data;
 }
 
 function printoption($option, $selected = "", $value = ""){
@@ -404,10 +414,14 @@ function millitime() {
 }
 
 function getsetting($Key, $Default = ""){
-    if (!enum_tables("settings")) {
-        return $Default;
+    if(!isset($GLOBALS["variables"]["hassettingtable"])) {
+        if (enum_tables("settings", "API.getsetting")) {
+            $GLOBALS["variables"]["hassettingtable"] = true;
+        } else {
+            return $Default;
+        }
     }
-    $Value = Query("SELECT value FROM settings WHERE keyname='" . $Key . "'", true);
+    $Value = Query("SELECT value FROM settings WHERE keyname='" . $Key . "'", true, "API.getsetting");
     if (isset($Value[0]["value"])) {
         return $Value[0]["value"];
     }
@@ -416,13 +430,13 @@ function getsetting($Key, $Default = ""){
 
 function drop_table($table = false){
     if ($table === false) {
-        Query("SET foreign_key_checks = 0");
-        $tables = enum_tables();
+        Query("SET foreign_key_checks = 0", false, "API.drop_table");
+        $tables = enum_tables("", "API.drop_table");
         foreach ($tables as $table) {
             drop_table($table);
         }
     } else {
-        Query("DROP TABLE IF EXISTS " . $table);
+        Query("DROP TABLE IF EXISTS " . $table, false, "API.drop_table");
     }
 }
 
@@ -436,11 +450,11 @@ function importSQL($filename){
         }// Skip it if it's a comment
         $templine .= $line;// Add this line to the current segment
         if (substr(trim($line), -1, 1) == ';') {// If it has a semicolon at the end, it's the end of the query
-            Query($templine);// Perform the query
+            Query($templine, false, "API.importSQL");// Perform the query
             $templine = '';// Reset temp variable to empty
         }
     }
-    Query("COMMIT;");
+    Query("COMMIT;", false, "API.importSQL");
 }
 
 function isFileUpToDate($SettingKey, $Filename){
@@ -452,7 +466,7 @@ function isFileUpToDate($SettingKey, $Filename){
 }
 
 function loadsettings(){
-    $settings = first("SELECT * FROM `settings` WHERE keyname NOT IN (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "') AND keyname NOT IN ('lastSQL', 'menucache')", false);
+    $settings = first("SELECT * FROM `settings` WHERE keyname NOT IN (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "') AND keyname NOT IN ('lastSQL', 'menucache')", false, "API.loadsettings");
     foreach($settings as $ID => $Value){
         $settings[$Value["keyname"]] = $Value["value"];
         unset($settings[$ID]);
@@ -462,8 +476,8 @@ function loadsettings(){
 
 $con = connectdb();
 $settings = loadsettings();
-
 define("debugmode", $GLOBALS["settings"]["debugmode"]);
+
 if (isFileUpToDate("lastSQL", $Filename)) {
     $lastSQLupdate = getsetting("lastSQL", "0");
     $lastFILupdate = filemtime($Filename);
@@ -531,7 +545,7 @@ function debugprint($text, $path = "royslog.txt", $DeleteFirst = false){
 }
 
 function orderpath($OrderID){
-    $userid = first("SELECT user_id FROM orders WHERE id = " . $OrderID);
+    $userid = first("SELECT user_id FROM orders WHERE id = " . $OrderID, true, "API.orderpath");
     if($userid) {
         $userid = $userid["user_id"];
         $oldfilename = public_path("orders") . "/" . $OrderID . ".json";
@@ -613,13 +627,13 @@ function getuser($IDorEmail = false, $IncludeOther = true){
     } else {
         $IDorEmail = "'" . $IDorEmail . "'";
     }
-    $user = first("SELECT * FROM users WHERE " . $field . " = " . $IDorEmail);
+    $user = first("SELECT * FROM users WHERE " . $field . " = " . $IDorEmail, true, "API.getuser");
     if (!$user) {
         return false;
     }
     if ($IncludeOther) {
-        $user["Addresses"] = Query("SELECT * FROM useraddresses WHERE user_id = " . $user["id"], true);
-        $user["Orders"] = Query("SELECT id, placed_at FROM `orders` WHERE user_id = " . $user["id"] . " ORDER BY id DESC LIMIT 5", true);
+        $user["Addresses"] = Query("SELECT * FROM useraddresses WHERE user_id = " . $user["id"], true, "API.getuser");
+        $user["Orders"] = Query("SELECT id, placed_at FROM `orders` WHERE user_id = " . $user["id"] . " ORDER BY id DESC LIMIT 5", true, "API.getuser");
         foreach ($user["Orders"] as $Index => $Order) {
             $user["Orders"][$Index]["placed_at"] = verbosedate($Order["placed_at"]);
         }
@@ -633,7 +647,7 @@ function getuser($IDorEmail = false, $IncludeOther = true){
                 }
                 $user["Stripe"] = $customer->sources->data;
             } catch (Stripe\Error\Base $e) {
-                Query("UPDATE users SET stripecustid = '' WHERE " . $field . " = " . $IDorEmail . ";");//stripecustid is likely invalid, delete it
+                Query("UPDATE users SET stripecustid = '' WHERE " . $field . " = " . $IDorEmail . ";", false, "API.getuser");//stripecustid is likely invalid, delete it
                 $user["StripeError"] = $e->getMessage();
             }
         }
@@ -707,7 +721,7 @@ function verbosedate($date){
 }
 
 function gethours($RestaurantID = -1){
-    $hours = first("SELECT * FROM `hours` WHERE restaurant_id = " . $RestaurantID . " or restaurant_id = 0 ORDER BY restaurant_id DESC LIMIT 1");
+    $hours = first("SELECT * FROM `hours` WHERE restaurant_id = " . $RestaurantID . " or restaurant_id = 0 ORDER BY restaurant_id DESC LIMIT 1", true, "API.gethours");
     $ret = array();
     foreach ($hours as $day => $time) {
         $dayofweek = left($day, 1);
@@ -756,11 +770,11 @@ function like_match($pattern, $subject){
 }
 
 function lastupdatetime($table){//will not work on live!
-    if (first("SHOW TABLE STATUS FROM " . $GLOBALS["database"] . " LIKE '" . $table . "';")["Engine"] == "InnoDB") {
-        $filename = first('SHOW VARIABLES WHERE Variable_name = "datadir"')["Value"] . $GLOBALS["database"] . '/' . $table . '.ibd';
+    if (first("SHOW TABLE STATUS FROM " . $GLOBALS["database"] . " LIKE '" . $table . "';", true , "API.lastupdatetime")["Engine"] == "InnoDB") {
+        $filename = first('SHOW VARIABLES WHERE Variable_name = "datadir"', true , "API.lastupdatetime")["Value"] . $GLOBALS["database"] . '/' . $table . '.ibd';
         return filemtime($filename);//UNIX datestamp
     }
-    return first("SELECT UPDATE_TIME FROM information_schema.tables WHERE  TABLE_SCHEMA = '" . $GLOBALS["database"] . "' AND TABLE_NAME = '" . $table . "'")["UPDATE_TIME"];//unknown format
+    return first("SELECT UPDATE_TIME FROM information_schema.tables WHERE  TABLE_SCHEMA = '" . $GLOBALS["database"] . "' AND TABLE_NAME = '" . $table . "'", true , "API.lastupdatetime")["UPDATE_TIME"];//unknown format
 }
 
 function startfile($filename){
@@ -773,7 +787,7 @@ function endfile($filename){
 }
 
 function countSQL($table, $SQL = "*"){
-    return first("SELECT COUNT(" . $SQL . ") as count FROM " . $table)["count"];
+    return first("SELECT COUNT(" . $SQL . ") as count FROM " . $table, true , "API.countSQL")["count"];
 }
 
 function actions($eventname, $party = -1){
@@ -783,11 +797,11 @@ function actions($eventname, $party = -1){
     if ($party > -1) {
         $SQL .= " AND party = " . $party;
     }
-    return first($SQL, $party > -1);
+    return first($SQL, $party > -1, "API.actions");
 }
 
 function getdeliverytime($var = "DeliveryTime"){
-    return first("SELECT price FROM additional_toppings WHERE size = '" . $var . "'")["price"];
+    return first("SELECT price FROM additional_toppings WHERE size = '" . $var . "'", true, "API.actions")["price"];
 }
 
 function formatphone($phone){

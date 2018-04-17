@@ -111,7 +111,7 @@
     <?php
         if (!islive()) {
             echo '<SPAN ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
-            $user = first("SELECT * FROM users WHERE profiletype = 1");
+            $user = first("SELECT * FROM users WHERE profiletype = 1", true, "layouts_app");
             $ispass = \Hash::check("admin", $user["password"]);
 
             $currtime = millitime();
@@ -183,36 +183,6 @@
     log("Page has loaded at: " + Date.now());
 </script>
 
-<div class="dont-show">
-    <?php
-    if (isset($GLOBALS["filetimes"])) {
-        echo '<TABLE><TR><TH COLSPAN="2">File times</TH></TR>';
-        $total = 0;
-        foreach ($GLOBALS["filetimes"] as $Index => $Values) {
-            echo '<TR><TD>' . $Index . '</TD><TD>';
-            if (isset($Values["start"]) && isset($Values["end"])) {
-                $val = round($Values["end"] - $Values["start"], 4);
-                if (strpos($val, ".") === false) {
-                    $val .= ".000";
-                } else {
-                    $val = str_pad($val, 4, "0");
-                }
-                echo $val . "s";
-                $total += $val;
-            } else {
-                echo "Unended";
-            }
-            echo '</TD></TR>';
-        }
-        $total = str_pad(round($total, 4), 5, "0");
-        echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
-        echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
-        echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
-        echo '</TABLE>';
-    }
-    ?>
-</div>
-
 @if(islive())
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -232,4 +202,67 @@
 
     </script>
 @endif
+
+<?php
+    function findSQL($SQLquery){
+        foreach($GLOBALS["SQL"] as $index => $query){
+            if($query["Query"] == $SQLquery){
+                return $index;
+            }
+        }
+    }
+
+    if(debugmode){
+        echo '<STYLE>.sqlduplicate{color:red;}.centertable{margin-left: auto; margin-right: auto;}</STYLE>';
+        if(isset($GLOBALS["SQL"])){
+            echo '<TABLE BORDER="1" CLASS="centertable">';
+            echo '<TR><TD COLSPAN="4" ALIGN="CENTER"><STRONG>SQL Debug data. (<SPAN CLASS="sqlduplicate">text</SPAN> = duplicate SQL query)</STRONG></TD></TR>';
+            echo '<TR><TH>#</TH><TH>Time</TH><TH>SQL Query</TH><TH>Where</TH></TR>';
+            $total = 0;
+            foreach($GLOBALS["SQL"] as $index => $query){
+                $total += $query["Time"];
+                echo '<TR><TD>' . $index . '</TD><TD>' . $query["Time"] . ' ms</TD><TD>' . $query["Query"] . '</TD><TD';
+                if(findSQL($query["Query"]) < $index){
+                    echo ' CLASS="sqlduplicate"';
+                }
+                echo '>' . $query["Where"] . '</TD></TR>';
+            }
+            echo '<TR><TD COLSPAN="3" ALIGN="RIGHT"><STRONG>Total Time:</STRONG></TD><TD><STRONG>' . $total . ' ms</STRONG></TD></TR>';
+            echo '<TR><TD COLSPAN="3" ALIGN="RIGHT"><STRONG>Total Queries:</STRONG></TD><TD><STRONG>' . count($GLOBALS["SQL"]) . '</STRONG></TD></TR>';
+            echo '</TABLE>';
+        }
+        if (isset($GLOBALS["filetimes"])) {
+            echo '<TABLE BORDER="1" CLASS="centertable"><TR><TH COLSPAN="2">File times</TH></TR>';
+            $total = 0;
+            foreach ($GLOBALS["filetimes"] as $Index => $Values) {
+                echo '<TR><TD>' . $Index . '</TD><TD>';
+                if (isset($Values["start"]) && isset($Values["end"])) {
+                    $val = round($Values["end"] - $Values["start"], 4);
+                    if (strpos($val, ".") === false) {
+                        $val .= ".000";
+                    } else {
+                        $val = str_pad($val, 4, "0");
+                    }
+                    echo $val . "s";
+                    $total += $val;
+                } else {
+                    echo "Unended";
+                }
+                echo '</TD></TR>';
+            }
+            $total = str_pad(round($total, 4), 5, "0");
+            echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
+            echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
+            echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
+            echo '</TABLE>';
+        }
+        if(isset($GLOBALS["debugdata"])){
+            echo '<TABLE BORDER="1" CLASS="centertable"><TR><TH COLSPAN="2">Debug data</TH></TR>';
+            foreach($GLOBALS["debugdata"] as $index => $value){
+                echo '<TR><TD>' . $index . '</TD><TD>' . $value . '</TD></TR>';
+            }
+            echo '</TABLE>';
+        }
+    }
+?>
 </html>
