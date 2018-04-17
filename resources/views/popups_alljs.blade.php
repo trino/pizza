@@ -1108,17 +1108,7 @@
                 $("#addresslist").html(addresses());
                 $("#cardlist").html(creditcards()); break;
         }
-        window.location.hash = "modal";
-    });
-
-    $(window).on('hashchange', function (event) {//delete button closes modal
-        if (window.location.hash != "#modal" && window.location.hash != "#loading" && !is_firefox_for_android) {
-            if (skipone > Date.now()) {
-                return;
-            }
-            $('#' + modalID).modal('hide');
-            log("AUTOHIDE " + modalID);
-        }
+        //window.location.hash = "modal";
     });
 
     //generate a list of addresses and send it to the alert modal
@@ -1190,7 +1180,7 @@
             }
             alert(HTML, "Orders");
             if (First) {
-                orders(First)
+                orders(First);
             }
         } else {
             if (isUndefined(getJSON)) {
@@ -1370,10 +1360,12 @@
 
     var skiploadingscreen = false;
     var skipunloadingscreen = false;
+    var skipmodalhide = false;
     //overwrites javascript's alert and use the modal popup
     (function () {
         var proxied = window.alert;
         window.alert = function () {
+            skipmodalhide = true;
             var title = "Alert";
             if (arguments.length > 1) {
                 title = arguments[1];
@@ -1388,7 +1380,8 @@
         };
     })();
 
-    function reseturl(){
+    function reseturl(Why){
+        log("reseturl: " + Why);
         history.pushState("", document.title, window.location.pathname);
     }
 
@@ -1400,9 +1393,9 @@
         //make every AJAX request show the loading animation
         $body = $("body");
 
-        $('.modal').on('hidden.bs.modal', function () {
-            history.pushState("", document.title, window.location.pathname);//clean #modal from url
-        });
+        //$('.modal').on('hidden.bs.modal', function () {
+        //    reseturl("hidden.bs.modal");//clean #modal from url
+        //});
 
         $(document).on({
             ajaxStart: function () {
@@ -1413,19 +1406,19 @@
                     }
                 } else {
                     loading(true, "ajaxStart");
-                    previoushash = window.location.hash;
-                    window.history.pushState({}, document.title, '#loading');
+                    //previoushash = window.location.hash;
+                    //window.history.pushState({}, document.title, '#loading');
                 }
             },
             ajaxStop: function () {
                 if (!skipunloadingscreen) {
                     loading(false, "ajaxStop");
-                    if (previoushash) {
+                    /*if (previoushash) {
                         if(previoushash.left(1) != "#"){previoushash = "#" + previoushash;}
                         window.history.pushState({}, document.title, previoushash);
                     } else {
                         reseturl();
-                    }
+                    }*/
                 }
                 skipone = Date.now() + 100;//
             }
@@ -2651,7 +2644,7 @@
     }
 
     $(document).ready(function () {
-        reseturl();
+        reseturl("document ready");
         <?php
             if(read("id")){
                 if (islive()) {
@@ -2676,6 +2669,18 @@
         });
     });
 
+    function ismodalvisible(){
+        return $(".modal:visible").length > 0;
+    }
+    function CloseModal(Why){
+        if(ismodalvisible()) {
+            log("Closing modal: " + Why);
+            $(".modal:visible").modal("hide");
+            return true;
+        }
+        return false;
+    }
+
     @if(read("id"))
     $(document).on( "click", function() {
         if($(".dropdown-menu").is(":visible")){
@@ -2683,10 +2688,27 @@
         }
     });
 
-    $(document).keyup(function(e) {
-        if (e.keyCode == 27) {//escape key
-            $(".modal:visible").modal("hide");
+    //MODAL HIDING CODE
+    $(window).load(function(){
+        $('body').backDetect(function(){
+            if(CloseModal("BACK BUTTON DETECTED")) {
+                return false;
+            }
+        });
+    });
+
+    document.addEventListener('keydown', HandleBackKey);
+    function HandleBackKey(e){
+        e = e.keyCode;
+        if (e == 27 || e == 8) {
+            if(CloseModal("escape/back key")) {
+                return false;
+            }
         }
+    }
+
+     $(window).on('hashchange', function (event) {//delete button closes modal
+         CloseModal("hashchange (" + window.location.hash + ")");
     });
 
     var stripemode = "";
@@ -2806,6 +2828,8 @@
         }, false);
         return xhr;
     } });
+
+    !function(e){var a=e,r="undefined"!=typeof window&&window,f={frameLoaded:0,frameTry:0,frameTime:0,frameDetect:null,frameSrc:null,frameCallBack:null,frameThis:null,frameNavigator:window.navigator.userAgent,frameDelay:0,frameDataSrc:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"};a.fn.backDetect=function(e,r){f.frameThis=this,f.frameCallBack=e,null!==r&&(f.frameDelay=r),f.frameNavigator.indexOf("MSIE ")>-1||f.frameNavigator.indexOf("Trident")>-1?setTimeout(function(){a('<iframe src="'+f.frameDataSrc+'?loading" style="display:none;" id="backDetectFrame" onload="jQuery.fn.frameInit();""></iframe>').appendTo(f.frameThis)},f.frameDelay):setTimeout(function(){a("<iframe src='about:blank?loading' style='display:none;' id='backDetectFrame' onload='jQuery.fn.frameInit();'></iframe>").appendTo(f.frameThis)},f.frameDelay)},a.fn.frameInit=function(){f.frameDetect=document.getElementById("backDetectFrame"),f.frameLoaded>1&&2===f.frameLoaded&&(f.frameCallBack.call(this),r.history.go(-1)),f.frameLoaded+=1,1===f.frameLoaded&&(f.frameTime=setTimeout(function(){e.fn.setupFrames()},500))},a.fn.setupFrames=function(){clearTimeout(f.frameTime),f.frameSrc=f.frameDetect.src,1===f.frameLoaded&&-1===f.frameSrc.indexOf("historyLoaded")&&(f.frameNavigator.indexOf("MSIE ")>-1||f.frameNavigator.indexOf("Trident")>-1?f.frameDetect.src=f.frameDataSrc+"?historyLoaded":f.frameDetect.src="about:blank?historyLoaded")}}(jQuery);
 </SCRIPT>
 
 <script type="text/javascript">
