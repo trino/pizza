@@ -85,7 +85,7 @@ function connectdb($database = "ai", $username = "root", $password = ""){
 function needsphonenumber(){
     $always = false;//should be set to true, customers are really bad at keeping the phone number up to date
     if($always){return true;}
-    if(read("id")){if(isvalidphone("phone")){return false;}}
+    if(read("id")){if(isvalidphone(read("phone"))){return false;}}
     return true;
 }
 

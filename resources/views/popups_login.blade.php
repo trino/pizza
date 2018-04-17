@@ -228,7 +228,6 @@
                     $.post(webroot + "auth/login", formdata, function (result) {
                         if (result) {
                             try {
-                                $("#logintab").trigger("click");
                                 @if(!islive())
                                     if(formdata["name"] == "test") {
                                         formdata["email"] = "roy@trinoweb.com";

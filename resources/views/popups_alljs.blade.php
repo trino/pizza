@@ -947,12 +947,12 @@
             if (isUndefined(CardNumber)) {CardNumber = $("[data-stripe=number]").val();}
             if (isUndefined(Month)) {Month = $("[data-stripe=exp_month]").val();}
             if (isUndefined(Year)) {Year = $("[data-stripe=exp_year]").val();}
-            if (isUndefined(CVV)) {CVV = $("[data-stripe=cvc]").val();}
+            if (isUndefined(CVV)) {CVV = $("[data-stripe=cvc]").val().trim();}
             CardNumber = CardNumber.replace(/\D/g, '');
             switch(cardtype(CardNumber)){
                 case 1: if (CardNumber.length != 15){return 5;} break;//American Express
                 case 2: if (CardNumber.length != 13 && CardNumber.length != 16 && CardNumber.length != 19){return 5;} break;//Visa
-                case 3: if (CardNumber.length != 16){return 5;}//MasterCard
+                case 3: if (CardNumber.length != 16){return 5;} break;//MasterCard
                 default: return 4;
             }
             var nDigit = 0, bEven = false;
@@ -971,7 +971,7 @@
             var d = new Date();
             var CurrentDate = (d.getYear() % 100) * 100 + d.getMonth();
             if (ExpiryDate > CurrentDate) {
-                if(Number(CVV)<100){return 3;}
+                if(CVV.length < 3){return 3;}
                 return 0;
             } else {
                 log("Failed expiry date check: " + ExpiryDate + " <= " + CurrentDate);

@@ -26,6 +26,8 @@
                     <?php
                         $order = ["deliverytime", "useraddress", "restaurant", "userphone", "creditcard", "notes"];
                         $needsphone = needsphonenumber();
+                        $index = array_search("userphone", $order);
+                        if(!$needsphone && $index !== false){unset($order[$index]);}
                         foreach($order as $key){
                             switch($key){
                                 case "deliverytime": ?>
