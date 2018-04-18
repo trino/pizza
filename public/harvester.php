@@ -48,12 +48,6 @@
         return $website;
     }
 
-    function vardump($data){
-        echo '<PRE>';
-        var_dump($data);
-        echo '</PRE>';
-    }
-
     if(isset($_GET["url"]) && isset($_GET["action"])){
         $url = $_GET["url"];
         $website = getwebsite($url);

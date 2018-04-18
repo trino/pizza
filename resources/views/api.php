@@ -644,6 +644,7 @@ function getuser($IDorEmail = false, $IncludeOther = true){
             initStripe();
             try {
                 $customer = \Stripe\Customer::Retrieve($user["stripecustid"]);//get all credit cards
+                //vardump($customer->sources->data);die();
                 foreach ($customer->sources->data as $Index => $Value) {
                     $customer->sources->data[$Index] = getProtectedValue($Value, "_values");
                     unset($customer->sources->data[$Index]["metadata"]);
@@ -656,6 +657,12 @@ function getuser($IDorEmail = false, $IncludeOther = true){
         }
     }
     return $user;
+}
+
+function vardump($data){
+    echo '<PRE>';
+    var_dump($data);
+    echo '</PRE>';
 }
 
 //gets the protected value of an object ("_properties" is one used by most objects)

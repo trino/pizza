@@ -1753,8 +1753,15 @@
         return false;
     }
 
+    function random(min, max){
+        if(min == max){return min;}
+        return Math.floor((Math.random() * max) + min);
+    }
+
     function testcard() {
-        $('input[data-stripe=number]').val('4242424242424242').trigger("click");
+        var cardnumber = ['4242424242424242', '4000001240000000', '4012888888881881', '4000056655665556', '5555555555554444', '5200828282828210', '5105105105105100', '378282246310005', '371449635398431'];
+        cardnumber = cardnumber[ random(0, cardnumber.length-1) ];
+        $('input[data-stripe=number]').val(cardnumber).trigger("click");
         $('input[data-stripe=address_zip]').val('L8L6V6').trigger("click");
         $('input[data-stripe=cvc]').val(rnd(100, 999)).trigger("click");
         $('select[data-stripe=exp_year]').val({{ right($CURRENT_YEAR,2) }} +1).trigger("click");

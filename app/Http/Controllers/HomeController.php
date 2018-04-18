@@ -211,11 +211,11 @@ class HomeController extends Controller {
                     try {
                         if ($user["stripecustid"]) {
                             $customer_id = $user["stripecustid"];//load customer ID from user profile
-                            if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
+                            /*if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
                                 $cu = \Stripe\Customer::retrieve($customer_id);
                                 $cu->source = $info['stripeToken']; //obtained with Checkout
                                 $cu->save();
-                            }
+                            }*/
                         } else {
                             $customer = \Stripe\Customer::create(array(
                                 "source" => $info["stripeToken"],
