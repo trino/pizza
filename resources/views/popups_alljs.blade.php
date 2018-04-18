@@ -1977,14 +1977,16 @@
         var needscreditrefresh = false;
         if (loadsavedcreditinfo()) {
             $(".credit-info").hide();
-            var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true);" class="form-control proper-height">';
+            var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true);" class="form-control proper-height"><OPTION value="">Add Card</OPTION>';
             for (var i = 0; i < userdetails.Stripe.length; i++) {
                 var card = userdetails.Stripe[i];
                 creditHTML += '<OPTION value="' + card.id + '" id="card_' + card.id + '"';
                 if (i == userdetails.Stripe.length - 1) {
                     creditHTML += ' SELECTED';
                 }
-                creditHTML += '>' + card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2) + '</OPTION><OPTION value="">Add Card</OPTION>';
+                card = card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2);
+                log("Card: " + (i+1) + " of " + userdetails.Stripe.length + " = " + card);
+                creditHTML += '>' + card + '</OPTION>';
             }
             $("#credit-info").html(creditHTML + '</SELECT>');
         } else {
@@ -2656,11 +2658,13 @@
         ?>
         $("input").blur(function() {
             var ID = $(this).attr("id");
-            if(ID.length == 0){
-                if($(this)[0].hasAttribute("autocomplete")){
-                    if($(this).attr("autocomplete") == "really-truly-off"){
-                        ID = "address [no id]";
-                        addressstatus(true, false, true, false);
+            if(!isUndefined(ID)) {
+                if (ID.length == 0) {
+                    if ($(this)[0].hasAttribute("autocomplete")) {
+                        if ($(this).attr("autocomplete") == "really-truly-off") {
+                            ID = "address [no id]";
+                            addressstatus(true, false, true, false);
+                        }
                     }
                 }
             }
@@ -2690,20 +2694,45 @@
 
     //MODAL HIDING CODE
     $(window).load(function(){
+        log("Back button detection in place");
         $('body').backDetect(function(){
-            if(CloseModal("BACK BUTTON DETECTED")) {
+            if(HandleBack("backDetect")){
                 return false;
             }
         });
     });
 
+    function HandleBack(Where){
+        log("BACK BUTTON DETECTED: " + Where);
+        return CloseModal("BACK BUTTON DETECTED");
+    }
+
+    window.addEventListener('popstate', function(event) {
+        if (!HandleBack("popstate")){
+            history.back();
+        }
+    }, false);
+
     document.addEventListener('keydown', HandleBackKey);
     function HandleBackKey(e){
         e = e.keyCode;
-        if (e == 27 || e == 8) {
-            if(CloseModal("escape/back key")) {
+        var doit = false;
+        var keyname = "keycode " + e;
+        if(e == 27){doit = true; keyname="escape";}
+        if(e == 8){
+            var focused = document.activeElement.tagName.toLowerCase();
+            keyname="delete " + focused;
+            switch(focused){
+                case "input":case "select":case "textarea": break;
+                default: doit = true;
+            }
+        }
+        if (doit) {
+            if(CloseModal("HandleBackKey: " + keyname)) {
                 return false;
             }
+        } else {
+            log("Skip close: " + keyname);
         }
     }
 
