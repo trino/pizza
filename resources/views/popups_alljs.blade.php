@@ -1021,14 +1021,14 @@
         @endif
     }
 
+    function isnewcard(){
+        return $("#saved-credit-info").val() == "";
+    }
+
     //send an order to the server
     function placeorder(StripeResponse) {
-        if (!canplaceanorder(false, "placeorder")) {
-            return cantplaceorder();
-        }
-        if (isUndefined(StripeResponse)) {
-            StripeResponse = "";
-        }
+        if (!canplaceanorder(false, "placeorder")) {return cantplaceorder();}
+        if (isUndefined(StripeResponse)) {StripeResponse = "";}
         if (isObject(userdetails)) {
             var addressinfo = getform("#orderinfo");//i don't know why the below 2 won't get included. this forces them to be
             addressinfo["cookingnotes"] = $("#cookingnotes").val();
@@ -1041,7 +1041,8 @@
                 stripemode: stripemode,
                 order: theorder,
                 name: $("#reg_name").val(),
-                phone: $("#order_phone").val()
+                phone: $("#order_phone").val(),
+                isnewcard: isnewcard()
             }, function (result) {
                 placeorderstate(false);
                 if (result.contains("ordersuccess")) {
@@ -1070,7 +1071,7 @@
                     }
                     userdetails["Orders"].unshift({
                         id: $("#receipt_id").text(),
-                        placed_at: $("#receipt_placed_at").text(),
+                        placed_at: $("#receipt_placed_at").text()
                     });
                     clearorder();
                 } else if(result.contains("[STRIPE]")) {
@@ -1147,7 +1148,7 @@
     }
 
     function deletecard(Index, ID, last4, month, year) {
-        confirm2("Are you sure you want to delete credit card:<br>x- " + last4 + " Expiring on " + month + "/" + year + "?", 'Delete Credit Card', function () {
+        confirm2("Are you sure you want to delete the credit card:<br>x-" + last4.pad(4) + " Expiring on " + month + "/" + year + "?", 'Delete Credit Card', function () {
             $.post(webroot + "placeorder", {
                 _token: token,
                 action: "deletecard",
@@ -1809,7 +1810,7 @@
             log("Stripe data - complete");
         } else {//saved card
             log("Use saved data");
-            placeorder("");//no stripe token, use customer ID on the server side
+            placeorder();//no stripe token, use customer ID on the server side
         }
         $(".saveaddresses").removeClass("dont-show");
     }
@@ -1829,7 +1830,7 @@
                 if (response.error) {
                     ajaxerror(response.error.message);
                 } else {
-                    log("Stripe successful");
+                    log("Stripe successful - token: " + response.id);
                     if (!changecredit(true)) {//save new card to userdetails
                         if (!isArray(userdetails.Stripe)) {
                             userdetails.Stripe = new Array();
@@ -1882,6 +1883,7 @@
         if (!formdata.latitude || !formdata.longitude) {return;}
         if (!debugmode) {formdata.radius = MAX_DISTANCE;}
         //skiploadingscreen = true;
+        //canplaceorder = false;
         //canplaceorder = false;
         $.post(webroot + "placeorder", {
             _token: token,
@@ -1991,9 +1993,10 @@
                 if (i == userdetails.Stripe.length - 1) {
                     creditHTML += ' SELECTED';
                 }
-                card = card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2);
-                log("Card: " + (i+1) + " of " + userdetails.Stripe.length + " = " + card);
-                creditHTML += '>' + card + '</OPTION>';
+                var cardtext = card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2);
+                if(debugmode){cardtext += " (" + card.id.replace("card_", "ID: ") + ")";}
+                log("Card: " + (i+1) + " of " + userdetails.Stripe.length + " = " + cardtext);
+                creditHTML += '>' + cardtext + '</OPTION>';
             }
             $("#credit-info").html(creditHTML + '</SELECT>');
         } else {

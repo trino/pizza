@@ -114,7 +114,7 @@ class HomeController extends Controller {
                         $ret["Status"] = false;
                         $cu = \Stripe\Customer::retrieve($user["stripecustid"]);
                         $cu->sources->retrieve($_POST["cardid"])->delete();
-                        $ret["Reason"] = "'" + $_POST["cardid"] . "' was deleted";
+                        $ret["Reason"] = "'" . $_POST["cardid"] . "' was deleted";
                         $ret["Status"] = true;
                     } catch (\Stripe\Error\InvalidRequest $e) {
                         $ret["Reason"] = $e->getMessage();
@@ -173,7 +173,6 @@ class HomeController extends Controller {
             if (isset($_POST["stripe"])) {
                 $info["stripeToken"] = $_POST["stripe"];
             }
-
             $order = $_POST["order"];
             unset($info["istest"]);
             if(!isset($info["phone"]) || !trim($info["phone"])){
@@ -208,15 +207,23 @@ class HomeController extends Controller {
                 $error = false;
                 if ($amount > 0) {
                     initStripe();
+                    $failedat = "";
                     try {
                         if ($user["stripecustid"]) {
                             $customer_id = $user["stripecustid"];//load customer ID from user profile
-                            /*if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
+                            if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
+                                $failedat = "Update card info";
                                 $cu = \Stripe\Customer::retrieve($customer_id);
-                                $cu->source = $info['stripeToken']; //obtained with Checkout
+                                if($_POST["isnewcard"] == "true") {//new card, add it to sources
+                                    $failedat = "Add to customer";
+                                    $cu->sources->create(array("source" => $info['stripeToken']));
+                                } else {
+                                    $cu->source = $info['stripeToken']; //obtained with Checkout
+                                }
                                 $cu->save();
-                            }*/
+                            }
                         } else {
+                            $failedat = "Create customer";
                             $customer = \Stripe\Customer::create(array(
                                 "source" => $info["stripeToken"],
                                 "description" => $user["name"] . ' (ID:' . $user["id"] . ')'
@@ -236,6 +243,7 @@ class HomeController extends Controller {
                             $charge["source"] = $_POST["creditcard"];//charge a specific credit card
                         }
                         // https://stripe.com/docs/charges https://stripe.com/docs/api
+                        $failedat = "Charge the card";
                         $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
                         insertdb("orders", array("id" => $orderid, "paid" => 1));//will only happen if the $charge succeeds
                         $this->order_placed($orderid, $info);
@@ -259,7 +267,7 @@ class HomeController extends Controller {
                 }
                 if ($error) {
                     debugprint("Order ID: " . $orderid . " - Stripe error: " . $error);
-                    return "[STRIPE]" . $error;// The card has been declined
+                    return "[STRIPE]" . $error . " (" . $failedat . ")";// The card has been declined
                 }
             }
             return '<div CLASS="ordersuccess" addressid="' . $addressID . '"></div>' . $HTML;
