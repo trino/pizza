@@ -35,7 +35,7 @@ class HomeController extends Controller {
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
                 case "testSMS": return $this->sendSMS(read("phone"), "This is a test SMS", false, true); break;
                 case "testCALL": return $this->sendSMS(read("phone"), "This is a test CALL", true, true); break;
-                case "testGATHER": return $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 0); break;
+                case "testGATHER": return $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 1); break;
             }
         }
         return view("home_list", array("table" => $table))->render();

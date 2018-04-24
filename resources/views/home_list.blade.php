@@ -600,9 +600,9 @@
                                 @if($table != "all" && $profiletype == 1)
                                     @if($table == "debug")
                                         <A onclick="testemail(0);" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
-                                        <A onclick="testemail(1);" TITLE="Send a test SMS" class="hyperlink" id="testsms" href="#"><i class="fa fa-phone"></i></A>
-                                        <A onclick="testemail(2);" TITLE="Send a test CALL" class="hyperlink" id="testcall" href="#"><i class="fa fa-phone"></i></A>
-                                        <A onclick="testemail(3);" TITLE="Send a test CALL with input" class="hyperlink" id="testcallinput" href="#"><i class="fa fa-phone"></i></A>
+                                        <A onclick="testemail(1);" TITLE="Send a test SMS" class="hyperlink" id="testsms" href="#"><i class="fa fa-phone"></i> SMS</A>
+                                        <A onclick="testemail(2);" TITLE="Send a test CALL" class="hyperlink" id="testcall" href="#"><i class="fa fa-phone"></i> Call</A>
+                                        <A onclick="testemail(3);" TITLE="Send a test GATHER" class="hyperlink" id="testcallinput" href="#"><i class="fa fa-phone"></i> Gather</A>
                                         <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
