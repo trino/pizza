@@ -535,7 +535,7 @@
         var suppressback=0;
         function HandleBack(Where){
             log("BACK BUTTON DETECTED: " + Where);
-            var ret = CloseModal("BACK BUTTON DETECTED");
+            var ret = CloseModal("BACK BUTTON DETECTED: " + Where);
             if(ret) {suppressback = Date.now() + 100;}
             if(Date.now() < suppressback){
                 log("BACK BUTTON SUPPRESSED");
@@ -576,11 +576,9 @@
 
         var prevhash = "";
         function hashchange(WHERE){
-            if(window.location.hash.length > 0){
-                prevhash = window.location.hash;
-            }
+            if(window.location.hash.length > 0){prevhash = window.location.hash;}
             if(!skiphash()) {
-                if(!HandleBack("hashchange: " + WHERE) && WHERE == "popstate"){
+                if(!HandleBack("hashchange: " + WHERE + " (" + window.location.hash + ")") && WHERE == "popstate"){
                     log("Back button allowed");
                     history.back();
                 }
@@ -606,7 +604,12 @@
     @endif
 
     function skiphash(){
-        return window.location.hash == "#modal";
+        log("Checking hash: " + window.location.hash);
+        if(window.location.hash == "#modal"){
+            suppressback = Date.now() + 100;
+            return true;
+        }
+        return Date.now() < suppressback;
     }
 </SCRIPT>
 

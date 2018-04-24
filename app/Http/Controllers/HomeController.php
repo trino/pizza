@@ -327,14 +327,16 @@ class HomeController extends Controller {
                 if ($action["sms"]) {
                     $action["message"] = str_replace("[url]", webroot("list/orders?action=getreceipt&orderid=") . $orderid, $message);
                     debugprint("Sending SMS to " . $party . ": " . $phone);
-                    $this->sendSMS($phone, $action["message"]);
+                    $SMSdata = $this->sendSMS($phone, $action["message"]);
+                    debugprint("SMS data: " . $SMSdata);
                 }
                 if ($action["phone"]) {
                     //if SMS restaurant then SMS user of the restaurant instead since all of the restaurant phones are land lines
                     $action["message"] = str_replace("[url]", "", $message);
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
-                    $this->sendSMS($phone, $action["message"], true);
+                    $SMSdata = $this->sendSMS($phone, $action["message"], true);
+                    debugprint("CALL data: " . $SMSdata);
                 }
             }
         }
