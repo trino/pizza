@@ -19,6 +19,10 @@ class HomeController extends Controller {
         return view("home_help")->render();
     }
 
+    public function cron(Request $request){
+        return view("cron")->render();
+    }
+
     public function tablelist($table){
         if (isset($_POST["action"])) {
             switch ($_POST["action"]) {
@@ -28,9 +32,10 @@ class HomeController extends Controller {
                         "email" => read("email")
                     ));
                     break;
-                case "testSMS":
-                    return $this->sendSMS(read("phone"), "This is a test", false, true);
-                    break;
+                //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
+                case "testSMS": return $this->sendSMS(read("phone"), "This is a test SMS", false, true); break;
+                case "testCALL": return $this->sendSMS(read("phone"), "This is a test CALL", true, true); break;
+                case "testGATHER": return $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 0); break;
             }
         }
         return view("home_list", array("table" => $table))->render();
@@ -277,9 +282,7 @@ class HomeController extends Controller {
     }
 
     function order_placed($orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""){
-        if (!$info) {
-            $info = first("SELECT * FROM orders WHERE id = " . $orderid);
-        }
+        if (!$info) {$info = first("SELECT * FROM orders WHERE id = " . $orderid);}
         $user = first("SELECT * FROM users WHERE id = " . $info["user_id"], true, "HomeController.order_placed1");
         $admin = first("SELECT * FROM users WHERE profiletype = 1", true, "HomeController.order_placed2");
         if ($party > -2) {
@@ -316,6 +319,7 @@ class HomeController extends Controller {
                     $action["message"] = str_replace("[reason]", $Reason, $action["message"]);
                 }
 
+                //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
                 $action["message"] = str_replace("[orderid]", $orderid, $action["message"]);
                 $message = str_replace("[sitename]", sitename, $action["message"]);
                 $message = str_replace("[name]", $name, $message);
@@ -335,7 +339,7 @@ class HomeController extends Controller {
                     $action["message"] = str_replace("[url]", "", $message);
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
-                    $SMSdata = $this->sendSMS($phone, $action["message"], true);
+                    $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $orderid);
                     debugprint("CALL data: " . $SMSdata);
                 }
             }

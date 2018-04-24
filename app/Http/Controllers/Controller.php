@@ -89,7 +89,7 @@ class Controller extends BaseController {
     }
 
     //https://www.twilio.com/ $0.0075 per SMS, + $1 per month
-    public function sendSMS($Phone, $Message, $Call = false, $force = false){
+    public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false){
         if (is_array($Phone)) {
             foreach ($Phone as $PhoneNumber) {
                 $this->sendSMS($PhoneNumber, $Message, $Call);
@@ -111,6 +111,7 @@ class Controller extends BaseController {
                 //do not change this to https, http is required for twilio to actually work
                 $Message = filternonalphanumeric(htmlentities($Message), '', ',.');
                 $Message = "http://hamiltonpizza.ca/call?message=" . urlencode($Message);
+                if($gather){$Message .= "&gather=" . $gather;}
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Calls";
                 $data = array("From" => $fromnumber, "To" => $Phone, "Url" => $Message);
             } else {

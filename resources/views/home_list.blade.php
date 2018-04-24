@@ -599,10 +599,10 @@
                                 @endif
                                 @if($table != "all" && $profiletype == 1)
                                     @if($table == "debug")
-                                        <A onclick="testemail(false);" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
-                                        @if(islive())
-                                            <A onclick="testemail(true);" TITLE="Send a test SMS" class="hyperlink" id="testsms" href="#"><i class="fa fa-phone"></i></A>
-                                        @endif
+                                        <A onclick="testemail(0);" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
+                                        <A onclick="testemail(1);" TITLE="Send a test SMS" class="hyperlink" id="testsms" href="#"><i class="fa fa-phone"></i></A>
+                                        <A onclick="testemail(2);" TITLE="Send a test CALL" class="hyperlink" id="testcall" href="#"><i class="fa fa-phone"></i></A>
+                                        <A onclick="testemail(3);" TITLE="Send a test CALL with input" class="hyperlink" id="testcallinput" href="#"><i class="fa fa-phone"></i></A>
                                         <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
@@ -1623,8 +1623,10 @@
 
                     function testemail(isSMS){
                         var name = "email";
-                        if(isSMS){
-                            name = "SMS";
+                        switch(isSMS){
+                            case 1: name = "SMS"; break;
+                            case 2: name = "CALL"; break;
+                            case 3: name = "GATHER"; break;
                         }
                         $("#debuglogcontents").html("Sending " + name + ". Please standby");
                         $.post(currentURL, {

@@ -19,7 +19,14 @@ if(strpos($server, ".") !== false){
 }
 
 if(strpos($_SERVER['REQUEST_URI'], "call?") !== false){
-    die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>');
+    $gather = "";
+    if(isset($_GET["gather"])){//https://www.twilio.com/docs/voice/twiml/gather
+        $gather = '<Gather numDigits="1" action="http://hamiltonpizza.ca/gather.php?orderid=' . $_GET["gather"] . '" method="GET">
+                        <Say>Please press 1 to acknowledge receipt of the order</Say>
+                   </Gather>
+                   <Say>We did not receive any input. Goodbye!</Say>';
+    }
+    die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say>' . $gather . '</Response>');
 }
 
 //if($_SERVER["SERVER_NAME"] == "londonpizza.ca") {

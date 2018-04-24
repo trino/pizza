@@ -265,7 +265,7 @@ function flattenarray($arr, $key){
 }
 
 function enum_tables($table = "", $Why = "UNKNOWN"){
-    return flattenarray(Query("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "'" . iif($table, "AND TABLE_NAME='" . $table . "'"), true, "API.enum_tables: " . $Why), "TABLE_NAME");
+    return flattenarray(Query("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "'" . iif($table, " AND TABLE_NAME='" . $table . "'"), true, "API.enum_tables: " . $Why), "TABLE_NAME");
 }
 
 if (!function_exists("mysqli_fetch_all")) {
