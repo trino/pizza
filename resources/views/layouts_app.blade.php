@@ -32,8 +32,7 @@
 
     <meta charset="utf-8">
     <meta name="theme-color" content="#d9534f">
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="viewport" content="width=500, user-scalable=no">
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
     <title><?= sitename; ?> - Pizza Delivery</title>
@@ -43,8 +42,10 @@
     <link href='<?= $css; ?>/Roboto.css' rel='stylesheet' type='text/css'>
     <link href='<?= $css; ?>/Roboto-Slab.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= $css . "/custom4.css?v=" . time(); ?>">
-    <link rel="stylesheet" href="<?= $css . "/google.css?v=" . time(); ?>">
+    <?php
+        includefile("public/css/custom4.css");
+        includefile("public/css/google.css");
+    ?>
     <script src="<?= $scripts; ?>/jquery.min.js"></script>
     <script src="<?= $scripts; ?>/tether.min.js"></script>
     <script src="<?= $scripts; ?>/bootstrap.min.js"></script>
@@ -94,7 +95,7 @@
         @endif
 
         @if(read("id"))
-            <LI><A ONCLICK="handlelogin('logout');" CLASS="dropdown-item" href="#"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
+            <LI><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
         @endif
 
         @if(false)
@@ -219,20 +220,23 @@
             echo '<TR><TD COLSPAN="4" ALIGN="CENTER"><STRONG>SQL Debug data. (<SPAN CLASS="sqlduplicate">text</SPAN> = duplicate SQL query)</STRONG></TD></TR>';
             echo '<TR><TH>#</TH><TH>Time</TH><TH>SQL Query</TH><TH>Where</TH></TR>';
             $total = 0;
+            $duplicates = 0;
             foreach($GLOBALS["SQL"] as $index => $query){
                 $total += $query["Time"];
                 echo '<TR><TD>' . $index . '</TD><TD>' . $query["Time"] . ' ms</TD><TD>' . $query["Query"] . '</TD><TD';
                 if(findSQL($query["Query"]) < $index){
                     echo ' CLASS="sqlduplicate"';
+                    $duplicates += 1;
                 }
                 echo '>' . $query["Where"] . '</TD></TR>';
             }
             echo '<TR><TD COLSPAN="3" ALIGN="RIGHT"><STRONG>Total Time:</STRONG></TD><TD><STRONG>' . $total . ' ms</STRONG></TD></TR>';
             echo '<TR><TD COLSPAN="3" ALIGN="RIGHT"><STRONG>Total Queries:</STRONG></TD><TD><STRONG>' . count($GLOBALS["SQL"]) . '</STRONG></TD></TR>';
+            echo '<TR><TD COLSPAN="3" ALIGN="RIGHT"><STRONG>Total Duplicates:</STRONG></TD><TD><STRONG>' . $duplicates . '</STRONG></TD></TR>';
             echo '</TABLE>';
         }
         if (isset($GLOBALS["filetimes"])) {
-            echo '<TABLE BORDER="1" CLASS="centertable"><TR><TH COLSPAN="2">File times</TH></TR>';
+            echo '<TABLE BORDER="1" CLASS="centertable"><TR><TH COLSPAN="3">File times</TH></TR>';
             $total = 0;
             foreach ($GLOBALS["filetimes"] as $Index => $Values) {
                 echo '<TR><TD>' . $Index . '</TD><TD>';
@@ -248,12 +252,12 @@
                 } else {
                     echo "Unended";
                 }
-                echo '</TD></TR>';
+                echo '</TD><TD' . iif($Values["times"] > 1, ' CLASS="sqlduplicate"') . '>x' . $Values["times"] . '</TD></TR>';
             }
             $total = str_pad(round($total, 4), 5, "0");
-            echo '<TR><TD>Total</TD><TD>' . $total . 's</TD></TR>';
-            echo '<TR><TD>DOM Loaded</TD><TD ID="td_loaded"></TD></TR>';
-            echo '<TR><TD>DOM Ready</TD><TD ID="td_ready"></TD></TR>';
+            echo '<TR><TD>Total</TD><TD COLSPAN="2">' . $total . 's</TD></TR>';
+            echo '<TR><TD>DOM Loaded</TD><TD COLSPAN="2" ID="td_loaded"></TD></TR>';
+            echo '<TR><TD>DOM Ready</TD><TD COLSPAN="2" ID="td_ready"></TD></TR>';
             echo '</TABLE>';
         }
         if(isset($GLOBALS["debugdata"])){

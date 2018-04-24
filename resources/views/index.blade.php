@@ -2,6 +2,17 @@
 @section('content')
     <?php
         startfile("index");
+        function bool($value){
+            return iif($value, "true", "false");
+        }
+        function isFileUpToDate2($SettingKey, $Filename = false){
+            if (file_exists($Filename)) {
+                $SettingKey = getsetting($SettingKey, "0");
+                $lastFILupdate = filemtime($Filename);
+                return $lastFILupdate <= $SettingKey;
+            }
+        }
+
         if(!read("id")){
             echo view("popups_login")->render();
         } else {
@@ -11,7 +22,15 @@
                     $doCache = $GLOBALS["settings"]["domenucache"];
                     $menucache_filename = resource_path() . "/menucache.html";
                     $menublade_filename = resource_path() . "/views/popups_menu.blade.php";
-                    $menucache_uptodate = isFileUpToDate("menucache", $menucache_filename) && !isFileUpToDate("menucache", $menublade_filename);
+                    $menublade_uptodate = isFileUpToDate2("menucache", $menublade_filename);
+                    $menucache_uptodate = isFileUpToDate2("menucache", $menucache_filename);
+                    if(debugmode){
+                        $GLOBALS["debugdata"]["docache"] = bool($doCache);
+                        $GLOBALS["debugdata"]["usecache"] = bool($menucache_uptodate && $doCache);
+                        $GLOBALS["debugdata"]["menucache setting"] = isFileUpToDate("menucache");
+                        $GLOBALS["debugdata"]["menucache_uptodate"] = bool($menucache_uptodate) . " (" . filemtime($menucache_filename) . ")";
+                        $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime($menublade_filename) . ")";
+                    }
                     if ($menucache_uptodate && $doCache) {
                         echo '<!-- menu cache pre-generated at: ' . filemtime($menucache_filename) . ' --> ' . file_get_contents($menucache_filename);
                     } else {

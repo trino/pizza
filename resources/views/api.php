@@ -457,11 +457,15 @@ function importSQL($filename){
     Query("COMMIT;", false, "API.importSQL");
 }
 
-function isFileUpToDate($SettingKey, $Filename){
-    if (file_exists($Filename)) {
-        $lastSQLupdate = getsetting($SettingKey, "0");
+function isFileUpToDate($SettingKey, $Filename = false){
+    if(!is_numeric($SettingKey)){
+        $SettingKey = getsetting($SettingKey, "0");
+    }
+    if($Filename === false){
+        return $SettingKey;
+    } else if (file_exists($Filename)) {
         $lastFILupdate = filemtime($Filename);
-        return $lastFILupdate > $lastSQLupdate;
+        return $lastFILupdate > $SettingKey;
     }
 }
 
@@ -790,6 +794,11 @@ function lastupdatetime($table){//will not work on live!
 function startfile($filename){
     date_default_timezone_set("America/Toronto");
     $GLOBALS["filetimes"][$filename]["start"] = microtime(true);
+    if(isset($GLOBALS["filetimes"][$filename]["times"])) {
+        $GLOBALS["filetimes"][$filename]["times"] += 1;
+    } else {
+        $GLOBALS["filetimes"][$filename]["times"] = 1;
+    }
 }
 
 function endfile($filename){
@@ -798,6 +807,24 @@ function endfile($filename){
 
 function countSQL($table, $SQL = "*"){
     return first("SELECT COUNT(" . $SQL . ") as count FROM " . $table, true , "API.countSQL")["count"];
+}
+
+function includefile($path){
+    $extension = getextension($path);
+    $actualpath = base_path() . "/" . $path;
+    if(file_exists($actualpath)) {
+        $webpath = webroot($path) . "?" . filemtime($actualpath);
+        switch ($extension) {
+            case "css":
+                echo '<link rel="stylesheet" href="' . $webpath . '">' . "\r\n";
+                break;
+            case "js":
+                echo '<script src="' . $webpath . '"></script>' . "\r\n";
+                break;
+        }
+    } else {
+        die("file not found: " . $path . " (" . $actualpath . ")");
+    }
 }
 
 function actions($eventname, $party = -1){
