@@ -19,6 +19,10 @@ class HomeController extends Controller {
         return view("home_help")->render();
     }
 
+    public function hours(Request $request){
+        return view("home_hours")->render();
+    }
+
     public function cron(Request $request){
         return view("cron")->render();
     }

@@ -580,7 +580,7 @@
                                     <ul class="dropdown-menu" id="alllist">
                                         <?php
                                             //show all administratable tables
-                                            foreach(array("users" => true, "restaurants" => true, "additional_toppings" => true, "useraddresses" => false, "orders" => $profiletype != 2, "actions" => true, "shortage" => $profiletype != 2, "settings" => true) as $thetable => $onlyadmins){//, "combos" => true
+                                            foreach(array("users" => true, "restaurants" => true, "additional_toppings" => true, "useraddresses" => false, "orders" => $profiletype != 2, "actions" => true, "shortage" => $profiletype != 2, "settings" => true, "hours" => $profiletype != 2) as $thetable => $onlyadmins){//, "combos" => true
                                                 if(($profiletype == 1 || !$onlyadmins) && $table != $thetable){
                                                     echo '<LI><A HREF="' . webroot("list/" . $thetable, true) . '" class="dropdown-item"><i class="fa fa-user-plus"></i> ' . str_replace("_", " ", ucfirst($thetable)) . ' list</A></LI>';
                                                 }

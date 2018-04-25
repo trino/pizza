@@ -66,7 +66,7 @@
         @if(read("id"))
             <SPAN class="loggedin profiletype profiletype1">
                 <?php
-                    foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings") as $table) {
+                    foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings", "hours") as $table) {
                         echo '<li><A HREF="' . webroot("list/" . $table, true) . '" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> ' . str_replace("_", " ", ucfirst($table)) . ' list</A></li>';
                     }
                 ?>

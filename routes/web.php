@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('/contact',              'HomeController@contact');
     Route::any('/editmenu',             'HomeController@editmenu');
 
+    Route::any('/list/hours',           'HomeController@hours');
     Route::any('/list/{table}',         'HomeController@tablelist');
     Route::any('/user/info',            'HomeController@edituser');
     Route::any('/user/info/{id}',       'HomeController@edituser');
