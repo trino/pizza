@@ -11,5 +11,6 @@
 		$query = "UPDATE orders SET status = 1 WHERE id = " . $_GET["orderid"];
 		query($query);
 	}
+
+	echo '<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">Thank you</Say></Response>';
 ?>
-<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">Thank you</Say></Response>

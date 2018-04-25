@@ -210,7 +210,7 @@
     @endif
 
     @if($style==1)
-        <TABLE <?= inline("table table-sm "); ?>>
+        <TABLE <?= inline("table table-sm"); ?>>
             <TR>
                 <TH>#</TH>
                 <TH>Item</TH>
@@ -222,7 +222,7 @@
                 <th align="right">Price</th>
             </TR>
     @else
-        <TABLE WIDTH="100%" class="mb-2" style="border-collapse: collapse;">
+        <TABLE WIDTH="100%" class="mb-2" style="border-collapse: collapse; border: none;">
     @endif
 
     <?php

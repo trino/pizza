@@ -240,6 +240,7 @@
             actionitem("order_confirmed", 'the <jump class="btn btn-sm btn-primary btn-border no-u">Confirmed</jump> button is clicked');
             actionitem("order_declined", 'the <jump class="btn btn-sm btn-border no-u">Declined</jump> or <jump class="btn btn-sm btn-danger btn-border no-u">Deleted</jump> buttons are clicked.');
             actionitem("user_registered", 'a new user is registered. (Since no restaurant is involved in this event, do not set the party of this event to the Restaurant)');
+            actionitem("cron_job", 'unconfirmed orders are in the system, waiting for the store to confirm receipt. [#] is the number of orders');
 
             if (read("profiletype") == 1) {
                 newlist("Administrators");

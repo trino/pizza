@@ -318,6 +318,13 @@ class HomeController extends Controller {
                 if ($Reason) {
                     $action["message"] = str_replace("[reason]", $Reason, $action["message"]);
                 }
+                switch($action["eventname"]){
+                    case "cron_job":
+                        $orders = first("SELECT count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3")["count"];
+                        $action["message"] = str_replace("[#]", $orders, $action["message"]);
+                        $action["message"] = str_replace("[s]", iif($orders == 1, "", "s"), $action["message"]);
+                        break;
+                }
 
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
                 $action["message"] = str_replace("[orderid]", $orderid, $action["message"]);
@@ -339,7 +346,9 @@ class HomeController extends Controller {
                     $action["message"] = str_replace("[url]", "", $message);
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
-                    $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $orderid);
+                    $gather = false;
+                    if($action["eventname"] == "cron_job" && $action["party"] == 2) {$gather = $orderid;}
+                    $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $gather);
                     debugprint("CALL data: " . $SMSdata);
                 }
             }

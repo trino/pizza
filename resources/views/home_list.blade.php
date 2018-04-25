@@ -948,6 +948,7 @@
                                                 case "order_placed":        prititle = "[url] - URL to the order<BR>[name] - Name of the restaurant<T>A customer places an order"; break;
                                                 case "order_declined":case "order_confirmed": prititle = "[reason] - The reason specified by the restaurant<T>The restaurant declines or confirms an order"; break;
                                                 case "user_registered":     prititle = "None<T>A new customer registers on the site"; break;
+                                                case "cron_job":            prititle = "[#] - The number of orders waiting<T>[s] - puts an 's' if the number of orders isn't 1<T>[attempt] - Which attempt number is being made ('final' for the last one)<T>The CRON job loops through all unconfirmed orders"; break;
                                             }
                                             if(prititle) {
                                                 prititle = "Text inside [these] will be replaced with the following text<P>Global variables:<BR>[sitename] - the site's name<P>Local variables:<BR>" + prititle;
