@@ -113,6 +113,7 @@ class HomeController extends Controller {
         if (is_array($POST)) {
             $_POST = $POST;
         }
+
         if (isset($_POST["action"])) {
             $ret = array("Status" => true, "Reason" => "", "Type" => "System");
             switch ($_POST["action"]) {
@@ -177,11 +178,15 @@ class HomeController extends Controller {
         if (isset($_POST["order"])) {
             $info["placed_at"] = my_now();
             unset($info["name"]);
-            unset($info["creditcard"]);
+            if(isset($info["creditcard"])) {
+                $_POST["creditcard"] = $info["creditcard"];
+                unset($info["creditcard"]);
+            }
             unset($info["restaurant"]);
             if (isset($_POST["stripe"])) {
                 $info["stripeToken"] = $_POST["stripe"];
             }
+
             $order = $_POST["order"];
             unset($info["istest"]);
             if(!isset($info["phone"]) || !trim($info["phone"])){
@@ -220,15 +225,13 @@ class HomeController extends Controller {
                     try {
                         if ($user["stripecustid"]) {
                             $customer_id = $user["stripecustid"];//load customer ID from user profile
+                            $cu = \Stripe\Customer::retrieve($customer_id);
+                            //$_POST["creditcard"] will have a value only if the customer selected a saved card
+                            //$info["stripeToken"] will have a value only if the customer made a new card
                             if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
                                 $failedat = "Update card info";
-                                $cu = \Stripe\Customer::retrieve($customer_id);
-                                if($_POST["isnewcard"] == "true") {//new card, add it to sources
-                                    $failedat = "Add to customer";
-                                    $cu->sources->create(array("source" => $info['stripeToken']));
-                                } else {
-                                    $cu->source = $info['stripeToken']; //obtained with Checkout
-                                }
+                                $data = $cu->sources->create(array("source" => $info['stripeToken']));
+                                $_POST["creditcard"] = $data["id"];//save it to $_POST["creditcard"] since it now exists
                                 $cu->save();
                             }
                         } else {
@@ -251,11 +254,17 @@ class HomeController extends Controller {
                         if (isset($_POST["creditcard"]) && $_POST["creditcard"]) {
                             $charge["source"] = $_POST["creditcard"];//charge a specific credit card
                         }
+
                         // https://stripe.com/docs/charges https://stripe.com/docs/api
                         $failedat = "Charge the card";
                         $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
-                        insertdb("orders", array("id" => $orderid, "paid" => 1));//will only happen if the $charge succeeds
-                        $this->order_placed($orderid, $info);
+                        if($charge["outcome"]["type"] == "authorized") {
+                            insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"]));//will only happen if the $charge succeeds
+                            $this->order_placed($orderid, $info);
+                            //die("Charged: " . $charge["source"]["id"]);
+                        } else {
+                            die($charge["outcome"]["type"]);
+                        }
                     } catch (Stripe_CardError $e) {
                         $error = $e->getMessage();
                     } catch (Stripe_InvalidRequestError $e) {
@@ -324,7 +333,7 @@ class HomeController extends Controller {
                 }
 
                 $gather = false;
-                switch($action["eventname"]){
+                switch($event){
                     case "cron_job": case "cron_job_final":
                         $gather = $orderid;
                         $orders = first("SELECT count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3")["count"];

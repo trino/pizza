@@ -988,7 +988,6 @@ function validphonenumber(text){
     return text.length == 10;
 }
 
-
 function isnewcard(){
     return $("#saved-credit-info").val() == "";
 }
@@ -1047,6 +1046,7 @@ function placeorder(StripeResponse) {
             } else {
                 ajaxerror("Error:" + result, makestring("{not_placed}"));
             }
+            paydisabled = false;
         });
     } else {
         $("#loginmodal").modal("show");
@@ -1417,15 +1417,16 @@ function payfororder() {
     }
     placeorderstate(true);
     var $form = $('#orderinfo');
-    log("Attempt to pay: " + changecredit(true, 'payfororder1'));
-    if (!changecredit(true, 'payfororder2')) {//new card
+    var stripetoken = changecredit(true, 'payfororder');
+    log("Attempt to pay: " + stripetoken);
+    if (isnewcard()) {
         log("Stripe data");
         loading(true, "stripe");
         placeorderstate(false);
         Stripe.card.createToken($form, stripeResponseHandler);
         log("Stripe data - complete");
     } else {//saved card
-        log("Use saved data");
+        log("Use Saved data");
         placeorder();//no stripe token, use customer ID on the server side
     }
     $(".saveaddresses").removeClass("dont-show");
@@ -1499,7 +1500,6 @@ function addresshaschanged(place) {
     if (!formdata.latitude || !formdata.longitude) {return;}
     if (!debugmode) {formdata.radius = MAX_DISTANCE;}
     //skiploadingscreen = true;
-    //canplaceorder = false;
     //canplaceorder = false;
     $.post(webroot + "placeorder", {
         _token: token,
