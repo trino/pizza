@@ -49,7 +49,11 @@
         maketimeselect($day . '_close');
         echo '</TD></TR>';
     }
-    echo '</TABLE></TD><TD>';
+    echo '<TR><TD><STRONG>All</STRONG>:</TD><TD>';
+    maketimeselect('all_open');
+    echo '</TD><TD>';
+    maketimeselect('all_close');
+    echo '</TD></TR></TABLE></TD><TD>';
     echo '<BUTTON ID="savebutton" ONCLICK="doesneedsaving(false);" style="display: none;" class="btn btn-sm btn-primary pull-center">Save Changes</BUTTON>';
     echo '</TD></TABLE>';
 
@@ -103,21 +107,25 @@
         var elementid = $(e).attr("id");
         var elementyp = $(e).prop("tagName").toLowerCase();
         var currvalue = $(e).val();
+        var index = elementid.replace(/\D/g,'');
+        if(!index){index = "all";}
+        var ending = "_close";
+        var oppositeending = "_open";
+        if(elementid.endswith("_open")){oppositeending = "_close"; ending = "_open";}
         if(elementyp == "input"){elementyp = $(e).attr("type").toLowerCase();}
         if(elementyp == "checkbox"){currvalue = e.checked;}
         currentinput = elementid;
         doesneedsaving(true);
         if(elementyp == "select"){
-            var index = elementid.replace(/\D/g,'');
-            if(elementid.endswith("_open")){
-                index += "_close";
-            } else {
-                index += "_open";
+            if(index == "all"){
+                for (var day = 0; day < daysofweek.length; day++){
+                    $("#" + day + ending).val(currvalue);
+                    if(currvalue == "-1"){$("#" + day + oppositeending).val(-1);}
+                }
             }
-            if(currvalue == -1){
-                $("#" + index).val(-1);
-            }
+            if(currvalue == -1){$("#" + index + oppositeending).val(-1);}
         }
+        if(currvalue == -1){currvalue += " (Closed)";}
         log(elementid + " is a " + elementyp + " = " + currvalue);
     }
 
