@@ -53,6 +53,10 @@
             }
             echo '></TR>';
         }
-        echo '<TR><TD COLSPAN="2" ALIGN="right"><STRONG>Total:</STRONG></TD><TD ALIGN="right">' . $count . '</TD><TD COLSPAN="2" ALIGN="right">' . $calls . ' call(s)</TD></TR>';
+        if($count == 0){
+            echo '<TR><TD COLSPAN="5">No orders found with a stripeToken, status=0(pending), and attempts < ' . ($max_attempts+1) .'</TD></TR>';
+        } else {
+            echo '<TR><TD COLSPAN="2" ALIGN="right"><STRONG>Total:</STRONG></TD><TD ALIGN="right">' . $count . '</TD><TD COLSPAN="2" ALIGN="right">' . $calls . ' call(s)</TD></TR>';
+        }
     ?>
 </TABLE>
