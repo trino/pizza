@@ -931,6 +931,7 @@
                                                 case "maxdistance_local":   prititle = "How far a store can be away from the customer while NOT on the live server"; break;
                                                 case "lastupdate":          prititle = "Used for auto-updating the SQL file. Set to 0 to force an update"; break;
                                                 case "headercolor":         prititle = "What color to use for the titlebar"; break;
+                                                case "max_attempts":        prititle = "How many times to try calling the restaurant for a new order"; break;
                                             }
                                         } else if(table == "additional_toppings"){
                                             switch(data.table[i]["size"]){
@@ -948,7 +949,8 @@
                                                 case "order_placed":        prititle = "[url] - URL to the order<BR>[name] - Name of the restaurant<T>A customer places an order"; break;
                                                 case "order_declined":case "order_confirmed": prititle = "[reason] - The reason specified by the restaurant<T>The restaurant declines or confirms an order"; break;
                                                 case "user_registered":     prititle = "None<T>A new customer registers on the site"; break;
-                                                case "cron_job":            prititle = "[#] - The number of orders waiting<T>[s] - puts an 's' if the number of orders isn't 1<T>[attempt] - Which attempt number is being made ('final' for the last one)<T>The CRON job loops through all unconfirmed orders"; break;
+                                                case "cron_job":case "cron_job_final":
+                                                                            prititle = "[#] - The number of orders waiting<T>[s] - puts an 's' if the number of orders isn't 1<T>[attempt] - Which attempt number is being made ('final' for the last one)<T>The CRON job loops through all unconfirmed orders"; break;
                                             }
                                             if(prititle) {
                                                 prititle = "Text inside [these] will be replaced with the following text<P>Global variables:<BR>[sitename] - the site's name<P>Local variables:<BR>" + prititle;

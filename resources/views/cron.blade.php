@@ -1,22 +1,58 @@
 <TITLE>CRON!</TITLE>
-
-<TABLE BORDER="1">
-    <TR><TH>ID</TH><TH>Restaurant</TH><TH>Attempt</TH></TR>
+<STYLE>
+    .finalattempt{
+        color: red;
+        font-weight: bold;
+    }
+</STYLE>
+<TABLE BORDER="1" STYLE="margin: auto;">
+    <TR><TH>ID</TH><TH>Restaurant</TH><TH>Orders</TH><TH>Attempt</TH><TH>Call</TH></TR>
     <?php //  http://localhost/pizza/public/cron
-        function processorder($ID){
+        $max_attempts = getsetting("max_attempts", 3);
+        $enabled = isset($_GET["call"]);
+        if(!$enabled){
+            echo '<TR><TD COLSPAN="5" ALIGN="CENTER"><STRONG><A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A></STRONG></TD></TR>';
+        }
+        function processorder($ID, $isfinal = false){
             //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""
-            //App::make('App\Http\Controllers\HomeController')->order_placed($ID, false, -1, "cron_job");
+            App::make('App\Http\Controllers\HomeController')->order_placed($ID, false, -1, iif($isfinal, "cron_job_final", "cron_job"));
             return $ID;
         }
-        $orders = query("SELECT * FROM orders WHERE stripeToken <> '' AND status = 0 GROUP BY restaurant_id", true, "CRON");
-        foreach($orders as $order){
-            echo '<TR>';
-            echo '<TD>' . processorder($order["id"]) . '</TD>';
-            echo '<TD>' . $order["restaurant_id"] . '</TD>';
-            echo '</TR>';
+        function findkeyvalue($array, $key, $value, $retdata = false){
+            foreach($array as $index => $data){
+                if($data[$key] == $value){
+                    if($retdata){return $data;}
+                    return $index;
+                }
+            }
+            return false;
         }
 
-        $orders =
-        vardump($orders);
+        $orders = query("SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id", true, "CRON");
+        $restaurants = query("SELECT * FROM restaurants", true, "CRON");
+        $calls=0;
+        $count = 0;
+        foreach($orders as $order){
+            $isfinal = $order["attempts"] == $max_attempts;
+            $restaurant = findkeyvalue($restaurants, "id", $order["restaurant_id"], true);
+            echo '<TR>';
+            echo '<TD ALIGN="right">' . $order["id"] . '</TD>';
+            if($restaurant === false){
+                echo '<TD CLASS="finalattempt">' . $order["restaurant_id"] . ' (NOT FOUND)</TD>';
+            } else {
+                echo '<TD>' . $order["restaurant_id"] . ' (' . $restaurant["name"] . ')</TD>';
+            }
+            $count += $order["count"];
+            echo '<TD ALIGN="right">' . $order["count"] . '</TD>';
+            echo '<TD' . iif($isfinal, ' CLASS="finalattempt"') . ' ALIGN="right">' . getordinal($order["attempts"]) . '</TD>';
+            echo '<TD ALIGN="center"><INPUT TYPE="checkbox" DISABLED TITLE="Will only call if the system is enabled, and the order has a valid restaurant"';
+            if($enabled && $restaurant !== false){
+                processorder($order["id"], $isfinal);
+                $calls+=1;
+                echo ' CHECKED';
+            }
+            echo '></TR>';
+        }
+        echo '<TR><TD COLSPAN="2" ALIGN="right"><STRONG>Total:</STRONG></TD><TD ALIGN="right">' . $count . '</TD><TD COLSPAN="2" ALIGN="right">' . $calls . ' call(s)</TD></TR>';
     ?>
 </TABLE>

@@ -322,11 +322,22 @@ class HomeController extends Controller {
                 if ($Reason) {
                     $action["message"] = str_replace("[reason]", $Reason, $action["message"]);
                 }
+
+                $gather = false;
                 switch($action["eventname"]){
-                    case "cron_job":
+                    case "cron_job": case "cron_job_final":
+                        $gather = $orderid;
                         $orders = first("SELECT count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3")["count"];
                         $action["message"] = str_replace("[#]", $orders, $action["message"]);
                         $action["message"] = str_replace("[s]", iif($orders == 1, "", "s"), $action["message"]);
+                        $attempt = $info["attempts"] + 1;
+                        if ($attempt == getsetting("max_attempts", 3)){
+                            $attempt = "final";
+                        } else if(is_numeric($attempt)){
+                            $attempt = getordinal($attempt);
+                        }
+                        $action["message"] = str_replace("[attempt]", $attempt, $action["message"]);
+                        if($action["phone"]){$this->recordattempt($orderid);}
                         break;
                 }
 
@@ -350,8 +361,6 @@ class HomeController extends Controller {
                     $action["message"] = str_replace("[url]", "", $message);
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
-                    $gather = false;
-                    if($action["eventname"] == "cron_job" && $action["party"] == 2) {$gather = $orderid;}
                     $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $gather);
                     debugprint("CALL data: " . $SMSdata);
                 }
@@ -364,6 +373,11 @@ class HomeController extends Controller {
         }
         debugprint($event . ": " . $orderid . " by: " . $user["name"] . " (" . $info["user_id"] . ")" . $resttext);
         return $user;
+    }
+
+    function recordattempt($orderID, $field = "id"){
+        //field can also be "restaurant_id"
+        query("UPDATE orders SET attempts = attempts + 1 WHERE " . $field . " = " . $orderID);
     }
 
     function closestrestaurant($data, $gethours = false, $includesql = true){

@@ -413,6 +413,14 @@ function millitime() {
     return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
 }
 
+function getordinal($number){
+    $ends = array('th','st','nd','rd');
+    if (((($number % 100) >= 11) && (($number%100) <= 13)) || !isset($ends[$number % 10])) {
+        return $number . 'th';
+    }
+    return $number . $ends[$number % 10];
+}
+
 function getsetting($Key, $Default = ""){
     if(!isset($GLOBALS["variables"]["hassettingtable"])) {
         if (enum_tables("settings", "API.getsetting")) {
