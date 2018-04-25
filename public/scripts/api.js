@@ -1417,8 +1417,8 @@ function payfororder() {
     }
     placeorderstate(true);
     var $form = $('#orderinfo');
-    log("Attempt to pay: " + changecredit(true));
-    if (!changecredit(true)) {//new card
+    log("Attempt to pay: " + changecredit(true, 'payfororder1'));
+    if (!changecredit(true, 'payfororder2')) {//new card
         log("Stripe data");
         loading(true, "stripe");
         placeorderstate(false);
@@ -1447,7 +1447,7 @@ function stripeResponseHandler(status, response) {
                 ajaxerror(response.error.message);
             } else {
                 log("Stripe successful - token: " + response.id);
-                if (!changecredit(true)) {//save new card to userdetails
+                if (!changecredit(true, 'stripeResponseHandler')) {//save new card to userdetails
                     if (!isArray(userdetails.Stripe)) {
                         userdetails.Stripe = new Array();
                     }//check to be sure
@@ -1566,8 +1566,9 @@ function loadsavedcreditinfo() {
     return false;
 }
 
-function changecredit(focus) {
+function changecredit(focus, where) {
     ajaxerror();
+    log("changecredit: " + where);
     $("#saved-credit-info").removeClass("red");
     $("[data-stripe=number]").removeClass("red");
     var val = $("#saved-credit-info").val();
@@ -1579,6 +1580,17 @@ function changecredit(focus) {
         $(".credit-info").hide();//use saved card info
     }
     return val;
+}
+
+function creditcardstatus(disabled){
+    if(is_android && is_chrome) {
+        document.getElementById("saved-credit-info").disabled = disabled;
+        if(disabled){
+            $("#chromeccbutton").show();
+        } else {
+            $("#chromeccbutton").hide();
+        }
+    }
 }
 
 function showcheckout() {
@@ -1602,7 +1614,7 @@ function showcheckout() {
     var needscreditrefresh = false;
     if (loadsavedcreditinfo()) {
         $(".credit-info").hide();
-        var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true);" class="form-control proper-height"><OPTION value="">Add Card</OPTION>';
+        var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true, ' + "'showcheckout1'" + ');" class="form-control proper-height"><OPTION value="">Add Card</OPTION>';
         for (var i = 0; i < userdetails.Stripe.length; i++) {
             var card = userdetails.Stripe[i];
             creditHTML += '<OPTION value="' + card.id + '" id="card_' + card.id + '"';
@@ -1633,7 +1645,7 @@ function showcheckout() {
     });
     $("#restaurant").html('<option value="0">Select Restaurant</option>').val("0");
     refreshform("#saveaddresses");
-    if(needscreditrefresh){changecredit(false);}
+    if(needscreditrefresh){changecredit(false, 'showcheckout2');}
     validateinput();
 }
 

@@ -104,7 +104,10 @@
                                         <DIV ID="credit-info"></DIV>
                                     </div>
                                     <div class="input_right">
-                                        <input type="text" size="20" class="form-control credit-info" autored="red_card" data-stripe="number" placeholder="Card Number">
+                                        <input type="text" size="20" class="form-control credit-info" autored="red_card" data-stripe="number" placeholder="Card Number" autocomplete="cc-number" onfocus="creditcardstatus(true);" onblur="creditcardstatus(false);">
+                                        <BUTTON ID="chromeccbutton" style="display: none;" ONCLICK="creditcardstatus(false);">
+                                            <i class="fas fa-unlock"></i>
+                                        </BUTTON>
                                     </div>
                                     <div class="input_left_icon"></div>
                                     <div class="input_right">
@@ -184,6 +187,8 @@
             visible_address(false);
             $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
             $(".credit-info").change(function () {
+                log(".credit-info change");
+                creditcardstatus(false);
                 if (isvalidcreditcard()) {
                     ajaxerror();
                 }
