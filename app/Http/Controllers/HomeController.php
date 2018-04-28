@@ -294,7 +294,7 @@ class HomeController extends Controller {
         }
     }
 
-    function order_placed($orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""){
+    function order_placed($orderid, $info = false, $party = -1, $event = "order_placed", $Reason = ""){
         if (!$info) {$info = first("SELECT * FROM orders WHERE id = " . $orderid);}
         $user = first("SELECT * FROM users WHERE id = " . $info["user_id"], true, "HomeController.order_placed1");
         $admin = first("SELECT * FROM users WHERE profiletype = 1", true, "HomeController.order_placed2");
