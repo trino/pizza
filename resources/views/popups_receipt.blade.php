@@ -70,7 +70,7 @@
                     switch (strtolower($Classname)) {
                         //table-sm
                         case "table":
-                            $Style[] = "";
+                            $Style[] = "border-collapse: collapse; border: none;";
                             break;
                         case "table-bordered":
                             $Style[] = "";
@@ -513,6 +513,11 @@
                 echo 'Caught exception: ', $e->getMessage() . " on line " . $e->getLine() . "<BR>";
                 echo $filename;
             }
+
+            if ($Order["cookingnotes"]){
+                echo '<TR><TD COLSPAN="' . 2 . '"><B>Notes </B><br>' . $Order["cookingnotes"] . '</TD></TR>';
+            }
+
             if ($style == 2 && !$includeextradata) {
                 echo '<TR><TD COLSPAN="' . 2 . '">';
                 if (isset($JSON)) {
@@ -528,10 +533,6 @@
         endfile("popups_receipt");
         ?>
     </TABLE>
-
-    @if ($Order["cookingnotes"])
-        <B>Notes </B><br> {{$Order["cookingnotes"]}}
-    @endif
 
     @if(!isset($JSON))
         <hr>

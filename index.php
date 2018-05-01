@@ -22,7 +22,7 @@ if(strpos($_SERVER['REQUEST_URI'], "call?") !== false){
     $say = '<Say voice="woman" language="en">';
     $message = $_GET["message"];
     if(isset($_GET["gather"])){// https://www.twilio.com/docs/voice/twiml/gather
-        $gather = '<Gather numDigits="1" action="http://hamiltonpizza.ca/gather.php?orderid=' . $_GET["gather"] . '" method="GET" timeout="10">
+        $message = '<Gather numDigits="1" action="http://hamiltonpizza.ca/gather.php?gather=' . $_GET["gather"] . '" method="GET" timeout="10">
                         ' . $say . $message . '. Please press 1 to acknowledge receipt of the order</Say>
                    </Gather>
                    ' . $say . 'We did not receive any input. Goodbye!</Say>';

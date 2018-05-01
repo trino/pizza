@@ -7,8 +7,8 @@
 	//ini_set('display_errors', 1);	
 	include $path;
 
-	if(isset($_GET["orderid"])){
-		$query = "UPDATE orders SET status = 1 WHERE id = " . $_GET["orderid"];
+	if(isset($_GET["gather"])){
+		$query = "UPDATE orders SET status = 1 WHERE restaurant_id = " . $_GET["gather"];
 		query($query);
 	}
 

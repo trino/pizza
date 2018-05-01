@@ -27,7 +27,7 @@
     }
 
     function deletecache(){
-        $menucache_filename = resource_path() . "/menucache.html";
+        $menucache_filename = public_path() . "/menucache.html";
         if(file_exists($menucache_filename)){
             unlink($menucache_filename);
         }

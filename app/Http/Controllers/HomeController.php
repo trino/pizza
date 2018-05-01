@@ -298,6 +298,7 @@ class HomeController extends Controller {
         if (!$info) {$info = first("SELECT * FROM orders WHERE id = " . $orderid);}
         $user = first("SELECT * FROM users WHERE id = " . $info["user_id"], true, "HomeController.order_placed1");
         $admin = first("SELECT * FROM users WHERE profiletype = 1", true, "HomeController.order_placed2");
+        $restaurant = false;
         if ($party > -2) {
             $actions = actions($event, $party);
             if ($party > -1) {
@@ -334,40 +335,48 @@ class HomeController extends Controller {
 
                 $gather = false;
                 switch($event){
-                    case "cron_job": case "cron_job_final":
-                        $gather = $orderid;
-                        $orders = first("SELECT count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3")["count"];
-                        $action["message"] = str_replace("[#]", $orders, $action["message"]);
-                        $action["message"] = str_replace("[s]", iif($orders == 1, "", "s"), $action["message"]);
-                        $attempt = $info["attempts"] + 1;
-                        if ($attempt == getsetting("max_attempts", 3)){
-                            $attempt = "final";
-                        } else if(is_numeric($attempt)){
-                            $attempt = getordinal($attempt);
-                        }
-                        $action["message"] = str_replace("[attempt]", $attempt, $action["message"]);
-                        if($action["phone"]){$this->recordattempt($orderid);}
-                        break;
+                    case "cron_job": case "cron_job_final": $gather = $info["restaurant_id"]; break;
+                    case "order_placed": if($party !== 0){$gather = $info["restaurant_id"];} break;
+                }
+                if($gather){
+                    //$orders = first("SELECT count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3")["count"];
+                    $orders = collapsearray(query("SELECT users.name FROM orders RIGHT JOIN users ON users.id = orders.user_id WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3"), "name");
+                    if(!$restaurant){$restaurant = $this->processrestaurant($info["restaurant_id"]);}
+                    $action["message"] = str_replace("[#]", count($orders), $action["message"]);
+                    $action["message"] = str_replace("[from]", implode2(", ", " and ", $orders), $action["message"]);
+                    $action["message"] = str_replace("[restaurant]", $restaurant["restaurant"]["name"], $action["message"]);
+                    $action["message"] = str_replace("[s]", iif(count($orders) == 1, "", "s"), $action["message"]);
+                    $attempt = $info["attempts"] + 1;
+                    if ($attempt == getsetting("max_attempts", 3)){
+                        $attempt = "final";
+                    } else if(is_numeric($attempt)){
+                        $attempt = getordinal($attempt);
+                    }
+                    $action["message"] = str_replace("[attempt]", $attempt, $action["message"]);
+                    if($action["phone"]){$this->recordattempt($info["restaurant_id"], "restaurant_id");}
                 }
 
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
                 $action["message"] = str_replace("[orderid]", $orderid, $action["message"]);
-                $message = str_replace("[sitename]", sitename, $action["message"]);
-                $message = str_replace("[name]", $name, $message);
+                $action["message"] = str_replace("[sitename]", sitename, $action["message"]);
+                $action["message"] = str_replace("[name]", $name, $action["message"]);
+                if(debugmode){
+
+                }
                 if ($action["email"]) {
-                    $action["message"] = str_replace("[url]", "", $message);
+                    $action["message"] = str_replace("[url]", "", $action["message"]);
                     debugprint("Sending email to " . $party . ": " . $email);//send emails to customer also generates the cost
                     $this->sendEMail("email_receipt", ["orderid" => $orderid, "email" => $email, "party" => $party, "mail_subject" => $action["message"]]);
                 }
                 if ($action["sms"]) {
-                    $action["message"] = str_replace("[url]", webroot("list/orders?action=getreceipt&orderid=") . $orderid, $message);
+                    $action["message"] = str_replace("[url]", webroot("list/orders?action=getreceipt&orderid=") . $orderid, $action["message"]);
                     debugprint("Sending SMS to " . $party . ": " . $phone);
                     $SMSdata = $this->sendSMS($phone, $action["message"]);
                     debugprint("SMS data: " . $SMSdata);
                 }
                 if ($action["phone"]) {
                     //if SMS restaurant then SMS user of the restaurant instead since all of the restaurant phones are land lines
-                    $action["message"] = str_replace("[url]", "", $message);
+                    $action["message"] = str_replace("[url]", "", $action["message"]);
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
                     $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $gather);

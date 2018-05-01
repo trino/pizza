@@ -169,6 +169,24 @@ function filtersubarrays(&$array){
     }
 }
 
+function implode2($mostglue, $lastglue, $array){
+    reset($array);
+    $first = key($array);
+    end($array);
+    $last = key($array);
+    $ret = $array[$first];
+    if(count($array) > 1) {
+        foreach ($array as $key => $value) {
+            if ($key == $last) {
+                $ret .= $lastglue . $value;
+            } else if ($key != $first) {
+                $ret .= $mostglue . $value;
+            }
+        }
+    }
+    return $ret;
+}
+
 /*
  * $getcol:
  *  blank, returns first query results

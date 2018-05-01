@@ -5,7 +5,7 @@
     $extratitle = "";
     $secondword = "list";
     $filedate = -1;
-    $menucache_filename = resource_path() . "/menucache.html";
+    $menucache_filename = public_path() . "/menucache.html";
     //gets text between $start and $end in $string
     function get_string_between($string, $start, $end){
         $string = ' ' . $string;
