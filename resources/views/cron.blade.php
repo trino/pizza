@@ -9,9 +9,13 @@
     <TR><TH>ID</TH><TH>Restaurant</TH><TH>Orders</TH><TH>Attempt</TH><TH>Call</TH></TR>
     <?php //  http://localhost/pizza/public/cron
         $max_attempts = getsetting("max_attempts", 3);
-        $enabled = isset($_GET["call"]);
+        $enabled = isset($_GET["call"]) || !debugmode;
+        $orders = query("SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id", true, "CRON");
+        $restaurants = query("SELECT * FROM restaurants", true, "CRON");
         if(!$enabled){
             echo '<TR><TD COLSPAN="5" ALIGN="CENTER"><STRONG><A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A></STRONG></TD></TR>';
+        } else if(!debugmode) {
+            log("CRON: " . count($orders) . " restaurants have unconfirmed orders");
         }
         function processorder($ID, $isfinal = false){
             //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""
@@ -28,8 +32,7 @@
             return false;
         }
 
-        $orders = query("SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id", true, "CRON");
-        $restaurants = query("SELECT * FROM restaurants", true, "CRON");
+
         $calls=0;
         $count = 0;
         foreach($orders as $order){
@@ -47,7 +50,7 @@
             echo '<TD' . iif($isfinal, ' CLASS="finalattempt"') . ' ALIGN="right">' . getordinal($order["attempts"]) . '</TD>';
             echo '<TD ALIGN="center"><INPUT TYPE="checkbox" DISABLED TITLE="Will only call if the system is enabled, and the order has a valid restaurant"';
             if($enabled && $restaurant !== false){
-                processorder($order["id"], $isfinal);
+                processorder($order["restaurant_id"], $isfinal);
                 $calls+=1;
                 echo ' CHECKED';
             }

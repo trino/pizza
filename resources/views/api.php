@@ -544,15 +544,9 @@ function my_now($totime = false, $now = false){
             }
         }
     }
-    if (!is_numeric($now)) {
-        return $now;
-    }
-    if ($totime === true) {
-        return $now;
-    }
-    if ($totime !== false && $totime !== true) {
-        return date($totime, $now);
-    }
+    if (!is_numeric($now)) {return $now;}
+    if ($totime === true) {return $now;}
+    if ($totime !== false && $totime !== true) {return date($totime, $now);}
     return date("Y-m-d H:i:s", $now);
 }
 

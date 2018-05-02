@@ -346,6 +346,7 @@ class HomeController extends Controller {
                     $action["message"] = str_replace("[from]", implode2(", ", " and ", $orders), $action["message"]);
                     $action["message"] = str_replace("[restaurant]", $restaurant["restaurant"]["name"], $action["message"]);
                     $action["message"] = str_replace("[s]", iif(count($orders) == 1, "", "s"), $action["message"]);
+                    if(!isset($info["attempts"])){$info["attempts"] = 0;}
                     $attempt = $info["attempts"] + 1;
                     if ($attempt == getsetting("max_attempts", 3)){
                         $attempt = "final";

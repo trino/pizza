@@ -1012,6 +1012,7 @@ function placeorder(StripeResponse) {
             isnewcard: isnewcard()
         }, function (result) {
             placeorderstate(false);
+            paydisabled = false;
             if (result.contains("ordersuccess")) {
                 $("#checkoutmodal").modal("hide");
                 handleresult(result, "ORDER RECEIPT");
@@ -1046,7 +1047,6 @@ function placeorder(StripeResponse) {
             } else {
                 ajaxerror("Error:" + result, makestring("{not_placed}"));
             }
-            paydisabled = false;
         });
     } else {
         $("#loginmodal").modal("show");
