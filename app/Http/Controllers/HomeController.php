@@ -396,7 +396,7 @@ class HomeController extends Controller {
 
     function recordattempt($orderID, $field = "id"){
         //field can also be "restaurant_id"
-        query("UPDATE orders SET attempts = attempts + 1 WHERE " . $field . " = " . $orderID);
+        query("UPDATE orders SET attempts = attempts + 1 WHERE status = 0 AND " . $field . " = " . $orderID);
     }
 
     function closestrestaurant($data, $gethours = false, $includesql = true){
