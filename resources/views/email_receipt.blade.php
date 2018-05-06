@@ -11,7 +11,7 @@
             <TD style="padding: 20px;" valign="top">
                 <?php
                     //hack to put CSS inline for emails cause no CSS can be used!!!
-                    echo 'Thank you for your order<br title="' . $party . '">';
+                    echo '<br title="' . $party . '">';
                     $HTML = view("popups_receipt", array("orderid" => $orderid, "inline" => true, "place" => "email", "style" => 2, "includeextradata" => true, "party" => $party))->render();
                     $Styles = array(
                         "TD" => "border: 0px solid #eceeef; display: table-cell;",

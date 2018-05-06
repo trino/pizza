@@ -515,7 +515,7 @@
             }
 
             if ($Order["cookingnotes"]){
-                echo '<TR><TD COLSPAN="' . 2 . '"><B>Notes </B><br>' . $Order["cookingnotes"] . '</TD></TR>';
+                echo '<TR><TD COLSPAN="' . 2 . '"><br><B>Notes </B><br>' . $Order["cookingnotes"] . '</TD></TR>';
             }
 
             if ($style == 2 && !$includeextradata) {
@@ -535,7 +535,7 @@
     </TABLE>
 
     @if(!isset($JSON))
-        <hr>
+                    <br><hr><br>
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
                 <TD WIDTH="49%" style="font-size: 85%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
