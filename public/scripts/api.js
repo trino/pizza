@@ -1186,7 +1186,7 @@ var skipmodalhide = false;
 })();
 
 function reseturl(Why){
-    CloseModal("reseturl: " + Why);
+    //CloseModal("reseturl: " + Why);
     history.pushState("", document.title, window.location.pathname);
 }
 
@@ -1758,8 +1758,9 @@ function toTimestamp(strDate){
 function fromtimestamp(unix_timestamp){
     return new Date(unix_timestamp * 1000);
 }
-function totimestamp(time, now){
+function totimestamp(time, wasnow){
     if (isUndefined(time)){return Math.floor(Date.now() / 1000);}
+    var now = new Date(wasnow.getTime());
     var timezone = now.getTimezoneOffset() / 60;
     now.setUTCHours(time / 100 + timezone);
     now.setUTCMinutes(time % 100);
@@ -1783,22 +1784,29 @@ function isopen(hours, dayofweek, time) {
     today.close = Number(today.close);
     yesterday.open = Number(yesterday.open);
     yesterday.close = Number(yesterday.close);
+    var tempstr = "[isopen] dayofweek: " + dayofweek + " time: " + time + " Checking:";
     if (yesterday.open > -1 && yesterday.close > -1 && yesterday.close < yesterday.open) {
-        if (yesterday.close > time) {
+        tempstr += " Yesterday close: " + yesterday.close + " open: " + yesterday.open;
+        if (yesterday.close >= time) {
+            log(tempstr + " True (" + yesterdaysdate + ")");
             return yesterdaysdate;
         }
     }
     if (today.open > -1 && today.close > -1) {
+        tempstr += " Today close: " + today.close + " open: " + today.open;
         if (today.close < today.open) {
-            if (time >= today.open || time < today.close) {
+            if (time >= today.open || time <= today.close) {
+                log(tempstr + " = True (" + dayofweek + ")");
                 return dayofweek;
             }
         } else {
-            if (time >= today.open && time < today.close) {
+            if (time >= today.open && time <= today.close) {
+                log(tempstr + " = True (" + dayofweek + ")");
                 return dayofweek;
             }
         }
     }
+    log(tempstr + " = False");
     return -1;//closed
 }
 

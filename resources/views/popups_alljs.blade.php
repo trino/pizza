@@ -435,13 +435,16 @@
             HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver ASAP (' + GenerateTime(time) + ')</option>';
             time = addtotime(time, increments);
         }
+        var thetime, minutes, thedayname, thedate;
         var totalInc = (minutesinaday * totaldays) / increments;
+
         for (var i = 0; i < totalInc; i++) {
             if (isopen(hours, dayofweek, time) > -1) {
-                var minutes = time % 100;
+                minutes = time % 100;
                 if (minutes < 60) {
-                    var thetime = GenerateTime(time);
-                    var thedayname = daysofweek[dayofweek];
+                    thetime = GenerateTime(time);
+                    thedayname = daysofweek[dayofweek];
+                    thedate = monthnames[now.getMonth()] + " " + now.getDate();
                     if (dayofweek == today) {
                         thedayname = today_text;
                     } else if (dayofweek == tomorrow) {
@@ -450,17 +453,19 @@
                     } else {
                         thedayname += " " + thedate;
                     }
-                    var thedate = monthnames[now.getMonth()] + " " + now.getDate();
-                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + totimestamp(time, now) + '">' + thedayname + " " + thetime;
-                    HTML += tempstr + '</OPTION>';
+                    var timestamp = totimestamp(time, now);
+                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + timestamp + '"';
+                    //tempstr += ' fromtimestamp="' + fromtimestamp(timestamp) + '"'
+                    tempstr += ' now="' + now + '"';
+                    HTML += tempstr + '>' + thedayname + " " + thetime + '</OPTION>';
                 }
             }
             time = addtotime(time, increments);
             if (time >= 2400) {
-                time = time % 2400;
+                time = 0;
                 dayselapsed += 1;
                 dayofweek = (dayofweek + 1) % 7;
-                now = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                now = new Date(now.getTime() + 24 * 3600 * 1000);
                 if (dayofweek == today || dayselapsed == totaldays) {
                     i = totalInc;
                 }

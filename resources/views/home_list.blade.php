@@ -307,7 +307,7 @@
                             break;
                     }
                 }
-                deleterow($table, "id IN(" . implode(",", $IDS) . ")");
+                deleterow($table, "id IN(" . implode(",", $IDS) . ")" . iif(read("profiletype") == 0, " AND user_id = " . read("id")));
                 break;
 
             case "deletetable"://delete all rows

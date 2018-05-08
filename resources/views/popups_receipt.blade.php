@@ -70,7 +70,7 @@
                     switch (strtolower($Classname)) {
                         //table-sm
                         case "table":
-                            $Style[] = "border-collapse: collapse; border: none;";
+                            $Style[] = "border-collapse: collapse !important; border: none !important;";
                             break;
                         case "table-bordered":
                             $Style[] = "";
@@ -222,7 +222,7 @@
                 <th align="right">Price</th>
             </TR>
     @else
-        <TABLE WIDTH="100%" class="mb-2" style="border-collapse: collapse; border: none;">
+        <TABLE WIDTH="100%" class="mb-2" style="border-collapse: collapse; border: none !important;">
     @endif
 
     <?php
