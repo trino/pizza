@@ -3,14 +3,27 @@
         return __DIR__;
     }
 	$path = base_path() . "/resources/views/api.php";
-	//error_reporting(E_ALL);
-	//ini_set('display_errors', 1);	
+	//error_reporting(E_ALL);ini_set('display_errors', 1);
 	include $path;
+	$message = "Thank you";
+	$say = '<Say voice="woman" language="en">';
 
-	if(isset($_GET["gather"])){
-		$query = "UPDATE orders SET status = 1 WHERE restaurant_id = " . $_GET["gather"];
-		query($query);
+	$digit = "";
+	if(isset($_GET["Digits"])){
+		$digit = $_GET["Digits"];
 	}
 
-	echo '<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">Thank you</Say></Response>';
+	if(isset($_GET["gather"]) && $digit == "1"){
+		$query = "UPDATE orders SET status = 1 WHERE restaurant_id = " . $_GET["gather"];
+		query($query);
+	} else if ($digit == "9"){
+		$message = $_GET["message"];
+		$url = 'http://hamiltonpizza.ca/gather.php?message=' . urlencode($message);
+		if(isset($_GET["gather"])){$url .= "&amp;gather=" . $_GET["gather"];}
+		$message = '<Gather numDigits="1" action="' . $url . '" method="GET" timeout="10">
+                        ' . $say . $message . '. Press 9 to repeat this message</Say>
+                   </Gather>
+                   ' . $say . 'We did not receive any input. Goodbye!</Say>';
+	}
+	echo '<?xml version="1.0" encoding="UTF-8"?><Response>' . $say . $message . '</Say></Response>';
 ?>

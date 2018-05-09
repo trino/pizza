@@ -22,12 +22,16 @@ if(strpos($_SERVER['REQUEST_URI'], "call?") !== false){
     $say = '<Say voice="woman" language="en">';
     $message = $_GET["message"];
     if(isset($_GET["gather"])){// https://www.twilio.com/docs/voice/twiml/gather
-        $message = '<Gather numDigits="1" action="http://hamiltonpizza.ca/gather.php?gather=' . $_GET["gather"] . '" method="GET" timeout="10">
-                        ' . $say . $message . '.</Say>
+        $message = '<Gather numDigits="1" action="http://hamiltonpizza.ca/gather.php?gather=' . $_GET["gather"] . "&amp;message=" . urlencode($message) . '" method="GET" timeout="10">
+                        ' . $say . $message . '. Press 9 to repeat this message</Say>
                    </Gather>
                    ' . $say . 'We did not receive any input. Goodbye!</Say>';
     } else {
-        $message = $say . $message . '</Say>';
+        $message = '<Gather numDigits="1" action="http://hamiltonpizza.ca/gather.php?message=' . urlencode($message) . '" method="GET" timeout="10">
+                        ' . $say . $message . '. Press 9 to repeat this message</Say>
+                   </Gather>
+                   ' . $say . '.</Say>';
+        //$message = $say . $message . '</Say>';
     }
     die('<?xml version="1.0" encoding="UTF-8"?><Response>' . $message . '</Response>');
 }
