@@ -599,11 +599,11 @@
                                 @endif
                                 @if($table != "all" && $profiletype == 1)
                                     @if($table == "debug")
-                                        <A onclick="testemail(0);" TITLE="Send a test email" class="hyperlink" id="testemail" href="#"><i class="fa fa-envelope"></i></A>
-                                        <A onclick="testemail(1);" TITLE="Send a test SMS" class="hyperlink" id="testsms" href="#"><i class="fa fa-phone"></i> SMS</A>
-                                        <A onclick="testemail(2);" TITLE="Send a test CALL" class="hyperlink" id="testcall" href="#"><i class="fa fa-phone"></i> Call</A>
-                                        <A onclick="testemail(3);" TITLE="Send a test GATHER" class="hyperlink" id="testcallinput" href="#"><i class="fa fa-phone"></i> Gather</A>
-                                        <A onclick="deletedebug();" TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="#"><i class="fa fa-trash"></i></A>
+                                        <A TITLE="Send a test email" class="hyperlink" id="testemail" href="javascript:testemail(0);"><i class="fa fa-envelope"></i></A>
+                                        <A TITLE="Send a test SMS" class="hyperlink" id="testsms" href="javascript:testemail(1);"><i class="fa fa-phone"></i> SMS</A>
+                                        <A TITLE="Send a test CALL" class="hyperlink" id="testcall" href="javascript:testemail(2);"><i class="fa fa-phone"></i> Call</A>
+                                        <A TITLE="Send a test GATHER" class="hyperlink" id="testcallinput" href="javascript:testemail(3);"><i class="fa fa-phone"></i> Gather</A>
+                                        <A TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="javascript:deletedebug();"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
                                         <A onclick="selecttableitems(-1);" href="#" ID="invert"><i class="fa fa-check-square"></i><i class="fa fa-square"></i> Invert Selection</A>

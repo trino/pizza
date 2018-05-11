@@ -23,7 +23,8 @@
 		$message = '<Gather numDigits="1" action="' . $url . '" method="GET" timeout="10">
                         ' . $say . $message . '. Press 9 to repeat this message</Say>
                    </Gather>
-                   ' . $say . 'We did not receive any input. Goodbye!</Say>';
+                   ' . $say . 'We did not receive any input. Goodbye!';
 	}
-	echo '<?xml version="1.0" encoding="UTF-8"?><Response>' . $say . $message . '</Say></Response>';
+	if(strpos($message, $say) === false){$message = $say . $message;}
+	echo '<?xml version="1.0" encoding="UTF-8"?><Response>' . $message . '</Say></Response>';
 ?>
