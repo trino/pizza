@@ -109,8 +109,10 @@ class Controller extends BaseController {
             if ($Call) {
                 //$Message = "http://" . serverurl . "/call?message=" . urlencode($Message);
                 //do not change this to https, http is required for twilio to actually work
+                $url = serverurl;
+                if(defined("callurl")){$url = callurl;}//localhost must use a non-local URL
                 $Message = filternonalphanumeric(htmlentities($Message), '', ',.');
-                $Message = "http://hamiltonpizza.ca/call?message=" . urlencode($Message);
+                $Message = "http://" . $url . "/call?message=" . urlencode($Message);
                 if($gather !== false){$Message .= "&gather=" . $gather;}
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Calls";
                 $data = array("From" => $fromnumber, "To" => $Phone, "Url" => $Message);

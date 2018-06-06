@@ -31,6 +31,16 @@ return [
     |
     */
 
+    'constants' => [
+        "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/ai/",
+        "callurl" => "hamiltonpizza.ca",
+        "sitename" => "Hamilton Pizza (localhost)",
+        "cityname" => "local",
+        "islive" => false,
+        "headercolor" => "#DC3545",
+        "timezone" => "America/Toronto",
+    ],
+
     'connections' => [
 
         'sqlite' => [
@@ -41,7 +51,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'ai'),
             'username' => env('DB_USERNAME', 'root'),

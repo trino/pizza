@@ -2,7 +2,7 @@
 <TABLE>
     <?php
         startfile("home_edittable");
-        $con = connectdb("ai");
+        $con = connectdb();
         $currentURL = Request::url();
         $backURL = $currentURL;
         if(isset($_GET["table"])){

@@ -951,6 +951,7 @@
                                                 case "user_registered":     prititle = "None<T>A new customer registers on the site"; break;
                                                 case "cron_job": case "cron_job_final":
                                                                             prititle = "[#] - The number of orders waiting<T>[s] - puts an 's' if the number of orders isn't 1<T>[attempt] - Which attempt number is being made ('final' for the last one)<T>[restaurant] - the name of the restaurant<T>[from] - the list of user names who ordered<T>The CRON job loops through all unconfirmed orders"; break;
+                                                case "press9torepeat":      prititle = "[press9torepeat] in any call action will be replaced with this text"; break;
                                             }
                                             if(prititle) {
                                                 prititle = "Text inside [these] will be replaced with the following text<P>Global variables:<BR>[sitename] - the site's name<P>Local variables:<BR>" + prititle;

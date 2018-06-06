@@ -378,6 +378,8 @@ class HomeController extends Controller {
                 if ($action["phone"]) {
                     //if SMS restaurant then SMS user of the restaurant instead since all of the restaurant phones are land lines
                     $action["message"] = str_replace("[url]", "", $action["message"]);
+                    $action["message"] = replacetag($action["message"], "press9torepeat");
+
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
                     $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $gather);
@@ -392,6 +394,14 @@ class HomeController extends Controller {
         }
         debugprint($event . ": " . $orderid . " by: " . $user["name"] . " (" . $info["user_id"] . ")" . $resttext);
         return $user;
+    }
+
+    function replacetag($string, $tag){
+        if(strpos($string, "[" . $tag . "]") !== false){
+            $data = first("SELECT message FROM actions WHERE eventname = '" . $tag . "'");
+            $string = str_replace("[" . $tag . "]", $data["message"], $string);
+        }
+        return $string;
     }
 
     function recordattempt($orderID, $field = "id"){

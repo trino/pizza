@@ -4,33 +4,38 @@ $dirroot = getcwd();
 if (!endswith($dirroot, "/public")){
     $dirroot = $dirroot . "/public";
 }
-define("headercolor", "#DC3545");
-switch($_SERVER["SERVER_NAME"]){
-    case 'scpizza.ca':
-        define("serverurl", "scpizza.ca");
-        define("sitename", "scpizza.ca");
-        define("cityname", "Stoney Creek");
-        break;
-    case 'londonpizza.ca':
-        define("serverurl", "londonpizza.ca");
-        define("sitename", "londonpizza.ca");
-        define("cityname", "London");
-        break;
-    case 'hamiltonpizza.ca': case "www.hamiltonpizza.ca":
-        $stripefile = $dirroot . "/../vendor/stripe/stripe-php/init.php";
-        require_once($stripefile);
-        define("serverurl", "hamiltonpizza.ca");
-        define("sitename", "Hamilton Pizza");
-        define("cityname", "Hamilton");
-    break;
-    default:
-        define("serverurl", "http://" . $_SERVER["SERVER_NAME"] . "/ai/");
-        define("sitename", "Hamilton Pizza (localhost)");
-        define("cityname", "local");
-        $islive=false;
+$servername = strtolower($_SERVER["SERVER_NAME"]);
+if(left($servername, 4) == "www."){$servername = right($servername, strlen($servername) - 4);}
+
+function setupconstants(){
+    global $islive;
+    $dirroot = str_replace("/public/", "", public_path() . "/");
+    $data = include($dirroot . "/config/database.php");
+    if(!defined("serverurl")){
+        foreach($data["constants"] as $key => $value){
+            switch(filternumeric($key)){
+                case "islive": $islive = $value; break;
+                case "include":
+                    $value = str_replace("[public_html]", $dirroot, $value);
+                    if(file_exists($value)){
+                        require_once($value);
+                    } else {
+                        die($value . " NOT FOUND!");
+                    }
+                    break;
+                case "timezone": date_default_timezone_set($value); break;
+                default:
+                    $value = str_replace("[SERVER_NAME]", $_SERVER["SERVER_NAME"], $value);
+                    define($key, $value);
+            }
+        }
+    }
+    return $data;
 }
+
+setupconstants();
+
 $webroot = webroot();
-date_default_timezone_set("America/Toronto");
 $Filename = base_path() . "/ai.sql";
 function webroot($file = "", $justroot = false){
     $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
@@ -58,23 +63,22 @@ function webroot($file = "", $justroot = false){
 //include("../veritas3-1/config/app.php");//config file is not meant to be run without cake, thus error reporting needs to be suppressed
 //error_reporting(E_ALL);//re-enable warnings
 $con = connectdb();
-function connectdb($database = "ai", $username = "root", $password = ""){
+function connectdb($database = false, $username = false, $password = false){
     global $con;
+    if(!$database || !$username || !$password){
+        $dirroot = getcwd();
+        if(endswith($dirroot, "public")){ $dirroot .= "/.."; }
+        $data = setupconstants();
+        $data = $data["connections"]["mysql"];
+        if(!$database){$database = $data["database"];}
+        if(!$username){$username = $data["username"];}
+        if(!$password){$password = $data["password"];}
+    }
     $localhost = "localhost";
     if ($_SERVER["SERVER_NAME"] == "localhost") {
         $localhost .= ":3306";
     }
-    if (islive()) {
-        switch (sitename) {
-            case "londonpizza.ca": case "Hamilton Pizza": case "scpizza.ca":
-                $database = "hamilton_db";
-                $username = "hamilton_user";
-                $password = "Pass1234!";
-            break;
-            default:
-                die("Username/password for '" . sitename . "' are not on file");
-        }
-    } else {
+    if (!islive()) {
         $_SERVER['SERVER_ADDR'] = gethostbyname(gethostname());
     }
     $GLOBALS["database"] = $database;
@@ -724,6 +728,7 @@ function isencrypted($text){
 }
 
 function islive(){
+    setupconstants();
     $server = $_SERVER["SERVER_NAME"];
     return textcontains($server, serverurl);
     /*if($server == "localhost" || $server == "127.0.0.1"){return false;}
