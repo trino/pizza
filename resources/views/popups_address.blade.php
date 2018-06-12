@@ -1,11 +1,14 @@
 <?php
     startfile("popups_address");
-    if (!isset($style))     {$style = 0;}
-    if (!isset($firefox))   {$firefox = true;}
-    if (!isset($required))  {$required = "";} else {$required = " required";}
-    if (!isset($class))     {$class = "";} else {$class = " " . $class;}
-    if (!isset($icons))     {$icons = false;}
-    if (isset($autored))    {$required .= ' autored="' . $autored . '"';}
+    if (!isset($style))                 {$style = 0;}
+    if (!isset($address_placeholder))   {$address_placeholder = '';} else {$address_placeholder = ' PLACEHOLDER="' . $address_placeholder . '"';}
+    if (!isset($unit))                  {$unit = true;}
+    if (!isset($firefox))               {$firefox = true;}
+    if (!isset($required))              {$required = "";} else {$required = " required";}
+    if (!isset($class))                 {$class = "";} else {$class = " " . $class;}
+    if (!isset($icons))                 {$icons = false;}
+    if (isset($autored))                {$required .= ' autored="' . $autored . '"';}
+    if(!isset($title))                  {$title = "Address";}
 
     $q = "'";
     $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
@@ -14,8 +17,8 @@
 
     switch ($style) {
         case 0:
-            echo '<DIV><DIV CLASS="col-md-2">Address</DIV><DIV CLASS="col-md-12" ID="gmapc">';
-            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '></div></DIV>';
+            echo '<DIV><DIV CLASS="col-md-2">' . $title . '</DIV><DIV CLASS="col-md-12" ID="gmapc">';
+            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . $address_placeholder . '></div></DIV>';
             break;
         case 1:
             if($icons) {echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-map-marker text-white fa-stack-1x"></i></span></div><div class="input_right">';}
@@ -43,7 +46,9 @@
         </div>
         <div class="input_right">
     @endif
+    @if($unit)
         <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to">
+    @endif
     @if($icons)
             </div>
     @endif

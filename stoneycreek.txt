@@ -1,0 +1,33 @@
+[Hi-Line Pizza & Wings]
+Address=236 Parkdale Ave N, Hamilton, ON L8H 5X5
+GPS=43.2428704,-79.7910212
+Phone=(905) 543-9555
+
+[Quality Pizza & Wings]
+Address=2372 Barton St E, Hamilton, ON L8E 2W7
+GPS=43.2376506,-79.7672911
+URL=qualitypizzaandwings.com (doesn't work)
+Phone=(905) 573-8800
+
+[Royal Pizza & Wings]
+Address=826 Queenston Rd, Stoney Creek, ON L8G 4A8
+GPS=43.223142,-79.7854553
+URL=royalpizzastoneycreek.com (looks like garbage)
+Phone=(905) 664-8585
+
+[First Choice Pizza]
+Address=2596 King St E, Hamilton, ON L8K 1Y2
+GPS=43.2221288,-79.703655
+URL=firstchoicepizza.ca (doesn't work)
+Phone=(905) 560-9111
+
+[King Pizza]
+Address=44 King St E, Stoney Creek, ON L8G 1K1
+GPS=43.2162632,-79.7579626
+Phone=(905) 662-6672
+
+[Fruitland Pizza & Grill]
+Address=301 Fruitland Rd, Stoney Creek, ON L8E 5M1
+GPS=43.2221288,-79.703655
+URL=fruitlandpizza.com (looks like garbage)
+Phone=(289) 656-1666

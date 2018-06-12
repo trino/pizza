@@ -19,6 +19,10 @@ class HomeController extends Controller {
         return view("home_help")->render();
     }
 
+    public function newrest(Request $request){
+        return view("home_newstore")->render();
+    }
+
     public function hours(Request $request){
         return view("home_hours")->render();
     }
@@ -199,7 +203,9 @@ class HomeController extends Controller {
             }
             $filename = $dir . "/" . $orderid . ".json";
             file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
-            chown($filename, "hamiltonpizza");
+            if(defined("username") && posix_geteuid() != fileowner($filename)){
+                chown($filename, username);
+            }
             chmod($filename, 0755);
 
             $user = $this->order_placed($orderid, $info, -2);//get user data without processing the event

@@ -39,6 +39,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('/auth/gettoken',        'AuthController@gettoken');
     Route::any('/placeorder',           'HomeController@placeorder');
 
+    Route::any('/newrest',              'HomeController@newrest');
     Route::any('/call',                 'HomeController@robocall');
     Route::any('/cron',                 'HomeController@cron');
     Route::any('/test',                 'HomeController@index');

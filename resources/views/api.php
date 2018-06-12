@@ -9,7 +9,7 @@ if(left($servername, 4) == "www."){$servername = right($servername, strlen($serv
 
 function setupconstants(){
     global $islive;
-    $dirroot = str_replace("/public/", "", public_path() . "/");
+    $dirroot = str_replace("/public/", "", str_replace("\\", "/", public_path()) . "/");
     $data = include($dirroot . "/config/database.php");
     if(!defined("serverurl")){
         foreach($data["constants"] as $key => $value){
@@ -57,6 +57,12 @@ function webroot($file = "", $justroot = false){
     }
     $public = $protocol . '://' . $_SERVER['HTTP_HOST'] . $webroot . $public . $file;
     return $public;
+}
+
+if(!function_exists("posix_geteuid")){
+    function posix_geteuid(){
+        return 0;
+    }
 }
 
 //error_reporting(E_ERROR | E_PARSE);//suppress warnings
