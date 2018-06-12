@@ -54,7 +54,7 @@
         $hours = $_POST["hours"];
         $hours["restaurant_id"] = $restaurantid;
         $hoursid = insertdb("hours", $hours, "restaurant_id");
-        
+
         echo "<B>Created</B><BR>Restaurant ID: " . $restaurantid;
         echo "<BR>User ID: " . $userid;
         echo "<BR>Address ID: " . $addressid;
