@@ -24,6 +24,7 @@
         //create user
         $userid = insertdb("users", [
             "name"          => $_POST["restaurant"],
+            "email"         => $_POST["emailaddress"],
             "created_at"    => now(),
             "updated_at"    => 0,
             "password"      => \Hash::make($_POST["password"]),

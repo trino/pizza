@@ -19,6 +19,10 @@ class HomeController extends Controller {
         return view("home_help")->render();
     }
 
+    public function map(Request $request){
+        return view("home_map")->render();
+    }
+
     public function newrest(Request $request){
         return view("home_newstore")->render();
     }

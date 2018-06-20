@@ -62,6 +62,20 @@ String.prototype.mid = function (start, length) {
     return this.substring(start, start + length);
 };
 
+String.prototype.GetBetween = function (startingtext, endingtext) {
+    var target = this;
+    var start = target.indexOf(startingtext);
+    if(start == -1){return "";}
+    var endit = target.indexOf(endingtext, start);
+    if(endit == -1){return "";}
+    return target.substring(start+1, endit);
+};
+
+String.prototype.SetSlice = function (Start, End, ReplaceText) {
+    var target = this;
+    return target.left(Start) + ReplaceText + target.right(target.length - End);
+};
+
 Number.prototype.pad = function (size, rightside) {
     var s = String(this);
     if (isUndefined(rightside)) {
@@ -1806,7 +1820,7 @@ function isopen(hours, dayofweek, time) {
             }
         }
     }
-    log(tempstr + " = False");
+    //log(tempstr + " = False");
     return -1;//closed
 }
 
