@@ -94,7 +94,9 @@
             <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
         @endif
 
-        <LI><A CLASS="dropdown-item" href="<?= webroot("map", true); ?>"><i class="fa fa-question-circle icon-width"></i> Map</A></LI>
+        @if(read("profiletype") == 1)
+            <LI><A CLASS="dropdown-item" href="<?= webroot("map", true); ?>"><i class="fa fa-question-circle icon-width"></i> Map</A></LI>
+        @endif
 
         @if(read("id"))
             <LI><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
