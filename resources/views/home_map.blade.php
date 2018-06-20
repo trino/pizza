@@ -34,6 +34,7 @@
                 if($restaurant["phone"]){$HTML .= $newline . "Phone: " . formatphone($restaurant["phone"]);}
                 $HTML .= $newline . "Address: " . addressdata($restaurant["address"]);
                 $HTML .= $newline . "Hours: " . hourdata($restaurant["hours"]);
+                $HTML .= $newline . "Is live: " . iif($restaurant["is_delivery"], "Yes", "No");
                 if(startswith($HTML, $newline)){$HTML = right($HTML, strlen($HTML) - strlen($newline));}
                 return $HTML;
             }
@@ -76,7 +77,7 @@
                 $restaurant["address"] = $address;
                 if($address !== false){
                     $markers[] = array($restaurant["name"], restaurantdata($restaurant), $address["latitude"], $address["longitude"]);
-                    echo '<BR><A CLASS="rest" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="clickrest(this);" marker="' . (count($markers)-1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '">' . $restaurant["name"] . '</A>';
+                    echo '<BR><A CLASS="rest-' . iif($restaurant["is_delivery"], "live", "dead") . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers)-1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '">' . $restaurant["name"] . '</A>';
                 }
             }
 
@@ -84,7 +85,7 @@
             echo view("popups_googlemaps");
             echo '</DIV></DIV>';
         } else {
-            echo 'ACCESS DENIED';
+            echo view("popups_accessdenied");
         }
     ?>
     <SCRIPT>
@@ -121,6 +122,7 @@
 
         function clickrest(element){
             new google.maps.event.trigger( locations[element.getAttribute("marker")][4], 'click' );
+            return false;
         }
     </SCRIPT>
 @endsection

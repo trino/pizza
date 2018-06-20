@@ -209,7 +209,7 @@
             $searchcols = array("keyname", "value");
             $SQL = "SELECT * FROM `settings` WHERE keyname NOT IN (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "') AND keyname NOT IN ('lastSQL', 'menucache')";
             break;
-        default: die("The table '" . $table . "' is not whitelisted");
+        default: echo view("popups_accessdenied");
     }
     if($datafields){//get all fields
         $datafields = describe($table);

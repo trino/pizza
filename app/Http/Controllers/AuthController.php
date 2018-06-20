@@ -64,7 +64,7 @@ class AuthController extends Controller {
         if($action) {
             $ret = array("Status" => true, "Action" => $action);
             if ($action == "logout") {
-                foreach (array("id", "name", "email", "phone") as $Key) {
+                foreach (array("id", "name", "email", "phone", "profiletype") as $Key) {
                     write($Key, '');
                 }
                 \Session::save();
