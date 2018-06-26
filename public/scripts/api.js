@@ -5,6 +5,39 @@ var is_firefox_for_android = is_firefox && is_android;
 var currentitemID = -1;
 var lockloading = false, previoushash = "", $body = "";
 var stripemode = "";
+var fade_speed = 600;
+var FadingElement = "";
+
+var FadingElements = {};
+function QueueFade(FadeIn, Selector, FadeOutHTML, FadeInHTML){
+    if(isUndefined(Selector)){//begin fading
+        if(isUndefined(FadeIn)){FadeIn = false;}
+        for(var i = FadingElements.length - 1; i > 0; i--){
+            if(FadingElements[i].Direction == FadeIn){
+                if(FadeIn){
+                    if(FadingElements[i].hasOwnProperty("FadeInHTML")){
+                        $(FadingElements[i].Selector).html(FadingElements[i].FadeInHTML);
+                    }
+                    $(FadingElements[i].Selector).fadeIn(fade_speed);
+                } else {
+                    if(FadingElements[i].hasOwnProperty("FadeOutHTML")){
+                        $(FadingElements[i].Selector).html(FadingElements[i].FadeOutHTML);
+                    }
+                    if(i == 0){
+                        $(FadingElements[i].Selector).fadeOut(fade_speed, function(){QueueFade(true);});
+                    } else {
+                        $(FadingElements[i].Selector).fadeOut(fade_speed);
+                    }
+                }
+                removeindex(FadingElements, i);
+            }
+        }
+    } else {
+        var Element = {Selector: Selector, Direction: FadeIn};
+        if(!isUndefined(FadeOutHTML)){Element.FadeOutHTML = FadeOutHTML;}
+        if(!isUndefined(FadeInHTML)){Element.FadeInHTML = FadeInHTML;}
+    }
+}
 
 String.prototype.isEqual = function (str) {
     if (isUndefined(str)) {
@@ -391,7 +424,7 @@ function refreshremovebutton() {
     if (currentaddonlist[currentitemindex].length > 0) {
         var index = currentaddonlist[currentitemindex].length - 1;
         var lastitem = currentaddonlist[currentitemindex][index];
-        $(".removeitemarrow").fadeTo("fast", 1.00);
+        $(".removeitemarrow").fadeTo(fade_speed, 1.00);
         $("#removeitemfromorder").attr("title", "Remove: " + lastitem.name + " from " + $("#item_" + currentitemindex).text()).attr("onclick", "removelistitem(" + currentitemindex + ", " + index + ");").attr("style", "");
     }
 }
@@ -483,13 +516,11 @@ function fadereceiptitem(itemindex, oldtext){
     itemindex = getsrcid(itemindex);
     var newtext = getitemtext(itemindex);
     if(oldtext[1]) {
-        getitemtext(itemindex, oldtext).fadeOut(
-            function () {
-                getitemtext(itemindex, newtext).fadeIn();
-            }
-        );
+        getitemtext(itemindex, oldtext).fadeOut(fade_speed, function () {
+            getitemtext(itemindex, newtext).fadeIn(fade_speed);
+        });
     } else {
-        getitemtext(itemindex, newtext).fadeIn();
+        getitemtext(itemindex, newtext).delay(fade_speed).fadeIn(fade_speed);
     }
 }
 
@@ -525,9 +556,9 @@ function cloneitem(me, itemid) {
 
 function refreshcost(itemid, oldcost) {
     var newcost = $('#cost_' + itemid).text();
-    $('#cost_' + itemid).show().text(oldcost).fadeOut(
+    $('#cost_' + itemid).show().text(oldcost).fadeOut(fade_speed,
         function () {
-            $('#cost_' + itemid).text(newcost).fadeIn();
+            $('#cost_' + itemid).text(newcost).fadeIn(fade_speed);
         }
     );
 }
@@ -712,10 +743,16 @@ function generatereceipt(forcefade) {
     $("#myorder").html(HTML + tempHTML);
     if (fadein || forcefade) {
         if (fadein) {
-            $(fadein).hide().fadeIn();
-            $(fadein2).hide().fadeIn();
+            $(fadein).hide();
+            $(fadein2).hide();
         }
-        $("#oldvalues").show().fadeOut("slow", function () {$("#newvalues").fadeIn();});
+        $("#oldvalues").show().fadeOut(fade_speed, function () {
+            if (fadein) {
+                $(fadein).fadeIn(fade_speed);
+                $(fadein2).fadeIn(fade_speed);
+            }
+            $("#newvalues").fadeIn(fade_speed);
+        });
     }
 }
 
@@ -763,9 +800,11 @@ function confirmclearorder() {
 function clearorder() {
     theorder = new Array;
     removeorderitemdisabled = true;
-    $(".receipt_item").fadeOut("fast", function () {
+    $("#newvalues").fadeOut(fade_speed);
+    $(".receipt_item").fadeOut(fade_speed, function () {
         removeorderitemdisabled = false;
         generatereceipt();
+        $("#oldvalues").hide();
     });
 }
 
@@ -870,10 +909,13 @@ function removeorderitem(index, quantity) {
     if (quantity == 1) {
         removeindex(theorder, index);
         removeorderitemdisabled = true;
-        $("#subitem_" + index).fadeOut();
-        $("#receipt_item_" + index).fadeOut("slow", function () {
+        $("#newvalues").fadeOut(fade_speed);
+        $("#subitem_" + index).fadeOut(fade_speed);
+        $("#receipt_item_" + index).fadeOut(fade_speed, function () {
             removeorderitemdisabled = false;
             generatereceipt(true);
+            $("#oldvalues").hide();
+            $("#newvalues").fadeIn(fade_speed);
         });
     } else {
         var original = theorder[index];
@@ -1084,7 +1126,7 @@ var modalID = "", skipone = 0;
 
 $(window).on('shown.bs.modal', function () {
     modalID = $(".modal:visible").attr("id");
-    $("#" + modalID).hide().fadeIn("fast");
+    $("#" + modalID).hide().fadeIn(fade_speed);
     skipone = Date.now() + 100;//blocks delete button for 1/10 of a second
     switch (modalID) {
         case "profilemodal":
@@ -1136,7 +1178,7 @@ function deletecard(Index, ID, last4, month, year) {
             action: "deletecard",
             cardid: ID
         }, function (result) {
-            $("#card_" + Index).fadeOut("fast", function () {
+            $("#card_" + Index).fadeOut(fade_speed, function () {
                 $("#card_" + Index).remove();
             });
             removeindex(userdetails.Stripe, Index);//remove it from userdetails
@@ -1955,7 +1997,7 @@ function generateaddons(ItemIndex, ToppingIndex) {
     refreshremovebutton();
     if (ItemIndex > -1) {
         log("FADE: #topping_" + ItemIndex + "_" + ToppingIndex);
-        $("#topping_" + ItemIndex + "_" + ToppingIndex).hide().fadeTo('fast', 1);
+        $("#topping_" + ItemIndex + "_" + ToppingIndex).hide().fadeTo(fade_speed, 1);
     }
 }
 
