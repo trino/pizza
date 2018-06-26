@@ -6,38 +6,6 @@ var currentitemID = -1;
 var lockloading = false, previoushash = "", $body = "";
 var stripemode = "";
 var fade_speed = 600;
-var FadingElement = "";
-
-var FadingElements = {};
-function QueueFade(FadeIn, Selector, FadeOutHTML, FadeInHTML){
-    if(isUndefined(Selector)){//begin fading
-        if(isUndefined(FadeIn)){FadeIn = false;}
-        for(var i = FadingElements.length - 1; i > 0; i--){
-            if(FadingElements[i].Direction == FadeIn){
-                if(FadeIn){
-                    if(FadingElements[i].hasOwnProperty("FadeInHTML")){
-                        $(FadingElements[i].Selector).html(FadingElements[i].FadeInHTML);
-                    }
-                    $(FadingElements[i].Selector).fadeIn(fade_speed);
-                } else {
-                    if(FadingElements[i].hasOwnProperty("FadeOutHTML")){
-                        $(FadingElements[i].Selector).html(FadingElements[i].FadeOutHTML);
-                    }
-                    if(i == 0){
-                        $(FadingElements[i].Selector).fadeOut(fade_speed, function(){QueueFade(true);});
-                    } else {
-                        $(FadingElements[i].Selector).fadeOut(fade_speed);
-                    }
-                }
-                removeindex(FadingElements, i);
-            }
-        }
-    } else {
-        var Element = {Selector: Selector, Direction: FadeIn};
-        if(!isUndefined(FadeOutHTML)){Element.FadeOutHTML = FadeOutHTML;}
-        if(!isUndefined(FadeInHTML)){Element.FadeInHTML = FadeInHTML;}
-    }
-}
 
 String.prototype.isEqual = function (str) {
     if (isUndefined(str)) {
