@@ -75,8 +75,8 @@
                 if($hoursID == false){$hoursID = findwhere($hours, "restaurant_id", 0);}
                 $restaurant["hours"] = $hours[$hoursID];
                 $restaurant["address"] = $address;
-                if($address !== false){
-                    $markers[] = array($restaurant["name"], restaurantdata($restaurant), $address["latitude"], $address["longitude"]);
+                if($address !== false){//0                  1                            2                     3                      4
+                    $markers[] = array($restaurant["name"], restaurantdata($restaurant), $address["latitude"], $address["longitude"], iif($restaurant["is_delivery"], "1", "0"));
                     echo '<BR><A CLASS="rest-' . iif($restaurant["is_delivery"], "live", "dead") . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers)-1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '">' . $restaurant["name"] . '</A>';
                 }
             }
@@ -87,9 +87,38 @@
         } else {
             echo view("popups_accessdenied");
         }
+
+        $dead_color = "#FF0000";
+        $live_color = "#006400";
     ?>
+    <STYLE>
+        .rest-dead{
+            color: <?= $dead_color; ?>;
+        }
+        .rest-live{
+            color: <?= $live_color; ?>;
+        }
+    </STYLE>
     <SCRIPT>
-        var locations = <?= json_encode($markers); ?>
+        var locations = <?= json_encode($markers); ?>;
+        var islive_icon, isntlive_icon;
+
+        function getIcon(pinColor, google) {
+            var data = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor.replace("#", ''),
+                    new google.maps.Size(21, 34), new google.maps.Point(0,0), new google.maps.Point(10, 34));
+            data.labelOrigin = {x: 10, y: -10};
+            return data;
+        }
+
+        function iconcolor(islive){
+            if(islive == 1){return islive_icon;}
+            return isntlive_icon;
+        }
+
+        function getColor(islive){
+            if(islive == 1){return "<?= $live_color; ?>";}
+            return "<?= $dead_color; ?>";
+        }
 
         $(window).load(function () {
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -97,15 +126,25 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
+            islive_icon = getIcon(getColor(1), google);
+            isntlive_icon = getIcon(getColor(0), google);
             var infowindow = new google.maps.InfoWindow();
 
             var marker, i;
             var bounds = new google.maps.LatLngBounds();
             for (i = 0; i < locations.length; i++) {
                 marker = new google.maps.Marker({
-                    label: locations[i][0],
+                    label: {
+                        text: locations[i][0],
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                        color: getColor(locations[i][4]),
+                        strokeColor: "black",
+                        strokeWeight: 1
+                    },
                     position: new google.maps.LatLng(locations[i][2], locations[i][3]),
-                    map: map
+                    map: map,
+                    icon: iconcolor(locations[i][4])
                 });
                 locations[i][4] = marker;
                 bounds.extend(marker.getPosition());

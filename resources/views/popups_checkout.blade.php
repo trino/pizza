@@ -8,7 +8,7 @@
 
 <div id="myorder" class="orderfont"></div>
 
-<button id="checkout-btn" class="list-padding btn btn-primary btn-block" onclick="showcheckout();">
+<button id="checkout-btn" class="list-padding btn btn-primary btn-block" onclick="showcheckout();" style="display: none;">
     <i class="fa fa-shopping-basket mr-2"></i> CHECKOUT
 </button>
 
