@@ -1802,7 +1802,7 @@ function isopen(hours, dayofweek, time) {
     if (yesterday.open > -1 && yesterday.close > -1 && yesterday.close < yesterday.open) {
         tempstr += " Yesterday close: " + yesterday.close + " open: " + yesterday.open;
         if (yesterday.close >= time) {
-            log(tempstr + " True (" + yesterdaysdate + ")");
+            //log(tempstr + " True (" + yesterdaysdate + ")");
             return yesterdaysdate;
         }
     }
@@ -1810,12 +1810,12 @@ function isopen(hours, dayofweek, time) {
         tempstr += " Today close: " + today.close + " open: " + today.open;
         if (today.close < today.open) {
             if (time >= today.open || time <= today.close) {
-                log(tempstr + " = True (" + dayofweek + ")");
+                //log(tempstr + " = True (" + dayofweek + ")");
                 return dayofweek;
             }
         } else {
             if (time >= today.open && time <= today.close) {
-                log(tempstr + " = True (" + dayofweek + ")");
+                //log(tempstr + " = True (" + dayofweek + ")");
                 return dayofweek;
             }
         }
