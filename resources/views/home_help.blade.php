@@ -2,6 +2,16 @@
 @section('content')
     <?php
         $site_name = sitename;
+        $launchdate = "April 1, 2017";
+        $datestamp = strtotime($launchdate);
+        $SQLdate = date("Y-m-d", $datestamp);
+        $launched = iif(time() > $datestamp, " (Launched)");
+        if(!$launched){
+            $days = ceil(($datestamp - time()) / 86400) ;
+            $launched = " (" . $days . " day" . iif($days > 1, "s") . " away)";
+        }
+        $orders =  first('SELECT count(*) as count FROM orders WHERE status <> 2 AND status <> 4 AND placed_at > "' . $SQLdate . '"')["count"];
+        $donation_per_order = 0.50;
         $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
     ?>
     <STYLE>
@@ -136,6 +146,35 @@
         }
     </SCRIPT>
     <DIV class="row py-3 bg-white">
+        <div class="col-sm-3 list-padding"></DIV>
+        <div class="col-sm-6 list-padding">
+            <h3><?= getsetting("aboutus"); ?></h3>
+
+            <div class="card-block bg-danger text-white py-2 mt-2">
+                <p>
+                    <?= $site_name; ?> is a pizza delivery service that's "faster than picking up the phone".
+
+                    Created by Van and Roy of Hamilton; we've seen what's out there for online ordering and we're confident that we can do better.
+                    <br><br>
+
+                    We believe in the community and we must give back at all cost.
+                    That's why we're pledging to donate $<?= number_format($donation_per_order, 2, ".", ""); ?> from every order the local food bank. With your support; we will help many people for many years. This is the lifetime commitment of <?= $site_name; ?>.
+                    <br><br>
+
+                    Thank you for your support.
+
+                </p>
+                <hr>
+
+                <div class="btn-outlined-danger text-center pt-1">
+                    <strong>June, 2017</strong>
+                    <p> Orders: <?= $orders; ?>
+                        <br> Donated: $<?= number_format((float)$orders * $donation_per_order, 2, '.', ''); ?>
+                        <br> Charity: London Food Bank</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 list-padding"></DIV>
         <div class="col-sm-12 list-padding list-card">
 
 
