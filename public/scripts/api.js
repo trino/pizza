@@ -1677,7 +1677,7 @@ var daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
 var monthnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function now() {
-    if(newtime > -1){return newtime;}
+    if(testing){return newtime;}
     var now = new Date();
     return now.getHours() * 100 + now.getMinutes();
 }
@@ -1731,46 +1731,46 @@ function addtotime(time, increments){
 }
 
 //Index: 0=hour, 1=minute, 2=24hr time, 3=day of week(0-6), 4=date, 5=tomorrow
-function getNow(Index){
+function getNow(Index, AllowTesting){
     if(isUndefined(Index)){
         return Math.floor(Date.now() / 1000);//reduce to seconds
     }
+    if(isUndefined(AllowTesting)){AllowTesting = true;}
     var now = new Date();
     switch (Index){
         case 0: //hour
-            if(newtime > -1){return Math.floor(newtime / 100);}
+            if(testing && AllowTesting){return Math.floor(newtime / 100);}
             return now.getHours();
             break;
         case 1: //minute
-            if(newtime > -1){return Math.floor(newtime % 100);}
+            if(testing && AllowTesting){return Math.floor(newtime % 100);}
             return now.getMinutes();
             break;
         case 2://hour+minute(24 hour)
-            if(newtime > -1){return newtime;}
+            if(testing && AllowTesting){return newtime;}
             return now.getHours() * 100 + now.getMinutes();
             break;
         case 3: //day of week
-            if(newday > -1){return newday;}
+            if(testing && AllowTesting){return newday;}
             return now.getDay();
             break;
         case 4: case 5: //date
-        if(newtime > -1){
-            now.setHours(Math.floor(newtime / 100));
-            now.setMinutes(Math.floor(newtime % 100));
-        }
-        if(newday > -1){
-            var currentday = now.getDay();
-            if(currentday > newday){
-                now.add("day", 6 - currentday + newday);
-            } else if (currentday < newday){
-                now.add("day", newday - currentday);
+            if(testing && AllowTesting){
+                now.setHours(Math.floor(newtime / 100));
+                now.setMinutes(Math.floor(newtime % 100));
+                now.setSeconds(0);
+                var currentday = now.getDay();
+                if(currentday > newday){
+                    now.add("day", 6 - currentday + newday);
+                } else if (currentday < newday){
+                    now.add("day", newday - currentday);
+                }
             }
-        }
-        if(Index == 5){
-            return now.add("day", 1);
-        }
-        return now;
-        break;
+            if(Index == 5){
+                return now.add("day", 1);
+            }
+            return now;
+            break;
     }
 }
 
@@ -2282,7 +2282,8 @@ function scrolltobottom() {
         barCSS.transition='all '+speed+'ms '+ease;return barCSS;}
     var queue=(function(){var pending=[];function next(){var fn=pending.shift();if(fn){fn(next);}}
         return function(fn){pending.push(fn);if(pending.length==1)next();};})();var css=(function(){var cssPrefixes=['Webkit','O','Moz','ms'],cssProps={};function camelCase(string){return string.replace(/^-ms-/,'ms-').replace(/-([\da-z])/gi,function(match,letter){return letter.toUpperCase();});}
-        function getVendorProp(name){var style=document.body.style;if(name in style)return name;var i=cssPrefixes.length,capName=name.charAt(0).toUpperCase()+ name.slice(1),vendorName;while(i--){vendorName=cssPrefixes[i]+ capName;if(vendorName in style)return vendorName;}
+        function getVendorProp(name){
+            var style=document.body.style;if(name in style)return name;var i=cssPrefixes.length,capName=name.charAt(0).toUpperCase()+ name.slice(1),vendorName;while(i--){vendorName=cssPrefixes[i]+ capName;if(vendorName in style)return vendorName;}
             return name;}
         function getStyleProp(name){name=camelCase(name);return cssProps[name]||(cssProps[name]=getVendorProp(name));}
         function applyCss(element,prop,value){prop=getStyleProp(prop);element.style[prop]=value;}

@@ -5,7 +5,7 @@
     //["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
     $MAX_DISTANCE = getsetting(islive() ? "maxdistance_live" : "maxdistance_local");
     $scripts = webroot("public/scripts");
-    $nprog = "#F0AD4E";
+    $nprog = "#F0AD4E";//color for loading bar
 ?>
 <script>
     function log(text) {
@@ -43,7 +43,7 @@
 <script>
     var MAX_DISTANCE = <?= $MAX_DISTANCE; ?>;//km
     var debugmode = '<?= !islive(); ?>' == '1';
-    var timestampoffset = 0;
+    var timestampoffset;
     timestampoffset = parseInt('<?= time(); ?>') - totimestamp();
 
     function userphonenumber(){
@@ -406,33 +406,70 @@
         addresshaschanged();
     }
 
+    function validtime(Time){
+        var Hours = Math.floor(Time / 100);
+        var Minutes = Time % 100;
+        while(Minutes > 59){
+            Minutes = Minutes - 60;
+            Hours += 1;
+        }
+        while(Hours > 23){
+            Hours = Hours - 24;
+        }
+        return Hours + "" + Minutes;
+    }
+    function validdayofweek(day){
+        return day % 7;
+    }
+
+    function verbosedate(date, today, today_text, tomorrow, tomor_text, time){
+        var dayofweek = date.getDay();
+        var thetime = " at " + GenerateTime(time);
+        if (dayofweek == today) {
+            return today_text + thetime;
+        } else if (dayofweek == tomorrow) {
+            return tomor_text + thetime;
+        } else {
+            return daysofweek[dayofweek] + " " + monthnames[date.getMonth()] + " " + date.getDate() + thetime;
+        }
+    }
+
 
     function GenerateHours(hours, increments) {
         //doesn't take into account <= because it takes more than 1 minute to place an order
         //now.setMinutes(now.getMinutes() + minutes);//start 40 minutes ahead
         if (isUndefined(increments)) {increments = 15;}
         var minutes = <?= getdeliverytime(); ?>;
-        var dayofweek = getNow(3);
+        var dayofweek = getNow(3);//day of week (virtual)
         var minutesinaday = 1440;
         var totaldays = 2;
         var dayselapsed = 0;
-        var today = dayofweek;
-        var tomorrow = (today + 1) % 7;
-        var now = getNow(4);
-        var tomorrowdate = getNow(5);//new Date().add("day", 1);
+        var today = getNow(3, false);//day of week (actual)
+        var tomorrow = validdayofweek(today + 1);
+        var now = getNow(4, false);//date (today, actual)
+        var tomorrowdate = getNow(5, false);//date (tomorrow, actual)
         var today_text = "Today (" + monthnames[now.getMonth()] + " " + now.getDate() + ")";
         var tomor_text = "Tomorrow (" + monthnames[tomorrowdate.getMonth()] + " " + tomorrowdate.getDate() + ")";
+        now = getNow(4);//date (today, virtual)
 
-        var time = getNow(2);
-        time = time + (increments - (time % increments));
+        var time = getNow(2);//24 hour time (virtual)
+        var oldtime = time;
+        time = validtime(time + (increments - (time % increments)));
+
         var oldValue = $("#deliverytime").val();
         var HTML = '';
         var temp = gettime(now, minutes, 15, time);
-        log("GenerateHours: " + temp + " Today: " + today + " Tomorrow: " + tomorrow);
+        if(time<oldtime){
+            dayofweek = validdayofweek(dayofweek + 1);
+        }
+        log("GenerateHours: " + temp + " Today: " + today + " (" + today_text + ") Tomorrow: " + tomorrow + " (" + tomor_text + ")");
         now = temp[0];
         time = temp[1];
+
+        dayofweek = now.getDay();
         if (isopen(hours, dayofweek, temp[2]) > -1) {
-            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver ASAP (' + GenerateTime(time) + ')</option>';
+            thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
+            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver ASAP (' + thedayname + ')</option>';
             time = addtotime(time, increments);
         }
         var thetime, minutes, thedayname, thedate;
@@ -442,22 +479,15 @@
             if (isopen(hours, dayofweek, time) > -1) {
                 minutes = time % 100;
                 if (minutes < 60) {
-                    thetime = GenerateTime(time);
-                    thedayname = daysofweek[dayofweek];
                     thedate = monthnames[now.getMonth()] + " " + now.getDate();
-                    if (dayofweek == today) {
-                        thedayname = today_text;
-                    } else if (dayofweek == tomorrow) {
-                        thedayname = tomor_text;
-                        now = tomorrowdate;
-                    } else {
-                        thedayname += " " + thedate;
-                    }
+                    thetime = GenerateTime(time);
+                    dayofweek = now.getDay();
+                    if (dayofweek == tomorrow) {now = tomorrowdate;}
+                    thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
                     var timestamp = totimestamp(time, now);
                     var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + timestamp + '"';
-                    //tempstr += ' fromtimestamp="' + fromtimestamp(timestamp) + '"'
                     tempstr += ' now="' + now + '"';
-                    HTML += tempstr + '>' + thedayname + " " + thetime + '</OPTION>';
+                    HTML += tempstr + '>' + thedayname + '</OPTION>';
                 }
             }
             time = addtotime(time, increments);

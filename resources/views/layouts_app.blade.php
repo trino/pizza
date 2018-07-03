@@ -163,7 +163,7 @@
 </body>
 
 <script type="text/javascript">
-    var newtime = -1, newday = -1;
+    var newtime = -1, newday = -1, testing = false;
     @if(isset($_GET["time"]) && is_numeric($_GET["time"]) && $_GET["time"] >= 0 && $_GET["time"] < 2400)
         newtime = Number("<?= $_GET["time"]; ?>");
     @endif
