@@ -124,6 +124,11 @@ function textcontains($text, $searchfor){
     return strpos(strtolower($text), strtolower($searchfor)) !== false;
 }
 
+function escapeSQL($text){
+    global $con;
+    return mysqli_real_escape_string($con, $text);
+}
+
 function insertdb($Table, $DataArray, $PrimaryKey = "id", $Execute = True){
     global $con;
     if (is_object($con)) {

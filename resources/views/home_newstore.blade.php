@@ -1,10 +1,16 @@
 <?php
     function restaurantexists($name, $email, $phone){
-        $restaurant = first("SELECT * FROM restaurants WHERE name = '" . $name ."' OR email = ' . $email . ' OR phone = '" . $phone . "'");
+        $query = "SELECT * FROM restaurants WHERE name = '" . $name ."' OR email = '" . $email . "' OR phone = '" . $phone . "'";
+        $restaurant = first($query);
+        if(is_null($restaurant)){return false;}
         return count($restaurant) > 0;
     }
 
     if(isset($_POST["action"])){
+        foreach(["restaurant"] as $key){
+            $_POST[$key] = escapeSQL($_POST[$key]);
+        }
+
         $phone = filternonnumeric($_POST["phonenumber"]);
         if(restaurantexists($_POST["restaurant"], $_POST["emailaddress"], $phone)){
             die("This restaurant exists already");
@@ -43,22 +49,31 @@
             "longitude"     => $_POST["longitude"],
             "phone"         => $phone
         ]);
+
+        $is_live = iif($_POST["is_live"] == "true", 1, 0);
+
         //create restaurant
         $restaurantid = insertdb("restaurants", [
             "name"          => $_POST["restaurant"],
             "email"         => $_POST["emailaddress"],
             "phone"         => $phone,
-            "is_delivery"   => 1,
+            "is_delivery"   => $is_live,
             "address_id"    => $addressid
         ]);
         //create hours
         $hours = $_POST["hours"];
         $hours["restaurant_id"] = $restaurantid;
-        $hoursid = insertdb("hours", $hours, "restaurant_id");
+        $hoursid = "[N/A]";
+        if($_POST["use_default_hours"] == "false"){
+            $hoursid = insertdb("hours", $hours, "restaurant_id");
+            $hoursid = "[Yes]";
+        }
 
         echo "<B>Created</B><BR>Restaurant ID: " . $restaurantid;
         echo "<BR>User ID: " . $userid;
         echo "<BR>Address ID: " . $addressid;
+        echo "<BR>Hours ID: " . $hoursid;
+        echo "<BR>Is Live: " . iif($is_live, "Yes", "No");
         die();
     }
     startfile("home_newstore");
@@ -69,19 +84,36 @@
         #add_unit{
             display: none;
         }
+
+        .inilist{
+            max-height: 500px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
     </STYLE>
-    Store creator
     <DIV CLASS="row">
         <DIV CLASS="col-md-2">
-            INI file:<BR>
-            <?= view("api_ini", ["filename" => base_path() . "/stoneycreek.txt", "onclick" => "loadstore", "class" => "cursor-pointer"])->render(); ?>
+            <?php
+                $dir = base_path();
+                $files = scandir($dir);
+                foreach($files as $file){
+                    if (getextension($file) == "ini"){
+                        echo '<B>INI file: ' . left($file, strlen($file) - 4) . '</B><DIV CLASS="inilist">';
+                        echo view("api_ini", ["filename" => $dir . "/" . $file, "onclick" => "loadstore", "class" => "cursor-pointer"])->render();
+                        echo '</DIV><HR>';
+                    }
+                }
+            ?>
         </DIV>
         <DIV CLASS="col-md-10">
+            Store creator:
             <INPUT TYPE="text" ID="storename" placeholder="Store Name" class="form-control">
             <?= view("popups_address", ["title" => "", "unit" => false, "address_placeholder" => "Address"])->render(); ?>
             <INPUT TYPE="email" ID="emailaddress" placeholder="Email Address" class="form-control">
             <INPUT TYPE="phone" ID="phonenumber" placeholder="Phone Number" class="form-control">
             <INPUT TYPE="password" ID="password" placeholder="password" class="form-control" value="admin">
+            <LABEL><INPUT TYPE="checkbox" ID="islive" CHECKED>Is Live</LABEL><BR>
+            <LABEL><INPUT TYPE="checkbox" ID="usedefaulthours">Use Default Hours instead of the below</LABEL>
             <?php
                 echo '<TABLE><TR><TH>Day</TH><TH>Open</TH><TH>Close</TH></TR>';
                 $daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -126,17 +158,30 @@
             //<div onclick="loadstore(this);" class="cursor-pointer" address="2372 Barton St E, Hamilton, ON L8E 2W7" gps="43.2376506,-79.7672911" url="qualitypizzaandwings.com (doesn't work)" phone="(905) 573-8800" sunday="12PM-12AM" monday="11AM-12AM" tuesday="11AM-12AM" wednesday="11AM-12AM" thursday="11AM-2AM" friday="11AM-2AM" saturday="11AM-2AM">Quality Pizza &amp; Wings</div>
             $("#storename").val( $(element).text() );
             $(getGoogleAddressSelector()).val( $(element).attr("address") );
-            $("#emailaddress").val( "roy+" + $(element).text().replaceAll(" ", "").replaceAll("&", "") + "@trinoweb.com" );
+            $("#emailaddress").val( "roy+" + $(element).text().replaceAll(" ", "").replaceAll("&", "").replaceAll("'", "") + "@trinoweb.com" );
             $("#phonenumber").val( $(element).attr("phone") );
-            var gps = $(element).attr("gps").split(",");
-            $("#add_latitude").val( gps[0] );
-            $("#add_longitude").val( gps[1] );
+            if($(element).hasAttr("gps")) {
+                var gps = $(element).attr("gps").split(",");
+                $("#add_latitude").val(gps[0]);
+                $("#add_longitude").val(gps[1]);
+            } else {
+                $("#add_latitude").val($(element).attr("latitude"));
+                $("#add_longitude").val($(element).attr("longitude"));
+            }
+
+            var hoursfound = 0;
             for (var day = 0; day < daysofweek.length; day++){
                 var dayofweek = daysofweek[day];
-                var hours = $(element).attr(daysofweek[day]).split("-");
-                $("#" + day + "_open").val( formattime(hours[0]) );
-                $("#" + day + "_close").val( formattime(hours[1]) );
-                //console.log(dayofweek + " = open " + hours[0] + " close " + hours[1]);
+                if($(element).hasAttr(dayofweek)) {
+                    var hours = $(element).attr(dayofweek).split("-");
+                    $("#" + day + "_open").val(formattime(hours[0]));
+                    $("#" + day + "_close").val(formattime(hours[1]));
+                    //console.log(dayofweek + " = open " + hours[0] + " close " + hours[1]);
+                    hoursfound++;
+                }
+            }
+            if(hoursfound == 0){
+                $('#usedefaulthours').prop('checked', true);
             }
         }
 
@@ -183,7 +228,9 @@
                 add_street: $("#add_street").val(),
                 add_city: $("#add_city").val(),
                 add_province: $("#add_province").val(),
-                add_postalcode: $("#add_postalcode").val()
+                add_postalcode: $("#add_postalcode").val(),
+                is_live: $("#islive").is(":checked"),
+                use_default_hours: $("#usedefaulthours").is(":checked")
             }).done(function (result) {
                 alert(result);
             });
