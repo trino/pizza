@@ -132,7 +132,7 @@ function escapeSQL($text){
 function insertdb($Table, $DataArray, $PrimaryKey = "id", $Execute = True){
     global $con;
     if (is_object($con)) {
-        $DataArray = escapearray($DataArray);
+        $DataArray = escapearray($DataArray, $con);
     }
     filtersubarrays($DataArray);
     $query = "INSERT INTO " . $Table . " (" . getarrayasstring($DataArray, True) . ") VALUES (" . getarrayasstring($DataArray, False) . ")";
@@ -156,8 +156,7 @@ function insertdb($Table, $DataArray, $PrimaryKey = "id", $Execute = True){
     return $query;
 }
 
-function escapearray($DataArray){
-    global $con;
+function escapearray($DataArray, $con){
     foreach ($DataArray as $Key => $Value) {
         if (!is_array($Value)) {
             $DataArray[$Key] = mysqli_real_escape_string($con, $Value);
@@ -251,11 +250,23 @@ function first($query, $Only1 = true, $Why = "Unknown"){
     if ($query) {
         $ret = array();
         while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+            unescape($row);
             if ($Only1) {return $row;}
             $ret[] = $row;
         }
         return $ret;
     }
+}
+
+function unescape(&$data){
+    if(is_array($data)){
+        foreach($data as $key => $index){
+            $data[$key] = unescape($index);
+        }
+    } else if (is_string($data)){
+        $data = stripslashes($data);
+    }
+    return $data;
 }
 
 function get($Key, $default = "", $arr = false){
@@ -324,6 +335,7 @@ function Query($query, $all = false, $Where = "Unknown"){
         if (is_object($result)) {
             $ret = true;
             $data = mysqli_fetch_all($result, MYSQLI_ASSOC);// or die ('Unable to execute query. '. mysqli_error($con) . "<P>Query: " . $query);
+            unescape($data);
         } else {
             debugprint($query . " returned no results");
         }
@@ -768,6 +780,14 @@ function verbosedate($date){
             break;
     }
     return date("l F j, Y @ g:i A", $date) . $append;
+}
+
+function findrestaurant($UserID){
+    $addresses = Query("SELECT id FROM useraddresses WHERE user_id = " . $UserID, true, "API");
+    $addresses = implode(",", collapsearray($addresses, "id"));
+    $restaurants = collapsearray(Query("SELECT id FROM restaurants WHERE address_id IN (" . $addresses. ")", true, "API"), "id");
+    if(count($restaurants) == 1){return $restaurants[0];}
+    return $restaurants;
 }
 
 function gethours($RestaurantID = -1){

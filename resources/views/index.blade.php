@@ -19,12 +19,12 @@
             }
         }
 
-        if(!islive()){
-            echo view("popups_time")->render();
-        }
         if(!read("id")){
             echo view("popups_login")->render();
         } else {
+            if(!islive() || read("profiletype") == 1){
+                echo view("popups_time")->render();
+            }
             ?>
             <div class="row">
                 <?php

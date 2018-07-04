@@ -361,6 +361,19 @@
                 }
                 break;
 
+            case "getorders":
+                //$_POST["restaurant"] = 3;$_POST["date"] = "05/02/2018";//forced test data
+                $date = explode("/", $_POST["date"]);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
+                $date = $date[2] . "-" . $date[0] . "-" . $date[1] . " 00:00:00";
+                $keys = iif(read("profiletype") == 1, "id, price", "*");
+                $results["data"] = Query("SELECT id, price FROM orders WHERE restaurant_id = " . $_POST["restaurant"] . " AND placed_at > '" . $date . "'", true, "home_list");
+                $data = ["place" => "getreceipt", "style" => 2, "party" => "private", "JSON" => false];
+                foreach($results["data"] as $index => $value){
+                    $data["orderid"] = $value["id"];
+                    $results["data"][$index]["html"] = view("popups_receipt", $data)->render();
+                }
+                break;
+
             default://unhandled, error
                 $results["Status"] = false;
                 $results["Reason"] = "'" . $_POST["action"] . "' is unhandled \r\n" . print_r($_POST, true);

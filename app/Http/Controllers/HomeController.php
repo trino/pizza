@@ -421,12 +421,14 @@ class HomeController extends Controller {
 
     function closestrestaurant($data, $gethours = false, $includesql = true){
         //if(!isset($data['radius'])){$data['radius'] = 100;}//default radius
-        $SQL = "SELECT address_id FROM restaurants WHERE address_id > 0 AND is_delivery = 1";
+        $SQL = "SELECT id, name, email, phone, is_delivery, address_id FROM restaurants WHERE address_id > 0 AND is_delivery = 1";
         if (isset($data["restaurant_id"])) {
             $SQL .= " AND id = " . $data["restaurant_id"];
         }
-        $owners = implode(",", collapsearray(Query($SQL, true, "HomeController.closestrestaurant1"), "address_id"));
+        $restaurantdata = Query($SQL, true, "HomeController.closestrestaurant1");
+        $owners = implode(",", collapsearray($restaurantdata, "address_id"));
         $limit = "";
+        $mergedata = isset($data["merge"]);
         if (isset($data["limit"])) {
             $limit = " LIMIT " . $data["limit"];
         } else {
@@ -439,19 +441,31 @@ class HomeController extends Controller {
         $SQL .= " ORDER BY distance ASC" . $limit;
         $Restaurants = Query($SQL, true, "HomeController.closestrestaurant2");//useraddresses
         if ($Restaurants) {
-            if ($gethours) {
-                if ($data["limit"] == 1) {
-                    $Restaurants = $this->processrestaurant($Restaurants[0]);
-                    $Restaurants["SQL"] = $SQL;
-                } else {
-                    foreach ($Restaurants as $Index => $Restaurant) {
-                        $Restaurants[$Index] = $this->processrestaurant($Restaurant);
-                    }
+            if ($data["limit"] == 1) {
+                if($mergedata) {$Restaurants[0] = $this->mergerestaurant($Restaurants[0], $restaurantdata);}
+                if ($gethours) {$Restaurants = $this->processrestaurant($Restaurants[0]);}
+                $Restaurants["SQL"] = $SQL;
+            } else {
+                foreach ($Restaurants as $Index => $Restaurant) {
+                    if($mergedata) {$Restaurants[$Index] = $this->mergerestaurant($Restaurant, $restaurantdata);}
+                    if ($gethours) {$Restaurants[$Index] = $this->processrestaurant($Restaurant);}
                 }
             }
         }
         if(!islive() && $includesql){$Restaurants["SQL"] = $SQL;}
         return $Restaurants;
+    }
+
+    function mergerestaurant($Restaurant, $restaurantdata){
+        foreach($restaurantdata as $data){
+            if($data["address_id"] == $Restaurant["id"]){
+                foreach($data as $key => $value){
+                    //if($key == "id"){$key = "restaurant_id";}
+                    $Restaurant[$key] = $value;
+                }
+            }
+        }
+        return $Restaurant;
     }
 
     function processrestaurant($Restaurant){

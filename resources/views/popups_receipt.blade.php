@@ -195,9 +195,11 @@
     $onlydebug = "Only shows in debug mode! - ";
 ?>
 
-    <div class="alert alert-success text-center text-sm-center mb-2">
-        <h2>{{ $Delivery . $duration }}</h2>
-    </div>
+    @if($party != "private"))
+        <div class="alert alert-success text-center text-sm-center mb-2">
+            <h2>{{ $Delivery . $duration }}</h2>
+        </div>
+    @endif
 
     @if($includeextradata)
         @if($timer)
@@ -506,8 +508,9 @@
                 if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
                 echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($tax, 2) . '</TD></TR>';
                 echo '<TR style="font-weight: bold;"><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($total, 2) . '</TD></TR>';
-                echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';
-
+                if($party != "private"){
+                    echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';
+                }
                 insertdb("orders", array("id" => $orderid, "price" => $total));//saved for stripe
             } catch (exception $e) {
                 echo 'Caught exception: ', $e->getMessage() . " on line " . $e->getLine() . "<BR>";
@@ -521,7 +524,9 @@
             if ($style == 2 && !$includeextradata) {
                 echo '<TR><TD COLSPAN="' . 2 . '">';
                 if (isset($JSON)) {
-                    echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
+                    if($party != "private"){
+                        echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
+                    }
                 } else {
                     echo $Order["name"] . " - " . $Order["email"] . "<BR>" . formatphone($Order["phone"]) . " " . formatphone($Order["cell"]) . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . ", " . $Order["province"] . "<BR>" . $Order["postalcode"] . '<BR>' . $Order["unit"];
                 }

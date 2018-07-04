@@ -506,8 +506,9 @@
         $("#deliverytime").html(HTML).val(oldValue);
     }
 
+    var doreset = true;
     $(document).ready(function () {
-        reseturl("document ready");
+        if(doreset){reseturl("document ready");}
         <?php
             if(read("id")){
                 if (islive()) {

@@ -9,6 +9,14 @@
     if (!isset($icons))                 {$icons = false;}
     if (isset($autored))                {$required .= ' autored="' . $autored . '"';}
     if(!isset($title))                  {$title = "Address";}
+    if(isset($address))                 {$GLOBALS["address"] = $address;}
+
+    function address($key){
+        if(isset($GLOBALS["address"][$key])){
+            return ' VALUE="' . $GLOBALS["address"][$key] . '"';
+        }
+        return "";
+    }
 
     $q = "'";
     $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
@@ -18,11 +26,11 @@
     switch ($style) {
         case 0:
             echo '<DIV><DIV CLASS="col-md-2">' . $title . '</DIV><DIV CLASS="col-md-12" ID="gmapc">';
-            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . $address_placeholder . '></div></DIV>';
+            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . $address_placeholder . address("formatted_address") . '></div></DIV>';
             break;
         case 1:
             if($icons) {echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-map-marker text-white fa-stack-1x"></i></span></div><div class="input_right">';}
-            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start typing your address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . '"></SPAN>';
+            echo '<SPAN ID="gmapc"><INPUT TYPE="text" ID="formatted_address" PLACEHOLDER="Start typing your address" CLASS="form-control formatted_address' . $class . '"' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . address("formatted_address") . '"></SPAN>';
             if($icons) {echo '</div>';}
             echo '<STYLE>.address:focus{z-index: 999;}</STYLE>';
             break;
@@ -47,18 +55,18 @@
         <div class="input_right">
     @endif
     @if($unit)
-        <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to">
+        <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to" <?=address("unit"); ?> >
     @endif
     @if($icons)
-            </div>
+        </div>
     @endif
-        <INPUT TYPE="text" NAME="number" ID="add_number" PLACEHOLDER="Street Number" {{ $required }} CLASS="form-control street_number address dont-show">
-        <INPUT TYPE="text" NAME="street" ID="add_street" PLACEHOLDER="Street" {{ $required }} CLASS="form-control route address dont-show">
-        <INPUT TYPE="text" NAME="city" ID="add_city" PLACEHOLDER="City" {{ $required }} CLASS="form-control locality address dont-show">
-        <INPUT TYPE="text" NAME="province" ID="add_province" PLACEHOLDER="Province" {{ $required }} CLASS="form-control administrative_area_level_1 address dont-show">
-        <INPUT TYPE="text" NAME="postalcode" ID="add_postalcode" PLACEHOLDER="Postal Code" {{ $required }} CLASS="form-control postal_code address dont-show">
-        <INPUT TYPE="text" NAME="latitude" ID="add_latitude" PLACEHOLDER="Latitude" {{ $required }} CLASS="form-control latitude address dont-show">
-        <INPUT TYPE="text" NAME="longitude" ID="add_longitude" PLACEHOLDER="Longitude" {{ $required }} CLASS="form-control longitude address dont-show">
+        <INPUT TYPE="text" NAME="number" ID="add_number" PLACEHOLDER="Street Number" {{ $required }} CLASS="form-control street_number address dont-show" <?=address("number"); ?> >
+        <INPUT TYPE="text" NAME="street" ID="add_street" PLACEHOLDER="Street" {{ $required }} CLASS="form-control route address dont-show" <?=address("street"); ?> >
+        <INPUT TYPE="text" NAME="city" ID="add_city" PLACEHOLDER="City" {{ $required }} CLASS="form-control locality address dont-show" <?=address("city"); ?> >
+        <INPUT TYPE="text" NAME="province" ID="add_province" PLACEHOLDER="Province" {{ $required }} CLASS="form-control administrative_area_level_1 address dont-show" <?=address("province"); ?> >
+        <INPUT TYPE="text" NAME="postalcode" ID="add_postalcode" PLACEHOLDER="Postal Code" {{ $required }} CLASS="form-control postal_code address dont-show" <?=address("postalcode"); ?> >
+        <INPUT TYPE="text" NAME="latitude" ID="add_latitude" PLACEHOLDER="Latitude" {{ $required }} CLASS="form-control latitude address dont-show" <?=address("latitude"); ?> >
+        <INPUT TYPE="text" NAME="longitude" ID="add_longitude" PLACEHOLDER="Longitude" {{ $required }} CLASS="form-control longitude address dont-show" <?=address("longitude"); ?> >
         <INPUT TYPE="hidden" NAME="user_id" ID="add_user_id" PLACEHOLDER="user_id" {{ $required }} CLASS="form-control session_id_val address" value="{{$user_id}}">
     @if($form) </FORM> @endif
 
@@ -285,6 +293,10 @@
                 validateinput("#restaurant", "Please select your desired restaurant");
             }
         }
+    }
+
+    function serializeaddress(){
+        return $("#googleaddress").serialize() + "&formatted_address=" + encodeURIComponent($(getGoogleAddressSelector()).val());
     }
 </SCRIPT>
 <?php
