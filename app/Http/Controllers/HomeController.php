@@ -388,7 +388,7 @@ class HomeController extends Controller {
                 if ($action["phone"]) {
                     //if SMS restaurant then SMS user of the restaurant instead since all of the restaurant phones are land lines
                     $action["message"] = str_replace("[url]", "", $action["message"]);
-                    $action["message"] = replacetag($action["message"], "press9torepeat");
+                    $action["message"] = $this->replacetag($action["message"], "press9torepeat");
 
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);

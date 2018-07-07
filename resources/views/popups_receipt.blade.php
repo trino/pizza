@@ -195,7 +195,7 @@
     $onlydebug = "Only shows in debug mode! - ";
 ?>
 
-    @if($party != "private"))
+    @if($party != "private")
         <div class="alert alert-success text-center text-sm-center mb-2">
             <h2>{{ $Delivery . $duration }}</h2>
         </div>
