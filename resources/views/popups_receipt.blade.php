@@ -196,7 +196,7 @@
 ?>
 
     @if($party != "private")
-        <div class="alert alert-success text-center text-sm-center mb-2">
+        <div class="alert alert-success text-center text-sm-center mb-4">
             <h2>{{ $Delivery . $duration }}</h2>
         </div>
     @endif
@@ -540,7 +540,6 @@
     </TABLE>
 
     @if(!isset($JSON))
-                    <br><hr><br>
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
                 <TD WIDTH="49%" style="font-size: 85%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
