@@ -12,7 +12,7 @@
 ?>
 <div class="row">
     <DIV CLASS="col-lg-4 col-md-5 bg-white">
-        <DIV CLASS="btn-sm-padding bg-white padding-tb">
+        <DIV CLASS="py-3 px-3">
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">LOG IN</a>
@@ -45,7 +45,7 @@
                         <!--div class="clearfix py-2"></div>
                         <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
                         <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-sm btn" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
+                        <BUTTON CLASS="btn-sm btn btn-light" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
                     </FORM>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="buzz">
@@ -82,9 +82,9 @@
 
     </DIV>
     <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
-        <span class="bold bigtext"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span>
+        <span class="bold bigtext"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span><br><br>
         <p>The art of delivery is in the team, local restaurants at your footstep within <?= $time; ?> minutes.</p>
-        <P><I class="lead text-danger strong">Feed yourself plus someone else! <!--a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a--></i></P>
+        <p class="text-danger">Feed yourself plus someone else! <!--a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a--></p>
 
         <div class="row">
             <div class="col-md-6 padleftright15">

@@ -154,7 +154,7 @@
                 <p>
                     <?= $site_name; ?> is a pizza delivery service that's "faster than picking up the phone".
 
-                    Created by Van and Roy of Hamilton; we've seen what's out there for online ordering and we're confident that we can do better.
+                    We've seen what's out there for online ordering and we're confident that we can do better.
                     <br><br>
 
                     We believe in the community and we must give back at all cost.
@@ -167,10 +167,10 @@
                 <hr>
 
                 <div class="btn-outlined-danger text-center pt-1">
-                    <strong>June, 2017</strong>
+                    <strong>July, 2018</strong>
                     <p> Orders: <?= $orders; ?>
                         <br> Donated: $<?= number_format((float)$orders * $donation_per_order, 2, '.', ''); ?>
-                        <br> Charity: London Food Bank</p>
+                        <br> Charity: Hamilton Food Centre</p>
                 </div>
             </div>
         </div>
