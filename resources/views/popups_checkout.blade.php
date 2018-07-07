@@ -214,8 +214,8 @@
         addressstatus();
         if (closest.length > 0) {
             GenerateHours(closest[index].hours);
-            shortitems = CheckforShortage(closest[index].shortage);
-            alertshortage();
+         //   shortitems = CheckforShortage(closest[index].shortage);
+         //   alertshortage();
         }
     }
 
