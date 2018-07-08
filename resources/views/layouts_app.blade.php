@@ -35,7 +35,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
-    <title><?= sitename; ?> - Pizza Delivery</title>
+    <title><?= sitename; ?> - Delivery</title>
     <link rel="icon" sizes="128x128" href="<?= webroot("public/images/pizza128.png"); ?>">
     <link rel="icon" sizes="192x192" href="<?= webroot("public/images/pizza192.png"); ?>">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -94,7 +94,7 @@
         @endif
         @if($routename == "help")
             <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i
-                            class="fa fa fa-shopping-basket icon-width"></i> Order Now</A></LI>
+                            class="fa fa fa-shopping-basket icon-width"></i> Menu</A></LI>
         @else
             <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i
                             class="fa fa-question-circle icon-width"></i> FAQs</A></LI>

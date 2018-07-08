@@ -27,7 +27,7 @@
                 <div CLASS="editprofilediv">
                     <DIV ID="addresslist"></DIV>
                 </div>
-                <hr>
+
                 <div CLASS="editprofilediv">
                     <DIV ID="cardlist"></DIV>
                 </div>

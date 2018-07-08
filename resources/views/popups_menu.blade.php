@@ -48,7 +48,7 @@
             }
             return $toppings_display . '</optgroup>';
         }
-    
+
         //same as explode, but makes sure each cell is trimmed
         function explodetrim($text, $delimiter = ",", $dotrim = true){
             if (is_array($text)) {
@@ -63,18 +63,18 @@
             }
             return $text;
         }
-    
+
         //converts a string to a class name (lowercase, replace spaces with underscores)
         function toclass($text){
             $text = strtolower(str_replace(" ", "_", trim($text)));
             return $text;
         }
-    
+
         function endwith($Text, $WithWhat){
             return strtolower(right($Text, strlen($WithWhat))) == strtolower($WithWhat);
         }
     }
-    
+
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
     $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true, "popups_menu.categories");
     $isfree = collapsearray(Query("SELECT * FROM additional_toppings", true, "popups_menu.isfree"), "price", "size");
@@ -85,7 +85,7 @@
     $groups = array();
     $toppings_display = getaddons("toppings", $isfree, $qualifiers, $addons, $groups);
     $wings_display = getaddons("wings_sauce", $isfree, $qualifiers, $addons, $groups);
-    
+
     $tables = array("toppings", "wings_sauce");
     $totalmenuitems = countSQL("menu");
     $maxmenuitemspercol = $totalmenuitems / 3; //17
@@ -140,7 +140,7 @@
                         }
                         $icon = $toppings_extra;
                     }
-    
+
                     $total = 0;
                     foreach ($tables as $table) {
                         echo $table . '="' . $menuitem[$table] . '" ';
@@ -158,7 +158,7 @@
 
                 <span class="align-middle item-icon rounded-circle bg-warning sprite sprite-{{$itemclass}} sprite-medium"></span>
                 <span class="align-middle item-name">{{$menuitem['item']}} </span>
-                <span class="text-muted ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
+                <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
             </button>
         @endforeach
         @if($catclass=="dips" || $catclass=="sides")

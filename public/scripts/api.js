@@ -629,7 +629,7 @@ function generatereceipt(forcefade) {
                 }
                 for (var currentitem = 0; currentitem < item["itemaddons"].length; currentitem++) {
                     var addons = item["itemaddons"][currentitem];
-                    tempHTML += '<DIV CLASS="receipt_item sub_item font-italic" ID="subitem_' + itemid + '">';
+                    tempHTML += '<DIV CLASS="receipt_item sub_item text-muted" ID="subitem_' + itemid + '">';
                     if (itemname) {
                         tempHTML += ordinals[currentitem] + " " + itemname + ': ';
                     }
