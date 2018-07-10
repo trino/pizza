@@ -19,8 +19,10 @@
     }
 
     $q = "'";
+    //chrome autofill avoidance
     $rndname = "formatted_address";// str_replace(" ", "-", str_replace(":", "-",now()));
     $autocompleteblocker = ' ONCLICK="autofix(this);" onkeydown="gmapkeypress(event);" parentlevel="2"';
+    $unitname = "suba" . time();
     echo '<SPAN ID="mirror"></SPAN>';
 
     switch ($style) {
@@ -55,7 +57,7 @@
         <div class="input_right">
     @endif
     @if($unit)
-        <INPUT TYPE="text" NAME="unit" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to" <?=address("unit"); ?> >
+        <INPUT TYPE="text" NAME="<?= $unitname; ?>" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to" <?=address("unit"); ?> >
     @endif
     @if($icons)
         </div>
@@ -170,7 +172,7 @@
 
     function deleteaddress(ID) {
         if (ID < 0) {//add new address
-            var address = getform("#orderinfo");
+            var address = serializeaddress("#orderinfo");
             $.post(webroot + "placeorder", {
                 _token: token,
                 info: address
@@ -295,8 +297,19 @@
         }
     }
 
-    function serializeaddress(){
-        return $("#googleaddress").serialize() + "&formatted_address=" + encodeURIComponent($(getGoogleAddressSelector()).val());
+    function serializeaddress(asdata){
+        var ret;
+        if(isUndefined(asdata)){asdata = false;}
+        if(asdata){
+            ret = getform(asdata);
+            ret["unit"] = ret["<?= $unitname; ?>"];
+            delete ret["<?= $unitname; ?>"];
+            return ret;
+        }
+        ret = $("#googleaddress").serialize();
+        if(ret.length > 0){ret += "&";}
+        ret = ret.replace("&<?= $unitname; ?>=", "&unit=");
+        return ret + "formatted_address=" + encodeURIComponent($(getGoogleAddressSelector()).val());
     }
 </SCRIPT>
 <?php

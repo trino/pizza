@@ -8,6 +8,10 @@
         border: 2px solid red;
     }
 
+    .timecaption, #timeselect {
+        z-index: -1;
+    }
+
     .timecaption{
         background-color: red;
         color: white;
@@ -44,6 +48,12 @@
 
     .colon::before{
         content: ":";
+    }
+
+    @media screen and (max-width: 400px) {
+        #timeselect{
+            display: none;
+        }
     }
 </STYLE>
 <DIV ID="timeselect">

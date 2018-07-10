@@ -223,7 +223,7 @@
                     var formdata = getform("#regform");
                     formdata["action"] = "registration";
                     formdata["_token"] = token;
-                    formdata["address"] = getform("#addform");
+                    formdata["address"] = serializeaddress("#addform");
                     skipunloadingscreen = true;
                     $.post(webroot + "auth/login", formdata, function (result) {
                         if (result) {

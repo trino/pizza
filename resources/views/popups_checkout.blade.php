@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="input_right">
                                         <input type="text" size="20" class="form-control credit-info" autored="red_card" data-stripe="number" placeholder="Card Number" autocomplete="cc-number" onfocus="creditcardstatus(true);" onblur="creditcardstatus(false);">
-                                        <BUTTON ID="chromeccbutton" style="display: none;" ONCLICK="creditcardstatus(false);">
+                                        <BUTTON ID="chromeccbutton-disabled" style="display: none;" ONCLICK="creditcardstatus(false);">
                                             <i class="fas fa-unlock"></i>
                                         </BUTTON>
                                     </div>
