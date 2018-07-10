@@ -869,7 +869,10 @@ function includefile($path){
     $extension = getextension($path);
     $actualpath = base_path() . "/" . $path;
     if(file_exists($actualpath)) {
-        $webpath = webroot($path) . "?" . filemtime($actualpath);
+        $webpath = webroot($path);
+        //if($GLOBALS["settings"]["domenucache"] != 1){
+            $webpath .= "?" . filemtime($actualpath);
+        //}
         switch ($extension) {
             case "css":
                 echo '<link rel="stylesheet" href="' . $webpath . '">' . "\r\n";

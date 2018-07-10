@@ -668,6 +668,10 @@ ul {
     height: 100%;
 }
 
+.half-width{
+    width: 49%;
+}
+
 .grey-backdrop {
     background: rgba(128, 128, 128, 0.75);
 }

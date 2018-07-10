@@ -437,6 +437,8 @@ class HomeController extends Controller {
         $SQL = "SELECT *, ( 6371 * acos( cos( radians('" . $data['latitude'] . "') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('" . $data['longitude'] . "') ) + sin( radians('" . $data['latitude'] . "') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (" . $owners . ")";
         if (isset($data['radius'])) {
             $SQL .= " HAVING distance <= " . $data['radius'];
+        //} else {
+          //  $SQL .= " HAVING distance <= max_delivery_distance";
         }
         $SQL .= " ORDER BY distance ASC" . $limit;
         $Restaurants = Query($SQL, true, "HomeController.closestrestaurant2");//useraddresses

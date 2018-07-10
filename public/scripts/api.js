@@ -1204,7 +1204,7 @@ var skipmodalhide = false;
         $("#alert-ok").off("click");
         $("#alert-confirm").off("click");
         $("#alertmodalbody").html(arguments[0]);
-        $("#alertmodallabel").text(title);
+        $("#alertmodallabel").html(title);
         $("#alertmodal").modal('show');
     };
 })();

@@ -70,25 +70,49 @@
         });
     });
 
+    function storeorders(){
+        $("#profilemodal").modal("hide");
+        var HTML = '<INPUT TYPE="button" VALUE="Your orders" CLASS="btn btn-sm btn-secondary half-width" ONCLICK="orders();"><INPUT TYPE="button" VALUE="Store orders" CLASS="btn btn-sm btn-primary half-width" ONCLICK="storeorders();"><BR><ul class="list-group" ID="ordersHTML">';
+        if(userdetails.hasOwnProperty("storeorders")){
+            HTML += userdetails["storeorders"];
+        } else {
+            $.post("<?= webroot('public/list/orders'); ?>", {
+                _token: token,
+                action: "getrecentorders"
+            }, function (result) {
+                var HTML = "";
+                result = JSON.parse(result);
+                for (var i = 0; i < result["data"].length; i++) {
+                    var order = result["data"][i];
+                    var ID = order["id"];
+                    HTML += '<li ONCLICK="orders(' + ID + ');"><span class="text-danger strong">ORDER # ' + ID + ' </span><br>' + order["placed_at"] + '<br><DIV ID="pastreceipt' + ID + '">' + order["html"] + '</DIV></li>';
+                }
+                userdetails["storeorders"] = HTML;
+                $("#ordersHTML").html(HTML);
+            });
+        }
+        alert(HTML + '</ul>', 'Orders');
+    }
+
     //handles the orders list modal
     function orders(ID, getJSON) {
         if (isUndefined(ID)) {//no ID specified, get a list of order IDs from the user's profile and make buttons
             $("#profilemodal").modal("hide");
-            var HTML = '<ul class="list-group">';
+            var HTML = '<INPUT TYPE="button" VALUE="Your orders" CLASS="btn btn-sm btn-primary half-width" ONCLICK="orders();"><INPUT TYPE="button" VALUE="Store orders" CLASS="btn btn-sm btn-secondary half-width" ONCLICK="storeorders();"><BR>';
             var First = false;
-            for (var i = 0; i < userdetails["Orders"].length; i++) {
-                var order = userdetails["Orders"][i];
-                ID = order["id"];
-                if (!First) {
-                    First = ID;
+            if(userdetails["Orders"].length > 0) {
+                HTML += '<ul class="list-group">';
+                for (var i = 0; i < userdetails["Orders"].length; i++) {
+                    var order = userdetails["Orders"][i];
+                    ID = order["id"];
+                    if (!First) {First = ID;}
+                    HTML += '<li ONCLICK="orders(' + ID + ');"><span class="text-danger strong">ORDER # ' + ID + ' </span><br>' + order["placed_at"] + '<br><DIV ID="pastreceipt' + ID + '"></DIV></li>';
                 }
-                HTML += '<li ONCLICK="orders(' + ID + ');"><span class="text-danger strong">ORDER # ' + ID + ' </span><br>' + order["placed_at"] + '<br><DIV ID="pastreceipt' + ID + '"></DIV></li>';
+                HTML += '</ul>';
+            } else {
+                HTML += "No orders placed yet";
             }
-            HTML += '</ul>';
-            if (!First) {
-                HTML = "No orders placed yet";
-            }
-            alert(HTML, "Orders");
+            alert(HTML, 'Orders');
             if (First) {
                 orders(First);
             }

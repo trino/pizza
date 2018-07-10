@@ -524,9 +524,9 @@
             if ($style == 2 && !$includeextradata) {
                 echo '<TR><TD COLSPAN="' . 2 . '">';
                 if (isset($JSON)) {
-                    if($party != "private"){
+                    //if($party != "private"){
                         echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
-                    }
+                    //}
                 } else {
                     echo $Order["name"] . " - " . $Order["email"] . "<BR>" . formatphone($Order["phone"]) . " " . formatphone($Order["cell"]) . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . ", " . $Order["province"] . "<BR>" . $Order["postalcode"] . '<BR>' . $Order["unit"];
                 }

@@ -223,6 +223,7 @@
     }
 
     if(isset($_GET["action"]) && !isset($_POST["action"])){
+        //if(islive() && read("profiletype") != 1){die("GET is not accepted on live");}
         $_POST = $_GET;
         $_POST["isGET"] = true;
     }
@@ -361,13 +362,25 @@
                 }
                 break;
 
+            case "getrecentorders":
+                if(!isset($_POST["limit"])){$_POST["limit"] = 5;}
+                $results["data"] = Query("SELECT id, price FROM orders WHERE user_id <> " . read("id") . " ORDER BY id DESC LIMIT " . $_POST["limit"], true, "getrecentorders");
+                $data = ["place" => "getreceipt", "style" => 2, "party" => "private", "JSON" => false];
+                foreach($results["data"] as $index => $value){
+                    $data["orderid"] = $value["id"];
+                    $results["data"][$index]["html"] = view("popups_receipt", $data)->render();
+                }
+                break;
+
             case "getorders":
                 //$_POST["restaurant"] = 3;$_POST["date"] = "05/02/2018";//forced test data
                 $date = explode("/", $_POST["date"]);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
                 $date = $date[2] . "-" . $date[0] . "-" . $date[1] . " 00:00:00";
                 $keys = iif(read("profiletype") == 1, "id, price", "*");
                 $results["data"] = Query("SELECT id, price FROM orders WHERE restaurant_id = " . $_POST["restaurant"] . " AND placed_at > '" . $date . "'", true, "home_list");
-                $data = ["place" => "getreceipt", "style" => 2, "party" => "private", "JSON" => false];
+                $party = "private";//profiletypes: 0=user, 1=admin, 2=restaurant
+                if(read("profiletype") == 2){$party = "restaurant";}
+                $data = ["place" => "getreceipt", "style" => 2, "party" => $party, "JSON" => false];
                 foreach($results["data"] as $index => $value){
                     $data["orderid"] = $value["id"];
                     $results["data"][$index]["html"] = view("popups_receipt", $data)->render();
