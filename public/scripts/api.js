@@ -385,7 +385,7 @@ function loadmodal(element, notparent) {
         refreshremovebutton();
     }
     $("#additemtoorder").html(title);
-    $("#modal-itemtotalprice").text(Number(itemcost).toFixed(2));
+    itemtotalprice(itemcost, false);
 }
 
 function refreshremovebutton() {
@@ -1958,14 +1958,26 @@ function generateaddons(ItemIndex, ToppingIndex) {
         HTML += tempstr + '</DIV>';
     }
 
-    var totalcost = getcost(totaltoppings);
-    $("#modal-itemtotalprice").text(totalcost);
+    itemtotalprice(getcost(totaltoppings));
     $("#theaddons").html(HTML);
     $(".currentitem.thisside").trigger("click");
     refreshremovebutton();
     if (ItemIndex > -1) {
         log("FADE: #topping_" + ItemIndex + "_" + ToppingIndex);
         $("#topping_" + ItemIndex + "_" + ToppingIndex).hide().fadeTo(fade_speed, 1);
+    }
+}
+
+function itemtotalprice(newprice, fade){
+    if(isUndefined(fade)){fade = true;}
+    newprice = Number(newprice).toFixed(2);
+    var current = $("#modal-itemtotalprice").text();
+    if(current != newprice) {
+        if (fade) {
+            $("#modal-itemtotalprice").stop(true, true).fadeTo(fade_speed, 0, function() {$("#modal-itemtotalprice").text(newprice).fadeTo(fade_speed, 1)});
+        } else {
+            $("#modal-itemtotalprice").text(newprice);
+        }
     }
 }
 
