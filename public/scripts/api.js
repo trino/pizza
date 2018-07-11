@@ -1021,7 +1021,7 @@ function placeorder(StripeResponse) {
     if (!canplaceanorder(false, "placeorder")) {return cantplaceorder();}
     if (isUndefined(StripeResponse)) {StripeResponse = "";}
     if (isObject(userdetails)) {
-        var addressinfo = getform("#orderinfo");//i don't know why the below 2 won't get included. this forces them to be
+        var addressinfo = serializeaddress("#orderinfo");//i don't know why the below 2 won't get included. this forces them to be
         addressinfo["cookingnotes"] = $("#cookingnotes").val();
         addressinfo["deliverytime"] = $("#deliverytime").val();
         addressinfo["restaurant_id"] = $("#restaurant").val();
