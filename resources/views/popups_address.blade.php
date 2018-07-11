@@ -235,7 +235,7 @@
             street_number: 'short_name',
             route: 'short_name',//street name
             locality: 'long_name',//ON Canada
-            administrative_area_level_1: 'long_name',
+            administrative_area_level_1: 'short_name',//province
             country: 'long_name',
             postal_code: 'short_name'
         };
