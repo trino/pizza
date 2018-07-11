@@ -92,6 +92,7 @@
     $itemsInCol = 0;
     $CurrentCol = 1;
     $CurrentCat = 0;
+    echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 ?>
 <div class="col-lg-3 col-md-12 bg-white ismenu">
     @foreach ($categories as $category)
