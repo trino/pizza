@@ -436,10 +436,12 @@ function printfile($filename){
     echo '<DIV CLASS="blue">' . $filename . '</DIV>';
 }
 
+//removes numbers
 function filternumeric($text, $withwhat = ''){
     return preg_replace('/[0-9]/', $withwhat, $text);
 }
 
+//removes non-numbers
 function filternonnumeric($text, $withwhat = ''){
     return preg_replace('/[^0-9]/', $withwhat, $text);
 }
@@ -595,8 +597,8 @@ function debugprint($text, $path = "royslog.txt", $DeleteFirst = false){
     return $text;
 }
 
-function orderpath($OrderID){
-    $userid = first("SELECT user_id FROM orders WHERE id = " . $OrderID, true, "API.orderpath");
+function orderpath($OrderID, $userid = false){
+    if(!$userid){$userid = first("SELECT user_id FROM orders WHERE id = " . $OrderID, true, "API.orderpath");}
     if($userid) {
         $userid = $userid["user_id"];
         $oldfilename = public_path("orders") . "/" . $OrderID . ".json";

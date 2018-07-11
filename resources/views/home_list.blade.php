@@ -57,6 +57,12 @@
         return $ID;
     }
 
+    function toSQLdate($javascriptdate, $midnight = false){
+        $date = explode("/", $javascriptdate);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
+        $midnight = iif($midnight, " 23:59:59", " 00:00:00");
+        return $date[2] . "-" . $date[0] . "-" . $date[1] . $midnight;
+    }
+
     function getfields($result, $asSQL = false){
         $result = mysqli_fetch_fields($result);
         foreach($result as $ID => $Value){
@@ -102,6 +108,51 @@
         }
         return $return;
     }
+
+    function containsitems($OrderID, $SearchtermArray, $SearchTerm, &$JSON){
+        if(!$SearchTerm){return true;}
+        $JSON = orderpath($OrderID);
+        if (!file_exists($JSON)) {return false;}
+        $JSON = json_decode(file_get_contents($JSON));
+        foreach($JSON as $item){
+            if(containsitem($item, $SearchtermArray)){
+                return true;
+            }
+        }
+        return false;
+    }
+    function containsitem($menuitem, $SearchtermArray){
+        //quantity, itemid, itemname, itemprice, itemsize, category, toppingcost, toppingcount, isnew
+        foreach($SearchtermArray as $Searchterm){
+            $number = filternonnumeric($Searchterm);
+            $contains_greaterthan = textcontains($Searchterm, ">");
+            $contains_lesser_than = textcontains($Searchterm, "<");
+            $contains__equals__to = textcontains($Searchterm, "=");
+            if(($contains_lesser_than || $contains_greaterthan || $contains__equals__to) && $number){
+                if ($contains_lesser_than){
+                    if($contains__equals__to){
+                        if ($menuitem->itemprice <= $number){return true;}
+                    }
+                    if ($menuitem->itemprice < $number){return true;}
+                }
+                if ($contains_greaterthan){
+                    if($contains__equals__to){
+                        if ($menuitem->itemprice >= $number){return true;}
+                    }
+                    if ($menuitem->itemprice > $number){return true;}
+                }
+                if($contains__equals__to){
+                    if ($menuitem->itemprice == $number){return true;}
+                }
+            } else {
+                if(textcontains($Searchterm, "-")){
+                    if (textcontains($menuitem->itemname, str_replace("-", "", $Searchterm))){return false;}
+                }
+                if (textcontains($menuitem->itemname, $Searchterm)){return true;}
+            }
+        }
+    }
+
 
     //sets permissions, SQL, fields for each whitelisted table
     $TableStyle = 0;
@@ -374,16 +425,45 @@
 
             case "getorders":
                 //$_POST["restaurant"] = 3;$_POST["date"] = "05/02/2018";//forced test data
-                $date = explode("/", $_POST["date"]);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
-                $date = $date[2] . "-" . $date[0] . "-" . $date[1] . " 00:00:00";
+                if($_POST["useend"] == "true"){
+                    $startdate = strtotime($_POST["date"]);//date_parse
+                    $enddate = strtotime($_POST["enddate"]);
+                    if($enddate < $startdate){
+                        $enddate = $_POST["enddate"];
+                        $_POST["enddate"] = $_POST["date"];
+                        $_POST["date"] = $enddate;
+                    }
+                }
+                $date = toSQLdate($_POST["date"]);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
                 $keys = iif(read("profiletype") == 1, "id, price", "*");
-                $results["data"] = Query("SELECT id, price FROM orders WHERE restaurant_id = " . $_POST["restaurant"] . " AND placed_at > '" . $date . "'", true, "home_list");
+                $results["startdate"] = $_POST["date"];
+
+                $query = "SELECT id, price FROM orders WHERE ";
+                if(is_numeric($_POST["restaurant"])){
+                    $query .= "restaurant_id = " . $_POST["restaurant"] . " AND ";
+                }
+                $query .= "placed_at > '" . $date . "'";
+                if($_POST["useend"] == "true"){//&& $_POST["enddate"] != $_POST["date"]){
+                    $results["enddate"] = $_POST["enddate"];
+                    $query .= " AND placed_at < '" . toSQLdate($_POST["enddate"], true) . "'";
+                }
+                if(read("profiletype") == 1){$results["query"] = $query;}
+                $results["data"] = Query($query, true, "home_list");
                 $party = "private";//profiletypes: 0=user, 1=admin, 2=restaurant
                 if(read("profiletype") == 2){$party = "restaurant";}
-                $data = ["place" => "getreceipt", "style" => 2, "party" => $party, "JSON" => false];
+                //$data = ["place" => "getreceipt", "style" => 2, "party" => $party, "JSON" => false];
+                $search = explode(",", $_POST["search"]);
                 foreach($results["data"] as $index => $value){
-                    $data["orderid"] = $value["id"];
-                    $results["data"][$index]["html"] = view("popups_receipt", $data)->render();
+                    $JSON = "";
+                    if(containsitems($value["id"], $search, $_POST["search"], $JSON)){
+                        /*
+                        $data["orderid"] = $value["id"];
+                        $results["data"][$index]["html"] = view("popups_receipt", $data)->render();//won't work, gets cached
+                        */
+                    } else {
+                        unset($results["data"][$index]);
+                        //$results["data"][$index]["html"] = "Search: " . print_r($JSON, true) . " for " . print_r($search, true);
+                    }
                 }
                 break;
 

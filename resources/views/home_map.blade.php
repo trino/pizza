@@ -26,14 +26,17 @@
         $radius = iif(read("profiletype") == 1, 100, 10);//range
         $restaurants = [];//is a user, no address specified (list no restaurants)
         $restaurant_id = -1;
-
         if(read("profiletype") == 2 || isset($_GET["restaurantid"])){//is a restaurant, or restaurant ID specified (list only their restaurant)
             if(isset($_GET["restaurantid"])){//restaurant ID specified
                 $restaurant_id = $_GET["restaurantid"];
             } else {//is a restaurant
                 $restaurant_id = findrestaurant(read("id"));
             }
-            $restaurants = Query("SELECT * FROM restaurants WHERE id = " . $restaurant_id, true, "home_map");
+            if(is_numeric($restaurant_id)){
+                $restaurants = Query("SELECT * FROM restaurants WHERE id = " . $restaurant_id, true, "home_map");
+            } else {
+                $restaurant_id  = "'" . $restaurant_id . "'";
+            }
         } else if(read("profiletype") == 1 && (!$latitude && !$longitude)){//is an admin, no address specified (list all restaurants)
             $restaurants = Query("SELECT * FROM restaurants WHERE address_id > 0", true, "home_map");
         } else if ($latitude && $longitude) {//address specified (list restaurants within range)
@@ -62,6 +65,12 @@
                 }
             }
             return false;
+        }
+
+        function clean($text){
+            $text = stripslashes($text);
+            $text = iconv('UTF-8', 'UTF-8//IGNORE', $text);
+            return $text;
         }
 
         function restaurantdata($restaurant, $includeName = true, $newline = '<BR>'){
@@ -112,61 +121,86 @@
             return "Closed";
         }
 
-        echo '<DIV CLASS="row"><DIV CLASS="col-md-2">';
-        if(count($restaurants)){
-            echo 'Restaurants:';
-            foreach($restaurants as $index => $restaurant){
-                $address = findwhere($addresses, "id", $restaurant["address_id"], true);
-                $hoursID = findwhere($hours, "restaurant_id", $restaurant["id"]);
-                if($hoursID == false){$hoursID = findwhere($hours, "restaurant_id", 0);}
-                $restaurant["hours"] = $hours[$hoursID];
-                $restaurant["address"] = $address;
-                $distance = "";
-                if(isset($restaurant["distance"])){$distance = " (" . round($restaurant["distance"],2) . " km)";}
-                if($address !== false){
-                    $class = "invalid";
-                    if(is_numeric($address["latitude"]) && is_numeric($address["longitude"])){
-                        $markers[] = array(
-                                $restaurant["name"],
-                                restaurantdata($restaurant),
-                                $address["latitude"],
-                                $address["longitude"],
-                                iif($restaurant["is_delivery"], "1", "0"),
-                                $restaurant["id"]
-                        );
-                        $class = iif($restaurant["is_delivery"], "live", "dead");
-                    }
-                    echo '<BR><A CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers)-1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] .'"';
-                    for($day = 0; $day < 7; $day++){
-                        echo $day . '_open="' . $restaurant["hours"][$day . "_open"] . '" ' . $day . '_close="' . $restaurant["hours"][$day . "_close"] . '"';
-                    }
-                    echo '>' . $restaurant["name"] . $distance . '</A>';
-                }
-            }
-        } else if($latitude && $longitude) {
-            echo 'No restaurants found within ' . $radius . " km";
+        if(isset($_GET["restaurantid"])){
+            echo '<DIV CLASS="row"><DIV ID="orders_list" CLASS="col-md-2"></DIV><DIV CLASS="col-md-10">';
         } else {
-            echo 'No address specified';
+            echo '<DIV CLASS="row"><DIV CLASS="col-md-2">';
+            if(count($restaurants)){
+                echo 'Restaurants:';
+                foreach($restaurants as $index => $restaurant){
+                    $address = findwhere($addresses, "id", $restaurant["address_id"], true);
+                    $hoursID = findwhere($hours, "restaurant_id", $restaurant["id"]);
+                    if($hoursID == false){$hoursID = findwhere($hours, "restaurant_id", 0);}
+                    $restaurant["hours"] = $hours[$hoursID];
+                    $restaurant["address"] = $address;
+                    $distance = "";
+                    if(isset($restaurant["distance"])){$distance = " (" . round($restaurant["distance"],2) . " km)";}
+                    if($address !== false){
+                        $class = "invalid";
+                        $restaurant["name"] = clean($restaurant["name"]);
+                        if(is_numeric($address["latitude"]) && is_numeric($address["longitude"])){
+                            $markers[] = array(
+                                    $restaurant["name"],
+                                    restaurantdata($restaurant),
+                                    $address["latitude"],
+                                    $address["longitude"],
+                                    iif($restaurant["is_delivery"], "1", "0"),
+                                    $restaurant["id"]
+                            );
+                            $class = iif($restaurant["is_delivery"], "live", "dead");
+                        }
+                        echo '<BR><A CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers)-1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] .'"';
+                        for($day = 0; $day < 7; $day++){
+                            echo $day . '_open="' . $restaurant["hours"][$day . "_open"] . '" ' . $day . '_close="' . $restaurant["hours"][$day . "_close"] . '"';
+                        }
+                        echo '>' . $restaurant["name"] . $distance . '</A>';
+                    }
+                }
+            } else if($latitude && $longitude) {
+                echo 'No restaurants found within ' . $radius . " km";
+            } else {
+                echo 'No address specified';
+            }
+            echo '</DIV><DIV CLASS="col-md-10">';
         }
-        echo '</DIV><DIV CLASS="col-md-10">';
-        echo view("popups_googlemaps");
 
+        $JSONmarkers = json_encode($markers);
+        if(!$JSONmarkers){
+            $JSONmarkers = "[]";
+            echo "Markers failed to encode to JSON";
+            vardump($markers);
+        } else {
+            echo view("popups_googlemaps");
+        }
         $GET = $_GET;
         unset($GET["restaurantid"]);
     ?>
             <DIV ID="orders" STYLE="display:none;" CLASS="row">
                 <DIV ID="orders_header" CLASS="col-md-12 col-right">
-                    Orders for: <SPAN ID="rest_name"></SPAN>
+                    Orders for: <SPAN ID="rest_name"><?php
+                        if(isset($_GET["restaurantid"])){
+                            if(is_numeric($_GET["restaurantid"])){
+                                $restaurant = first("SELECT name FROM restaurants WHERE id = " . $_GET["restaurantid"], true, "home_map");
+                                echo $restaurant["name"];
+                            } else {
+                                echo "[Any Restaurant]";
+                            }
+                        }
+                        ?></SPAN>
                     <INPUT TYPE="BUTTON" VALUE="View Map" CLASS="vieworders float-right" ONCLICK="vieworders();">
                 </DIV>
                 <DIV ID="orders_sidebar" CLASS="col-md-4">
                     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                     <link rel="stylesheet" href="/resources/demos/style.css">
                     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-                    <INPUT TYPE="BUTTON" VALUE="Select Today" ONCLICK="selectdate();">
-                    <INPUT TYPE="BUTTON" VALUE="Refresh" ONCLICK="refresh();">
+                    <INPUT TYPE="BUTTON" VALUE="Select Today" ONCLICK="selectdate();" CLASS="half-width">
+                    <INPUT TYPE="BUTTON" VALUE="Refresh/Search" ONCLICK="refresh();" CLASS="half-width">
+                    <BR>Start date:<BR>
                     <div id="datepicker"></div>
-                    <DIV ID="orders_list"></DIV>
+                    <LABEL><INPUT TYPE="checkbox" ID="useenddate" ONCHANGE="selectdate();"> Use end date:</LABEL><BR>
+                    <div id="datepicker_end"></div>
+                    <INPUT TYPE="text" PLACEHOLDER="Search term" ID="searchterm" ONBLUR="selectdate();" ONKEYPRESS="searchbutton(event);">
+                    @if(!isset($_GET["restaurantid"])) <DIV ID="orders_list"></DIV> @endif
                 </DIV>
                 <DIV ID="orders_content" CLASS="col-md-8 col-right"></DIV>
             </DIV>
@@ -190,6 +224,11 @@
             }
         }
 
+        #searchterm{
+            width: 272px;
+            margin-top: 10px;
+        }
+
         .full-width{
             width: 100%;
         }
@@ -210,15 +249,25 @@
         .col-right{
             padding-right: 16px;
         }
+
+        .half-width{
+            width: 134px;
+        }
     </STYLE>
     <SCRIPT>
         doreset = false;
         var currentURL = "<?= Request::url(); ?>";
-        var locations = <?= json_encode($markers); ?>;
+        var locations = <?= $JSONmarkers; ?>;
         var islive_icon, isntlive_icon, local_icon;
         var currentrestaurant = <?= $restaurant_id; ?>;
         var APIURL = "<?= webroot('public/list/orders'); ?>";
         var GETQUERY = "<?= http_build_query($GET); ?>";
+
+        function searchbutton(e){
+            if (e.keyCode == 13) {
+                selectdate();
+            }
+        }
 
         function getIcon(pinColor, google) {
             var data = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor.replace("#", ''),
@@ -281,7 +330,7 @@
                 })(marker, i));
             }
             map.fitBounds(bounds);
-            if (currentrestaurant > -1){
+            if (isNaN(currentrestaurant) || currentrestaurant > -1){
                 vieworders(currentrestaurant);
             }
         });
@@ -297,12 +346,17 @@
 
         function vieworders(restaurant){
             if(isUndefined(restaurant)){
+                @if(isset($_GET["restaurantid"]))
+                    window.location = currentURL;
+                @endif
                 $("#map").show();
                 $("#orders").hide();
             } else {
                 currentrestaurant = restaurant;
                 $("#map").hide();
-                $("#rest_name").text($("#rest_" + restaurant).attr("name"));
+                @if(!isset($_GET["restaurantid"]))
+                    $("#rest_name").text($("#rest_" + restaurant).attr("name"));
+                @endif
                 $("#orders_content").html("TESTING");
                 $("#orders").show();
                 selectdate();
@@ -320,6 +374,8 @@
                     selectdate(date);
                 }
             });
+
+            $("#datepicker_end").datepicker({onSelect: function() {selectdate();}});
         });
 
         function refresh(){
@@ -359,13 +415,16 @@
                 today = toMMDDYYY();
                 $('#datepicker').datepicker('setDate', today);
             }
-
             //accounts for being before closing time for yesterday's business day
             var actualdate = new Date();
             var is_yesterday = false;
             var currenttime = actualdate.getHours() * 100 + actualdate.getMinutes();
             actualdate = $( "#datepicker" ).datepicker( "getDate" );
+            var enddate = toMMDDYYY($( "#datepicker_end" ).datepicker( "getDate" ));
             var dayofweek = actualdate.getDay();
+            var useend = $("#useenddate").prop("checked");
+            var searchterm = $("#searchterm").val().trim();
+
             if(testing){
                 currenttime = newtime;
                 dayofweek = newday;
@@ -386,19 +445,36 @@
                 _token: token,
                 action: "getorders",
                 restaurant: currentrestaurant,
-                date: today
+                date: today,
+                enddate: enddate,
+                useend: useend,
+                search: searchterm
             }, function (result) {
-                result = JSON.parse(result).data;
-                var listHTML = 'Checked at: ' + toHMMSS();
+                result = JSON.parse(result);
+                var listHTML = 'Checked at: ' + toHMMSS() + '<BR>';
                 var contentHTML = '';
-                if(result.length == 0){
-                    contentHTML += "No orders found on " + today + " at " + $("#rest_name").text() + '<BR>';
+                if(result.data.length == 0){
+                    if(useend){
+                        contentHTML += "No orders found between " + result.startdate + " and " + result.enddate;
+                    } else {
+                        contentHTML += "No orders found on " + result.startdate;
+                    }
+                    if(searchterm.length > 0){contentHTML += " containing '" + searchterm + "'";}
+                    contentHTML += " at " + $("#rest_name").text() + "<BR>";
+                    if(result.hasOwnProperty("query")) {contentHTML += "SQL: " + result.query + "<BR>";}
                 }
                 if(is_yesterday){
                     contentHTML += "(Checking orders for yesterday since it's close to closing for that day)<BR>";
                 }
-                for(var index = 0; index < result.length; index++){
-                    listHTML += '<A HREF="javascript:loadorder(' + result[index].id + ');">View order: ' + index + '<DIV ID="order_' + result[index].id + '" CLASS="order" STYLE="display: none;">' + result[index].html + '</DIV></A><BR>';
+
+                var actualindex = 1;
+                for(var index = 0; index < result.data.length; index++){
+                    //if(result.data[index].hasOwnProperty("html")) {
+                        @if(debugmode) actualindex = result.data[index].id; @endif
+                        listHTML += '<A HREF="javascript:loadorder(' + result.data[index].id + ');">Order: ' + actualindex + " ($" + result.data[index].price + ')<DIV ID="order_' + result.data[index].id + '" CLASS="order" STYLE="display: none;"></DIV></A><BR>';
+                        //result.data[index].html
+                        actualindex++;
+                    //}
                 }
                 $("#orders_list").html(listHTML);
                 $("#orders_content").html(contentHTML);
@@ -406,7 +482,20 @@
         }
 
         function loadorder(OrderID){
-            $("#orders_content").html($("#order_" + OrderID).html());
+            var html = $("#order_" + OrderID).html();
+            if(html) {
+                $("#orders_content").html(html);
+            } else {
+                $.post(APIURL, {
+                    _token: token,
+                    action: "getreceipt",
+                    orderid: OrderID,
+                    JSON: false
+                }, function (html) {
+                    $("#order_" + OrderID).html(html);
+                    $("#orders_content").html(html);
+                });
+            }
         }
     </SCRIPT>
 @endsection

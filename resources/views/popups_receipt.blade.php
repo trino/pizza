@@ -1,6 +1,8 @@
 @extends(isset($isGET) ? 'layouts_app' : 'layouts_blank')
 @section('content')
     <?php
+    //echo 'ORDER ID: ' . $orderid . '<BR>';
+
     //do not in-line the styles as this is used in emails
     //http://localhost/ai/public/list/orders?action=getreceipt&orderid=224
     startfile("popups_receipt");
@@ -211,7 +213,8 @@
     @endif
 
     <?php
-        $HTMLfilename = public_path("orders/user" . $Order["user_id"]) . "/" . $orderid . "-" . $style . ".html";
+        $dir = public_path("orders/user" . $Order["user_id"]);
+        $HTMLfilename = $dir . "/" . $orderid . "-" . $style . ".html";
         if(file_exists($HTMLfilename)){
             $HTML = file_get_contents($HTMLfilename);
         } else {
@@ -229,6 +232,7 @@
             );
             //vardump($data);
             $HTML = view("popups_receiptdata", $data)->render();
+            if (!is_dir($dir)) {mkdir($dir, 0777, true);}
             file_put_contents($HTMLfilename, $HTML);
         }
         echo $HTML;
