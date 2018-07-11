@@ -680,7 +680,7 @@ function generatereceipt(forcefade) {
         removeCookie("theorder");
         collapsecheckout();
         $("#checkout-btn").hide();
-        $("#checkout-total").text('$0.00');
+        fadetext("#checkout-total", '$0.00');
         forcefade = true;
     } else {
         tempHTML = "";
@@ -697,7 +697,7 @@ function generatereceipt(forcefade) {
         tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong"> $' + totalcost.toFixed(2) + '</TD></TR>';
         tempHTML += '</TABLE><div class="clearfix py-2"></div></DIV></DIV>';
         $("#confirmclearorder").show();
-        $("#checkout-total").text('$' + totalcost.toFixed(2));
+        fadetext("#checkout-total", '$' + totalcost.toFixed(2));
         if (fadein || forcefade) {
             tempHTML += oldvalues;
         }
@@ -724,6 +724,11 @@ function generatereceipt(forcefade) {
     }
 }
 
+function fadetext(selector, newtext){
+    $(selector).fadeOut(fade_speed, function () {
+        $(selector).text(newtext).fadeIn(fade_speed);
+    });
+}
 
 function isfirstinstance2(addons, addonid){
     for (var i = 0; i < addonid; i++) {
