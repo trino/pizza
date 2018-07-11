@@ -199,7 +199,7 @@
             break;
         case "orders":
             $TableStyle=1;
-            $fields=array("id", "user_id", "placed_at", "deliverytime", "status", "restaurant_id", "number", "unit", "street", "postalcode", "city", "province", "longitude", "latitude");
+            $fields=array("id", "user_id", "price", "placed_at", "deliverytime", "status", "restaurant_id", "number", "unit", "street", "postalcode", "city", "province", "longitude", "latitude");
             $specialformats=array("placed_at" => "date");
             $namefield="placed_at";
             $faicon = "dollar-sign";
@@ -912,6 +912,7 @@
                     function getdata(field, data, alldata){
                         field = table + "." + field;
                         switch(field){
+                            case "orders.price":                                                return "$" + data; break;
                             case "orders.status":                                               return statuses[data]; break;
                             case "users.profiletype": case "actions.party":                     return usertype[data]; break;
                             case "users.authcode":                                              return iif(data, "Not Authorized", "Authorized"); break;
