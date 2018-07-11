@@ -141,14 +141,14 @@
 
     function autofix(element){
         if(is_chrome) {
-            var randomid = "";
-            if(is_android){
-                randomid = "omit_" + randomString();
+            if(isUndefined(element)){element = document.getElementById("formatted_address");}
+            if(element.getAttribute("autocomplete") != "really-truly-off") {
+                var randomid = "omit_" + randomString();
+                element.setAttribute("name", randomid);
+                element.setAttribute("id", randomid);
+                element.setAttribute("class", "form-control");
+                element.setAttribute("autocomplete", "really-truly-off");
             }
-            element.setAttribute("name", randomid);
-            element.setAttribute("id", randomid);
-            element.setAttribute("class", "form-control");
-            element.setAttribute("autocomplete", "really-truly-off");
         }
     }
 
@@ -215,6 +215,7 @@
                 componentRestrictions: {country: "ca"}
         });
         formatted_address.addListener('place_changed', fillInAddress);
+        autofix();
     }
 
     function fillInAddress() {
