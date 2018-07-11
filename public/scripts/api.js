@@ -379,7 +379,7 @@ function loadmodal(element, notparent) {
         }
     }
     currentitemID = -1;
-    var title = "<div class='pull-left d-inline'><i class='fa fa-check mr-2'></i></div><div class='pull-right d-inline'>$<SPAN ID='modal-itemtotalprice'></SPAN></div>";
+    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline"><i class="fa fa-check mr-2"></i></div><div class="pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div></SPAN>';
     if (!isUndefined(notparent)) {
         $("#menumodal").modal("show");
         refreshremovebutton();
@@ -1979,7 +1979,10 @@ function itemtotalprice(newprice, fade){
     var current = $("#modal-itemtotalprice").text();
     if(current != newprice) {
         if (fade) {
-            $("#modal-itemtotalprice").stop(true, true).fadeTo(fade_speed, 0, function() {$("#modal-itemtotalprice").text(newprice).fadeTo(fade_speed, 1)});
+            $("#modal-itemtotalprice-all").stop(true, true).fadeTo(fade_speed, 0, function() {
+                $("#modal-itemtotalprice").text(newprice);
+                $("#modal-itemtotalprice-all").fadeTo(fade_speed, 1);
+            });
         } else {
             $("#modal-itemtotalprice").text(newprice);
         }
