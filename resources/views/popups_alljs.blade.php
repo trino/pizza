@@ -98,7 +98,7 @@
     function orders(ID, getJSON) {
         if (isUndefined(ID)) {//no ID specified, get a list of order IDs from the user's profile and make buttons
             $("#profilemodal").modal("hide");
-            var HTML = '<INPUT TYPE="button" VALUE="Your orders" CLASS="btn btn-sm btn-primary half-width" ONCLICK="orders();"><INPUT TYPE="button" VALUE="Store orders" CLASS="btn btn-sm btn-secondary half-width" ONCLICK="storeorders();"><BR>';
+            var HTML = '';// '<INPUT TYPE="button" VALUE="Your orders" CLASS="btn btn-sm btn-primary half-width" ONCLICK="orders();"><INPUT TYPE="button" VALUE="Store orders" CLASS="btn btn-sm btn-secondary half-width" ONCLICK="storeorders();"><BR>';
             var First = false;
             if(userdetails["Orders"].length > 0) {
                 HTML += '<ul class="list-group">';

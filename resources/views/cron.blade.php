@@ -15,7 +15,7 @@
         if(!$enabled){
             echo '<TR><TD COLSPAN="5" ALIGN="CENTER"><STRONG><A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A></STRONG></TD></TR>';
         } else if(!debugmode) {
-            log("CRON: " . count($orders) . " restaurants have unconfirmed orders");
+            echo "CRON: " . count($orders) . " restaurants have unconfirmed orders";
         }
         function processorder($ID, $isfinal = false){
             //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""

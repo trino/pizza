@@ -2259,12 +2259,6 @@ function ucfirst(text) {
     return text.left(1).toUpperCase() + text.right(text.length - 1);
 }
 
-function visible_address(state) {
-    var hasmirror = $("#mirror").html().length > 0;
-    visible(getGoogleAddressSelector(), state);
-    visible("#add_unit", state);
-}
-
 function iif(value, iftrue, iffalse) {
     if (value) {return iftrue;}
     if (isUndefined(iffalse)) {return "";}

@@ -88,6 +88,11 @@
         */
     //endif
 
+    function visible_address(state) {
+        visible(getGoogleAddressSelector(), state);
+        visible("#add_unit", state);
+    }
+
     function getGoogleAddressSelector(clear){
         if(isUndefined(clear)){clear = false;}
         if(clear){
@@ -96,7 +101,7 @@
         if($("input[autocomplete=really-truly-off]").length > 0){
             return "input[autocomplete=really-truly-off]";
         }
-        return "input[name=formatted_address]";
+        return "#" + GoogleAddressID;//"input[name=formatted_address]";
     }
 
     function testaddress(element){
@@ -139,13 +144,14 @@
         return randomString;
     }
 
+    var GoogleAddressID = '';
     function autofix(element){
         if(is_chrome) {
             if(isUndefined(element)){element = document.getElementById("formatted_address");}
             if(element.getAttribute("autocomplete") != "really-truly-off") {
-                var randomid = "omit_" + randomString();
-                element.setAttribute("name", randomid);
-                element.setAttribute("id", randomid);
+                GoogleAddressID = "omit_" + randomString();
+                element.setAttribute("name", GoogleAddressID);
+                element.setAttribute("id", GoogleAddressID);
                 element.setAttribute("class", "form-control");
                 element.setAttribute("autocomplete", "really-truly-off");
             }

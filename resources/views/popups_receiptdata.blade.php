@@ -15,6 +15,7 @@
 @endif
 
 <?php
+startfile("popups_receiptdata");
 $ordinals = array("1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th");
 $integrity = true;
 if (!function_exists("findkey")) {
@@ -311,7 +312,7 @@ if (file_exists($filename)) {
         echo '<TR><TD COLSPAN="' . 2 . '">';
         if (isset($JSON)) {
             //if($party != "private"){
-            echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
+            //echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
             //}
         } else {
             echo $Order["name"] . " - " . $Order["email"] . "<BR>" . formatphone($Order["phone"]) . " " . formatphone($Order["cell"]) . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . ", " . $Order["province"] . "<BR>" . $Order["postalcode"] . '<BR>' . $Order["unit"];
@@ -321,6 +322,6 @@ if (file_exists($filename)) {
 } else {
     echo '<TR><TD COLSPAN="' . $colspan . '" ALIGN="CENTER"><B TITLE="' . $filename . '">ORDER ' . $orderid . ' NOT FOUND</B></TD></TR>';
 }
-endfile("popups_receipt");
+endfile("popups_receiptdata");
 ?>
 </TABLE>

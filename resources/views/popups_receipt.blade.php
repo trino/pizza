@@ -228,7 +228,8 @@
                     "party" => $party,
                     "Order" => $Order,
                     "includeextradata" => $includeextradata,
-                    "orderid" => $orderid
+                    "orderid" => $orderid,
+                    "debug" => $debug
             );
             //vardump($data);
             $HTML = view("popups_receiptdata", $data)->render();
@@ -236,6 +237,11 @@
             file_put_contents($HTMLfilename, $HTML);
         }
         echo $HTML;
+        if (isset($JSON)) {
+            //if($party != "private"){
+            echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
+            //}
+        }
     ?>
 
     @if(!isset($JSON))
@@ -368,4 +374,5 @@
             }
         </SCRIPT>
     @endif
+    <?php endfile("popups_receipt"); ?>
 @endsection
