@@ -98,10 +98,11 @@
         if(clear){
             //formatted_address.set('place',null);
         }
-        if($("input[autocomplete=really-truly-off]").length > 0){
-            return "input[autocomplete=really-truly-off]";
+        if(GoogleAddressID.length > 0){
+            return "#" + GoogleAddressID;
+            //return "input[autocomplete=really-truly-off]";
         }
-        return "#" + GoogleAddressID;//"input[name=formatted_address]";
+        return "input[name=formatted_address]";
     }
 
     function testaddress(element){
@@ -110,10 +111,6 @@
     }
 
     function transferdata(value){
-        var html = $("#mirror").html();
-        if(!html){
-            $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" class="nevershow">');
-        }
         $('input[autocomplete=really-truly-off]').val(value);
         $("#formatted_address").val(value);
     }
@@ -154,6 +151,7 @@
                 element.setAttribute("id", GoogleAddressID);
                 element.setAttribute("class", "form-control");
                 element.setAttribute("autocomplete", "really-truly-off");
+                $("#mirror").html('<INPUT TYPE="TEXT" NAME="formatted_address" ID="formatted_address" class="nevershow">');
             }
         }
     }
