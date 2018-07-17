@@ -15,13 +15,13 @@
         <DIV CLASS="py-3 px-3">
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">LOG IN</a>
+                    <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
                 </li>
                 <A class="nav-link">
-                    &nbsp;OR&nbsp;
+                    &nbsp;or&nbsp;
                 </A>
                 <li class="nav-item">
-                    <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">SIGN UP</a>
+                    <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
                 </li>
             </ul>
             <!-- Tab panes -->
