@@ -603,8 +603,8 @@ function generatereceipt(forcefade) {
             if (item.hasOwnProperty("isnew")) {
                 if (item["isnew"]) {
                     item["isnew"] = false;
-                    fadein = "#receipt_item_" + itemid;
-                    fadein2 = "#subitem_" + itemid
+                    fadein = "#receipt_item_" + itemid + "-master";
+                    //fadein2 = "#subitem_" + itemid
                 }
             }
             subtotal += Number(totalcost);
@@ -622,7 +622,7 @@ function generatereceipt(forcefade) {
                 sprite += " sprite-" + toclassname(item["itemname"].trim()).replaceAll("_", "-").replace(/\./g, '');
             }
 
-            tempHTML = '<DIV ID="receipt_item_' + itemid + '" class="receipt_item"><SPAN CLASS="item_qty" onclick="removeall(' + itemid + ');" title="Remove All">';
+            tempHTML = '<DIV ID="receipt_item_' + itemid + '-master"><DIV ID="receipt_item_' + itemid + '" class="receipt_item"><SPAN CLASS="item_qty" onclick="removeall(' + itemid + ');" title="Remove All">';
             if(quantity > 1) {
                 tempHTML += quantity + ' x&nbsp;';
             }
@@ -673,7 +673,7 @@ function generatereceipt(forcefade) {
 
                 }
             }
-            HTML += tempHTML;
+            HTML += tempHTML + '</DIV>';
         }
     }
     var discountpercent = getDiscount(subtotal);
@@ -725,25 +725,29 @@ function generatereceipt(forcefade) {
     }
     $("#myorder").html(HTML + tempHTML);
     if (fadein || forcefade) {
+        fadeinall(fadein, fadein2);
+    }
+}
+
+function fadeinall(fadein, fadein2, doit){
+    if(isUndefined(doit)){
         if (fadein) {
             $(fadein).hide();
             $(fadein2).hide();
         }
-        if($("#oldvalues").html()) {
+        if ($("#oldvalues").html()) {
             $("#oldvalues").show().fadeOut(fade_speed, function () {
-                if (fadein) {
-                    $(fadein).fadeIn(fade_speed);
-                    $(fadein2).fadeIn(fade_speed);
-                }
-                $("#newvalues").fadeIn(fade_speed);
+                fadeinall(fadein, fadein2, true);
             });
         } else {
-            if (fadein) {
-                $(fadein).fadeIn(fade_speed);
-                $(fadein2).fadeIn(fade_speed);
-            }
-            $("#newvalues").fadeIn(fade_speed);
+            fadeinall(fadein, fadein2, true);
         }
+    } else {
+        if (fadein) {
+            $(fadein).fadeIn(fade_speed);
+            $(fadein2).fadeIn(fade_speed);
+        }
+        $("#newvalues").fadeIn(fade_speed);
     }
 }
 
@@ -907,7 +911,7 @@ function removeorderitem(index, quantity) {
         removeorderitemdisabled = true;
         $("#newvalues").fadeOut(fade_speed);
         $("#subitem_" + index).fadeOut(fade_speed);
-        $("#receipt_item_" + index).fadeOut(fade_speed, function () {
+        $("#receipt_item_" + index + "-master").fadeOut(fade_speed, function () {
             removeorderitemdisabled = false;
             generatereceipt(true);
             $("#oldvalues").hide();
