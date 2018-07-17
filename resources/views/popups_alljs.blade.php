@@ -8,6 +8,7 @@
     $nprog = "#F0AD4E";//color for loading bar
 ?>
 <script>
+    var debugmode = "<?= debugmode; ?>";
     function log(text) {
         @if(debugmode) console.log(text); @endif
     }
@@ -114,7 +115,7 @@
             }
             alert(HTML, 'Orders');
             if (First) {
-                orders(First);
+                orders(First);//userdetails["Orders"]);
             }
         } else {
             if (isUndefined(getJSON)) {
@@ -549,7 +550,7 @@
                     if ($(this)[0].hasAttribute("autocomplete")) {
                         if ($(this).attr("autocomplete") == "really-truly-off") {
                             ID = "address [no id]";
-                            addressstatus(true, false, true, false);
+                            addressstatus(true, false, true, false, "input blur");
                         }
                     }
                 }

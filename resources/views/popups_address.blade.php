@@ -189,7 +189,7 @@
                 }
             });
         } else {
-            confirm2("Are you sure you want to delete '" + $("#add_" + ID).text().trim() + "'?", 'Delete Address', function () {
+            confirm3("add_" + ID, "Are you sure you want to delete '" + $("#add_" + ID).text().trim() + "'?", 'Delete Address', function () {
                 $.post("<?= webroot("public/list/useraddresses"); ?>", {
                     _token: token,
                     action: "deleteitem",
@@ -198,6 +198,9 @@
                     if (handleresult(result)) {
                         $("#add_" + ID).fadeOut(500, function () {
                             $("#add_" + ID).remove();
+                            if(!$("#addresses").html()){
+                                $("#addresses").hide().html(makestring("{noaddresses}")).fadeIn(fade_speed);
+                            }
                         });
                         $(".saveaddresses option[value=" + ID + "]").remove();
                     }
@@ -276,11 +279,19 @@
         return place;
     }
 
-    function addressstatus(checkaddress, checkrestaurant, forceaddress, forcerestaurant){
+    function tobool(value){
+        if(value){
+            return 1;
+        }
+        return 0;
+    }
+
+    function addressstatus(checkaddress, checkrestaurant, forceaddress, forcerestaurant, calledfrom){
         if(isUndefined(checkaddress)){checkaddress = true;}
         if(isUndefined(checkrestaurant)){checkrestaurant = true;}
         if(isUndefined(forceaddress)){forceaddress = false;}
         if(isUndefined(forcerestaurant)){forcerestaurant = false;}
+        if(isUndefined(calledfrom)){calledfrom = "[UNKNOWN]";}
         if(checkaddress) {
             if (validaddress() || forceaddress) {
                 $("#red_address").removeClass("redhighlite");
@@ -288,7 +299,11 @@
                 $("#reg_address-error").remove();
             } else {
                 $("#red_address").addClass("redhighlite");
-                validateinput("#saveaddresses", "Please check your address");
+                var code = "";
+                @if(debugmode)
+                    code = " (CODE: " + tobool(checkaddress) + tobool(checkrestaurant) + tobool(forceaddress) + tobool(forcerestaurant) + " - " + calledfrom + ")";
+                @endif
+                validateinput("#saveaddresses", "Please check your address" + code);
             }
         }
         if(checkrestaurant) {
@@ -297,7 +312,14 @@
                 validateinput("#restaurant", true);
             } else {
                 $("#red_rest").addClass("redhighlite");
-                validateinput("#restaurant", "Please select your desired restaurant");
+                var message = "Please select your desired restaurant";
+                var children = $("#restaurant").children();
+                if(children.length == 1){
+                    if(children[0].text == makestring("{norestaurants}")){
+                        message = "Please enter an address in-range of our restaurants";
+                    }
+                }
+                validateinput("#restaurant", message);
             }
         }
     }

@@ -9,13 +9,13 @@
     <TR><TH>ID</TH><TH>Restaurant</TH><TH>Orders</TH><TH>Attempt</TH><TH>Call</TH></TR>
     <?php //  http://localhost/pizza/public/cron
         $max_attempts = getsetting("max_attempts", 3);
-        $enabled = isset($_GET["call"]) || !debugmode;
+        $enabled = isset($_GET["call"]) || !debugmode || islive();
         $orders = query("SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id", true, "CRON");
         $restaurants = query("SELECT * FROM restaurants", true, "CRON");
         if(!$enabled){
             echo '<TR><TD COLSPAN="5" ALIGN="CENTER"><STRONG><A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A></STRONG></TD></TR>';
         } else if(!debugmode) {
-            echo "CRON: " . count($orders) . " restaurants have unconfirmed orders";
+            //echo "CRON: " . count($orders) . " restaurants have unconfirmed orders";
         }
         function processorder($ID, $isfinal = false){
             //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""
