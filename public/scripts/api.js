@@ -253,6 +253,21 @@ function inputbox2(Text, Title, Default, retfnc) {
     });
 }
 
+var confirm3action = function () {};
+function confirm3(OverlapID, Prompt, Title, Action){
+    $(".confirm3").remove();
+    if(isUndefined(Title)){
+        if(Prompt){confirm3action();}
+    } else {
+        confirm3action = Action;
+        var HTML = '<DIV ID="' + OverlapID + '-confirm" CLASS="confirm3">' + Prompt + '<DIV CLASS="confirm3-answers float-right">';
+        HTML += '<DIV ONCLICK="confirm3(' + "'" + OverlapID + "', true" + ');" CLASS="confirm3-yes btn btn-primary">Yes</DIV>';
+        HTML += '<DIV ONCLICK="confirm3(' + "'" + OverlapID + "', false" + ');" CLASS="confirm3-no btn btn-danger">No</DIV>';
+        HTML += '</DIV></DIV>';
+        $("#" + OverlapID).append(HTML).addClass("confirm3-behind");
+    }
+}
+
 function confirm2() {
     var Title = "Confirm";
     var action = function () {};
@@ -714,13 +729,15 @@ function generatereceipt(forcefade) {
             $(fadein).hide();
             $(fadein2).hide();
         }
-        $("#oldvalues").show().fadeOut(fade_speed, function () {
-            if (fadein) {
-                $(fadein).fadeIn(fade_speed);
-                $(fadein2).fadeIn(fade_speed);
-            }
-            $("#newvalues").fadeIn(fade_speed);
-        });
+        if($("#oldvalues").html()) {
+            $("#oldvalues").show().fadeOut(fade_speed, function () {
+                if (fadein) {
+                    $(fadein).fadeIn(fade_speed);
+                    $(fadein2).fadeIn(fade_speed);
+                }
+                $("#newvalues").fadeIn(fade_speed);
+            });
+        }
     }
 }
 
@@ -1023,7 +1040,7 @@ function isnewcard(){
 
 //send an order to the server
 function placeorder(StripeResponse) {
-    if (!canplaceanorder(false, "placeorder")) {return cantplaceorder();}
+    if (!canplaceanorder(false, "placeorder")) {return cantplaceorder("placeorder");}
     if (isUndefined(StripeResponse)) {StripeResponse = "";}
     if (isObject(userdetails)) {
         var addressinfo = serializeaddress("#orderinfo");//i don't know why the below 2 won't get included. this forces them to be
@@ -1111,7 +1128,7 @@ $(window).on('shown.bs.modal', function () {
 
 //generate a list of addresses and send it to the alert modal
 function addresses() {
-    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2>';
+    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2><SPAN ID="addresses">';
     var number = $("#add_number").val();
     var street = $("#add_street").val();
     var city = $("#add_city").val();
@@ -1127,7 +1144,7 @@ function addresses() {
     if (!AddNew) {
         HTML += makestring("{noaddresses}");
     }
-    return HTML + "</DIV>";
+    return HTML + "</SPAN></DIV>";
 }
 
 function creditcards() {
@@ -1145,7 +1162,7 @@ function creditcards() {
 }
 
 function deletecard(Index, ID, last4, month, year) {
-    confirm2("Are you sure you want to delete the credit card:<br>x-" + last4.pad(4) + " Expiring on " + month + "/" + year + "?", 'Delete Credit Card', function () {
+    confirm3("card_" + Index, "Are you sure you want to delete the credit card:<br>x-" + last4.pad(4) + " Expiring on " + month + "/" + year + "?", 'Delete Credit Card', function () {
         $.post(webroot + "placeorder", {
             _token: token,
             action: "deletecard",
@@ -1386,30 +1403,32 @@ function rnd(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
-function cantplaceorder() {
+function cantplaceorder(Where) {
     ajaxerror();
+    if(isUndefined(Where)){Where = "Unknown";}
+    if(!debugmode){Where = "";} else {Where = " - " + Where;}
     $(".red").removeClass("red");
     $("#red_card").removeClass("redhighlite");
-    addressstatus();
+    addressstatus(true, true, false, false, "cantplaceorder" + WHERE);
     if (!$("#saved-credit-info").val()) {
         var validcreditcard = isvalidcreditcard();
         if (validcreditcard != 0) {
             $("#red_card").addClass("redhighlite");
             switch (validcreditcard){//-1=unknown, 0=success, 1=bad card number, 2=bad expiry date, 3=bad CVV
-                case 1: validateinput("#saved-credit-info", "Please select or enter a valid credit card"); break;
-                case 2: validateinput("#saved-credit-info", "Please select a valid expiry date"); break;
-                case 3: validateinput("#saved-credit-info", "Please enter a valid CVV number"); break;
-                case 4: validateinput("#saved-credit-info", "Please enter a Visa, MasterCard or American Express card number"); break;
-                case 5: validateinput("#saved-credit-info", "The credit card number is not the correct amount of digits"); break;
+                case 1: validateinput("#saved-credit-info", "Please select or enter a valid credit card" + Where); break;
+                case 2: validateinput("#saved-credit-info", "Please select a valid expiry date" + Where); break;
+                case 3: validateinput("#saved-credit-info", "Please enter a valid CVV number" + Where); break;
+                case 4: validateinput("#saved-credit-info", "Please enter a Visa, MasterCard or American Express card number" + Where); break;
+                case 5: validateinput("#saved-credit-info", "The credit card number is not the correct amount of digits" + Where); break;
             }
         }
     }
     if(!validphonenumber(userphonenumber())) {
-        validateinput("#order_phone", "Please enter a valid phone number");
+        validateinput("#order_phone", "Please enter a valid phone number" + Where);
     }
     if(!validdeliverytime()){
         GenerateHours(generalhours);
-        validateinput("#deliverytime", "Please select a future delivery time");
+        validateinput("#deliverytime", "Please select a future delivery time" + Where);
     }
     return false;
 }
@@ -1442,7 +1461,7 @@ function payfororder() {
     if (!canplaceanorder(true, "payfororder")) {
         flash();
         log("Can't pay for order");
-        return cantplaceorder();
+        return cantplaceorder("payfororder");
     }
     placeorderstate(true);
     var $form = $('#orderinfo');
@@ -1514,7 +1533,7 @@ function getnewcard(ID) {
 var closest = false;
 function addresshaschanged(place) {
     if (!getcloseststore) {return;}
-    var HTML = '<OPTION VALUE="0">No restaurant within range</OPTION>';
+    var HTML = '<OPTION VALUE="0">' + makestring("{norestaurants}") + '</OPTION>';
     if(isUndefined(place)) {
         var value = $("#saveaddresses").val();
         if (value == "0" || value == "addaddress"){
@@ -1622,21 +1641,27 @@ function creditcardstatus(disabled){
     }
 }
 
-function showcheckout() {
-    if (userdetails["Addresses"].length == 0) {
+function selectaddress(address){
+    if(isNaN(address)) {
         setTimeout(function () {
-            $("#saveaddresses").val("addaddress");
-            addresschanged("showcheckout");
+            $("#saveaddresses").val(address);
         }, 100);
     } else {
-        $("#saveaddresses").val(0);
+        $("#saveaddresses").val(address);
     }
     addresschanged("showcheckout");
-    if (userdetails["Addresses"].length == 1) {
-        setTimeout(function () {
-            $("#saveaddresses").val(userdetails["Addresses"][0].id);
-            addresschanged("showcheckout");
-        }, 100);
+}
+
+function showcheckout() {
+    $(getGoogleAddressSelector()).val("");
+    if (userdetails["Addresses"].length == 0) {
+        selectaddress("addaddress");
+        addresshaschanged();
+        $(getGoogleAddressSelector()).show();
+    } else if (userdetails["Addresses"].length == 1) {
+        selectaddress(userdetails["Addresses"][0].id);
+    } else {
+        selectaddress(0);
     }
     var HTML = $("#checkoutaddress").html();
     HTML = HTML.replace('class="', 'class="corner-top ');
@@ -1657,7 +1682,7 @@ function showcheckout() {
         }
         $("#credit-info").html(creditHTML + '</SELECT>');
     } else {
-        $("#credit-info").html('<INPUT TYPE="hidden" VALUE="" ID="saved-credit-info">');
+        $("#credit-info").html('<INPUT TYPE="hidden" ID="saved-credit-info">');
         needscreditrefresh = true;
     }
     $("#checkoutaddress").html(HTML);
@@ -1676,6 +1701,11 @@ function showcheckout() {
     refreshform("#saveaddresses");
     if(needscreditrefresh){changecredit(false, 'showcheckout2');}
     validateinput();
+}
+
+function clearvalidation(){
+    $(".redhighlite").removeClass("redhighlite");
+    $(".error").hide();
 }
 
 var daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -1859,6 +1889,7 @@ if (isUndefined(unikeys)) {
         noaddresses: 'No Addresses Saved',
         mycreditcard: 'My Credit Cards',
         nocreditcards: 'No Credit Cards',
+        norestaurants: 'No restaurant within range'
     };
 }
 

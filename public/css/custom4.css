@@ -1244,3 +1244,16 @@ td {
     border: 1px solid black !important;
 }
 */
+
+.confirm3{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: 1060;
+    background-color: white;
+}
+.confirm3-answers{
+
+}

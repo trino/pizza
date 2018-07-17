@@ -205,17 +205,17 @@
     function restchange(where) {
         var abort = false;
         switch(where){
-         //   case "addresshaschanged": abort = true; break;
+            case "addresshaschanged": abort = true; break;
         }
         log("restchange: " + where + iif(abort, " [ABORTED]"));
         if(abort){return;}
         var value = $("#restaurant").val();
         var index = findwhere(closest, "restid", value);
-        addressstatus();
+        addressstatus(true, true, false, false, "restchange " + where);
         if (closest.length > 0) {
             GenerateHours(closest[index].hours);
-         //   shortitems = CheckforShortage(closest[index].shortage);
-         //   alertshortage();
+            /* shortitems = CheckforShortage(closest[index].shortage);
+            alertshortage(); //this should not be commented out */
         }
     }
 

@@ -136,7 +136,9 @@ class AuthController extends Controller {
                                     unset($user["Addresses"]);
                                     unset($user["Others"]);
                                     insertdb("users", $user);
+                                    $text = "Email sent";
                                 }
+                                debugprint("Reseting password for " . $user["name"] . " (" . $user["email"] . ") = " . $text);
                             }
                             break;
                     }
