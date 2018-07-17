@@ -303,10 +303,12 @@
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
                 <h2 class="mt-4">Questions about your order?</h2>
-                <p>Please contact the restaurant directly.</p><br><br>
+                <p>Please contact the restaurant directly.</p>
                 <DIV CLASS="clearfix"></DIV>
             @endif
+            <p>
             <a class="btn-link btn pl-0" href="<?= webroot("help"); ?>">FAQs</a>
+            </p>
         </DIV>
     @endif
 

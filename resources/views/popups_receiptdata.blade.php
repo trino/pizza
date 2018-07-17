@@ -325,3 +325,4 @@ if (file_exists($filename)) {
 endfile("popups_receiptdata");
 ?>
 </TABLE>
+            <p>&nbsp;</p>
