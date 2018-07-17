@@ -247,7 +247,7 @@
     @if(!isset($JSON))
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
-                <TD WIDTH="49%" style="font-size: 85%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
+                <TD WIDTH="49%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
                     <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>
                     <?php
                         echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";

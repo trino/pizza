@@ -393,6 +393,9 @@ h2 {
     width: 25%;
     float: left !important;
     display: inline !important;
+    line-height: .85rem;
+
+
 }
 
 .thirdwidth {
