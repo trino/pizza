@@ -737,6 +737,12 @@ function generatereceipt(forcefade) {
                 }
                 $("#newvalues").fadeIn(fade_speed);
             });
+        } else {
+            if (fadein) {
+                $(fadein).fadeIn(fade_speed);
+                $(fadein2).fadeIn(fade_speed);
+            }
+            $("#newvalues").fadeIn(fade_speed);
         }
     }
 }
