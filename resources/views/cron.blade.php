@@ -55,7 +55,6 @@
             return false;
         }
 
-
         $calls=0;
         $count = 0;
         foreach($orders as $order){

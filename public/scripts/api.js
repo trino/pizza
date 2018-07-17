@@ -1154,7 +1154,7 @@ function addresses() {
 }
 
 function creditcards() {
-    var HTML = '<DIV CLASS="se23ction"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2>';
+    var HTML = '<DIV CLASS="se23ction"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
     if (!loadsavedcreditinfo()) {
         return HTML + makestring("{nocreditcards}");
     }
@@ -1164,7 +1164,7 @@ function creditcards() {
         HTML += '<DIV id="card_' + i + '" class="list-group-item"><A ONCLICK="deletecard(' + i + ", '" + card.id + "', " + card.last4 + ", '" + card.exp_month.pad(2) + "', " + right(card.exp_year, 2) + ');" CLASS="cursor-pointer">';
         HTML += '<i class="fa fa-fw fa-times error"></i></A> ' + card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2) + '</DIV>';
     }
-    return HTML + '</DIV>';
+    return HTML + '</DIV></DIV>';
 }
 
 function deletecard(Index, ID, last4, month, year) {
@@ -1178,6 +1178,9 @@ function deletecard(Index, ID, last4, month, year) {
                 $("#card_" + Index).remove();
             });
             removeindex(userdetails.Stripe, Index);//remove it from userdetails
+            if(!$("#cardlist").html()){
+                $("#cardlist").html(makestring("{nocreditcards}"));
+            }
         });
     });
 }
@@ -1415,7 +1418,7 @@ function cantplaceorder(Where) {
     if(!debugmode){Where = "";} else {Where = " - " + Where;}
     $(".red").removeClass("red");
     $("#red_card").removeClass("redhighlite");
-    addressstatus(true, true, false, false, "cantplaceorder" + WHERE);
+    addressstatus(true, true, false, false, "cantplaceorder" + Where);
     if (!$("#saved-credit-info").val()) {
         var validcreditcard = isvalidcreditcard();
         if (validcreditcard != 0) {
