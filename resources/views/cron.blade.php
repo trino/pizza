@@ -37,10 +37,13 @@
             }
         }
 
-        function processorder($ID, $isfinal = false){
-            //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""
-            App::make('App\Http\Controllers\HomeController')->order_placed($ID, false, -1, iif($isfinal, "cron_job_final", "cron_job"));
-            return $ID;
+        function processorder($OrderID, $isfinal = false){
+            //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = "", $RetActions = false
+            $info = false;
+            $party = -1;//0=customer, 1=admin, 2=restaurant
+            $event = iif($isfinal, "cron_job_final", "cron_job");
+            return App::make('App\Http\Controllers\HomeController')->order_placed($OrderID, $info, $party, $event, "CRON", true);
+            //return $ID;
         }
         function findkeyvalue($array, $key, $value, $retdata = false){
             foreach($array as $index => $data){
@@ -69,12 +72,14 @@
             echo '<TD ALIGN="right">' . $order["count"] . '</TD>';
             echo '<TD' . iif($isfinal, ' CLASS="finalattempt"') . ' ALIGN="right">' . getordinal($order["attempts"]) . '</TD>';
             echo '<TD ALIGN="center"><INPUT TYPE="checkbox" DISABLED TITLE="Will only call if the system is enabled, and the order has a valid restaurant"';
+            $data = "[" . $order["restaurant_id"] . "NOT SENT]";
             if($enabled && $restaurant !== false){
-                processorder($order["restaurant_id"], $isfinal);
+                $data = processorder($order["id"], $isfinal);
                 $calls+=1;
                 echo ' CHECKED';
             }
             echo '></TR>';
+            //vardump($data);
         }
         if($count == 0){
             echo '<TR><TD COLSPAN="5">No orders found with a stripeToken, status=0(pending), and attempts < ' . ($max_attempts+1) .'</TD></TR>';

@@ -305,7 +305,7 @@ class HomeController extends Controller {
         }
     }
 
-    function order_placed($orderid, $info = false, $party = -1, $event = "order_placed", $Reason = ""){
+    function order_placed($orderid, $info = false, $party = -1, $event = "order_placed", $Reason = "", $RetActions = false){
         if (!$info) {$info = first("SELECT * FROM orders WHERE id = " . $orderid);}
         if (!$info) {return false;}
         $user = first("SELECT * FROM users WHERE id = " . $info["user_id"], true, "HomeController.order_placed1");
@@ -313,10 +313,8 @@ class HomeController extends Controller {
         $restaurant = false;
         if ($party > -2) {
             $actions = actions($event, $party);
-            if ($party > -1) {
-                $actions = array($actions);
-            }
-            foreach ($actions as $action) {
+            if ($party > -1) {$actions = array($actions);}
+            foreach ($actions as $index => $action) {
                 $phone_restro = false;
                 switch ($action["party"]) {
                     case 0://customer
@@ -373,9 +371,7 @@ class HomeController extends Controller {
                 $action["message"] = str_replace("[orderid]", $orderid, $action["message"]);
                 $action["message"] = str_replace("[sitename]", sitename, $action["message"]);
                 $action["message"] = str_replace("[name]", $name, $action["message"]);
-                if(debugmode){
-
-                }
+                //if(debugmode){ }
                 if ($action["email"]) {
                     $action["message"] = str_replace("[url]", "", $action["message"]);
                     debugprint("Sending email to " . $party . ": " . $email);//send emails to customer also generates the cost
@@ -397,6 +393,7 @@ class HomeController extends Controller {
                     $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $gather);
                     debugprint("CALL data: " . $SMSdata);
                 }
+                $actions[$index]["action"] = $action;
             }
         }
         $user["orderid"] = $orderid;
@@ -405,6 +402,7 @@ class HomeController extends Controller {
             $resttext = "for: " . $restaurant["restaurant"]["name"] . " (" . $info["restaurant_id"] . ")";
         }
         debugprint($event . ": " . $orderid . " by: " . $user["name"] . " (" . $info["user_id"] . ")" . $resttext);
+        if($RetActions){return $actions;}
         return $user;
     }
 
