@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2018 at 06:36 PM
+-- Generation Time: Jul 17, 2018 at 08:56 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -219,6 +219,7 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `placed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deliver_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `number` int(11) NOT NULL,
   `unit` varchar(16) NOT NULL,
   `buzzcode` varchar(32) NOT NULL,
@@ -248,11 +249,15 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `placed_at`, `number`, `unit`, `buzzcode`, `street`, `postalcode`, `city`, `province`, `latitude`, `longitude`, `accepted_at`, `restaurant_id`, `type`, `payment_type`, `phone`, `cell`, `paid`, `stripeToken`, `deliverytime`, `cookingnotes`, `status`, `price`, `email`, `attempts`) VALUES
-(373, 187, '2018-07-08 16:58:21', 18, '123', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304607999999', '-79.769279400000', '0000-00-00 00:00:00', 26, 0, 0, '9055315331', '', 1, 'ch_DBjpzmaICTZqkm', 'July 8 at 2345', '', 1, '20.91', NULL, 4),
-(374, 3, '2018-07-08 16:58:23', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DC4HT4K6zItuFI', 'Deliver Now', '', 1, '24.35', NULL, 1),
-(375, 3, '2018-07-08 20:27:01', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DC7eHQWhJ34cL5', 'July 9 at 2345', '', 0, '16.39', NULL, 4),
-(376, 1, '2018-07-11 02:47:41', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DCyJqGOvMjO34w', 'Deliver Now', '', 0, '34.80', NULL, 0);
+INSERT INTO `orders` (`id`, `user_id`, `placed_at`, `deliver_at`, `number`, `unit`, `buzzcode`, `street`, `postalcode`, `city`, `province`, `latitude`, `longitude`, `accepted_at`, `restaurant_id`, `type`, `payment_type`, `phone`, `cell`, `paid`, `stripeToken`, `deliverytime`, `cookingnotes`, `status`, `price`, `email`, `attempts`) VALUES
+(373, 187, '2018-07-11 19:22:40', '0000-00-00 00:00:00', 18, '123', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304607999999', '-79.769279400000', '0000-00-00 00:00:00', 26, 0, 0, '9055315331', '', 1, 'ch_DBjpzmaICTZqkm', 'July 8 at 2345', '', 1, '24.86', NULL, 4),
+(374, 3, '2018-07-11 19:24:02', '0000-00-00 00:00:00', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DC4HT4K6zItuFI', 'Deliver Now', '', 1, '32.77', NULL, 1),
+(375, 3, '2018-07-11 19:24:02', '0000-00-00 00:00:00', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DC7eHQWhJ34cL5', 'July 9 at 2345', '', 0, '32.77', NULL, 4),
+(376, 1, '2018-07-11 02:47:41', '0000-00-00 00:00:00', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'Ontario', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DCyJqGOvMjO34w', 'Deliver Now', '', 0, '34.80', NULL, 0),
+(377, 1, '2018-07-12 16:27:47', '0000-00-00 00:00:00', 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'ON', '43.2304791', '-79.769272699999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DDYlAIT6B68t5i', 'Deliver Now', '', 0, '22.83', NULL, 0),
+(378, 1, '2018-07-17 16:45:31', '0000-00-00 00:00:00', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'ON', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DFRBhWBL7S2rWJ', 'Deliver Now', '', 0, '24.86', NULL, 0),
+(379, 1, '2018-07-17 17:17:48', '0000-00-00 00:00:00', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'ON', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DFRhi8Bxss5gKU', 'Deliver Now', '', 0, '24.86', NULL, 0),
+(380, 1, '2018-07-17 17:57:52', '0000-00-00 00:00:00', 2396, '', '', 'Bloor St W', 'M6S 1P5', 'Toronto', 'ON', '43.6498421999999', '-79.482770599999', '0000-00-00 00:00:00', 81, 0, 0, '9055315331', '', 1, 'ch_DFSLSS7WpD9Aex', 'Deliver Now', '', 0, '24.86', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -373,10 +378,10 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
-(1, 'lastSQL', '1531242614'),
+(1, 'lastSQL', '1531332154'),
 (20, 'orders', '1530589874'),
 (24, 'menucache', '1531080996'),
-(25, 'useraddresses', '1525563470'),
+(25, 'useraddresses', '1531852401'),
 (37, 'users', '1530669300'),
 (38, 'additional_toppings', '1530669448'),
 (43, 'actions', '1525270887'),
@@ -391,7 +396,7 @@ INSERT INTO `settings` (`id`, `keyname`, `value`) VALUES
 (1582, 'localhostdialing', '0'),
 (1593, 'maxdistance_live', '9'),
 (1594, 'maxdistance_local', '100'),
-(1600, 'lastupdate', '1531326851715'),
+(1600, 'lastupdate', '1531853341059'),
 (1715, 'max_attempts', '3');
 
 -- --------------------------------------------------------
@@ -475,7 +480,6 @@ INSERT INTO `useraddresses` (`id`, `user_id`, `number`, `unit`, `buzzcode`, `str
 (152, 102, 123, '', '', 'King St', 'L0S 1J0', 'Niagara-on-the-Lake', 'ON', '43.2566571', '-79.069487500000'),
 (153, 102, 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'ON', '43.2304791', '-79.769272699999'),
 (154, 103, 51, '', '', 'Fenton Way', 'L6P 0P4', 'Brampton', 'ON', '43.799186', '-79.708743000000'),
-(155, 1, 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'ON', '43.2304791', '-79.769272699999'),
 (156, 104, 725, '', '', 'Acadia Dr', 'L8W 3V2', 'Hamilton', 'ON', '43.199438', '-79.8710931'),
 (157, 105, 18, '', '', 'Oakland Dr', 'L8E 3Z2', 'Hamilton', 'ON', '43.2304791', '-79.769272699999'),
 (159, 103, 177, '', '', 'Queen St S', 'L8P 4V6', 'Hamilton', 'ON', '43.2536279', '-79.8808065'),
@@ -595,9 +599,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `creat
 (3, 'Van Trinh', 'info@trinoweb.com', '$2y$10$.0DQCK8l9YOr49mc3AcEr.8zemyiRmUa1j69p5MJO4vf6PCIAOip.', '', '2017-04-02 01:18:32', '2018-04-09 03:22:01', '9055315331', 1522026647, 0, 0, '', 'cus_CWyLzacP0LTU6M'),
 (4, 'Queens Pizza and Wings', 'queenspizza905@gmail.com', '$2y$10$S5SNVTZgWk9Ufe.kLdtaMOOMo2VxRqkXUpv1k/af09Bn1c32UUrcq', '', '2017-04-02 02:20:18', '0000-00-00 00:00:00', '', 1494703615, 0, 2, '', ''),
 (103, 'Rony', 'ronysgu@gmail.com', '$2y$10$hGj3TyjDtLvguh4ZVmEZyub1S6XYD4ejG48jlFZEpK01KTu8EGsYy', '', '2018-04-09 12:49:16', '0000-00-00 00:00:00', '6472417339', 0, 0, 0, '', 'cus_Ci6WI4lrTrEMFy'),
-(104, 'Tommy', 'tran.tommy@me.com', '$2y$10$cq7UMm7u45GvDxWChGM1CuX55ryn3pWMzOiomjFUlXC9kyzozFdpK', '', '2018-04-14 17:18:39', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
+(104, 'Techni', 'neotechni@gmail.com', '$2y$10$c41Ti0/R2Yu4qsdJa3j4p.RFOnMInvQZAvcPJdj8JXcJsP1DvNwLq', '', '2018-04-14 17:18:39', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
 (110, 'Minh', 'ngocminh89@hotmail.com', '$2y$10$J/g962xTz9K8A.2Mqy0au.CjmdCLEmWQYOccH6u5aN3NHXYKZjiSi', '', '2018-05-15 18:12:44', '0000-00-00 00:00:00', '9055188531', 0, 0, 0, '', 'cus_CrtZYEtysdYFRa'),
-(111, '2 For 1 Pizza Wings and Subs', 'roy+2For1PizzaWingsandSubs@trinoweb.com', '$2y$10$6ybzWzEdaC3jI8NcRCt/xuAw.ROO7aKkCnBuYARRsawRmTaaH1Nt6', NULL, '2018-07-03 19:46:17', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
+(111, '2 For 1 Pizza Wings and Subs', 'roy+2For1PizzaWingsandSubs@trinoweb.com', '$2y$10$RSCPUhjVFybHQeTT5e5qDuEYMS35tnhFmJ9tC.LZZzTdGv0USCKF6', '', '2018-07-03 19:46:17', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
 (112, 'Aberdeen Pizza & Wings', 'roy+AberdeenPizzaWings@trinoweb.com', '$2y$10$roufRsFrOmztRD4cBMvZ5OTYqwB.OcCAZCakQO./nw8MM.XbOpdTC', NULL, '2018-07-03 19:47:07', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
 (113, 'Aceti\\\'s Pizzeria', 'roy+AcetisPizzeria@trinoweb.com', '$2y$10$XVXTGABcSUszoZtPNnvtnu1j1shHauk3J6zDfL3hdx8MkMyCbN6UO', NULL, '2018-07-03 19:47:22', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
 (114, 'Andre\\\'s Pizza & Wings', 'roy+AndresPizzaWings@trinoweb.com', '$2y$10$yOVvQnX..t/yZT/JSVlwae64pi18iwI3jskZfpTRJzXXUUK2RKTUm', NULL, '2018-07-03 19:47:28', '0000-00-00 00:00:00', '', 0, 0, 2, '', ''),
@@ -839,7 +843,7 @@ ALTER TABLE `additional_toppings`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=381;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
@@ -851,13 +855,13 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1768;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1896;
 
 --
 -- AUTO_INCREMENT for table `useraddresses`
 --
 ALTER TABLE `useraddresses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -10,13 +10,33 @@
     <?php //  http://localhost/pizza/public/cron
         $max_attempts = getsetting("max_attempts", 3);
         $enabled = isset($_GET["call"]) || !debugmode || islive();
+        $delivery_delay = getdeliverytime() * 60;//minutes * 60 * 1000 // (60 seconds per minute, 1000 milliseconds per second)
+
+        $orders = query("SELECT * FROM orders WHERE deliver_at = '0000-00-00 00:00:00'", true, "CRON");
+        if($orders){
+            printline(count($orders) . " order(s) found/corrected with invalid delivery dates");
+            foreach($orders as $order){
+                $order["deliver_at"] = delivery_at($order["placed_at"], $order["deliverytime"], $delivery_delay);
+                Query("UPDATE orders SET deliver_at = '" . $order["deliver_at"] . "' WHERE id = " . $order["id"]);
+            }
+        }
+
         $orders = query("SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id", true, "CRON");
         $restaurants = query("SELECT * FROM restaurants", true, "CRON");
         if(!$enabled){
-            echo '<TR><TD COLSPAN="5" ALIGN="CENTER"><STRONG><A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A></STRONG></TD></TR>';
+            printline('<A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A>');
         } else if(!debugmode) {
-            //echo "CRON: " . count($orders) . " restaurants have unconfirmed orders";
+            printline('CRON: ' . count($orders) . ' restaurants have unconfirmed orders');
         }
+
+        function printline($text, $sidetext = false){
+            if($sidetext){
+                echo '<TR><TD COLSPAN="3" ALIGN="CENTER"><STRONG>' . $text . '</STRONG></TD><TD COLSPAN="2" ALIGN="CENTER"><STRONG>' . $sidetext . '</STRONG></TD></TR>';
+            } else {
+                echo '<TR><TD COLSPAN="5" ALIGN="CENTER"><STRONG>' . $text . '</STRONG></TD></TR>';
+            }
+        }
+
         function processorder($ID, $isfinal = false){
             //$orderid, &$info = false, $party = -1, $event = "order_placed", $Reason = ""
             App::make('App\Http\Controllers\HomeController')->order_placed($ID, false, -1, iif($isfinal, "cron_job_final", "cron_job"));

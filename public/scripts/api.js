@@ -1642,27 +1642,33 @@ function creditcardstatus(disabled){
 }
 
 function selectaddress(address){
-    if(isNaN(address)) {
-        setTimeout(function () {
-            $("#saveaddresses").val(address);
-        }, 100);
+    if(isUndefined(address)) {
+        if (userdetails["Addresses"].length == 0) {
+            selectaddress("addaddress");
+            addresshaschanged();
+            $(getGoogleAddressSelector()).show();
+        } else if (userdetails["Addresses"].length == 1) {
+            selectaddress(userdetails["Addresses"][0].id);
+        } else {
+            selectaddress(0);
+        }
     } else {
-        $("#saveaddresses").val(address);
+        if (isNaN(address)) {
+            setTimeout(function () {
+                $("#saveaddresses").val(address);
+            }, 100);
+        } else {
+            $("#saveaddresses").val(address);
+        }
+        addresschanged("showcheckout");
     }
-    addresschanged("showcheckout");
 }
 
 function showcheckout() {
     $(getGoogleAddressSelector()).val("");
-    if (userdetails["Addresses"].length == 0) {
-        selectaddress("addaddress");
-        addresshaschanged();
-        $(getGoogleAddressSelector()).show();
-    } else if (userdetails["Addresses"].length == 1) {
-        selectaddress(userdetails["Addresses"][0].id);
-    } else {
-        selectaddress(0);
-    }
+    setTimeout(function () {
+        selectaddress();
+    }, 100);
     var HTML = $("#checkoutaddress").html();
     HTML = HTML.replace('class="', 'class="corner-top ');
     var needscreditrefresh = false;

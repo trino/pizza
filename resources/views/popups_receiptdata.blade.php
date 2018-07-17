@@ -131,6 +131,10 @@ if (file_exists($filename)) {
 
         //convert the JSON into an HTML receipt, using only item/addon IDs, reobtaining cost/names from the database for security
         $subtotal = 0;
+
+        if(!is_array($items)){
+            $items =  (array) $items;
+        }
         foreach ($items as $ID => $item) {
             unset($items[$ID]->clone);
         }

@@ -196,6 +196,7 @@ class HomeController extends Controller {
             }
 
             $order = $_POST["order"];
+            $info["deliver_at"] = delivery_at($info["placed_at"], $info["deliverytime"]);
             unset($info["istest"]);
             if(!isset($info["phone"]) || !trim($info["phone"])){
                 $info["phone"] = read("phone");

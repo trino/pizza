@@ -910,6 +910,33 @@ function formatphone($phone){
     return $phone;
 }
 
+function pad_left($value, $length){
+    return str_pad($value, $length, '0', STR_PAD_LEFT);
+}
+
+function delivery_at($placed_at, $deliverytime, $delivery_delay = false){
+    $monthnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    $placed_at_time = strtotime($placed_at);
+    $placed_at_date = explode("-", $placed_at);
+    if(!$delivery_delay){$delivery_delay = getdeliverytime() * 60;}
+    $should_be = $placed_at_time + $delivery_delay;
+    if($deliverytime == "Deliver Now"){//convert 'July 9 at 2345' to '2018-07-11 15:22:40'
+        $ret = date("Y-m-d G:i:s", $should_be);
+    } else {
+        $delivery_date = explode(" ", $deliverytime);
+        $month   = array_search($delivery_date[0], $monthnames) + 1;//month
+        $year    = $placed_at_date[0];
+        $day     = $delivery_date[1];
+        $minutes = $delivery_date[3];
+        $hours   = floor($minutes / 100);
+        $minutes = $minutes % 100;
+        if($month < $placed_at_date[1]){$year++;}
+        $ret = $year . "-" . pad_left($month,2) . "-" . pad_left($day,2) . " " . $hours . ":" . pad_left($minutes,2) . ":00";
+        if(strtotime($ret) < $should_be){$ret = $should_be;}
+    }
+    return $ret;
+}
+
 $GLOBALS["strings"] = [
     "aboutus" => 'Our Story'
 ];
