@@ -14,14 +14,21 @@
 
         $orders = query("SELECT * FROM orders WHERE deliver_at = '0000-00-00 00:00:00'", true, "CRON");
         if($orders){
+            vardump($orders);
             printline(count($orders) . " order(s) found/corrected with invalid delivery dates");
             foreach($orders as $order){
-                $order["deliver_at"] = delivery_at($order["placed_at"], $order["deliverytime"], $delivery_delay);
-                Query("UPDATE orders SET deliver_at = '" . $order["deliver_at"] . "' WHERE id = " . $order["id"]);
+                $time = delivery_at($order["placed_at"], $order["deliverytime"], $delivery_delay);
+                $query = "UPDATE orders SET deliver_at = '" . $time . "' WHERE id = " . $order["id"];
+                Query($query);//didn't work
+                vardump($query);
             }
         }
 
-        $orders = query("SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id", true, "CRON");
+        $query = "SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id ORDER BY attempts ASC";
+        $orders = query($query, true, "CRON");
+
+        //vardump($query); vardump($orders); die();
+
         $restaurants = query("SELECT * FROM restaurants", true, "CRON");
         if(!$enabled){
             printline('<A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A>');
