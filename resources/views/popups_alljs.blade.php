@@ -129,6 +129,7 @@
             }
             if(getJSON){
                 CloseModal("LoadOrder");// $("#alertmodal").modal('hide');
+                scrolltobottom();
             }
             $.post("<?= webroot('public/list/orders'); ?>", {
                 _token: token,
@@ -142,7 +143,6 @@
                     theorder = result["Order"];
                     $("#cookingnotes").val(result["cookingnotes"]);
                     generatereceipt();
-                    scrolltobottom();
                 } else {//HTML recieved, put it in the pastreceipt element
                     skipunloadingscreen = true;
                     setTimeout(function () {
