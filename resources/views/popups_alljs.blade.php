@@ -413,6 +413,7 @@
             $("#add_" + keyname).val(keyvalue);
         }
         $("#ffaddress").hide();
+        clearvalidation("#red_address");
         refreshform("#saveaddresses").trigger("click");
         if (SelectedVal == 0) {
             Text = '';
