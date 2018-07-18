@@ -127,7 +127,9 @@
                 GetNextOrder(ID);
                 return;
             }
-            if(getJSON){$("#alertmodal").modal('hide');}
+            if(getJSON){
+                CloseModal("LoadOrder");// $("#alertmodal").modal('hide');
+            }
             $.post("<?= webroot('public/list/orders'); ?>", {
                 _token: token,
                 action: "getreceipt",
