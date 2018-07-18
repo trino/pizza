@@ -278,7 +278,7 @@
                     ?>
                 </TD>
                 <TD WIDTH="2%"></TD>
-                <TD WIDTH="49%" style="font-size: 85%" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
+                <TD WIDTH="49%" style="" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                     <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order # <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
