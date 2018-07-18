@@ -1101,6 +1101,7 @@ function placeorder(StripeResponse) {
             } else {
                 ajaxerror("Error:" + result, makestring("{not_placed}"));
             }
+            placeorderstate(false);
         });
     } else {
         $("#loginmodal").modal("show");
@@ -1455,6 +1456,7 @@ function flash(delay){
     $('.redhighlite').fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0).fadeTo(delay, 0.3, function() { $(this).fadeTo(delay, 1.0); }); }); });
 }
 
+//state: true=can't place orders, false=can place orders
 function placeorderstate(state){
     if(state){
         $(".payfororder").removeClass("disabled");
@@ -1678,6 +1680,7 @@ function selectaddress(address){
 
 function showcheckout() {
     $(getGoogleAddressSelector()).val("");
+    placeorderstate(false);
     var HTML = $("#checkoutaddress").html();
     HTML = HTML.replace('class="', 'class="corner-top ');
     var needscreditrefresh = false;
