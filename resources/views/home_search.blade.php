@@ -33,41 +33,51 @@
 
     <DIV CLASS="row">
 
-        <DIV CLASS="col-md-2">
-            Restaurant:
-            <SELECT ID="rest_id" CLASS="form-control">
-                <?php
-                    $restaurants = Query("SELECT * FROM restaurants ORDER BY name", true, "home_search");
-                    foreach($restaurants as $restaurant){
-                        echo '<OPTION VALUE="' . $restaurant["id"] . '">' . $restaurant["name"] . '</OPTION>';
-                    }
-                ?>
-            </SELECT>
-        </DIV>
-
-        <DIV CLASS="col-md-2">
-            User:
-            <SELECT ID="user_id" CLASS="form-control">
-                <?php
-                    $users = Query("SELECT * FROM users ORDER BY profiletype", true, "home_search");
-                    foreach($users as $user){
-                        echo '<OPTION VALUE="' . $user["id"] . '">';
-                        switch ($user["profiletype"]){
-                            case 0://customer
-                                echo '&#xf007;';
-                                break;
-                            case 1://admin
-                                echo '&#xf234;';
-                                break;
-                            case 2://restaurant
-                                echo '&#xf07a;';
-                                break;
+        @if(read("profiletype") == 2)
+            <INPUT TYPE="hidden" ID="rest_id" VALUE="<?= findrestaurant(); ?>">
+        @else
+            <DIV CLASS="col-md-2">
+                Restaurant:
+                <SELECT ID="rest_id" CLASS="form-control">
+                    <OPTION VALUE="0">All</OPTION>
+                    <?php
+                        $restaurants = Query("SELECT * FROM restaurants ORDER BY name", true, "home_search");
+                        foreach($restaurants as $restaurant){
+                            echo '<OPTION VALUE="' . $restaurant["id"] . '">' . $restaurant["name"] . '</OPTION>';
                         }
-                        echo $user["name"] . '</OPTION>';
-                    }
-                ?>
-            </SELECT>
-        </DIV>
+                    ?>
+                </SELECT>
+            </DIV>
+        @endif
+
+        @if(read("profiletype") == 0)
+            <INPUT TYPE="hidden" ID="user_id" VALUE="<?= read("id"); ?>">
+        @else
+            <DIV CLASS="col-md-2">
+                User:
+                <SELECT ID="user_id" CLASS="form-control">
+                    <OPTION VALUE="0">All</OPTION>
+                    <?php
+                        $users = Query("SELECT * FROM users ORDER BY profiletype", true, "home_search");
+                        foreach($users as $user){
+                            echo '<OPTION VALUE="' . $user["id"] . '">';
+                            switch ($user["profiletype"]){
+                                case 0://customer
+                                    echo '&#xf007;';
+                                    break;
+                                case 1://admin
+                                    echo '&#xf234;';
+                                    break;
+                                case 2://restaurant
+                                    echo '&#xf07a;';
+                                    break;
+                            }
+                            echo $user["name"] . '</OPTION>';
+                        }
+                    ?>
+                </SELECT>
+            </DIV>
+        @endif
 
         <DIV CLASS="col-md-2">
             Starting Date:
@@ -210,6 +220,7 @@
                 _token: token,
                 action: "getorders",
                 restaurant: currentrestaurant,
+                userid: $("#user_id").val(),
                 date: today,
                 enddate: enddate,
                 useend: useend,

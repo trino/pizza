@@ -784,7 +784,8 @@ function verbosedate($date){
     return date("l F j, Y @ g:i A", $date) . $append;
 }
 
-function findrestaurant($UserID){
+function findrestaurant($UserID = false){
+    if(!$UserID){$UserID = read("id");}
     $addresses = Query("SELECT id FROM useraddresses WHERE user_id = " . $UserID, true, "API");
     $addresses = implode(",", collapsearray($addresses, "id"));
     $restaurants = collapsearray(Query("SELECT id FROM restaurants WHERE address_id IN (" . $addresses. ")", true, "API"), "id");
@@ -899,7 +900,10 @@ function actions($eventname, $party = -1){
 }
 
 function getdeliverytime($var = "DeliveryTime"){
-    return first("SELECT price FROM additional_toppings WHERE size = '" . $var . "'", true, "API.actions")["price"];
+    if(!isset($GLOBALS["deliverytime"])){
+        $GLOBALS["deliverytime"] = first("SELECT price FROM additional_toppings WHERE size = '" . $var . "'", true, "API.actions")["price"];
+    }
+    return $GLOBALS["deliverytime"];
 }
 
 function formatphone($phone){

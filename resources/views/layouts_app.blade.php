@@ -219,7 +219,7 @@
             echo '<STYLE>.sqlduplicate{color:red;}.centertable{margin-left: auto; margin-right: auto;}</STYLE>';
             if (isset($GLOBALS["SQL"])) {
                 echo '<TABLE BORDER="1" CLASS="centertable">';
-                echo '<TR><TD COLSPAN="4" ALIGN="CENTER"><STRONG>SQL Debug data. (<SPAN CLASS="sqlduplicate">text</SPAN> = duplicate SQL query)</STRONG></TD></TR>';
+                echo '<TR><TD COLSPAN="4" ALIGN="CENTER"><STRONG>SQL Debug data. (<SPAN CLASS="sqlduplicate">red text</SPAN> = duplicate SQL query)</STRONG></TD></TR>';
                 echo '<TR><TH>#</TH><TH>Time</TH><TH>SQL Query</TH><TH>Where</TH></TR>';
                 $total = 0;
                 $duplicates = 0;
