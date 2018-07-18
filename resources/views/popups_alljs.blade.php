@@ -142,7 +142,7 @@
                     theorder = result["Order"];
                     $("#cookingnotes").val(result["cookingnotes"]);
                     generatereceipt();
-                    //scrolltobottom();
+                    scrolltobottom();
                 } else {//HTML recieved, put it in the pastreceipt element
                     skipunloadingscreen = true;
                     setTimeout(function () {
