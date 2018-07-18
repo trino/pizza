@@ -438,32 +438,94 @@
                 $keys = iif(read("profiletype") == 1, "id, price", "*");
                 $results["startdate"] = $_POST["date"];
 
-                $query = "SELECT id, price FROM orders WHERE ";
-                if(is_numeric($_POST["restaurant"])){
-                    $query .= "restaurant_id = " . $_POST["restaurant"] . " AND ";
+                function appendtoquery(&$query, $text){
+                    if(isset($GLOBALS["hasQ"])){
+                        $query .= " AND " . $text;
+                    } else {
+                        $query .= " " . $text;
+                    }
+                    $GLOBALS["hasQ"] = true;
+                    return $query;
                 }
-                $query .= "placed_at > '" . $date . "'";
+
+                switch(read("profiletype")){
+                    case 0://user
+                        $_POST["userid"] = read("id");
+                        break;
+                    case 2://restaurant
+                        $_POST["restaurant"] = findrestaurant();
+                        break;
+                }
+
+                $query = "SELECT id, price FROM orders WHERE ";
+                if(is_numeric($_POST["restaurant"]) && $_POST["restaurant"] > 0){
+                    appendtoquery($query, "restaurant_id = " . $_POST["restaurant"]);
+                }
+                if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) && $_POST["userid"] > 0){
+                    appendtoquery($query, "user_id = " . $_POST["userid"]);
+                }
+
+                //make sure minimum and maximum are numbers, and minimum is < maximum
+                $minimum = false;
+                if(isset($_POST["minimum"]) && is_numeric(isset($_POST["minimum"]))){
+                    $minimum = $_POST["minimum"];
+                }
+                $maximum = false;
+                if(isset($_POST["maximum"]) && is_numeric(isset($_POST["maximum"]))){
+                    if($minimum === false){
+                        $minimum = $_POST["maximum"];
+                    } else {
+                        $maximum = $_POST["maximum"];
+                        if($maximum < $minimum){
+                            $maximum = $minimum;
+                            $minimum = $_POST["maximum"];
+                        } else if ($maximum == $minimum){
+                            $maximum = false;
+                        }
+                    }
+                }
+                if($minimum !== false){
+                    if(!$maximum !== false){
+                        appendtoquery($query, "price > " . $minimum . " AND price < " . $maximum);
+                    } else {
+                        appendtoquery($query, "price = " . $minimum);
+                    }
+                }
+
+                $datefield = "placed_at";
+                if(isset($_POST["datetype"])){
+                    switch($_POST["datetype"]){
+                        case "deliver_at"://whitelist fields, do not trust user data
+                            $datefield = $_POST["datetype"];
+                            break;
+                    }
+                }
+                appendtoquery($query, $datefield . " > '" . $date . "'");
                 if($_POST["useend"] == "true"){//&& $_POST["enddate"] != $_POST["date"]){
                     $results["enddate"] = $_POST["enddate"];
-                    $query .= " AND placed_at < '" . toSQLdate($_POST["enddate"], true) . "'";
+                    appendtoquery($query, $datefield . " < '" . toSQLdate($_POST["enddate"], true) . "'");
                 }
+
                 if(read("profiletype") == 1){$results["query"] = $query;}
                 $results["data"] = Query($query, true, "home_list");
                 $party = "private";//profiletypes: 0=user, 1=admin, 2=restaurant
                 if(read("profiletype") == 2){$party = "restaurant";}
                 //$data = ["place" => "getreceipt", "style" => 2, "party" => $party, "JSON" => false];
                 $search = explode(",", $_POST["search"]);
-                foreach($results["data"] as $index => $value){
-                    $JSON = "";
-                    if(containsitems($value["id"], $search, $_POST["search"], $JSON)){
-                        /*
-                        $data["orderid"] = $value["id"];
-                        $results["data"][$index]["html"] = view("popups_receipt", $data)->render();//won't work, gets cached
-                        */
-                    } else {
-                        unset($results["data"][$index]);
-                        //$results["data"][$index]["html"] = "Search: " . print_r($JSON, true) . " for " . print_r($search, true);
+                if($results["data"]){
+                    foreach($results["data"] as $index => $value){
+                        $JSON = "";
+                        if(containsitems($value["id"], $search, $_POST["search"], $JSON)){
+                            /*
+                            $data["orderid"] = $value["id"];
+                            $results["data"][$index]["html"] = view("popups_receipt", $data)->render();//won't work, gets cached
+                            */
+                        } else {
+                            unset($results["data"][$index]);
+                        }
                     }
+                } else {
+                    $results["data"] = array();
                 }
                 break;
 

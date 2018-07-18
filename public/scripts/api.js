@@ -1719,8 +1719,9 @@ function showcheckout() {
     selectaddress();
 }
 
-function clearvalidation(){
-    $(".redhighlite").removeClass("redhighlite");
+function clearvalidation(specificselector){
+    if(!isUndefined(specificselector)){specificselector = ".redhighlite";}
+    $(specificselector).removeClass("redhighlite");
     $(".error").hide();
 }
 
