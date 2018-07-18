@@ -1101,7 +1101,6 @@ function placeorder(StripeResponse) {
             } else {
                 ajaxerror("Error:" + result, makestring("{not_placed}"));
             }
-            placeorderstate(false);
         });
     } else {
         $("#loginmodal").modal("show");
@@ -1680,7 +1679,7 @@ function selectaddress(address){
 
 function showcheckout() {
     $(getGoogleAddressSelector()).val("");
-    placeorderstate(false);
+    //placeorderstate(false);
     var HTML = $("#checkoutaddress").html();
     HTML = HTML.replace('class="', 'class="corner-top ');
     var needscreditrefresh = false;
