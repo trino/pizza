@@ -20,12 +20,18 @@
                 $time = delivery_at($order["placed_at"], $order["deliverytime"], $delivery_delay);
                 $query = "UPDATE orders SET deliver_at = '" . $time . "' WHERE id = " . $order["id"];
                 Query($query);//didn't work
-                vardump($query);
+                //vardump($query);
             }
         }
 
-        $query = "SELECT *, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id ORDER BY attempts ASC";
+        $query = "SELECT *, min(attempts) as new_attempts, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id ORDER BY attempts ASC";
         $orders = query($query, true, "CRON");
+        if($orders){
+            foreach($orders as $index => $order){
+                $orders[$index]["attempts"] = $order["new_attempts"];
+                unset($orders[$index]["new_attempts"]);
+            }
+        }
 
         //vardump($query); vardump($orders); die();
 
