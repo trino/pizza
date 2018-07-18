@@ -1459,9 +1459,9 @@ function flash(delay){
 //state: true=can't place orders, false=can place orders
 function placeorderstate(state){
     if(state){
-        $(".payfororder").removeClass("disabled");
+      //  $(".payfororder").removeClass("disabled");
     } else {
-        $(".payfororder").addClass("disabled");
+      //  $(".payfororder").addClass("disabled");
     }
     paydisabled = state;
 }
