@@ -936,7 +936,7 @@ function delivery_at($placed_at, $deliverytime, $delivery_delay = false){
         $minutes = $minutes % 100;
         if($month < $placed_at_date[1]){$year++;}
         $ret = $year . "-" . pad_left($month,2) . "-" . pad_left($day,2) . " " . $hours . ":" . pad_left($minutes,2) . ":00";
-        if(strtotime($ret) < $should_be){$ret = $should_be;}
+        if(strtotime($ret) < $should_be){$ret = date("Y-m-d G:i:s", $should_be);}
     }
     return $ret;
 }
