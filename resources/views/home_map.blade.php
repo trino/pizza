@@ -7,13 +7,13 @@
     $local_color = "#000064";//BLUE
 
     if (!islive() || read("profiletype") == 1) {
-        echo view("popups_time")->render();
+       // echo view("popups_time")->render();
     }
     use App\Http\Controllers\HomeController;//used for order "closestrestaurant"
     //profiletypes: 0=user, 1=admin, 2=restaurant
     echo '<DIV CLASS="row"><DIV CLASS="col-md-9">';
     echo view("popups_address", array("dontincludeGoogle" => true, "unit" => false, "title" => "", "address" => $_GET))->render();
-    echo '</DIV><DIV CLASS="col-md-3"><BUTTON CLASS="btn btn-sm btn-success full-width full-height" ONCLICK="search();">Search</BUTTON></DIV></DIV>';
+    echo '</DIV><DIV CLASS="col-md-3" ><BUTTON  CLASS="btn btn-sm btn-success full-width full-height" ONCLICK="search();">Search</BUTTON></DIV></DIV>';
     function get_number($GET)
     {
         if (isset($_GET[$GET]) && is_numeric($_GET[$GET])) {
@@ -164,7 +164,8 @@
                         );
                         $class = iif($restaurant["is_delivery"], "live", "dead");
                     }
-                    echo '<div class = "col-md-3"><A CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers) - 1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] . '"';
+                    echo '<div class = "col-md-3"><A style="background:white; font-weight:normal !important;font-size:75% !important;overflow: hidden !important;white-space: nowrap !important;"
+ CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers) - 1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] . '"';
                     for ($day = 0; $day < 7; $day++) {
                         echo $day . '_open="' . $restaurant["hours"][$day . "_open"] . '" ' . $day . '_close="' . $restaurant["hours"][$day . "_close"] . '"';
                     }
@@ -176,7 +177,7 @@
         } else {
             echo 'No address specified';
         }
-        echo '</DIV><DIV CLASS="col-md-12">';
+        echo '</DIV><DIV CLASS="row"><DIV CLASS="col-md-12">';
     }
     $JSONmarkers = json_encode($markers);
     if (!$JSONmarkers) {
@@ -219,6 +220,7 @@
                 <DIV ID="orders_list"></DIV> @endif
         </DIV>
         <DIV ID="orders_content" CLASS="col-md-8 col-right"></DIV>
+    </DIV>
     </DIV>
     </DIV>
     </DIV>
