@@ -127,6 +127,7 @@
                 GetNextOrder(ID);
                 return;
             }
+            if(getJSON){$("#alertmodal").modal('hide');}
             $.post("<?= webroot('public/list/orders'); ?>", {
                 _token: token,
                 action: "getreceipt",
@@ -139,8 +140,7 @@
                     theorder = result["Order"];
                     $("#cookingnotes").val(result["cookingnotes"]);
                     generatereceipt();
-                    $("#alertmodal").modal('hide');
-                    scrolltobottom();
+                    //scrolltobottom();
                 } else {//HTML recieved, put it in the pastreceipt element
                     skipunloadingscreen = true;
                     setTimeout(function () {
@@ -473,8 +473,8 @@
         var tomorrow = validdayofweek(today + 1);
         var now = getNow(4, false);//date (today, actual)
         var tomorrowdate = getNow(5, false);//date (tomorrow, actual)
-        var today_text = "Today (" + monthnames[now.getMonth()] + " " + now.getDate() + ")";
-        var tomor_text = "Tomorrow (" + monthnames[tomorrowdate.getMonth()] + " " + tomorrowdate.getDate() + ")";
+        var today_text = "Today, " + monthnames[now.getMonth()] + " " + now.getDate();
+        var tomor_text = "Tomorrow, " + monthnames[tomorrowdate.getMonth()] + " " + tomorrowdate.getDate();
         now = getNow(4);//date (today, virtual)
 
         var time = getNow(2);//24 hour time (virtual)

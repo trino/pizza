@@ -648,23 +648,21 @@ function generatereceipt(forcefade) {
                     if (itemname) {
                         tempHTML += ordinals[currentitem] + " " + itemname + ': ';
                     }
-                    if(addons.hasOwnProperty("addons")) {
-                        if (addons["addons"].length == 0) {
-                            tempHTML += 'no ' + nonames[tablename] + '';
-                        } else {
-                            for (var addonid = 0; addonid < addons["addons"].length; addonid++) {
-                                if (isfirstinstance2(addons["addons"], addonid)) {
-                                    if (addonid > 0) {
-                                        tempHTML += ", ";
-                                    }
-                                    var addonname = addons["addons"][addonid]["text"];
-                                    var isfree = isaddon_free(tablename, addonname);
-                                    addonname = countaddons2(addons["addons"], addonid) + addonname;
-                                    if (isfree) {
-                                        tempHTML += '' + addonname + '';
-                                    } else {
-                                        tempHTML += addonname;
-                                    }
+                    if(!addons.hasOwnProperty("addons") || addons["addons"].length == 0) {
+                        tempHTML += 'no ' + nonames[tablename];
+                    } else {
+                        for (var addonid = 0; addonid < addons["addons"].length; addonid++) {
+                            if (isfirstinstance2(addons["addons"], addonid)) {
+                                if (addonid > 0) {
+                                    tempHTML += ", ";
+                                }
+                                var addonname = addons["addons"][addonid]["text"];
+                                var isfree = isaddon_free(tablename, addonname);
+                                addonname = countaddons2(addons["addons"], addonid) + addonname;
+                                if (isfree) {
+                                    tempHTML += '' + addonname + '';
+                                } else {
+                                    tempHTML += addonname;
                                 }
                             }
                         }
@@ -1660,6 +1658,7 @@ function selectaddress(address){
             selectaddress("addaddress");
             addresshaschanged();
             $(getGoogleAddressSelector()).show();
+            visible_address(true);
         } else if (userdetails["Addresses"].length == 1) {
             selectaddress(userdetails["Addresses"][0].id);
         } else {
@@ -1679,9 +1678,6 @@ function selectaddress(address){
 
 function showcheckout() {
     $(getGoogleAddressSelector()).val("");
-    setTimeout(function () {
-        selectaddress();
-    }, 100);
     var HTML = $("#checkoutaddress").html();
     HTML = HTML.replace('class="', 'class="corner-top ');
     var needscreditrefresh = false;
@@ -1720,6 +1716,7 @@ function showcheckout() {
     refreshform("#saveaddresses");
     if(needscreditrefresh){changecredit(false, 'showcheckout2');}
     validateinput();
+    selectaddress();
 }
 
 function clearvalidation(){

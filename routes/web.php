@@ -40,6 +40,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('/placeorder',           'HomeController@placeorder');
 
     Route::any('/map',                  'HomeController@map');
+    Route::any('/search',               'HomeController@search');
     Route::any('/newrest',              'HomeController@newrest');
     Route::any('/call',                 'HomeController@robocall');
     Route::any('/cron',                 'HomeController@cron');
