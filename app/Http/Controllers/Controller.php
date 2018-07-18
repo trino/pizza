@@ -30,11 +30,11 @@ class Controller extends BaseController {
                 $array['email'] = first("SELECT email FROM users WHERE profiletype = 1", true, "Controller.SendEmail")["email"];
             }
             try {
-                //if(islive()) {
+                if(islive()) {
                     \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
                         $messages->to($array['email'])->subject($array['mail_subject']);
                     });
-                //}
+                }
             } catch (\Swift_TransportException $e) {
                 $text = $e->getMessage();
                 $email = view($template_name, $array);
