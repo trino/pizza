@@ -598,17 +598,16 @@ function debugprint($text, $path = "royslog.txt", $DeleteFirst = false){
 }
 
 function orderpath($OrderID, $userid = false){
+    $oldfilename = public_path("orders") . "/" . $OrderID . ".json";
+    if (file_exists($oldfilename)) {
+        return $oldfilename;
+    }
     if(!$userid){$userid = first("SELECT user_id FROM orders WHERE id = " . $OrderID, true, "API.orderpath");}
     if($userid) {
         $userid = $userid["user_id"];
-        $oldfilename = public_path("orders") . "/" . $OrderID . ".json";
         $dir = public_path("orders/user" . $userid);//no / at the end
         $newfilename = $dir . "/" . $OrderID . ".json";
         //if (!is_dir($dir)) {mkdir($dir, 0777, true);}
-        if (file_exists($oldfilename)) {
-            //rename($oldfilename, $newfilename);
-            return $oldfilename;
-        }
         return $newfilename;
     }
     return "";

@@ -206,10 +206,8 @@ class HomeController extends Controller {
                 $info["phone"] = read("phone");
             }
             $orderid = insertdb("orders", $info);
-            $dir = public_path("orders/user" . $info["user_id"]);//no / at the end
-            if (!is_dir($dir)) {
-                mkdir($dir, 0777, true);
-            }
+            $dir = public_path("orders");//no / at the end (was in "user" . $info["user_id"])
+            //if (!is_dir($dir)) {mkdir($dir, 0777, true);}
             $filename = $dir . "/" . $orderid . ".json";
             file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
             if(defined("username") && posix_geteuid() != fileowner($filename)){
