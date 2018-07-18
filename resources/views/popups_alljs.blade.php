@@ -688,14 +688,14 @@
                 <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <div class="pull-center mb-4" id="exclame">
+                <div class="pull-center" id="exclame">
 
                     <span class="fa-stack fa-3x">
                           <i class="text-muted fa fa-circle fa-stack-2x"></i>
                           <i class="fa fa-exclamation text-white fa-stack-1x"></i>
                         </span>
                 </div>
-                <DIV ID="alertmodalbody"></DIV>
+                <DIV ID="alertmodalbody" class="py-3"></DIV>
                 <div CLASS="pull-center">
                     <button class="btn btn-danger text-white alert-button" id="alert-cancel" data-dismiss="modal">
                         CANCEL

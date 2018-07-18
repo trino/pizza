@@ -164,7 +164,7 @@
                         );
                         $class = iif($restaurant["is_delivery"], "live", "dead");
                     }
-                    echo '<div class = "col-md-3"><A style="background:white; font-weight:normal !important;font-size:75% !important;overflow: hidden !important;white-space: nowrap !important;"
+                    echo '<div class = "col-md-3 col-xs-6"><A style="background:#e6ecf0; font-weight:normal !important;font-size:75% !important;overflow: hidden !important;white-space: nowrap !important;"
  CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers) - 1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] . '"';
                     for ($day = 0; $day < 7; $day++) {
                         echo $day . '_open="' . $restaurant["hours"][$day . "_open"] . '" ' . $day . '_close="' . $restaurant["hours"][$day . "_close"] . '"';
