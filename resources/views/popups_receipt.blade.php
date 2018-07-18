@@ -213,7 +213,7 @@
     @endif
 
     <?php
-        $dir = public_path("orders/user" . $Order["user_id"]);
+        $dir = public_path("orders");/* "user" . $Order["user_id"]);*/
         $HTMLfilename = $dir . "/" . $orderid . "-" . $style . ".html";
         if(file_exists($HTMLfilename)){
             $HTML = file_get_contents($HTMLfilename);

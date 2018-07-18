@@ -127,7 +127,9 @@
                 GetNextOrder(ID);
                 return;
             }
-            if(getJSON){$("#alertmodal").modal('hide');}
+            if(getJSON){
+                CloseModal("LoadOrder");// $("#alertmodal").modal('hide');
+            }
             $.post("<?= webroot('public/list/orders'); ?>", {
                 _token: token,
                 action: "getreceipt",
@@ -140,7 +142,7 @@
                     theorder = result["Order"];
                     $("#cookingnotes").val(result["cookingnotes"]);
                     generatereceipt();
-                    //scrolltobottom();
+                    scrolltobottom();
                 } else {//HTML recieved, put it in the pastreceipt element
                     skipunloadingscreen = true;
                     setTimeout(function () {
