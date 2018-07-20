@@ -316,7 +316,7 @@
                 var children = $("#restaurant").children();
                 if(children.length == 1){
                     if(children[0].text == makestring("{norestaurants}")){
-                        message = "Please enter an address in-range of our restaurants";
+                        message = "No restaurants within range";
                     }
                 }
                 validateinput("#restaurant", message);

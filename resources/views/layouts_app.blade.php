@@ -56,7 +56,8 @@
         <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
         <div class="list-group-item container-fluid shadow bg-danger">
-            <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
+            <button data-toggle="dropdown" style="width:38px; outline: none !important;
+   box-shadow: none;" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
                 <i class="fa fa-bars text-white"></i>
             </button>
 
@@ -87,7 +88,7 @@
                     </SPAN>
                 @endif
                 @if($routename == "help")
-                    <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-basket icon-width"></i> Menu</A></LI>
+                    <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-cart icon-width"></i> Menu</A></LI>
                 @else
                     <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
                 @endif

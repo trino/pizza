@@ -45,7 +45,7 @@
                         <!--div class="clearfix py-2"></div>
                         <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
                         <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-sm btn btn-light" href="#" onclick="handlelogin('forgotpassword'); return false;">FORGOT PASSWORD</BUTTON>
+                        <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
                     </FORM>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="buzz">
@@ -70,7 +70,7 @@
 
         <DIV class="ajaxprompt margin-sm"></DIV>
 
-        <div class="py-3">
+        <div class="pb-3">
             <center>
                 <img src="<?= webroot("images/delivery.jpg"); ?>" class="width-50"/>
                 <h2 class="text-danger mt-3 pull-center">Only the Best Pizza in <?= cityname; ?></h2>
@@ -84,7 +84,7 @@
     <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
         <span class="bold bigtext"> <?= strtoupper(cityname); ?> PIZZA DELIVERY</span><br><br>
         <p>The art of delivery is in the team, local restaurants at your footstep within <?= $time; ?> minutes.</p>
-        <p class="text-danger">Feed yourself plus someone else! <!--a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a--></p>
+        <p class="text-danger">Feed yourself plus someone else... <!--a class="btn-link" href="<?= webroot("help"); ?>" role="button"><?= makestring("{aboutus}"); ?></a--><br>Our restaurants will donate 1 pizza for every 10 ordered to feed the needy!</p>
 
         <div class="row">
             <div class="col-md-6 padleftright15">

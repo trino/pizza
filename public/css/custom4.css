@@ -1,6 +1,7 @@
 :root {
     --min-height-global: 55px;
 }
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     margin-top: auto;
@@ -59,8 +60,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .orderfont {
-/*    font-family: sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
-    font-size: 85% */
+    /*    font-family: sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+        font-size: 85% */
 }
 
 .toppinglistitem {
@@ -302,7 +303,7 @@ h2 {
 }
 
 @media screen and (max-width: 400px) {
-    .list-group-item,.form-control ,.orderfont{
+    .list-group-item, .form-control, .orderfont {
         font-size: .85rem !important;
     }
 
@@ -320,7 +321,7 @@ h2 {
 }
 
 .modal-content {
-    border: 5px solid #E6ECF0;
+    border: 0px solid #fff;
     border-radius: 0;
 }
 
@@ -394,7 +395,6 @@ h2 {
     float: left !important;
     display: inline !important;
     line-height: .85rem;
-
 
 }
 
@@ -470,7 +470,7 @@ body.loading {
     cursor: pointer;
 }
 
-.sub_item{
+.sub_item {
 }
 
 .nowrap {
@@ -555,8 +555,6 @@ body {
     background: #e6ecf0;
 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-
-
 
 }
 
@@ -671,7 +669,7 @@ ul {
     height: 100%;
 }
 
-.half-width{
+.half-width {
     width: 49%;
 }
 
@@ -691,6 +689,10 @@ ul {
 
 .bg-white2 {
     background-color: white
+}
+
+.receipt_item .bg-transparent {
+    width: 25px !important;
 }
 
 .fa-stack-1x {
@@ -1047,7 +1049,7 @@ table {
 }
 
 table td, table th {
-  /*  font-family: sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; */
+    /*  font-family: sans Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; */
 }
 
 table tr:first-child th {
@@ -1248,7 +1250,7 @@ td {
 }
 */
 
-.confirm3{
+.confirm3 {
     position: absolute;
     left: 0px;
     right: 0px;
@@ -1257,6 +1259,7 @@ td {
     z-index: 1060;
     background-color: white;
 }
-.confirm3-answers{
+
+.confirm3-answers {
 
 }

@@ -686,7 +686,7 @@ function generatereceipt(forcefade) {
     oldvalues = '<DIV id="oldvalues" class="float-right">' + oldvalues + '</div>';
 
     if (theorder.length == 0) {
-        HTML = oldvalues + '<DIV CLASS="clearfix"></DIV><div CLASS="list-padding py-3 btn-block radius0"><div class="d-flex justify-content-center"><i class="fa fa-shopping-basket empty-shopping-cart fa-2x pb-1 text-muted"></i></div><div class="d-flex justify-content-center text-muted">Empty</div></div>';
+        HTML = oldvalues + '<DIV CLASS="clearfix"></DIV><div CLASS="list-padding py-3 btn-block radius0"><div class="d-flex justify-content-center"><i class="fa fa-shopping-cart empty-shopping-cart fa-2x pb-1 text-muted"></i></div><div class="d-flex justify-content-center text-muted">Empty</div></div>';
         $("#checkout").hide();
         $("#checkoutbutton").hide();
         $("#confirmclearorder").hide();

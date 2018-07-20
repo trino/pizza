@@ -1,21 +1,49 @@
 <?php
-    startfile("popups_alljs");
-    $CURRENT_YEAR = date("Y");
-    $STREET_FORMAT = "[number] [street], [city] [postalcode]";
-    //["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
-    $MAX_DISTANCE = getsetting(islive() ? "maxdistance_live" : "maxdistance_local");
-    $scripts = webroot("public/scripts");
-    $nprog = "#F0AD4E";//color for loading bar
+startfile("popups_alljs");
+$CURRENT_YEAR = date("Y");
+$STREET_FORMAT = "[number] [street], [city] [postalcode]";
+//["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
+$MAX_DISTANCE = getsetting(islive() ? "maxdistance_live" : "maxdistance_local");
+$scripts = webroot("public/scripts");
+$nprog = "#F0AD4E";//color for loading bar
 ?>
 <script>
     var debugmode = "<?= debugmode; ?>";
+
     function log(text) {
         @if(debugmode) console.log(text); @endif
     }
-    !function(e){var a=e,r="undefined"!=typeof window&&window,f={frameLoaded:0,frameTry:0,frameTime:0,frameDetect:null,frameSrc:null,frameCallBack:null,frameThis:null,frameNavigator:window.navigator.userAgent,frameDelay:0,frameDataSrc:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"};a.fn.backDetect=function(e,r){f.frameThis=this,f.frameCallBack=e,null!==r&&(f.frameDelay=r),f.frameNavigator.indexOf("MSIE ")>-1||f.frameNavigator.indexOf("Trident")>-1?setTimeout(function(){a('<iframe src="'+f.frameDataSrc+'?loading" style="display:none;" id="backDetectFrame" onload="jQuery.fn.frameInit();""></iframe>').appendTo(f.frameThis)},f.frameDelay):setTimeout(function(){a("<iframe src='about:blank?loading' style='display:none;' id='backDetectFrame' onload='jQuery.fn.frameInit();'></iframe>").appendTo(f.frameThis)},f.frameDelay)},a.fn.frameInit=function(){f.frameDetect=document.getElementById("backDetectFrame"),f.frameLoaded>1&&2===f.frameLoaded&&(f.frameCallBack.call(this),r.history.go(-1)),f.frameLoaded+=1,1===f.frameLoaded&&(f.frameTime=setTimeout(function(){e.fn.setupFrames()},500))},a.fn.setupFrames=function(){clearTimeout(f.frameTime),f.frameSrc=f.frameDetect.src,1===f.frameLoaded&&-1===f.frameSrc.indexOf("historyLoaded")&&(f.frameNavigator.indexOf("MSIE ")>-1||f.frameNavigator.indexOf("Trident")>-1?f.frameDetect.src=f.frameDataSrc+"?historyLoaded":f.frameDetect.src="about:blank?historyLoaded")}}(jQuery);
+
+    !function (e) {
+        var a = e, r = "undefined" != typeof window && window, f = {
+            frameLoaded: 0,
+            frameTry: 0,
+            frameTime: 0,
+            frameDetect: null,
+            frameSrc: null,
+            frameCallBack: null,
+            frameThis: null,
+            frameNavigator: window.navigator.userAgent,
+            frameDelay: 0,
+            frameDataSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
+        };
+        a.fn.backDetect = function (e, r) {
+            f.frameThis = this, f.frameCallBack = e, null !== r && (f.frameDelay = r), f.frameNavigator.indexOf("MSIE ") > -1 || f.frameNavigator.indexOf("Trident") > -1 ? setTimeout(function () {
+                a('<iframe src="' + f.frameDataSrc + '?loading" style="display:none;" id="backDetectFrame" onload="jQuery.fn.frameInit();""></iframe>').appendTo(f.frameThis)
+            }, f.frameDelay) : setTimeout(function () {
+                a("<iframe src='about:blank?loading' style='display:none;' id='backDetectFrame' onload='jQuery.fn.frameInit();'></iframe>").appendTo(f.frameThis)
+            }, f.frameDelay)
+        }, a.fn.frameInit = function () {
+            f.frameDetect = document.getElementById("backDetectFrame"), f.frameLoaded > 1 && 2 === f.frameLoaded && (f.frameCallBack.call(this), r.history.go(-1)), f.frameLoaded += 1, 1 === f.frameLoaded && (f.frameTime = setTimeout(function () {
+                e.fn.setupFrames()
+            }, 500))
+        }, a.fn.setupFrames = function () {
+            clearTimeout(f.frameTime), f.frameSrc = f.frameDetect.src, 1 === f.frameLoaded && -1 === f.frameSrc.indexOf("historyLoaded") && (f.frameNavigator.indexOf("MSIE ") > -1 || f.frameNavigator.indexOf("Trident") > -1 ? f.frameDetect.src = f.frameDataSrc + "?historyLoaded" : f.frameDetect.src = "about:blank?historyLoaded")
+        }
+    }(jQuery);
 </script>
 <?php
-	includefile("public/scripts/api.js");
+includefile("public/scripts/api.js");
 ?>
 <STYLE>
     /* STOP MOVING THIS TO THE CSS, IT WON'T WORK! */
@@ -30,16 +58,67 @@
         background: rgba(0, 0, 0, .6) url('<?= webroot("public/images/slice.gif"); ?>') 50% 50% no-repeat;
     }
 
-    #loading {z-index: 999999;}
-    #nprogress{pointer-events:none;}
-    #nprogress .bar{background:<?= $nprog; ?>;position:fixed;z-index:1999999;top:0;left:0;width:100%;height:10px;}
-    #nprogress .peg{display:block;position:absolute;right:0px;width:100px;height:100%;box-shadow:0 0 10px <?= $nprog; ?>,0 0 5px <?= $nprog; ?>;opacity:1.0;-webkit-transform:rotate(3deg) translate(0px,-4px);-ms-transform:rotate(3deg) translate(0px,-4px);transform:rotate(3deg) translate(0px,-4px);}
+    #loading {
+        z-index: 999999;
+    }
+
+    #nprogress {
+        pointer-events: none;
+    }
+
+    #nprogress .bar {
+        background: <?= $nprog; ?>;
+        position: fixed;
+        z-index: 1999999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+    }
+
+    #nprogress .peg {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: 100px;
+        height: 100%;
+        box-shadow: 0 0 5px <?= $nprog; ?>, 0 0 5px<?= $nprog; ?>;
+        opacity: 1.0;
+        -webkit-transform: rotate(3deg) translate(0px, -4px);
+        -ms-transform: rotate(3deg) translate(0px, -4px);
+        transform: rotate(3deg) translate(0px, -4px);
+    }
+
     /*#nprogress .spinner{display:block;position:fixed;z-index:11111;top:15px;right:15px;}
-    #nprogress .spinner-icon{width:18px;height:18px;box-sizing:border-box;border:solid 2px transparent;border-top-color:<?= $nprog; ?>;border-left-color:<?= $nprog; ?>;border-radius:50%;-webkit-animation:nprogress-spinner 400ms linear infinite;animation:nprogress-spinner 400ms linear infinite;}*/
-    .nprogress-custom-parent{overflow:hidden;position:relative;}
-    .nprogress-custom-parent #nprogress .spinner,.nprogress-custom-parent #nprogress .bar{position:absolute;}
-    @-webkit-keyframes nprogress-spinner{0%{-webkit-transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);}}
-    @keyframes nprogress-spinner{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    #nprogress .spinner-icon{width:18px;height:18px;box-sizing:border-box;border:solid 2px transparent;border-top-color:
+    <?= $nprog; ?> ;border-left-color:
+    <?= $nprog; ?> ;border-radius:50%;-webkit-animation:nprogress-spinner 400ms linear infinite;animation:nprogress-spinner 400ms linear infinite;}*/
+    .nprogress-custom-parent {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .nprogress-custom-parent #nprogress .spinner, .nprogress-custom-parent #nprogress .bar {
+        position: absolute;
+    }
+
+    @-webkit-keyframes nprogress-spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes nprogress-spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </STYLE>
 <script>
     var MAX_DISTANCE = <?= $MAX_DISTANCE; ?>;//km
@@ -47,7 +126,7 @@
     var timestampoffset;
     timestampoffset = parseInt('<?= time(); ?>') - totimestamp();
 
-    function userphonenumber(){
+    function userphonenumber() {
         @if(needsphonenumber())
             return $("#order_phone").val();
         @else
@@ -62,7 +141,7 @@
         }
         generatereceipt();
         @if(!read("id"))
-            $("#loginmodal").modal("show");
+        $("#loginmodal").modal("show");
         @endif
 
         $('[data-popup-close]').on('click', function (e) {
@@ -71,10 +150,10 @@
         });
     });
 
-    function storeorders(){
+    function storeorders() {
         $("#profilemodal").modal("hide");
         var HTML = '<INPUT TYPE="button" VALUE="Your orders" CLASS="btn btn-sm btn-secondary half-width" ONCLICK="orders();"><INPUT TYPE="button" VALUE="Store orders" CLASS="btn btn-sm btn-primary half-width" ONCLICK="storeorders();"><BR><ul class="list-group" ID="ordersHTML">';
-        if(userdetails.hasOwnProperty("storeorders")){
+        if (userdetails.hasOwnProperty("storeorders")) {
             HTML += userdetails["storeorders"];
         } else {
             $.post("<?= webroot('public/list/orders'); ?>", {
@@ -101,12 +180,14 @@
             $("#profilemodal").modal("hide");
             var HTML = '';// '<INPUT TYPE="button" VALUE="Your orders" CLASS="btn btn-sm btn-primary half-width" ONCLICK="orders();"><INPUT TYPE="button" VALUE="Store orders" CLASS="btn btn-sm btn-secondary half-width" ONCLICK="storeorders();"><BR>';
             var First = false;
-            if(userdetails["Orders"].length > 0) {
+            if (userdetails["Orders"].length > 0) {
                 HTML += '<ul class="list-group">';
                 for (var i = 0; i < userdetails["Orders"].length; i++) {
                     var order = userdetails["Orders"][i];
                     ID = order["id"];
-                    if (!First) {First = ID;}
+                    if (!First) {
+                        First = ID;
+                    }
                     HTML += '<li ONCLICK="orders(' + ID + ');"><span class="text-danger strong">ORDER # ' + ID + ' </span><br>' + order["placed_at"] + '<br><DIV ID="pastreceipt' + ID + '"></DIV></li>';
                 }
                 HTML += '</ul>';
@@ -127,7 +208,7 @@
                 GetNextOrder(ID);
                 return;
             }
-            if(getJSON){
+            if (getJSON) {
                 CloseModal("LoadOrder");// $("#alertmodal").modal('hide');
             }
             $.post("<?= webroot('public/list/orders'); ?>", {
@@ -158,12 +239,14 @@
         }
     }
 
-    function reloadpage(hardway){
+    function reloadpage(hardway) {
         var allowredirect = true;
-        if(isUndefined(hardway)){hardway = false;}
+        if (isUndefined(hardway)) {
+            hardway = false;
+        }
         log("reloadpage: " + allowredirect + " " + hardway);
-        if(allowredirect) {
-            if(hardway){
+        if (allowredirect) {
+            if (hardway) {
                 window.location = "<?= webroot("", true); ?>";
             } else {
                 location.reload();
@@ -172,11 +255,13 @@
     }
 
     function handlelogin(action) {
-        if (isUndefined(action)) {action = "verify";}
-        if($("#login_email").length > 0) {
+        if (isUndefined(action)) {
+            action = "verify";
+        }
+        if ($("#login_email").length > 0) {
             $("#login_email").val($("#login_email").val().trim());
         }
-        if(action !== "logout" && $("#login_email").length > 0){
+        if (action !== "logout" && $("#login_email").length > 0) {
             if (!$("#login_email").valid()) {
                 return validateinput("#login_email", makestring("{email_needed}"));
             }
@@ -192,7 +277,7 @@
         }, function (result) {
             try {
                 var data = JSON.parse(result);
-                skipunloadingscreen=false;
+                skipunloadingscreen = false;
                 log("ACTION: " + action + " STATUS: " + data["Status"] + " REASON: " + data["Reason"]);
                 if (data["Status"] == "false" || !data["Status"]) {
                     data["Reason"] = data["Reason"].replace('[verify]', '<A onclick="handlelogin();" CLASS="hyperlink" TITLE="Click here to resend the email">verify</A>');
@@ -202,7 +287,8 @@
                             validateinput("#login_email", false);
                             validateinput("#login_password", data["Reason"]);
                             break;
-                        case "forgotpassword": case "verify":
+                        case "forgotpassword":
+                        case "verify":
                             validateinput("#login_email", data["Reason"]);
                             break;
                         case "logout":
@@ -220,11 +306,12 @@
                             }
                             $("#loginmodal").modal("hide");
                             if (redirectonlogin) {
-                                skipunloadingscreen=true;
+                                skipunloadingscreen = true;
                                 reloadpage();
                             }
                             break;
-                        case "forgotpassword": case "verify":
+                        case "forgotpassword":
+                        case "verify":
                             validateinput("#login_email", data["Reason"]);
                             break;
                         case "logout":
@@ -236,7 +323,7 @@
                             $(".profiletype").hide();
                             userdetails = false;
                             if (redirectonlogout) {
-                                skipunloadingscreen=true;
+                                skipunloadingscreen = true;
                                 reloadpage(true);
                             } else {
                                 switch (currentRoute) {
@@ -299,8 +386,8 @@
         });
 
         @if(isset($user) && $user)
-            login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
-        @endif
+        login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
+                @endif
 
         var HTML = '';
         var todaysdate = isopen(generalhours);
@@ -319,7 +406,7 @@
 
     //handle a user login
     function login(user, isJSON) {
-        if(isUndefined(user)){
+        if (isUndefined(user)) {
             user = userdetails;
         } else {
             userdetails = user;
@@ -434,23 +521,24 @@
         addresshaschanged();
     }
 
-    function validtime(Time){
+    function validtime(Time) {
         var Hours = Math.floor(Time / 100);
         var Minutes = Time % 100;
-        while(Minutes > 59){
+        while (Minutes > 59) {
             Minutes = Minutes - 60;
             Hours += 1;
         }
-        while(Hours > 23){
+        while (Hours > 23) {
             Hours = Hours - 24;
         }
         return Hours + "" + Minutes;
     }
-    function validdayofweek(day){
+
+    function validdayofweek(day) {
         return day % 7;
     }
 
-    function verbosedate(date, today, today_text, tomorrow, tomor_text, time){
+    function verbosedate(date, today, today_text, tomorrow, tomor_text, time) {
         var dayofweek = date.getDay();
         var thetime = " at " + GenerateTime(time);
         if (dayofweek == today) {
@@ -466,7 +554,9 @@
     function GenerateHours(hours, increments) {
         //doesn't take into account <= because it takes more than 1 minute to place an order
         //now.setMinutes(now.getMinutes() + minutes);//start 40 minutes ahead
-        if (isUndefined(increments)) {increments = 15;}
+        if (isUndefined(increments)) {
+            increments = 15;
+        }
         var minutes = <?= getdeliverytime(); ?>;
         var dayofweek = getNow(3);//day of week (virtual)
         var minutesinaday = 1440;
@@ -487,7 +577,7 @@
         var oldValue = $("#deliverytime").val();
         var HTML = '';
         var temp = gettime(now, minutes, 15, time);
-        if(time<oldtime){
+        if (time < oldtime) {
             dayofweek = validdayofweek(dayofweek + 1);
         }
         log("GenerateHours: " + temp + " Today: " + today + " (" + today_text + ") Tomorrow: " + tomorrow + " (" + tomor_text + ")");
@@ -510,7 +600,9 @@
                     thedate = monthnames[now.getMonth()] + " " + now.getDate();
                     thetime = GenerateTime(time);
                     dayofweek = now.getDay();
-                    if (dayofweek == tomorrow) {now = tomorrowdate;}
+                    if (dayofweek == tomorrow) {
+                        now = tomorrowdate;
+                    }
                     thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
                     var timestamp = totimestamp(time, now);
                     var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + timestamp + '"';
@@ -536,19 +628,21 @@
 
     var doreset = true;
     $(document).ready(function () {
-        if(doreset){reseturl("document ready");}
+        if (doreset) {
+            reseturl("document ready");
+        }
         <?php
-            if(read("id")){
-                if (islive()) {
-                    echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live');";
-                } else {
-                    echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
-                }
+        if (read("id")) {
+            if (islive()) {
+                echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live');";
+            } else {
+                echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
             }
+        }
         ?>
-        $("input").blur(function() {
+        $("input").blur(function () {
             var ID = $(this).attr("id");
-            if(!isUndefined(ID)) {
+            if (!isUndefined(ID)) {
                 if (ID.length == 0) {
                     if ($(this)[0].hasAttribute("autocomplete")) {
                         if ($(this).attr("autocomplete") == "really-truly-off") {
@@ -568,111 +662,130 @@
 
     function testcard() {
         var cardnumber = ['4242424242424242', '4000001240000000', '4012888888881881', '4000056655665556', '5555555555554444', '5200828282828210', '5105105105105100', '378282246310005', '371449635398431'];
-        cardnumber = cardnumber[ random(0, cardnumber.length-1) ];
+        cardnumber = cardnumber[random(0, cardnumber.length - 1)];
         $('input[data-stripe=number]').val(cardnumber).trigger("click");
         $('input[data-stripe=address_zip]').val('L8L6V6').trigger("click");
         $('input[data-stripe=cvc]').val(rnd(100, 999)).trigger("click");
         $('select[data-stripe=exp_year]').val({{ right($CURRENT_YEAR,2) }} +1).trigger("click");
         @if(islive())
-            log("Changing stripe key");
-            $("#istest").val("true");
-            setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
-            log("Stripe key changed");
+        log("Changing stripe key");
+        $("#istest").val("true");
+        setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
+        log("Stripe key changed");
         @endif
     }
 
 
     @if(read("id"))
-        $(document).on( "click", function() {
-            if($(".dropdown-menu").is(":visible")){
-                $(".dropdown-menu").hide();
+    $(document).on("click", function () {
+        if ($(".dropdown-menu").is(":visible")) {
+            $(".dropdown-menu").hide();
+        }
+    });
+
+    //MODAL HIDING CODE
+    $(window).load(function () {
+        log("Back button detection in place");
+        $('body').backDetect(function () {
+            if (HandleBack("backDetect")) {
+                return false;
             }
         });
+    });
 
-        //MODAL HIDING CODE
-        $(window).load(function(){
-            log("Back button detection in place");
-            $('body').backDetect(function(){
-                if(HandleBack("backDetect")){
-                    return false;
-                }
-            });
-        });
+    var suppressback = 0;
 
-        var suppressback=0;
-        function HandleBack(Where){
-            log("BACK BUTTON DETECTED: " + Where);
-            var ret = CloseModal("BACK BUTTON DETECTED: " + Where);
-            if(ret) {suppressback = Date.now() + 100;}
-            if(Date.now() < suppressback){
-                log("BACK BUTTON SUPPRESSED");
-                ret = true;
-            }
-            return ret;
+    function HandleBack(Where) {
+        log("BACK BUTTON DETECTED: " + Where);
+        var ret = CloseModal("BACK BUTTON DETECTED: " + Where);
+        if (ret) {
+            suppressback = Date.now() + 100;
         }
+        if (Date.now() < suppressback) {
+            log("BACK BUTTON SUPPRESSED");
+            ret = true;
+        }
+        return ret;
+    }
 
-        document.addEventListener('keydown', HandleBackKey);
-        function HandleBackKey(e){
-            if(isObject(e)){e = e.keyCode;}
-            var doit = false;
-            var keyname = "keycode " + e;
-            if(e == 27){doit = true; keyname="escape";}
-            if(e == 8){
-                var focused = document.activeElement.tagName.toLowerCase();
-                keyname="delete " + focused;
-                switch(focused){
-                    case "input":case "select":case "textarea": break;
-                    default: doit = true;
-                }
-            }
-            if (doit) {
-                if(CloseModal("HandleBackKey: " + keyname)) {
-                    return false;
-                }
-            } else {
-                log("Skip close: " + keyname);
+    document.addEventListener('keydown', HandleBackKey);
+
+    function HandleBackKey(e) {
+        if (isObject(e)) {
+            e = e.keyCode;
+        }
+        var doit = false;
+        var keyname = "keycode " + e;
+        if (e == 27) {
+            doit = true;
+            keyname = "escape";
+        }
+        if (e == 8) {
+            var focused = document.activeElement.tagName.toLowerCase();
+            keyname = "delete " + focused;
+            switch (focused) {
+                case "input":
+                case "select":
+                case "textarea":
+                    break;
+                default:
+                    doit = true;
             }
         }
+        if (doit) {
+            if (CloseModal("HandleBackKey: " + keyname)) {
+                return false;
+            }
+        } else {
+            log("Skip close: " + keyname);
+        }
+    }
 
-        window.addEventListener('popstate', function(event) {
-            hashchange("popstate");
-        }, false);
-        $(window).on('hashchange', function (event) {//delete button closes modal
-            hashchange("hashchange");
-        });
+    window.addEventListener('popstate', function (event) {
+        hashchange("popstate");
+    }, false);
+    $(window).on('hashchange', function (event) {//delete button closes modal
+        hashchange("hashchange");
+    });
 
-        var prevhash = "";
-        function hashchange(WHERE){
-            if(window.location.hash.length > 0){prevhash = window.location.hash;}
-            if(!skiphash()) {
-                if(!HandleBack("hashchange: " + WHERE + " (" + window.location.hash + ")") && WHERE == "popstate"){
-                    log("Back button allowed");
-                    history.back();
-                }
+    var prevhash = "";
+
+    function hashchange(WHERE) {
+        if (window.location.hash.length > 0) {
+            prevhash = window.location.hash;
+        }
+        if (!skiphash()) {
+            if (!HandleBack("hashchange: " + WHERE + " (" + window.location.hash + ")") && WHERE == "popstate") {
+                log("Back button allowed");
+                history.back();
             }
         }
+    }
 
 
-        function setPublishableKey(Key, mode) {
-            try {
-                stripemode = mode;
-                Stripe.setPublishableKey(Key);
-                @if(!islive())
-                log(mode + " stripe mode");
-                @endif
+    function setPublishableKey(Key, mode) {
+        try {
+            stripemode = mode;
+            Stripe.setPublishableKey(Key);
+            @if(!islive())
+            log(mode + " stripe mode");
+            @endif
         } catch (error) {
-                log("Stripe not available on this page");
-            }
+            log("Stripe not available on this page");
         }
+    }
 
-        @if(debugmode)
-            window.onbeforeunload = function() { return "Are you sure?"; };
-        @endif
+    @if(debugmode)
+        window.onbeforeunload = function () {
+        return "Are you sure?";
+    };
+
+    @endif
     @endif
 
-    function skiphash(){
+    function skiphash() {
         log("Checking hash: " + window.location.hash);
-        if(window.location.hash == "#modal"){
+        if (window.location.hash == "#modal") {
             suppressback = Date.now() + 100;
             return true;
         }
@@ -680,12 +793,14 @@
     }
 </SCRIPT>
 
-<div class="modal z-index-9999" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal z-index-9999" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="alertmodallabel">Title</h2>
-                <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i class="fa fa-times"></i></button>
+                <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i
+                            class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <div class="pull-center" id="exclame">
@@ -695,7 +810,7 @@
                           <i class="fa fa-exclamation text-white fa-stack-1x"></i>
                         </span>
                 </div>
-                <DIV ID="alertmodalbody" class="py-3"></DIV>
+                <DIV ID="alertmodalbody" class="py-1"></DIV>
                 <div CLASS="pull-center">
                     <button class="btn btn-danger text-white alert-button" id="alert-cancel" data-dismiss="modal">
                         CANCEL
