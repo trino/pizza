@@ -14,8 +14,7 @@
     echo '<DIV CLASS="row"><DIV CLASS="col-md-9">';
     echo view("popups_address", array("dontincludeGoogle" => true, "unit" => false, "title" => "", "address" => $_GET))->render();
     echo '</DIV><DIV CLASS="col-md-3" ><BUTTON  CLASS="btn btn-sm btn-success full-width full-height" ONCLICK="search();">Search</BUTTON></DIV></DIV>';
-    function get_number($GET)
-    {
+    function get_number($GET){
         if (isset($_GET[$GET]) && is_numeric($_GET[$GET])) {
             return $_GET[$GET];
         }
@@ -56,8 +55,7 @@
         $addresses = Query("SELECT * FROM useraddresses WHERE id IN (" . $addressIDs . ")", true, "home_map");
         $hours = Query("SELECT * FROM hours WHERE restaurant_id IN (0," . $addressIDs . ")", true, "home_map");
     }
-    function findwhere($array, $key, $value, $retdata = false)
-    {
+    function findwhere($array, $key, $value, $retdata = false){
         foreach ($array as $index => $data) {
             if ($data[$key] == $value) {
                 if ($retdata) {
@@ -68,14 +66,12 @@
         }
         return false;
     }
-    function clean($text)
-    {
+    function clean($text){
         $text = stripslashes($text);
         $text = iconv('UTF-8', 'UTF-8//IGNORE', $text);
         return $text;
     }
-    function restaurantdata($restaurant, $includeName = true, $newline = '<BR>')
-    {
+    function restaurantdata($restaurant, $includeName = true, $newline = '<BR>'){
         $HTML = iif($includeName, $restaurant["name"]);
         if (strlen(filternonnumeric($restaurant["email"])) == 10 && !textcontains($restaurant["email"], "@")) {
             $restaurant["phone"] = $restaurant["email"];
@@ -95,8 +91,7 @@
         }
         return $HTML;
     }
-    function addressdata($address, $newline)
-    {
+    function addressdata($address, $newline){
         $debugdata = "";
         if (!is_numeric($address["latitude"]) || !is_numeric($address["longitude"])) {
             $debugdata = $newline . "Invalid Latitude and/or Longitude data for address ID: " . $address["id"];
@@ -107,8 +102,7 @@
             return $address["number"] . " " . iif($address["unit"], " (Unit" . $address["unit"] . ")") . $address["street"] . ", " . $address["city"] . ", " . $address["province"] . " " . $address["postalcode"] . $debugdata;
         }
     }
-    function hourdata($hours)
-    {
+    function hourdata($hours){
         $dayofweek = date("w");
         $time = date("Gi");
         $today_open = $hours[$dayofweek . "_open"];

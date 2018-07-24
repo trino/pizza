@@ -60,6 +60,7 @@
     function toSQLdate($javascriptdate, $midnight = false){
         $date = explode("/", $javascriptdate);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
         $midnight = iif($midnight, " 23:59:59", " 00:00:00");
+        if(count($date) < 3){die($javascriptdate . " is invalid");}
         return $date[2] . "-" . $date[0] . "-" . $date[1] . $midnight;
     }
 
@@ -434,8 +435,16 @@
                         $_POST["date"] = $enddate;
                     }
                 }
+                $datefield = "placed_at";
+                if(isset($_POST["datetype"])){
+                    switch($_POST["datetype"]){
+                        case "deliver_at"://whitelist fields, do not trust user data
+                            $datefield = $_POST["datetype"];
+                            break;
+                    }
+                }
                 $date = toSQLdate($_POST["date"]);//"mm/dd/yyyy" to "2018-05-02 10:20:03"
-                $keys = iif(read("profiletype") == 1, "id, price", "*");
+                $keys = iif(read("profiletype") != 1, "id, price, " . $datefield, "*");
                 $results["startdate"] = $_POST["date"];
 
                 function appendtoquery(&$query, $text){
@@ -457,7 +466,7 @@
                         break;
                 }
 
-                $query = "SELECT id, price FROM orders WHERE ";
+                $query = "SELECT id, price, " . $datefield . " as date FROM orders WHERE ";
                 if(is_numeric($_POST["restaurant"]) && $_POST["restaurant"] > 0){
                     appendtoquery($query, "restaurant_id = " . $_POST["restaurant"]);
                 }
@@ -492,14 +501,6 @@
                     }
                 }
 
-                $datefield = "placed_at";
-                if(isset($_POST["datetype"])){
-                    switch($_POST["datetype"]){
-                        case "deliver_at"://whitelist fields, do not trust user data
-                            $datefield = $_POST["datetype"];
-                            break;
-                    }
-                }
                 appendtoquery($query, $datefield . " > '" . $date . "'");
                 if($_POST["useend"] == "true"){//&& $_POST["enddate"] != $_POST["date"]){
                     $results["enddate"] = $_POST["enddate"];
@@ -511,7 +512,12 @@
                 $party = "private";//profiletypes: 0=user, 1=admin, 2=restaurant
                 if(read("profiletype") == 2){$party = "restaurant";}
                 //$data = ["place" => "getreceipt", "style" => 2, "party" => $party, "JSON" => false];
-                $search = explode(",", $_POST["search"]);
+                $search = false;
+                if(isset($_POST["search"])){
+                    $search = explode(",", $_POST["search"]);
+                } else {
+                    $_POST["search"] = "";
+                }
                 if($results["data"]){
                     foreach($results["data"] as $index => $value){
                         $JSON = "";

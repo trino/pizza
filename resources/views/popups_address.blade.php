@@ -36,6 +36,9 @@
             if($icons) {echo '</div>';}
             echo '<STYLE>.address:focus{z-index: 999;}</STYLE>';
             break;
+        case 2:
+            echo '<INPUT class="form-control" TYPE="text" ID="formatted_address" ' . $required . ' name="' . $rndname . '"' . $autocompleteblocker . $address_placeholder . address("formatted_address") . '>';
+            break;
     }
     if (!isset($user_id)) {$user_id = read("id");}
     if (!isset($form)) {$form = true;}

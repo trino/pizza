@@ -145,6 +145,7 @@ class HomeController extends Controller {
                     }
                     break;
                 case "closestrestaurant":
+                    $info["radius"] = "max_distance";
                     $ret["closest"] = $this->closestrestaurant($info, true);
                     if(!islive()) {
                         $ret["sql"] = $ret["closest"]["SQL"];
@@ -422,36 +423,29 @@ class HomeController extends Controller {
     }
 
     function closestrestaurant($data, $gethours = false, $includesql = true){
-        //if(!isset($data['radius'])){$data['radius'] = 100;}//default radius
-        $SQL = "SELECT id, name, email, phone, is_delivery, address_id FROM restaurants WHERE address_id > 0 AND is_delivery = 1";
+        if(!is_numeric($data['longitude']) || !is_numeric($data['latitude'])){return false;}
+        $SQL = "SELECT restaurants.id, name, email, phone, is_delivery, address_id, max_distance, number, unit, buzzcode, street, postalcode, city, province, latitude, longitude, ( 6371 * acos( cos( radians('" . $data['latitude'] . "') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('" . $data['longitude'] . "') ) + sin( radians('" . $data['latitude'] . "') ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurants LEFT JOIN useraddresses ON restaurants.address_id = useraddresses.id WHERE address_id > 0 AND is_delivery = 1";
         if (isset($data["restaurant_id"])) {
+            if(!is_numeric($data["restaurant_id"])){return false;}
             $SQL .= " AND id = " . $data["restaurant_id"];
         }
-        $restaurantdata = Query($SQL, true, "HomeController.closestrestaurant1");
-        $owners = implode(",", collapsearray($restaurantdata, "address_id"));
         $limit = "";
-        $mergedata = isset($data["merge"]);
-        if (isset($data["limit"])) {
+        if (isset($data["limit"]) && is_numeric($data["limit"])) {
             $limit = " LIMIT " . $data["limit"];
         } else {
             $data["limit"] = 1;
         }
-        $SQL = "SELECT *, ( 6371 * acos( cos( radians('" . $data['latitude'] . "') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('" . $data['longitude'] . "') ) + sin( radians('" . $data['latitude'] . "') ) * sin( radians( latitude ) ) ) ) AS distance FROM useraddresses WHERE id IN (" . $owners . ")";
         if (isset($data['radius'])) {
             $SQL .= " HAVING distance <= " . $data['radius'];
-        //} else {
-          //  $SQL .= " HAVING distance <= max_delivery_distance";
         }
         $SQL .= " ORDER BY distance ASC" . $limit;
-        $Restaurants = Query($SQL, true, "HomeController.closestrestaurant2");//useraddresses
+        $Restaurants = Query($SQL, true, "HomeController.closestrestaurant");
         if ($Restaurants) {
             if ($data["limit"] == 1) {
-                if($mergedata) {$Restaurants[0] = $this->mergerestaurant($Restaurants[0], $restaurantdata);}
                 if ($gethours) {$Restaurants = $this->processrestaurant($Restaurants[0]);}
                 $Restaurants["SQL"] = $SQL;
             } else {
                 foreach ($Restaurants as $Index => $Restaurant) {
-                    if($mergedata) {$Restaurants[$Index] = $this->mergerestaurant($Restaurant, $restaurantdata);}
                     if ($gethours) {$Restaurants[$Index] = $this->processrestaurant($Restaurant);}
                 }
             }

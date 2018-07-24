@@ -330,6 +330,9 @@ function Query($query, $all = false, $Where = "Unknown"){
     $debugmode = defined('debugmode');
     if($debugmode){$debugmode = debugmode;}
     if($debugmode){$now = millitime();}
+
+    // search $query for --, /*, */, ;, IF(, 0x, CONCAT, LOAD_FILE, Hex, #, (, TRUE, FALSE, :, WAITFOR, DELAY, UNION, INTO ,
+
     if ($all) {
         $result = $con->query($query);
         if (is_object($result)) {
