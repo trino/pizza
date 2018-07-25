@@ -6,6 +6,24 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+    <?php
+        $filename = public_path("orders") . "/user_" . read("id") . ".json";
+        $GLOBALS["usersettings"] = [];
+        if(file_exists($filename)){
+            $GLOBALS["usersettings"] = (array) json_decode(file_get_contents($filename));
+            foreach($GLOBALS["usersettings"] as $key => $value){
+                if($value === "on"){$GLOBALS["usersettings"][$key] = true;}
+                if($value === "off"){$GLOBALS["usersettings"][$key] = false;}
+            }
+        }
+        function setting($key, $default = false, $ifTRUE = false, $ifFALSE = false){
+            if(isset($GLOBALS["usersettings"][$key])){$default = $GLOBALS["usersettings"][$key];}
+            if(!$ifTRUE){return $default;}
+            if($default){return $ifTRUE;}
+            return $ifFALSE;
+        }
+    ?>
+
     <STYLE>
         label{
             margin-bottom: 00px;
@@ -47,6 +65,11 @@
 
         #calendar{
             width: 100%;
+        }
+
+        .float-right{
+            position: absolute;
+            right: 5px;
         }
     </STYLE>
 
@@ -141,16 +164,49 @@
         </DIV>
 
         <DIV CLASS="col-md-4">
+            <A HREF="javascript:settings()"><i class="fas fa-cog"></i> Settings</A>
             <DIV ID="retain"></DIV>
             <DIV><?= view("popups_googlemaps"); ?></DIV>
         </DIV>
         <DIV ID="orders_list" CLASS="col-md-2"></DIV>
-        <DIV CLASS="col-md-6" ID="orders_content"></DIV>
+        <DIV CLASS="col-md-6" ID="orders_content">No search results</DIV>
+        <DIV CLASS="col-md-6" ID="settings" STYLE="display: none;">
+            <H2>Settings:</H2>
+            <FORM ID="settingsform">
+                <LABEL><INPUT TYPE="checkbox" NAME="loadall" <?= setting("loadall", false, "CHECKED") ?> > Load all orders</LABEL><BR>
+                @if(read("profiletype") > 0) <LABEL><INPUT TYPE="checkbox" NAME="showdetails" <?= setting("showdetails", false, "CHECKED") ?> > Show user details</LABEL><BR> @endif
+                Sort by:
+                <SELECT NAME="sortby" ID="sortby">
+                    <OPTION VALUE="id">ID #</OPTION>
+                    <OPTION VALUE="price">Price</OPTION>
+                    <OPTION VALUE="user_id">User ID #</OPTION>
+                    <OPTION VALUE="placed_at">Placed At time/date</OPTION>
+                    <OPTION VALUE="deliver_at">Deliver at time/date</OPTION>
+                </SELECT>
+                <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="ASC" CHECKED>ASC</LABEL>
+                <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="DESC">DESC</LABEL>
+            </FORM>
+            <?php
+                echo "Saved settings: (only viewable in debug mode)<BR>";
+                if(debugmode){
+                    vardump($GLOBALS["usersettings"]);
+                }
+            ?>
+            <BUTTON CLASS="btn btn-primary float-bottom float-right" ONCLICK="save();"><i class="fas fa-cog"></i> Save and apply changes</BUTTON>
+        </DIV>
     </DIV>
 
     <SCRIPT>
         var APIURL = "<?= webroot('public/list/orders'); ?>";
         var restaurant_hours = <?= json_encode($hours); ?>;
+        var SETTINGS = <?= json_encode($GLOBALS["usersettings"]); ?>;
+
+        for (var key in SETTINGS) {
+            switch(key){
+                case "sortby": $("#" + key).val(SETTINGS[key]); break;//select
+                case "sortorder": $("input:radio[name=" + key + "][value=" + SETTINGS[key] + "]").prop("checked", true);//radio
+            }
+        }
 
         function findhours(restaurantid){
             for(var index = 0; index < restaurant_hours.length; index++){
@@ -159,7 +215,6 @@
                         restaurant_hours[index][day + "_open"] = parseInt(restaurant_hours[index][day + "_open"]);
                         restaurant_hours[index][day + "_close"] = parseInt(restaurant_hours[index][day + "_close"]);
                     }
-
                     return restaurant_hours[index];
                 }
             }
@@ -193,9 +248,11 @@
             return h + ":" + mm + ":" + ss + " " + am;
         }
 
-
-        function loadorder(OrderID){
+        var hasloaded = false;
+        function loadorder(OrderID, ShowIt){
             var html = $("#order_" + OrderID).html();
+            showorders();
+            if(isUndefined(ShowIt)){ShowIt = true;}
             if(html) {
                 $("#orders_content").html(html);
             } else {
@@ -203,10 +260,17 @@
                     _token: token,
                     action: "getreceipt",
                     orderid: OrderID,
-                    JSON: false
+                    JSON: false,
+                    settings: SETTINGS
                 }, function (html) {
                     $("#order_" + OrderID).html(html);
-                    $("#orders_content").html(html);
+                    if(ShowIt){
+                        $("#orders_content").html(html);
+                        hasloaded=true;
+                    }
+                    $("#aorder" + OrderID).attr("loaded", "yes");
+                    $("#aorder" + OrderID).prepend('<i class="far fa-save"></i> ');
+                    loadnextorder();
                 });
             }
         }
@@ -215,6 +279,7 @@
             $(".datepicker").datepicker();
             setDate(".datepicker");
             restchange();
+            loading(false, "page done");
         } );
 
         function getDate(picker_selector){
@@ -267,6 +332,7 @@
             }
             //end yesterday
 
+            hasloaded = false;
             $("#orders_list").html("");
             $("#orders_content").html("Loading...");
             $.post(APIURL, {
@@ -280,7 +346,8 @@
                 search: searchterm,
                 minimum: $("#minimum").val(),
                 maximum: $("#maximum").val(),
-                datetype: selectedradio("datetype")
+                datetype: selectedradio("datetype"),
+                settings: SETTINGS
             }, function (result) {
                 result = JSON.parse(result);
                 var listHTML = 'Checked at: ' + toHMMSS() + '<BR>';
@@ -303,17 +370,32 @@
                 for(var index = 0; index < result.data.length; index++){
                     //if(result.data[index].hasOwnProperty("html")) {
                     @if(debugmode) actualindex = result.data[index].id; @endif
-                        listHTML += '<A HREF="javascript:loadorder(' + result.data[index].id + ');">Order: ' + actualindex + " ($" + result.data[index].price + ')<DIV ID="order_' + result.data[index].id + '" CLASS="order" STYLE="display: none;"></DIV></A><BR>';
+                        var orderid = result.data[index].id;
+                        listHTML += '<A ID="aorder' + orderid + '" loaded="no" orderid="' + orderid + '" CLASS="aorder" HREF="javascript:loadorder(' + orderid + ');">Order: ' + actualindex + " ($" + result.data[index].price + ')<DIV ID="order_' + orderid + '" CLASS="order" STYLE="display: none;"></DIV></A><BR>';
                     //result.data[index].html
                     actualindex++;
                     //}
                 }
                 $("#orders_list").html(listHTML);
                 $("#orders_content").html(contentHTML);
+                loadnextorder();
             });
         }
 
+        function setting(name){
+            if(SETTINGS.hasOwnProperty(name)){
+                return SETTINGS[name];
+            }
+        }
 
+        function loadnextorder(){
+            if(setting("loadall")) {
+                var orderid = $(".aorder[loaded=no]").first().attr("orderid");
+                if(!isNaN(orderid) && !isUndefined(orderid)){
+                    loadorder(orderid, !hasloaded);
+                }
+            }
+        }
 
         //address searching
         function addresshaschanged(place){
@@ -372,7 +454,8 @@
                 date: toMMDDYYY(firstday),
                 enddate: toMMDDYYY(lastday),
                 useend: useend,
-                datetype: selectedradio("datetype")
+                datetype: selectedradio("datetype"),
+                settings: SETTINGS
             }, function (result) {
                 result = JSON.parse(result);
                 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -539,6 +622,34 @@
 
         function scrolltobottom(){
             window.location.href = "<?= webroot(''); ?>";
+        }
+
+        function settings(){
+            $("#orders_content").hide();
+            $("#settings").show();
+        }
+
+        function save(){
+            SETTINGS = getform("#settingsform");
+            $.post(APIURL, {
+                _token: token,
+                action: "savesettings",
+                data: SETTINGS
+            }, function (result) {
+                for (var key in SETTINGS) {
+                    switch (SETTINGS[key]){
+                        case "on": SETTINGS[key] = true; break;
+                        case "off": SETTINGS[key] = false; break;
+                    }
+                }
+                showorders();
+                alert("Settings saved");
+            });
+        }
+
+        function showorders(){
+            $("#settings").hide();
+            $("#orders_content").show();
         }
     </SCRIPT>
 @endsection

@@ -235,14 +235,19 @@ function createCookieValue(cname, cvalue) {
 }
 
 
-function getform(ID) {
-    var data = $(ID).serializeArray();
+function getform(Selector) {
+    var data = $(Selector).serializeArray();
     var ret = {};
     for (var i = 0; i < data.length; i++) {
         if(!data[i].name.startswith("omit_")) {
             ret[data[i].name] = data[i].value.trim();
         }
     }
+    $(Selector + " input:checkbox:not(:checked)").each(function (index) {
+        if($(this).hasAttr("name")){
+            ret[$(this).attr("name")] = "off";
+        }
+    });
     return ret;
 }
 
@@ -1457,7 +1462,7 @@ function flash(delay){
 
 //state: true=can't place orders, false=can place orders
 function placeorderstate(state){
-    if(state){
+    if(state){//THIS SHOULD NOT BE COMMENTED OUT!!!!
       //  $(".payfororder").removeClass("disabled");
     } else {
       //  $(".payfororder").addClass("disabled");

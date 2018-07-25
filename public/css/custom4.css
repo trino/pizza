@@ -102,6 +102,11 @@ h1, h2, h3, h4, h5, h6 {
     color: #007BFF;
 }
 
+.vardump{
+    border: 1px solid red;
+    background-color: white;
+}
+
 .hyperlink:hover {
     text-decoration: underline;
 }

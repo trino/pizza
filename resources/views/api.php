@@ -330,9 +330,14 @@ function Query($query, $all = false, $Where = "Unknown"){
     $debugmode = defined('debugmode');
     if($debugmode){$debugmode = debugmode;}
     if($debugmode){$now = millitime();}
-
-    // search $query for --, /*, */, ;, IF(, 0x, CONCAT, LOAD_FILE, Hex, #, (, TRUE, FALSE, :, WAITFOR, DELAY, UNION, INTO ,
-
+    /*
+    $query2 = strtolower($query);
+    foreach(["--", "/*", ";", "if(", "0x", "concat", "load_file", "hex", "#", ":", "waitfor", "delay", "into ", "true", "false"] as $search){
+        if(strpos($query2, $search) !== false){
+            die("MySQL attack intercepted: " . $search);
+        }
+    }
+    */
     if ($all) {
         $result = $con->query($query);
         if (is_object($result)) {
@@ -715,7 +720,7 @@ function getuser($IDorEmail = false, $IncludeOther = true){
 }
 
 function vardump($data){
-    echo '<PRE>';
+    echo '<PRE CLASS="vardump">';
     var_dump($data);
     echo '</PRE>';
 }

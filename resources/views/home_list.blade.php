@@ -396,9 +396,12 @@
             case "getreceipt"://get an order receipt
                 $_POST["place"] = "getreceipt";
                 $_POST["style"] = 2;
-                $_POST["party"] = "admin";
-                if($profiletype == 2){
-                    $_POST["party"] = "restaurant";
+                $parties = ["user", "admin", "restaurant"];
+                $_POST["party"] = $parties[$profiletype];
+                if(isset($_POST["settings"]["showdetails"])){
+                    if($_POST["settings"]["showdetails"] == "false"){
+                        $_POST["party"] = "private";
+                    }
                 }
                 die(view("popups_receipt", $_POST)->render());
                 break;
@@ -507,6 +510,15 @@
                     appendtoquery($query, $datefield . " < '" . toSQLdate($_POST["enddate"], true) . "'");
                 }
 
+                if(isset($_POST["settings"])){
+                    if(isset($_POST["settings"]["sortby"])){
+                        $query .= " ORDER BY " . $_POST["settings"]["sortby"];
+                        if(isset($_POST["settings"]["sortorder"])){
+                            $query .= " " . $_POST["settings"]["sortorder"];
+                        }
+                    }
+                }
+
                 if(read("profiletype") == 1){$results["query"] = $query;}
                 $results["data"] = Query($query, true, "home_list");
                 $party = "private";//profiletypes: 0=user, 1=admin, 2=restaurant
@@ -533,6 +545,10 @@
                 } else {
                     $results["data"] = array();
                 }
+                break;
+            case "savesettings":
+                $filename = public_path("orders") . "/user_" . read("id") . ".json";
+                file_put_contents($filename, json_encode($_POST["data"], JSON_PRETTY_PRINT));
                 break;
 
             default://unhandled, error

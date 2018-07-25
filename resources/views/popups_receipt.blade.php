@@ -9,6 +9,12 @@
     $debugmode = !islive();
     $debug = "";
     $Order = first("SELECT orders.*, users.name, users.id as userid, users.email FROM orders, users WHERE orders.id = " . $orderid . " HAVING user_id = users.id");
+    /* testing
+    $Order["userid"] = 12;
+    if($Order["userid"] <> read("id") && $party == "user"){$party = "private";}
+            echo "Order User ID: " . $Order["userid"];
+            echo "PARTY: " . $party;
+    */
     $filename = orderpath($orderid);//
     if (!isset($includeextradata)) {
         $includeextradata = false;
@@ -237,14 +243,9 @@
             file_put_contents($HTMLfilename, $HTML);
         }
         echo $HTML;
-        if (isset($JSON)) {
-            //if($party != "private"){
-            echo '<BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>';
-            //}
-        }
     ?>
 
-    @if(!isset($JSON))
+    @if( isset($JSON) && $party != "private")
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
                 <TD WIDTH="49%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
@@ -298,7 +299,9 @@
             ?>
         </TABLE>
     @endif
-
+    @if(isset($JSON))
+        <BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>
+    @endif
     @if($includeextradata)
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
