@@ -469,7 +469,7 @@
                         break;
                 }
 
-                $query = "SELECT id, price, " . $datefield . " as date FROM orders WHERE ";
+                $query = "SELECT id, user_id, price, " . $datefield . " as date FROM orders WHERE ";
                 if(is_numeric($_POST["restaurant"]) && $_POST["restaurant"] > 0){
                     appendtoquery($query, "restaurant_id = " . $_POST["restaurant"]);
                 }

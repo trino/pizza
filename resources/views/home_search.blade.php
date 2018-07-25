@@ -180,8 +180,7 @@
                     <OPTION VALUE="id">ID #</OPTION>
                     <OPTION VALUE="price">Price</OPTION>
                     <OPTION VALUE="user_id">User ID #</OPTION>
-                    <OPTION VALUE="placed_at">Placed At time/date</OPTION>
-                    <OPTION VALUE="deliver_at">Deliver at time/date</OPTION>
+                    <OPTION VALUE="date">Placed/Deliver at time/date</OPTION>
                 </SELECT>
                 <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="ASC" CHECKED>ASC</LABEL>
                 <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="DESC">DESC</LABEL>
