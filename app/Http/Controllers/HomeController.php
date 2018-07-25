@@ -467,17 +467,18 @@ class HomeController extends Controller {
     }
 
     function processrestaurant($Restaurant){
-        if (!is_array($Restaurant)) {
-            $Restaurant = array("id" => $Restaurant);
-            $Restaurant["restaurant"] = first("SELECT * FROM restaurants WHERE id = " . $Restaurant["id"]);
-            $UserID = first("SELECT user_id FROM useraddresses WHERE id = " . $Restaurant["restaurant"]["address_id"]);
-            $Restaurant["user_id"] = $UserID["user_id"];
-        } else {
-            $Restaurant["restaurant"] = first("SELECT * FROM restaurants WHERE address_id = " . $Restaurant["id"]);
-        }
+        if (!is_array($Restaurant)) {$Restaurant = array("id" => $Restaurant);}
+        $Restaurant["sql"][] = "SELECT * FROM restaurants WHERE id = " . $Restaurant["id"];
+        $Restaurant["restaurant"] = first($Restaurant["sql"][0]);
+        $Restaurant["sql"][] = "SELECT user_id FROM useraddresses WHERE id = " . $Restaurant["restaurant"]["address_id"];
+        $UserID = first($Restaurant["sql"][1]);
+        $Restaurant["user_id"] = $UserID["user_id"];
         $Restaurant["hours"] = gethours($Restaurant["id"]);
-        $Restaurant["user"] = first("SELECT id, name, phone, email FROM users WHERE id = " . $Restaurant["user_id"]);//do not send password
-        $Restaurant["shortage"] = first("SELECT item_id, tablename FROM shortage WHERE restaurant_id = " . $Restaurant["id"], false);
+        $Restaurant["sql"][] = "SELECT id, name, phone, email FROM users WHERE id = " . $Restaurant["user_id"];
+        $Restaurant["user"] = first($Restaurant["sql"][2]);//do not send password
+        $Restaurant["sql"][] = "SELECT item_id, tablename FROM shortage WHERE restaurant_id = " . $Restaurant["id"];
+        $Restaurant["shortage"] = first($Restaurant["sql"][3], false);
+        if(islive()){unset($Restaurant["sql"]);}
         return $Restaurant;
     }
 
