@@ -133,14 +133,13 @@
                         } else if ($itemclass == "panzerotti") {
                             $icon = $toppings_extra;
                         }
-                    } else if ($itemclass == "drinks") {
-                        $itemclass .= " sprite-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
                     } else if ($itemclass == "pizza") {
                         if (left($menuitem['item'], 1) == "2") {
                             $itemclass = "241_pizza";
                         }
                         $icon = $toppings_extra;
                     }
+                    $itemclass .= " sprite-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
 
                     $total = 0;
                     foreach ($tables as $table) {
