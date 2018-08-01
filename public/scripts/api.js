@@ -167,6 +167,16 @@ log("Local storage is available: " + iif(uselocalstorage, "Yes", "No (use cookie
 function hasItem(c_name){
     if(uselocalstorage){
         return window['localStorage'].getItem(c_name) !== null;
+    } else {
+        var i, x, y, ARRcookies = document.cookie.split(";");
+        for (i = 0; i < ARRcookies.length; i++) {
+            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+            x = x.replace(/^\s+|\s+$/g, "");
+            if (x == c_name) {
+                return true;
+            }
+        }
     }
     return false;
 }
@@ -235,7 +245,7 @@ function createCookieValue(cname, cvalue) {
 }
 
 
-function getform(Selector) {
+function getform(Selector, IncludeType) {
     var data = $(Selector).serializeArray();
     var ret = {};
     for (var i = 0; i < data.length; i++) {
@@ -248,6 +258,23 @@ function getform(Selector) {
             ret[$(this).attr("name")] = "off";
         }
     });
+    if(!isUndefined(IncludeType) && IncludeType){
+        for (var key in ret) {
+            ret[key] = {value: ret[key], type: inputtype(Selector, key)};
+        }
+    }
+    return ret;
+}
+
+function inputtype(FormSelector, InputName){
+    var element = $(FormSelector + " [name=" + InputName + "]");
+    if(element.length == 0){return;}
+    var ret = element.get(0).tagName.toLowerCase();
+    if(ret == "input"){
+        if (element.hasAttr("type")){
+            ret = element.attr("type").toLowerCase();
+        }
+    }
     return ret;
 }
 

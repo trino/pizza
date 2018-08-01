@@ -6,24 +6,6 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <?php
-        $filename = public_path("orders") . "/user_" . read("id") . ".json";
-        $GLOBALS["usersettings"] = [];
-        if(file_exists($filename)){
-            $GLOBALS["usersettings"] = (array) json_decode(file_get_contents($filename));
-            foreach($GLOBALS["usersettings"] as $key => $value){
-                if($value === "on"){$GLOBALS["usersettings"][$key] = true;}
-                if($value === "off"){$GLOBALS["usersettings"][$key] = false;}
-            }
-        }
-        function setting($key, $default = false, $ifTRUE = false, $ifFALSE = false){
-            if(isset($GLOBALS["usersettings"][$key])){$default = $GLOBALS["usersettings"][$key];}
-            if(!$ifTRUE){return $default;}
-            if($default){return $ifTRUE;}
-            return $ifFALSE;
-        }
-    ?>
-
     <STYLE>
         label{
             margin-bottom: 00px;
@@ -115,15 +97,9 @@
                         foreach($users as $user){
                             echo '<OPTION VALUE="' . $user["id"] . '">';
                             switch ($user["profiletype"]){
-                                case 0://customer
-                                    echo '&#xf007;';
-                                    break;
-                                case 1://admin
-                                    echo '&#xf234;';
-                                    break;
-                                case 2://restaurant
-                                    echo '&#xf07a;';
-                                    break;
+                                case 0: echo '&#xf007;'; break; //customer
+                                case 1: echo '&#xf234;'; break; //admin
+                                case 2: echo '&#xf07a;'; break; //restaurant
                             }
                             echo $user["name"] . '</OPTION>';
                         }
@@ -173,8 +149,8 @@
         <DIV CLASS="col-md-6" ID="settings" STYLE="display: none;">
             <H2>Settings:</H2>
             <FORM ID="settingsform">
-                <LABEL><INPUT TYPE="checkbox" NAME="loadall" <?= setting("loadall", false, "CHECKED") ?> > Load all orders</LABEL><BR>
-                @if(read("profiletype") > 0) <LABEL><INPUT TYPE="checkbox" NAME="showdetails" <?= setting("showdetails", false, "CHECKED") ?> > Show user details</LABEL><BR> @endif
+                <LABEL><INPUT TYPE="checkbox" NAME="loadall"> Load all orders</LABEL><BR>
+                @if(read("profiletype") > 0) <LABEL><INPUT TYPE="checkbox" NAME="showdetails"> Show user details</LABEL><BR> @endif
                 Sort by:
                 <SELECT NAME="sortby" ID="sortby">
                     <OPTION VALUE="id">ID #</OPTION>
@@ -185,12 +161,6 @@
                 <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="ASC" CHECKED>ASC</LABEL>
                 <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="DESC">DESC</LABEL>
             </FORM>
-            <?php
-                echo "Saved settings: (only viewable in debug mode)<BR>";
-                if(debugmode){
-                    vardump($GLOBALS["usersettings"]);
-                }
-            ?>
             <BUTTON CLASS="btn btn-primary float-bottom float-right" ONCLICK="save();"><i class="fas fa-cog"></i> Save and apply changes</BUTTON>
         </DIV>
     </DIV>
@@ -198,12 +168,15 @@
     <SCRIPT>
         var APIURL = "<?= webroot('public/list/orders'); ?>";
         var restaurant_hours = <?= json_encode($hours); ?>;
-        var SETTINGS = <?= json_encode($GLOBALS["usersettings"]); ?>;
-
-        for (var key in SETTINGS) {
-            switch(key){
-                case "sortby": $("#" + key).val(SETTINGS[key]); break;//select
-                case "sortorder": $("input:radio[name=" + key + "][value=" + SETTINGS[key] + "]").prop("checked", true);//radio
+        var SETTINGS = [];
+        if(hasItem("settings")){
+            SETTINGS = JSON.parse( getCookie("settings") );
+            for (var key in SETTINGS) {
+                switch(key){
+                    case "sortby": $("#" + key).val(SETTINGS[key]); break;//select
+                    case "sortorder": $("input:radio[name=" + key + "][value=" + SETTINGS[key] + "]").prop("checked", true); break;//radio
+                    case "showdetails":case "loadall": if(SETTINGS[key] == "on"){$("input:checkbox[name=" + key + "]").prop("checked", true);} break;//checkbox
+                }
             }
         }
 
@@ -630,20 +603,9 @@
 
         function save(){
             SETTINGS = getform("#settingsform");
-            $.post(APIURL, {
-                _token: token,
-                action: "savesettings",
-                data: SETTINGS
-            }, function (result) {
-                for (var key in SETTINGS) {
-                    switch (SETTINGS[key]){
-                        case "on": SETTINGS[key] = true; break;
-                        case "off": SETTINGS[key] = false; break;
-                    }
-                }
-                showorders();
-                alert("Settings saved");
-            });
+            createCookieValue("settings", JSON.stringify(SETTINGS));
+            showorders();
+            alert("Settings saved");
         }
 
         function showorders(){
