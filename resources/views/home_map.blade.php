@@ -1,8 +1,8 @@
 @extends('layouts_app')
 @section('content')
     <?php
-    $dead_color = "#FF0000";//RED
-    $live_color = "#006400";//GREEN
+    $dead_color = "#dadada";//RED
+    $live_color = "#FF0000";//GREEN
     $invalid_color = "#000000";//BLACK
     $local_color = "#000064";//BLUE
 

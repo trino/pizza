@@ -32,15 +32,16 @@
 
         <meta charset="utf-8">
         <meta name="theme-color" content="#d9534f">
-        <meta name="viewport" content="width=device-width, user-scalable=no">
-        <meta http-equiv="content-language" content="en-CA">
+            <meta name="viewport" content="width=380, user-scalable=no">
+
+            <meta http-equiv="content-language" content="en-CA">
         <meta name="mobile-web-app-capable" content="yes">
         <title><?= sitename; ?> - Delivery</title>
-        <link rel="icon" sizes="128x128" href="<?= webroot("public/images/pizza128.png"); ?>">
-        <link rel="icon" sizes="192x192" href="<?= webroot("public/images/pizza192.png"); ?>">
+        <link rel="icon" sizes="128x128" href="<?= webroot("images/pizza128.png"); ?>">
+        <link rel="icon" sizes="192x192" href="<?= webroot("images/pizza192.png"); ?>">
         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-        <link href='<?= $css; ?>/Roboto.css' rel='stylesheet' type='text/css'>
-        <link href='<?= $css; ?>/Roboto-Slab.css' rel='stylesheet' type='text/css'>
+        <!--link href='<?= $css; ?>/Roboto.css' rel='stylesheet' type='text/css'>
+        <link href='<?= $css; ?>/Roboto-Slab.css' rel='stylesheet' type='text/css'-->
         <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
         <?php
             includefile("public/css/custom4.css");
@@ -110,7 +111,7 @@
                 @endif
             </ul>
 
-            <a HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
+            <a style="    color: white;    text-decoration: none;" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
 
             <?php
                 if (!islive() || debugmode) {

@@ -208,6 +208,8 @@
         </div>
     @endif
 
+    <p class=" text-center">Please allow + or - 10 minutes for delivery.</p>
+
     @if($includeextradata)
         @if($timer)
 
@@ -245,7 +247,6 @@
         echo $HTML;
     ?>
 
-    @if( isset($JSON) && $party != "private")
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
                 <TD WIDTH="49%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
@@ -298,7 +299,7 @@
                 }
             ?>
         </TABLE>
-    @endif
+
     @if(isset($JSON))
         <BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>
     @endif
