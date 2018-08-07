@@ -384,8 +384,8 @@ includefile("public/scripts/api.js");
         });
 
         @if(isset($user) && $user)
-        login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
-                @endif
+            login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
+        @endif
 
         var HTML = '';
         var todaysdate = isopen(generalhours);

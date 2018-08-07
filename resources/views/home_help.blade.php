@@ -1,18 +1,18 @@
 @extends('layouts_app')
 @section('content')
     <?php
-    $site_name = sitename;
-    $launchdate = "April 1, 2017";
-    $datestamp = strtotime($launchdate);
-    $SQLdate = date("Y-m-d", $datestamp);
-    $launched = iif(time() > $datestamp, " (Launched)");
-    if (!$launched) {
-        $days = ceil(($datestamp - time()) / 86400);
-        $launched = " (" . $days . " day" . iif($days > 1, "s") . " away)";
-    }
-    $orders = first('SELECT count(*) as count FROM orders WHERE status <> 2 AND status <> 4 AND placed_at > "' . $SQLdate . '"')["count"];
-    $donation_per_order = 1.75;
-    $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
+        $site_name = sitename;
+        $launchdate = "April 1, 2017";
+        $datestamp = strtotime($launchdate);
+        $SQLdate = date("Y-m-d", $datestamp);
+        $launched = iif(time() > $datestamp, " (Launched)");
+        if (!$launched) {
+            $days = ceil(($datestamp - time()) / 86400);
+            $launched = " (" . $days . " day" . iif($days > 1, "s") . " away)";
+        }
+        $orders = first('SELECT count(*) as count FROM orders WHERE status <> 2 AND status <> 4 AND placed_at > "' . $SQLdate . '"')["count"];
+        $donation_per_order = 1.75;
+        $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
     ?>
     <STYLE>
         li > .title {
@@ -154,7 +154,7 @@
             <h3><?= getsetting("aboutus"); ?></h3>
             <div class="card-block text-white">
                 <p>
-                    Hamilton Pizza was founded with the simple belief that online food ordering doesn’t have to be so
+                    <?= $site_name; ?> was founded with the simple belief that online food ordering doesn’t have to be so
                     complicated. We realize that restaurants are paying enormous commissions to existing online food
                     service providers. Ultimately, it’s YOU, the customer, who ends up paying the bills. We want to put
                     that money back where it belongs…in your pocket! Not only do we save you money, but we also use 100%
@@ -185,14 +185,13 @@
             <?php
             $minimum = first("SELECT price FROM additional_toppings WHERE size = 'Minimum'")["price"];
 
-            function toclass($text)
-            {
+            function toclass($text){
                 $text = str_replace('/', '_', $text);
                 $text = strtolower(str_replace(" ", "_", trim(strip_tags($text))));
                 return str_replace(array("?"), "", $text);
             }
-            function newID()
-            {
+
+            function newID(){
                 if (isset($GLOBALS["lastid"])) {
                     $GLOBALS["lastid"] += 1;
                 } else {
@@ -200,26 +199,26 @@
                 }
                 return lastID();
             }
-            function lastID()
-            {
+
+            function lastID(){
                 return "section_" . $GLOBALS["lastid"];
             }
-            function newlist($Title)
-            {
+
+            function newlist($Title){
                 if (isset($GLOBALS["startlist"])) {
                     echo '</UL>';
                 }
                 $GLOBALS["startlist"] = true;
                 echo '<H2>' . $Title . '</H2><UL>';
             }
-            function newitem($Title, $Text, $Class = "")
-            {
+
+            function newitem($Title, $Text, $Class = ""){
                 echo '<LI data-toggle="collapse" data-target="#' . newID() . '" ID="item_' . toclass($Title) . '">';
                 echo '<SPAN CLASS="title cursor-pointer ' . $Class . '">' . $Title . '</SPAN></LI>';
                 echo '<div id="' . lastID() . '" class="collapse">' . $Text . '</div>';
             }
-            function actionitem($action, $text = '')
-            {
+
+            function actionitem($action, $text = ''){
                 $actions = actions($action);
                 $parties = ["User", "Admin", "Restaurant"];
                 $tempstr = "";
@@ -243,6 +242,17 @@
                 }
                 newitem($action, 'Occurs when: ' . $text . $tempstr);
             }
+
+            newlist("General");
+            newitem("Why can’t I order for pickup?", "We are committed to providing a premier end-to-end customer experience. In order to promote simplicity and ease-of-use, we only provide delivery service at this time. Please check our site regularly for updates on new service offerings.");
+            newitem("Can I track my order once submitted?", "Once your order is submitted, it is accepted and confirmed by the choosen restaurant immediately. If there are any issues in preparing or delivering your order on time, we will contact you directly. Unfortunately, we do not currently have the ability to track the status of your order while it is being prepared and/or delivered.");
+            newitem("How do I know if the restaurant has accepted my order?", "All orders placed on HamiltonPizza.ca are instantly confirmed and accepted. You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order.");
+            newitem("What do I do if I need to make changes after submitting an order?", "You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order. Please contact the restaurant directly by phone should you wish to make any changes.");
+            newitem("I never received my order. Who do I contact?", "You may call our support line at Hamilton Pizza or call the restaurant for immediate assistance.");//Support line?
+            newitem("Why can’t I see certain items on the menu?", "Since we use a universal menu, certain items offered by particular restaurants may not be available through our service. Once you receive your order receipt via email, you may contact the restaurant directly should you wish to make any specific additions to your order.");
+            newitem("Can I choose the restaurant that prepares my order?", "Yes, during check-out you have the ability to choose from any restaurant that is within your delivery range. By default, we choose the restaurant closest to your location to fulfill your order.");
+            newitem("Can I pay with cash or credit/debit once I receive my order?", "No. Unfortunately, all of our orders require pre-payment via debit/credit card. This allows us to instantly confirm and start preparing orders placed through Hamilton Pizza.");
+            newitem("Do you store my credit card information?", "We do not keep this information on our servers, but rather via our secure payment processing partner: Stripe. It is requested from Stripe when you sign in and stored on your browser, not our servers.");
 
             newlist("Your Account");
             newitem("Signing in", "Enter your email address and password in the <A HREF='" . webroot("/") . "'>Log In</A> page and click <button class='btn btn-sm btn-primary'>LOG IN</button>");
