@@ -774,57 +774,6 @@ ul {
     background: #eee !important;
 }
 
-.sprite {
-    background-image: url('../../public/images/grid.png');
-    background-repeat: no-repeat;
-    width: 256px;
-    height: 256px;
-    margin-right: .75rem !important;
-}
-.sprite-medium {
-    zoom: 0.15; /* 256*0.15=64px */
-    -moz-transform: scale(0.15);
-    -moz-transform-origin: 0 0;
-}
-.sprite-none { background-position: 110px 110px; }
-.sprite-pizza { background-position: 0 0; }
-.sprite-salad { background-position: -384px 0; }
-.sprite-potato-wedges { background-position: -768px 0; }
-.sprite-panzerotti { background-position: -1152px 0; }
-.sprite-onion-rings { background-position: -1536px 0; }
-.sprite-wings { background-position: -1920px 0; }
-.sprite-241_pizza { background-position: -2304px 0; }
-.sprite-lasagna { background-position: -2688px 0; }
-.sprite-dips { background-position: -3072px 0; }
-.sprite-garlic-bread { background-position: -3456px 0; }
-.sprite-french-fries { background-position: -3840px 0; }
-.sprite-drinks { background-position: -4224px 0; }
-.sprite-chicken-nuggets { background-position: -4608px 0; }
-.sprite-veggie-sticks { background-position: -4992px 0; }
-.sprite-pepsi { background-position: -5376px 0; }
-.sprite-diet-pepsi { background-position: -5760px 0; }
-.sprite-2l-sprite { background-position: -6144px 0; }
-.sprite-sprite { background-position: -6528px 0; }
-.sprite-water { background-position: -6912px 0; }
-.sprite-chicken-salad { background-position: 0 -384px; }
-.sprite-caesar-salad { background-position: -384px -384px; }
-.sprite-cheddar-dip { background-position: -768px -384px; }
-.sprite-marinara-dip { background-position: -1152px -384px; }
-.sprite-blue-cheese-dip { background-position: -1920px -384px; }
-.sprite-garlic-dip, .sprite-ranch-dip { background-position: -2304px -384px; }
-.sprite-greek-salad { background-position: -2688px -384px; }
-.sprite-2l-coca-cola { background-position: -3072px -384px; }
-.sprite-crush-orange { background-position: -3456px -384px; }
-.sprite-ginger-ale { background-position: -3840px -384px; }
-.sprite-diet-coca-cola { background-position: -4224px -384px; }
-.sprite-nestea { background-position: -4608px -384px; }
-.sprite-2l-brisk-iced-tea { background-position: -4992px -384px; }
-.sprite-dr-pepper { background-position: -4992px -384px; }
-.sprite-7-up { background-position: -5760px -384px; }
-.sprite-root-beer { background-position: -6144px -384px; }
-.sprite-iced-tea { background-position: -6528px -384px; }
-.sprite-orange { background-position: -6912px -384px; }
-
 .c-rays {
     width: 100%;
     padding-top: 40%;

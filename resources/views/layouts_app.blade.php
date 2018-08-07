@@ -45,6 +45,7 @@
         <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
         <?php
             includefile("public/css/custom4.css");
+            includefile("public/css/sprite128.css");//128 pixel version of the sprite sheet
             includefile("public/css/google.css");
         ?>
         <script src="<?= $scripts; ?>/jquery.min.js"></script>
