@@ -1,11 +1,10 @@
 <?php
-startfile("popups_alljs");
-$CURRENT_YEAR = date("Y");
-$STREET_FORMAT = "[number] [street], [city] [postalcode]";
-//["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
-$MAX_DISTANCE = getsetting(islive() ? "maxdistance_live" : "maxdistance_local");
-$scripts = webroot("public/scripts");
-$nprog = "#F0AD4E";//color for loading bar
+    startfile("popups_alljs");
+    $CURRENT_YEAR = date("Y");
+    $STREET_FORMAT = "[number] [street], [city] [postalcode]";
+    //["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
+    $scripts = webroot("public/scripts");
+    $nprog = "#F0AD4E";//color for loading bar
 ?>
 <script>
     var debugmode = "<?= debugmode; ?>";
@@ -121,7 +120,6 @@ includefile("public/scripts/api.js");
     }
 </STYLE>
 <script>
-    var MAX_DISTANCE = <?= $MAX_DISTANCE; ?>;//km
     var debugmode = '<?= !islive(); ?>' == '1';
     var timestampoffset;
     timestampoffset = parseInt('<?= time(); ?>') - totimestamp();

@@ -356,6 +356,14 @@ function Query($query, $all = false, $Where = "Unknown"){
     return $data;
 }
 
+function GenerateDate($Date){
+    $today = date("F j");
+    $Date = str_replace($today, "Today, " . $today, $Date);
+    $tomorrow = date("F j", strtotime("+ 1 day"));
+    $Date = str_replace($tomorrow, "Tomorrow, " . $tomorrow, $Date);
+    return $Date;
+}
+
 function printoption($option, $selected = "", $value = ""){
     $tempstr = "";
     if ($option === $selected || $value === $selected) {

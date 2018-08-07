@@ -1590,7 +1590,6 @@ function addresshaschanged(place) {
     }
     formdata.limit = 10;
     if (!formdata.latitude || !formdata.longitude) {return;}
-    if (!debugmode) {formdata.radius = MAX_DISTANCE;}
     //skiploadingscreen = true;
     //canplaceorder = false;
     $.post(webroot + "placeorder", {
@@ -1609,17 +1608,12 @@ function addresshaschanged(place) {
                     closest[i].restid = restaurant.restaurant.id;
                     restaurant.distance = parseFloat(restaurant.distance);
                     var distancetext = "";
-                    if (restaurant.distance <= MAX_DISTANCE || debugmode) {
-                        if (restaurant.distance >= MAX_DISTANCE) {
-                            restaurant.restaurant.name += " [DEBUG]"
-                        }
-                        if (distance == -1 || distance > restaurant.distance) {
-                            smallest = restaurant.restaurant.id;
-                            distance = restaurant.distance;
-                            distancetext = ' (' + restaurant.distance.toFixed(2) + ' km)';
-                        }
-                        HTML += '<OPTION VALUE="' + restaurant.restaurant.id + '">' + restaurant.restaurant.name + '</OPTION>';
+                    if (distance == -1 || distance > restaurant.distance) {
+                        smallest = restaurant.restaurant.id;
+                        distance = restaurant.distance;
+                        distancetext = ' (' + restaurant.distance.toFixed(2) + ' km)';
                     }
+                    HTML += '<OPTION VALUE="' + restaurant.restaurant.id + '">' + restaurant.restaurant.name + '</OPTION>';
                 }
             }
             if (!smallest) {

@@ -107,19 +107,6 @@
             return $timestamp + ($DIFFERENCEminutes * 60);
         }
 
-        function GenerateDate($Date, $timer = true){
-            $today = date("F j");
-            if (isset($_GET["day"]) && is_numeric($_GET["day"]) && $_GET["day"] >= 0 && $_GET["day"] <= 6) {
-
-            }
-            if($timer){
-                $Date = str_replace($today, "Today (" . $today . ")", $Date);
-                $tomorrow = date("F j", strtotime("+ 1 day"));
-                $Date = str_replace($tomorrow, "Tomorrow (" . $tomorrow . ")", $Date);
-            }
-            return $Date;
-        }
-
         function todate($timestamp){
             return date("F j, Y G:i", $timestamp);
         }
@@ -208,7 +195,7 @@
         </div>
     @endif
 
-    <p class=" text-center">Please allow + or - 10 minutes for delivery.</p>
+    <p class="text-center">Please allow + or - 10 minutes for delivery.</p>
 
     @if($includeextradata)
         @if($timer)
@@ -280,16 +267,18 @@
                     ?>
                 </TD>
                 <TD WIDTH="2%"></TD>
-                <TD WIDTH="49%" style="" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
-                    <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order # <span ID="receipt_id"><?= $orderid; ?></span></h2>
-                    <?php
-                        echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
-                                $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
-                        echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
-                                . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
-                                . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
-                    ?>
-                </TD>
+                @if($party != "private")
+                    <TD WIDTH="49%" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
+                        <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order # <span ID="receipt_id"><?= $orderid; ?></span></h2>
+                        <?php
+                            echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
+                                    $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
+                            echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
+                                    . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
+                                    . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
+                        ?>
+                    </TD>
+                @endif
             </TR>
             <?php
                 if(isset($isinmodal)){

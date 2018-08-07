@@ -370,6 +370,21 @@ class HomeController extends Controller {
                     if($action["phone"]){$this->recordattempt($info["restaurant_id"], "restaurant_id");}
                 }
 
+                foreach ($info as $key => $value) {
+                    switch($key){
+                        case "deliverytime":
+                            if($value == "Deliver Now"){
+                                $value = "ASAP";
+                            } else {
+                                $date = trim(right($value, 4));
+                                $value = str_replace($date, GenerateTime($date), $value);
+                                $value = GenerateDate($value);
+                            }
+                            break;
+                    }
+                    $action["message"] = str_replace("[" . $key . "]", $value, $action["message"]);
+                }
+
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
                 $action["message"] = str_replace("[orderid]", $orderid, $action["message"]);
                 $action["message"] = str_replace("[sitename]", sitename, $action["message"]);

@@ -45,7 +45,7 @@
                         <!--div class="clearfix py-2"></div>
                         <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
                         <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" style="    font-weight: normal !important;" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
+                        <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" style="font-weight: normal !important;" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
                     </FORM>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="buzz">

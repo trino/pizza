@@ -397,6 +397,7 @@
                 $_POST["place"] = "getreceipt";
                 $_POST["style"] = 2;
                 $parties = ["user", "admin", "restaurant"];
+                if($profiletype === NULL){$profiletype = 2;}//default
                 $_POST["party"] = $parties[$profiletype];
                 if(isset($_POST["settings"]["showdetails"])){
                     if($_POST["settings"]["showdetails"] == "false"){

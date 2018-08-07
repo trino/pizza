@@ -16,6 +16,7 @@
 
 <?php
 startfile("popups_receiptdata");
+$Bold = '<SPAN style="font-weight: bold;">';
 $ordinals = array("1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th");
 $integrity = true;
 if (!function_exists("findkey")) {
@@ -188,7 +189,7 @@ if (file_exists($filename)) {
                                 }
                             }
                             $colspan = $colspan - 2;
-                            echo '<TR><TD valign="middle" style="font-weight: bold;">' . showifabove1($quantity, 'x&nbsp;') . $item->itemname . '</TD><TD ALIGN="RIGHT" WIDTH="5%">';
+                            echo '<TR><TD valign="middle">' . $Bold . showifabove1($quantity, 'x&nbsp;') . $item->itemname . '</SPAN></TD><TD ALIGN="RIGHT" WIDTH="5%">';
                             break;
                     }
 
@@ -300,7 +301,7 @@ if (file_exists($filename)) {
         $total = $subtotal + $deliveryfee + $tax;
         if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($tax, 2) . '</TD></TR>';
-        echo '<TR style="font-weight: bold;"><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($total, 2) . '</TD></TR>';
+        echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">' . $Bold . 'Total &nbsp;</SPAN></TD><TD ALIGN="RIGHT">' . $Bold . ' $' . number_format($total, 2) . '</SPAN></TD></TR>';
         //if($party != "private"){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';}
         insertdb("orders", array("id" => $orderid, "price" => $total));//saved for stripe
     } catch (exception $e) {

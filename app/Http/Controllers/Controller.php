@@ -26,15 +26,17 @@ class Controller extends BaseController {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
             }
+            if(!islive()){
+                $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
+                $array['email'] = "admin";
+            }
             if ($array['email'] == "admin") {
                 $array['email'] = first("SELECT email FROM users WHERE profiletype = 1", true, "Controller.SendEmail")["email"];
             }
             try {
-                if(islive()) {
-                    \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
-                        $messages->to($array['email'])->subject($array['mail_subject']);
-                    });
-                }
+                \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
+                    $messages->to($array['email'])->subject($array['mail_subject']);
+                });
             } catch (\Swift_TransportException $e) {
                 $text = $e->getMessage();
                 $email = view($template_name, $array);

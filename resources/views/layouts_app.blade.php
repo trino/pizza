@@ -112,7 +112,7 @@
                 @endif
             </ul>
 
-            <a style="    color: white;    text-decoration: none;" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
+            <a style="color: white; text-decoration: none;" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
 
             <?php
                 if (!islive() || debugmode) {
