@@ -122,10 +122,7 @@ class HomeController extends Controller {
             $info = $_POST["info"];
             unset($info["formatted_address"]);
         }
-        if (is_array($POST)) {
-            $_POST = $POST;
-        }
-
+        if (is_array($POST)) {$_POST = $POST;}
         if (isset($_POST["action"])) {
             $ret = array("Status" => true, "Reason" => "", "Type" => "System");
             switch ($_POST["action"]) {
@@ -206,6 +203,9 @@ class HomeController extends Controller {
             if(!isset($info["phone"]) || !trim($info["phone"])){
                 $info["phone"] = read("phone");
             }
+            $tip = 0.00;
+            if(isset($_POST["tip"]) && is_numeric($_POST["tip"])){$tip = $_POST["tip"];}
+            $info["tip"] = $tip;
             $orderid = insertdb("orders", $info);
             $dir = public_path("orders");//no / at the end (was in "user" . $info["user_id"])
             //if (!is_dir($dir)) {mkdir($dir, 0777, true);}
@@ -223,14 +223,16 @@ class HomeController extends Controller {
                 $user["phone"] = $_POST["phone"];
                 insertdb("users", array("id" => $info["user_id"], "name" => $_POST["name"], "phone" => $_POST["phone"]));//attempt to update user profile
             }
-            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user"))->render();
+
+            if(!isset($_POST["last4"])){$_POST["last4"] = "";}
+            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user", "last4" => $_POST["last4"]))->render();
             //if ($text) {return $text;} //shows email errors. Uncomment when email works
             if (isset($info["stripeToken"]) || $user["stripecustid"]) {//process stripe payment here
                 $amount = select_field_where("orders", "id=" . $orderid, "price");
                 if($GLOBALS["settings"]["onlyfiftycents"]) {
                     $amount = 50;//dont remove this
                 } else if (strpos($amount, ".")) {
-                    $amount = $amount * 100;//remove the period, make it in cents
+                    $amount = ($amount+$tip) * 100;//remove the period, make it in cents
                 }
                 $error = false;
                 if ($amount > 0) {
@@ -274,6 +276,7 @@ class HomeController extends Controller {
                         $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
                         if($charge["outcome"]["type"] == "authorized") {
                             insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"]));//will only happen if the $charge succeeds
+                            $info["last4"] = $_POST["last4"];
                             $this->order_placed($orderid, $info);
                             //die("Charged: " . $charge["source"]["id"]);
                         } else {
@@ -393,7 +396,9 @@ class HomeController extends Controller {
                 if ($action["email"]) {
                     $action["message"] = str_replace("[url]", "", $action["message"]);
                     debugprint("Sending email to " . $party . ": " . $email);//send emails to customer also generates the cost
-                    $this->sendEMail("email_receipt", ["orderid" => $orderid, "email" => $email, "party" => $party, "mail_subject" => $action["message"]]);
+                    if(!isset($info["last4"])){$info["last4"] = "missingdata1";}
+                    $data = ["orderid" => $orderid, "email" => $email, "party" => $party, "mail_subject" => $action["message"], "last4" => $info["last4"]];
+                    $this->sendEMail("email_receipt", $data);
                 }
                 if ($action["sms"]) {
                     $action["message"] = str_replace("[url]", webroot("list/orders?action=getreceipt&orderid=") . $orderid, $action["message"]);

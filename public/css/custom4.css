@@ -791,6 +791,10 @@ ul {
     padding: .75rem 1rem
 }
 
+.btn-space{
+    margin-right: 7px;
+}
+
 .inline {
     display: inline;
 }

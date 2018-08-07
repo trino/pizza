@@ -12,7 +12,16 @@
                 <?php
                     //hack to put CSS inline for emails cause no CSS can be used!!!
                     echo '<br title="' . $party . '">';
-                    $HTML = view("popups_receipt", array("orderid" => $orderid, "inline" => true, "place" => "email", "style" => 2, "includeextradata" => true, "party" => $party))->render();
+                    if(!isset($last4)){$last4 = false;}
+                    $HTML = view("popups_receipt", array(
+                            "orderid" => $orderid,
+                            "inline" => true,
+                            "place" => "email",
+                            "style" => 2,
+                            "includeextradata" => true,
+                            "party" => $party,
+                            "last4" => $last4
+                    ))->render();
                     $Styles = array(
                         "TD" => "border: 0px solid #eceeef; display: table-cell;",
                         "TH" => "border-color: #55595c; border-bottom: 0px solid #eceeef; padding:0rem; display: table-cell; border-right: 0px solid #eceeef;",

@@ -213,6 +213,7 @@
         if(file_exists($HTMLfilename)){
             $HTML = file_get_contents($HTMLfilename);
         } else {
+            if(!isset($last4)){$last4 = false;}
             $data = array(
                     "style" => $style,
                     "debugmode" => $debugmode,
@@ -226,11 +227,18 @@
                     "orderid" => $orderid,
                     "debug" => $debug
             );
+            //echo "last4-3: " . $last4;
             //vardump($data);
             $HTML = view("popups_receiptdata", $data)->render();
             if (!is_dir($dir)) {mkdir($dir, 0777, true);}
             file_put_contents($HTMLfilename, $HTML);
+            if($last4){
+                $HTML = str_replace("<LAST4 />", '<font color="#ff0000">Paid by ' . $last4 . '</font>', $HTML);
+            } else {
+                $HTML = str_replace("<LAST4 />", '', $HTML);
+            }
         }
+
         echo $HTML;
     ?>
 

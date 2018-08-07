@@ -587,6 +587,76 @@ function getDiscount(subtotal){
     return 0;
 }
 
+var pretiptotal = 0;
+var tip = 0.00;
+function changetip(){
+    var value = tip, ispercent = false, actual = tip;
+    if(value < 0){
+        ispercent = true;
+        value = -value * 100;
+        actual = value * actual;
+    }
+    var HTML = '<INPUT TYPE="TEXT" VALUE="' + value + '" ID="tip-value" ONCHANGE="recalctip();" ONKEYUP="recalctip();">';
+    HTML += ' <LABEL><INPUT TYPE="RADIO" NAME="tip" ID="tip-percent" VALUE="%"' + iif(ispercent, " CHECKED", "") + ' ONCLICK="recalctip();"> % </LABEL>';
+    HTML += ' <LABEL><INPUT TYPE="RADIO" NAME="tip" ID="tip-dollars" VALUE="$"' + iif(ispercent, "", " CHECKED") + ' ONCLICK="recalctip();"> $ </LABEL>';
+    HTML += '<BR>' + tippreset(0.05) + tippreset(0.10) + tippreset(0.15) + tippreset(1) + tippreset(3) + tippreset(5);
+    HTML += '<TABLE>';
+    HTML += '<TR><TD>Sub-total:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-subtotal">' + pretiptotal.toFixed(2) + '</SPAN></TD></TR>';
+    HTML += '<TR><TD>Tip:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-actual">' + actual.toFixed(2) + '</SPAN></TD></TR>';
+    HTML += '<TR><TD>Total:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-total">' + (pretiptotal+actual).toFixed(2) + '</SPAN></TD></TR>';
+    HTML += '</TABLE>';
+    alert(HTML, "Driver's Tip");
+    $("#alert-confirm").click(function(){recalctip(true);});
+}
+function settip(value){
+    if(value > 0 && value < 1){
+        value = value * 100;
+        $("#tip-percent").prop("checked", true);
+    } else {
+        $("#tip-dollars").prop("checked", true);
+    }
+    $("#tip-value").val(value);
+    recalctip();
+}
+function tippreset(value){
+    var HTML = '<BUTTON CLASS="btn btn-primary btn-space" ONCLICK="settip(' + value + ');">';
+    if(value > 0 && value < 1){
+        HTML += (value * 100) + "%";
+    } else {
+        HTML += "$" + value.toFixed(2);
+    }
+    return HTML + '</BUTTON>';
+}
+function recalctip(save){
+    if(isUndefined(save)){save = false;}
+    var value = $("#tip-value").val().trim();
+    if(isNaN(value)){value = 0.00;} else {value = parseFloat(value);}
+    var tiptype = $("input[name='tip']:checked").val();
+    var ispercent = tiptype == "%";
+    var actual = value;
+
+    if(ispercent) {
+        value = -value*0.01;
+        actual = -pretiptotal*value;
+    }
+    $("#tip-actual").text(actual.toFixed(2));
+    $("#tip-total").text((pretiptotal+actual).toFixed(2));
+    if(save){
+        tip = value;
+        generatereceipt();
+    }
+}
+function calculatetip(totalcost){
+    if(isUndefined(totalcost)){
+        totalcost = pretiptotal;
+    } else {
+        pretiptotal = totalcost;
+    }
+    var ret = tip;
+    if(ret < 0){ret = -tip * totalcost;}
+    return ret;
+}
+
 //convert the order to an HTML receipt
 function generatereceipt(forcefade) {
     if ($("#myorder").length == 0) {
@@ -739,6 +809,11 @@ function generatereceipt(forcefade) {
         }
         if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery &nbsp;</TD><TD> $' + deliveryfee.toFixed(2) + '</TD></TR>';}
         tempHTML += '<TR><TD>Tax &nbsp;</TD><TD> $' + taxes.toFixed(2) + '</TD></TR>';
+
+        var thetip = calculatetip(totalcost);
+        tempHTML += '<TR><TD>Tip &nbsp;</TD><TD><BUTTON ONCLICK="changetip();">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
+        totalcost = totalcost + thetip;
+
         tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong"> $' + totalcost.toFixed(2) + '</TD></TR>';
         tempHTML += '</TABLE><div class="clearfix py-2"></div></DIV></DIV>';
         $("#confirmclearorder").show();
@@ -829,6 +904,7 @@ function confirmclearorder() {
 
 function clearorder() {
     theorder = new Array;
+    tip = 0.00;
     removeorderitemdisabled = true;
     $("#newvalues").fadeOut(fade_speed);
     $(".receipt_item").fadeOut(fade_speed, function () {
@@ -1078,6 +1154,27 @@ function isnewcard(){
     return $("#saved-credit-info").val() == "";
 }
 
+function last4(includeExpiry){
+    var value = $("#saved-credit-info option:selected").val(), ret = "";
+    if(isUndefined(includeExpiry)){includeExpiry = false;}
+    if(value){
+        ret = $("#saved-credit-info option:selected").text();
+    } else {
+        var card_type = cardtype($("input[data-stripe=number]").val());
+        var card_types = {1: "American Express", 2: "Visa", 3: "MasterCard"};
+        card_type = card_types[card_type];
+        var card_number = $("input[data-stripe=number]").val().trim().right(4);
+        var card_month = $("select[data-stripe=exp_month]").val();
+        var card_year = $("select[data-stripe=exp_year]").val();
+        ret = card_type + " x-" + card_number + " Expires: " + card_month + "/20" + card_year;
+    }
+    if(!includeExpiry) {
+        var endit = ret.indexOf("Expires:");
+        ret = ret.left(endit).trim();
+    }
+    return ret;
+}
+
 //send an order to the server
 function placeorder(StripeResponse) {
     if (!canplaceanorder(false, "placeorder")) {return cantplaceorder("placeorder");}
@@ -1093,6 +1190,8 @@ function placeorder(StripeResponse) {
             stripe: StripeResponse,
             stripemode: stripemode,
             order: theorder,
+            tip: calculatetip(),
+            last4: last4(),
             name: $("#reg_name").val(),
             phone: $("#order_phone").val(),
             isnewcard: isnewcard()

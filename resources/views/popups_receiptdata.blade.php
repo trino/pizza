@@ -301,7 +301,13 @@ if (file_exists($filename)) {
         $total = $subtotal + $deliveryfee + $tax;
         if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($tax, 2) . '</TD></TR>';
+        if($Order["tip"] > 0){
+            echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tip &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($Order["tip"], 2) . '</TD></TR>';
+            $total += $Order["tip"];
+        }
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">' . $Bold . 'Total &nbsp;</SPAN></TD><TD ALIGN="RIGHT">' . $Bold . ' $' . number_format($total, 2) . '</SPAN></TD></TR>';
+
+        echo '<TR><TD COLSPAN="' . $colspan . '"  ALIGN="RIGHT"><LAST4 /></TD></TR>';
         //if($party != "private"){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';}
         insertdb("orders", array("id" => $orderid, "price" => $total));//saved for stripe
     } catch (exception $e) {
