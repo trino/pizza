@@ -9,10 +9,35 @@
     $delivery = number_format(getVal($Additional_Toppings, "Delivery"), 2);
     $time = getVal($Additional_Toppings, "DeliveryTime");
     $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
+    if(!isset($minimal)){$minimal = false;}
 ?>
+
+@if($minimal)
+    <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs mb-1" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
+                        </li>
+                        <A class="nav-link">
+                            &nbsp;or&nbsp;
+                        </A>
+                        <li class="nav-item">
+                            <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
+                        </li>
+                    </ul>
+                    <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+@else
 <div class="row">
     <DIV CLASS="col-lg-4 col-md-5 bg-white">
+@endif
+
         <DIV CLASS="py-3 px-3">
+            @if(!$minimal)
             <ul class="nav nav-tabs mb-1" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
@@ -24,6 +49,7 @@
                     <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
                 </li>
             </ul>
+            @endif
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="profile">
@@ -80,6 +106,12 @@
             </center>
         </div>
 
+@if($minimal)
+                </div>
+            </div>
+        </div>
+    </div>
+@else
     </DIV>
     <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
         <span class="bold bigtext"> <?= cityname ?>'s Premier Pizza Delivery Service</span><br><br>
@@ -136,7 +168,7 @@
         </div>
     </div>
 </div>
-
+@endif
 
 
 

@@ -870,6 +870,7 @@ function startfile($filename){
     $GLOBALS["filetimes"][$filename]["start"] = microtime(true);
     if(isset($GLOBALS["filetimes"][$filename]["times"])) {
         $GLOBALS["filetimes"][$filename]["times"] += 1;
+        return true;
     } else {
         $GLOBALS["filetimes"][$filename]["times"] = 1;
     }

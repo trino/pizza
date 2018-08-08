@@ -139,7 +139,7 @@ includefile("public/scripts/api.js");
         }
         generatereceipt();
         @if(!read("id"))
-        $("#loginmodal").modal("show");
+            //showlogin("document ready");
         @endif
 
         $('[data-popup-close]').on('click', function (e) {
@@ -314,11 +314,7 @@ includefile("public/scripts/api.js");
                             break;
                         case "logout":
                             removeCookie();
-                            $('[class^="session_"]').text("");
-                            $(".loggedin").hide();
-                            $(".loggedout").show();
-                            $(".clear_loggedout").html("");
-                            $(".profiletype").hide();
+                            logout();
                             userdetails = false;
                             if (redirectonlogout) {
                                 skipunloadingscreen = true;
@@ -344,6 +340,14 @@ includefile("public/scripts/api.js");
                 ajaxerror(err.message + "<BR>" + result, makestring("{error_login}"));
             }
         });
+    }
+
+    function logout(){
+        $('[class^="session_"]').text("");
+        $(".loggedin").hide();
+        $(".loggedout").show();
+        $(".clear_loggedout").html("");
+        $(".profiletype").hide();
     }
 
     var generalhours = <?= json_encode(gethours()) ?>;
@@ -385,6 +389,8 @@ includefile("public/scripts/api.js");
 
         @if(isset($user) && $user)
             login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
+        @else
+            logout();
         @endif
 
         var HTML = '';
@@ -401,6 +407,10 @@ includefile("public/scripts/api.js");
         GenerateHours(generalhours);
         $("#openingtime").html(HTML);
     });
+
+    function showlogin(){
+        $("#loginmodal").modal("show");
+    }
 
     //handle a user login
     function login(user, isJSON) {

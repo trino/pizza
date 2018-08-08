@@ -64,7 +64,6 @@
             </button>
 
             <ul class="dropdown-menu dropdown-menu-left" ID="dropdown-menu">
-                @if(read("id"))
                     <SPAN class="loggedin profiletype profiletype1">
                         <?php
                             foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings", "hours") as $table) {
@@ -83,12 +82,10 @@
                             <li class="profiletype_not profiletype_not2"><A class="dropdown-item" href="javascript:orders();"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
                         @endif
                     </SPAN>
-                @endif
-                @if($routename != "/")
-                    <SPAN class="loggedout">
-                        <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa-user icon-width"></i> Log In</A></LI>
-                    </SPAN>
-                @endif
+
+                <SPAN class="loggedout">
+                </SPAN>
+
                 @if($routename == "help")
                     <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-cart icon-width"></i> Menu</A></LI>
                 @else

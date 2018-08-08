@@ -1269,7 +1269,7 @@ function placeorder(StripeResponse) {
             }
         });
     } else {
-        $("#loginmodal").modal("show");
+        showlogin("placeorder");
     }
 }
 

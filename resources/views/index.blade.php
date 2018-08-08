@@ -2,6 +2,7 @@
 @section('content')
     <?php
         startfile("index");
+        $minimal = true;
         function bool($value){
             return iif($value, "true", "false");
         }
@@ -19,7 +20,7 @@
             }
         }
 
-        if(!read("id")){
+        if(!read("id") && !$minimal){
             echo view("popups_login")->render();
         } else {
             if(!islive() || read("profiletype") == 1){
@@ -63,7 +64,10 @@
             </button>
         </div>
     @endif
-    <?php }
+    <?php
+        if(!read("id" && $minimal))
+            echo view("popups_login", array("minimal" => true))->render();
+        }
         endfile("index");
     ?>
 @endsection
