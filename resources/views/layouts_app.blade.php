@@ -16,6 +16,7 @@
             $scripts = webroot("public/scripts");
             $css = webroot("public/css");
             $routename = Route::getCurrentRoute()->uri();
+            $minimal = true;//also change in index.blade.php
         ?>
 
         <script type="text/javascript">
@@ -270,6 +271,9 @@
                 }
                 echo '</TABLE>';
             }
+        }
+        if(!read("id" && $minimal)){
+            echo view("popups_login", array("minimal" => true))->render();
         }
     ?>
 </html>

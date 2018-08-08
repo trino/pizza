@@ -1,9 +1,11 @@
 <?php
     startfile("popups_login");
     $Additional_Toppings = first("SELECT * FROM additional_toppings", false);
-    function getVal($Additional_Toppings, $size) {
-        $it = getiterator($Additional_Toppings, "size", $size, false);
-        return $Additional_Toppings[$it]["price"];
+    if(!function_exists("getVal")){
+        function getVal($Additional_Toppings, $size) {
+            $it = getiterator($Additional_Toppings, "size", $size, false);
+            return $Additional_Toppings[$it]["price"];
+        }
     }
     $minimum = number_format(getVal($Additional_Toppings, "Minimum"), 2);
     $delivery = number_format(getVal($Additional_Toppings, "Delivery"), 2);

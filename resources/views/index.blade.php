@@ -2,7 +2,7 @@
 @section('content')
     <?php
         startfile("index");
-        $minimal = true;
+        $minimal = true;//also change in layouts_app.blade.php
         function bool($value){
             return iif($value, "true", "false");
         }
@@ -56,6 +56,7 @@
                     @include("popups_checkout")
                 </div>
             </div>
+        <?php } ?>
     @include("popups_editprofile_modal")
     @if(read("id") && read("profiletype") <> 2)
         <div class="fixed-action-btn hidden-lg-up sticky-footer d-lg-none">
@@ -65,9 +66,6 @@
         </div>
     @endif
     <?php
-        if(!read("id" && $minimal))
-            echo view("popups_login", array("minimal" => true))->render();
-        }
         endfile("index");
     ?>
 @endsection
