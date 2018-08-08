@@ -84,6 +84,7 @@
                     </SPAN>
 
                 <SPAN class="loggedout">
+                    <LI><A CLASS="dropdown-item" href="javascript:showlogin();"><i class="fa fa-user icon-width"></i> Log In</A></LI>
                 </SPAN>
 
                 @if($routename == "help")
