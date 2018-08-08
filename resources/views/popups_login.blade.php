@@ -10,101 +10,106 @@
     $time = getVal($Additional_Toppings, "DeliveryTime");
     $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
     if(!isset($minimal)){$minimal = false;}
+    if(!isset($justright)){$justright = false;}
 ?>
 
-@if($minimal)
-    <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <ul class="nav nav-tabs mb-1" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
-                        </li>
-                        <A class="nav-link">
-                            &nbsp;or&nbsp;
-                        </A>
-                        <li class="nav-item">
-                            <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
-                        </li>
-                    </ul>
-                    <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button>
-                </div>
-                <div class="modal-body">
-@else
-<div class="row">
-    <DIV CLASS="col-lg-4 col-md-5 bg-white">
+@if(!$justright)
+    @if($minimal)
+        <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <ul class="nav nav-tabs mb-1" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
+                            </li>
+                            <A class="nav-link">
+                                &nbsp;or&nbsp;
+                            </A>
+                            <li class="nav-item">
+                                <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
+                            </li>
+                        </ul>
+                        <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+    @else
+    <div class="row">
+        <DIV CLASS="col-lg-4 col-md-5 bg-white">
+    @endif
 @endif
 
-        <DIV CLASS="py-3 px-3">
-            @if(!$minimal)
-            <ul class="nav nav-tabs mb-1" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
-                </li>
-                <A class="nav-link">
-                    &nbsp;or&nbsp;
-                </A>
-                <li class="nav-item">
-                    <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
-                </li>
-            </ul>
-            @endif
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="profile">
-                    <FORM id="signform" name="signform">
-                        <div class="input_left_icon">
-                            <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-envelope text-white fa-stack-1x"></i></span>
-                        </div>
-                        <div class="input_right">
-                            <INPUT TYPE="text" id="login_email" name="login_email" placeholder="Email" class="form-control session_email_val" onkeydown="enterkey(event, '#login_password');" required>
-                        </div>
-                        <div class="input_left_icon">
-                            <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-lock text-white fa-stack-1x"></i></span>
-                        </div>
-                        <div class="input_right">
-                            <INPUT TYPE="password" id="login_password" placeholder="Password" class="form-control" onkeydown="enterkey(event, 'login');" required>
-                        </div>
-                        <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
-                        <!--div class="clearfix py-2"></div>
-                        <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
-                        <div class="clearfix py-2"></div>
-                        <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" style="font-weight: normal !important;" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
-                    </FORM>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="buzz">
-                    <FORM id="addform">
-                        <?php
-                            if (!read("id")) {
-                                echo view("popups_address", array("style" => 1, "required" => true, "icons" => true, "firefox" => false))->render();
-                            }
-                        ?>
-                    </FORM>
-                    <FORM Name="regform" id="regform">
-                        <?= view("popups_edituser", array("phone" => false, "autocomplete" => "new-password", "required" => true, "icons" => true))->render(); ?>
-                    </FORM>
+@if(!$justright)
+    <DIV CLASS="py-3 px-3">
+        @if(!$minimal)
+        <ul class="nav nav-tabs mb-1" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
+            </li>
+            <A class="nav-link">
+                &nbsp;or&nbsp;
+            </A>
+            <li class="nav-item">
+                <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
+            </li>
+        </ul>
+        @endif
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="profile">
+                <FORM id="signform" name="signform">
+                    <div class="input_left_icon">
+                        <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-envelope text-white fa-stack-1x"></i></span>
+                    </div>
+                    <div class="input_right">
+                        <INPUT TYPE="text" id="login_email" name="login_email" placeholder="Email" class="form-control session_email_val" onkeydown="enterkey(event, '#login_password');" required>
+                    </div>
+                    <div class="input_left_icon">
+                        <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-lock text-white fa-stack-1x"></i></span>
+                    </div>
+                    <div class="input_right">
+                        <INPUT TYPE="password" id="login_password" placeholder="Password" class="form-control" onkeydown="enterkey(event, 'login');" required>
+                    </div>
                     <div class="clearfix py-2"></div>
-                    <button class="btn btn-block btn-primary" onclick="register();">
-                        SIGN UP
-                    </button>
-                </div>
+                    <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
+                    <!--div class="clearfix py-2"></div>
+                    <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
+                    <div class="clearfix py-2"></div>
+                    <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" style="font-weight: normal !important;" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
+                </FORM>
             </div>
-            <DIV CLASS="clearfix"></DIV>
-        </DIV>
-
-        <DIV class="ajaxprompt margin-sm"></DIV>
-
-        <div class="pb-3">
-            <center>
-                <img src="<?= webroot("images/delivery.jpg"); ?>" class="width-50"/>
-                <h2 class="text-danger mt-3 pull-center">Feed Yourself + Someone Else</h2>
-                ${{ $minimum }} Minimum<br>
-                ${{ $delivery }} Delivery *Account Required<br>
-                Credit/Debit Only
-            </center>
+            <div role="tabpanel" class="tab-pane fade" id="buzz">
+                <FORM id="addform">
+                    <?php
+                        if (!read("id")) {
+                            echo view("popups_address", array("style" => 1, "required" => true, "icons" => true, "firefox" => false))->render();
+                        }
+                    ?>
+                </FORM>
+                <FORM Name="regform" id="regform">
+                    <?= view("popups_edituser", array("phone" => false, "autocomplete" => "new-password", "required" => true, "icons" => true))->render(); ?>
+                </FORM>
+                <div class="clearfix py-2"></div>
+                <button class="btn btn-block btn-primary" onclick="register();">
+                    SIGN UP
+                </button>
+            </div>
         </div>
+        <DIV CLASS="clearfix"></DIV>
+    </DIV>
+
+    <DIV class="ajaxprompt margin-sm"></DIV>
+
+    <div class="pb-3">
+        <center>
+            <img src="<?= webroot("images/delivery.jpg"); ?>" class="width-50"/>
+            <h2 class="text-danger mt-3 pull-center">Feed Yourself + Someone Else</h2>
+            ${{ $minimum }} Minimum<br>
+            ${{ $delivery }} Delivery *Account Required<br>
+            Credit/Debit Only
+        </center>
+    </div>
+@endif
 
 @if($minimal)
                 </div>
@@ -112,8 +117,11 @@
         </div>
     </div>
 @else
+    @if(!$justright)
     </DIV>
     <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
+    @endif
+
         <span class="bold bigtext"> <?= cityname ?>'s Premier Pizza Delivery Service</span><br><br>
 
         <p class="pull-center">
@@ -166,12 +174,15 @@
                 </TABLE>
             </div>
         </div>
+
+        @if(!$justright)
     </div>
 </div>
+        @endif
 @endif
 
 
-
+@if(!$justright)
 <SCRIPT>
     redirectonlogin = true;
     var minlength = 5;
@@ -297,4 +308,5 @@
         $("#profile").removeClass("fade").removeClass("in");
     });
 </SCRIPT>
+@endif
 <?php endfile("popups_login"); ?>

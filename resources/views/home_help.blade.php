@@ -151,9 +151,8 @@
             }
         }
     </SCRIPT>
-    <DIV class="row  bg-danger">
-        <div class="col-sm-3"></DIV>
-        <div class="col-sm-6 py-3">
+    <DIV class="row">
+        <div class="col-sm-6 py-3 bg-danger">
             <h3><?= getsetting("aboutus"); ?></h3>
             <div class="card-block text-white">
                 <p>
@@ -180,7 +179,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3"></DIV>
+        <DIV CLASS="col-sm-6">
+            <?= view("popups_login", array("justright" => true))->render(); ?>
+        </DIV>
     </DIV>
     <DIV class="row bg-white">
         <div class="col-sm-12 list-padding list-card">
