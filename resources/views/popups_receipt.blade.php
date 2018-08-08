@@ -243,6 +243,9 @@
             $HTML = view("popups_receiptdata", $data)->render();
             if (!is_dir($dir)) {mkdir($dir, 0777, true);}
             file_put_contents($HTMLfilename, $HTML);
+            if(read("id") != $Order["user_id"] && read("profiletype") == 0){
+                $last4 = false;//do not allow other users to view this data!!!
+            }
             if($last4){
                 $HTML = str_replace("<LAST4 />", '<font color="#ff0000">Paid by ' . formatlast4($last4) . '</font>', $HTML);
             } else {
