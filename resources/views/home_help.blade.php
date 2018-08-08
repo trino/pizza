@@ -11,7 +11,10 @@
             $launched = " (" . $days . " day" . iif($days > 1, "s") . " away)";
         }
         $orders = first('SELECT count(*) as count FROM orders WHERE status <> 2 AND status <> 4 AND placed_at > "' . $SQLdate . '"')["count"];
-        $donation_per_order = 1.75;
+        $donation_per_order = 0.1;
+        $units_donated = "Pizzas";
+        //$donations = number_format((float)$orders * $donation_per_order, 0, '.', '');
+        $donations = floor($orders * $donation_per_order);
         $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
     ?>
     <STYLE>
@@ -172,7 +175,7 @@
                 <div class="btn-outlined-danger text-center pt-1">
                     <strong>August, 2018</strong>
                     <p> Orders: <?= $orders; ?>
-                        <br> Donated: <?= number_format((float)$orders * $donation_per_order, 0, '.', ''); ?> Slices
+                        <br> Donated: <?= $donations . " " . $units_donated; ?>
                         <br> Charity: Hamilton Food Centre</p>
                 </div>
             </div>

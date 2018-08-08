@@ -275,8 +275,8 @@ class HomeController extends Controller {
                         $failedat = "Charge the card";
                         $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
                         if($charge["outcome"]["type"] == "authorized") {
-                            insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"]));//will only happen if the $charge succeeds
-                            $info["last4"] = $_POST["last4"];
+                            insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"], "last4" => $_POST["last4"]));//will only happen if the $charge succeeds
+                            //$info["last4"] = $_POST["last4"];
                             $this->order_placed($orderid, $info);
                             //die("Charged: " . $charge["source"]["id"]);
                         } else {

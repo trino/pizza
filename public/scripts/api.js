@@ -1154,25 +1154,41 @@ function isnewcard(){
     return $("#saved-credit-info").val() == "";
 }
 
-function last4(includeExpiry){
-    var value = $("#saved-credit-info option:selected").val(), ret = "";
-    if(isUndefined(includeExpiry)){includeExpiry = false;}
+function last4(LongForm, includeExpiry){
+    var value = $("#saved-credit-info option:selected").val(), ret = "", endit = 0;
+    var card_types = {1: "American Express", 2: "Visa", 3: "MasterCard"};
+    if(isUndefined(LongForm)){LongForm = false;}
+    if(isUndefined(includeExpiry)){includeExpiry = true;}
     if(value){
         ret = $("#saved-credit-info option:selected").text();
+        if(!includeExpiry) {
+            endit = ret.indexOf("Expires:");
+            ret = ret.left(endit);
+        }
+        if(!LongForm){
+            ret = ret.replace(card_types[1], 1);
+            ret = ret.replace(card_types[2], 2);
+            ret = ret.replace(card_types[3], 3);
+            ret = ret.replace(' Expires: ', '');
+            ret = ret.replace(' x-', '');
+            ret = ret.replace("/20", '');
+        }
+        endit = ret.indexOf("(ID:");
+        if(endit > -1){ret = ret.left(endit);}
     } else {
         var card_type = cardtype($("input[data-stripe=number]").val());
-        var card_types = {1: "American Express", 2: "Visa", 3: "MasterCard"};
-        card_type = card_types[card_type];
         var card_number = $("input[data-stripe=number]").val().trim().right(4);
         var card_month = $("select[data-stripe=exp_month]").val();
         var card_year = $("select[data-stripe=exp_year]").val();
-        ret = card_type + " x-" + card_number + " Expires: " + card_month + "/20" + card_year;
+        if(LongForm) {
+            ret = card_types[card_type] + " x-" + card_number + " Expires: " + card_month + "/20" + card_year;
+        } else if (includeExpiry){
+            ret = card_type + "" + card_number;
+        } else {
+            ret = card_type + "" + card_number + "" + card_month + "" + card_year;
+        }
     }
-    if(!includeExpiry) {
-        var endit = ret.indexOf("Expires:");
-        ret = ret.left(endit).trim();
-    }
-    return ret;
+    return ret.trim();
 }
 
 //send an order to the server

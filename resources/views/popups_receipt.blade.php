@@ -121,6 +121,16 @@
             }
             return 0;
         }
+
+        function formatlast4($last4){//ABBBBCCDD
+            if(strlen($last4) <> 9){return "Missing Data";}
+            $card_types = [1 => "American Express", 2 => "Visa", 3 => "MasterCard"];
+            $card_type = left($last4, 1);
+            $card_number = mid($last4, 1, 4);
+            $card_month = mid($last4, 5, 2);
+            $card_year = right($last4, 2);
+            return $card_types[$card_type] . " x-" . $card_number . " Expires: " . $card_month . "/20" . $card_year;
+        }
     }
     //edit countdown timer duration
     $minutes = getdeliverytime();
@@ -213,7 +223,8 @@
         if(file_exists($HTMLfilename)){
             $HTML = file_get_contents($HTMLfilename);
         } else {
-            if(!isset($last4)){$last4 = false;}
+            if(isset($Order["last4"]) && $Order["last4"]){$last4 = $Order["last4"];}
+            if(!isset($last4) || !$last4){$last4 = "";}
             $data = array(
                     "style" => $style,
                     "debugmode" => $debugmode,
@@ -233,7 +244,7 @@
             if (!is_dir($dir)) {mkdir($dir, 0777, true);}
             file_put_contents($HTMLfilename, $HTML);
             if($last4){
-                $HTML = str_replace("<LAST4 />", '<font color="#ff0000">Paid by ' . $last4 . '</font>', $HTML);
+                $HTML = str_replace("<LAST4 />", '<font color="#ff0000">Paid by ' . formatlast4($last4) . '</font>', $HTML);
             } else {
                 $HTML = str_replace("<LAST4 />", '', $HTML);
             }
