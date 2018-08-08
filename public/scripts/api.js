@@ -598,7 +598,8 @@ function changetip(){
     var HTML = '<INPUT TYPE="TEXT" VALUE="' + value + '" ID="tip-value" ONCHANGE="recalctip();" ONKEYUP="recalctip();">';
     HTML += ' <LABEL><INPUT TYPE="RADIO" NAME="tip" ID="tip-percent" VALUE="%"' + iif(ispercent, " CHECKED", "") + ' ONCLICK="recalctip();"> % </LABEL>';
     HTML += ' <LABEL><INPUT TYPE="RADIO" NAME="tip" ID="tip-dollars" VALUE="$"' + iif(ispercent, "", " CHECKED") + ' ONCLICK="recalctip();"> $ </LABEL>';
-    HTML += '&nbsp;' + tippreset(0) + '<BR>' + tippreset(0.05) + tippreset(0.10) + tippreset(0.15) + tippreset(1) + tippreset(3) + tippreset(5);
+    HTML += '&nbsp;<SPAN ONCLICK="settip(0);" CLASS="cursor-pointer"><i class="fas fa-times-circle" STYLE="color: red;"></i></SPAN><BR>';
+    HTML += tippreset(0.05) + tippreset(0.10) + tippreset(0.15) + tippreset(1) + tippreset(3) + tippreset(5);
     HTML += '<TABLE>';
     HTML += '<TR><TD>Sub-total:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-subtotal">' + pretiptotal.toFixed(2) + '</SPAN></TD></TR>';
     HTML += '<TR><TD>Tip:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-actual"></SPAN></TD></TR>';
@@ -829,7 +830,7 @@ function generatereceipt(forcefade) {
 
         var thetip = calculatetip(totalcost);
         var tipstyle = iif(thetip == 0, ' STYLE="display: none;"');
-        tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;<SPAN ONCLICK="settip(0, true);"><i class="fas fa-times-circle" STYLE="color: red;"></i></SPAN></TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
+        tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;<SPAN ONCLICK="settip(0, true);" CLASS="cursor-pointer"><i class="fas fa-times-circle" STYLE="color: red;"></i></SPAN></TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
         totalcost = totalcost + thetip;
 
         tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong" ID="thetotal"> $' + totalcost.toFixed(2) + '</TD></TR>';
