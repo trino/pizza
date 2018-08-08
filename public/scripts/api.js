@@ -1573,6 +1573,7 @@ function ajaxerror(errortext, title){
         alert(errortext, title);
     }
     skipunloadingscreen=false;
+    paydisabled=false;
     loading(false, "ajaxerror");
 }
 

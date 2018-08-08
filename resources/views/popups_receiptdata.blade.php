@@ -307,7 +307,8 @@ if (file_exists($filename)) {
         }
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">' . $Bold . 'Total &nbsp;</SPAN></TD><TD ALIGN="RIGHT">' . $Bold . ' $' . number_format($total, 2) . '</SPAN></TD></TR>';
 
-        echo '<TR><TD COLSPAN="' . $colspan . '"  ALIGN="RIGHT"><LAST4 /></TD></TR>';
+        echo '<TR><TD COLSPAN="' . $colspan . '"  ALIGN="RIGHT">(LAST4)</TD></TR>';
+
         //if($party != "private"){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';}
         insertdb("orders", array("id" => $orderid, "price" => $total));//saved for stripe
     } catch (exception $e) {

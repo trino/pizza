@@ -187,6 +187,7 @@ class HomeController extends Controller {
         $addressID = $this->processaddress($info);
         if (isset($_POST["order"])) {
             $info["placed_at"] = my_now();
+            $info["last4"] = $_POST["last4"];
             unset($info["name"]);
             if(isset($info["creditcard"])) {
                 $_POST["creditcard"] = $info["creditcard"];
@@ -276,7 +277,6 @@ class HomeController extends Controller {
                         $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
                         if($charge["outcome"]["type"] == "authorized") {
                             insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"], "last4" => $_POST["last4"]));//will only happen if the $charge succeeds
-                            //$info["last4"] = $_POST["last4"];
                             $this->order_placed($orderid, $info);
                             //die("Charged: " . $charge["source"]["id"]);
                         } else {
@@ -396,7 +396,6 @@ class HomeController extends Controller {
                 if ($action["email"]) {
                     $action["message"] = str_replace("[url]", "", $action["message"]);
                     debugprint("Sending email to " . $party . ": " . $email);//send emails to customer also generates the cost
-                    if(!isset($info["last4"])){$info["last4"] = "missingdata1";}
                     $data = ["orderid" => $orderid, "email" => $email, "party" => $party, "mail_subject" => $action["message"], "last4" => $info["last4"]];
                     $this->sendEMail("email_receipt", $data);
                 }

@@ -220,11 +220,10 @@
     <?php
         $dir = public_path("orders");/* "user" . $Order["user_id"]);*/
         $HTMLfilename = $dir . "/" . $orderid . "-" . $style . ".html";
+        if(isset($Order["last4"]) && $Order["last4"]){$last4 = $Order["last4"];}
         if(file_exists($HTMLfilename)){
             $HTML = file_get_contents($HTMLfilename);
         } else {
-            if(isset($Order["last4"]) && $Order["last4"]){$last4 = $Order["last4"];}
-            if(!isset($last4) || !$last4){$last4 = "";}
             $data = array(
                     "style" => $style,
                     "debugmode" => $debugmode,
@@ -243,16 +242,19 @@
             $HTML = view("popups_receiptdata", $data)->render();
             if (!is_dir($dir)) {mkdir($dir, 0777, true);}
             file_put_contents($HTMLfilename, $HTML);
-            if(read("id") != $Order["user_id"] && read("profiletype") == 0){
-                $last4 = false;//do not allow other users to view this data!!!
-            }
-            if($last4){
-                $HTML = str_replace("<LAST4 />", '<font color="#ff0000">Paid by ' . formatlast4($last4) . '</font>', $HTML);
-            } else {
-                $HTML = str_replace("<LAST4 />", '', $HTML);
-            }
         }
 
+        if((read("id") != $Order["user_id"] && read("profiletype") == 0) || $party == "Private"){
+            $last4 = "Private information";//do not allow other users to view this data!!!
+        }
+        if(is_numeric($last4)){
+            $last4 = '<font color="#ff0000">Paid by ' . formatlast4($last4) . '</font>';
+        } else if ($last4){
+            $last4 = '<font color="#ff0000">' . $last4 . '</font>';
+        } else {
+            $last4 = "";
+        }
+        $HTML = str_replace("(LAST4)", $last4, $HTML);
         echo $HTML;
     ?>
 
