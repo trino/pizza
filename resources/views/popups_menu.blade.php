@@ -94,7 +94,9 @@
     $CurrentCat = 0;
     echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 ?>
-<div class="col-lg-3 col-md-12 bg-white ismenu">
+<DIV CLASS="col-md-9">
+    <DIV CLASS="row no-margin">
+<div class="col-lg-4 col-md-12 bg-white ismenu">
     @foreach ($categories as $category)
         <?php
             $toppings_extra = '+';
@@ -163,23 +165,28 @@
         @endforeach
         @if($catclass=="dips" || $catclass=="sides")
             </div>
-            <div class="col-lg-3 col-md-12 bg-white ismenu">
+            <div class="col-lg-4 col-md-12 bg-white ismenu">
         @endif
     @endforeach
+</div>
 
     <?php
-        echo '<div class="text-danger strong list-group-item" ID="category_tips">
-        <h2 CLASS="pull-left align-middle h2-middle">Tips</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-tip sprite-medium"></span></div>';
+        echo '<DIV CLASS="row col-md-12 no-margin">';
         $tips = [1,3,5];
         foreach($tips as $tip){
+            echo '<DIV CLASS="col-md-4">';
             echo '<button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_tip" ONCLICK="addtip(' . $tip . ');">';
             echo '<i class="fas fa-dollar-sign rounded-circle align-middle item-icon bg-warning sprite-tip sprite-medium"></i>
                 <span class="align-middle item-name">Tip</span>
                 <span class="ml-auto align-middle btn-sm-padding item-cost"> $' . $tip . '</span>
-            </button>';
+            </button></DIV>';
         }
+        echo '</DIV>';
     ?>
-</div>
+
+    </DIV>
+</DIV>
+
 
 <!-- order menu item Modal -->
 <div class="modal modal-fullscreen force-fullscreen" id="menumodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">

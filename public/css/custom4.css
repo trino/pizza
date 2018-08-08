@@ -467,6 +467,11 @@ body.loading {
     cursor: pointer;
 }
 
+.no-margin{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
 .sub_item {
 }
 
