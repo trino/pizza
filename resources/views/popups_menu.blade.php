@@ -162,11 +162,23 @@
             </button>
         @endforeach
         @if($catclass=="dips" || $catclass=="sides")
-</div>
-
-<div class="col-lg-3 col-md-12 bg-white ismenu">
-    @endif
+            </div>
+            <div class="col-lg-3 col-md-12 bg-white ismenu">
+        @endif
     @endforeach
+
+    <?php
+        echo '<div class="text-danger strong list-group-item" ID="category_tips">
+        <h2 CLASS="pull-left align-middle h2-middle">Tips</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-tip sprite-medium"></span></div>';
+        $tips = [1,3,5];
+        foreach($tips as $tip){
+            echo '<button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_tip" ONCLICK="addtip(' . $tip . ');">';
+            echo '<i class="fas fa-dollar-sign rounded-circle align-middle item-icon bg-warning sprite-tip sprite-medium"></i>
+                <span class="align-middle item-name">Tip</span>
+                <span class="ml-auto align-middle btn-sm-padding item-cost"> $' . $tip . '</span>
+            </button>';
+        }
+    ?>
 </div>
 
 <!-- order menu item Modal -->

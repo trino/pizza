@@ -5,6 +5,11 @@
     height: 128px;
     margin-right: .75rem !important;
 }
+.sprite-tip{
+    width: 128px !important;
+    height: 128px !important;
+    margin-right: .75rem !important;
+}
 .sprite-medium {
     zoom: 0.3;
     -moz-transform: scale(0.3);

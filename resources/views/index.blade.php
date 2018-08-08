@@ -33,7 +33,7 @@
                     $menublade_filename = resource_path() . "/views/popups_menu.blade.php";
                     $menublade_uptodate = isFileUpToDate2("menucache", $menublade_filename);
                     $menucache_uptodate = isFileUpToDate2("menucache", $menucache_filename);
-                    if ($menucache_uptodate && $doCache) {
+                    if ($menucache_uptodate && $menublade_uptodate && $doCache) {
                         echo '<!-- menu cache pre-generated at: ' . filemtime($menucache_filename) . " it is " . time() . ' now --> ' . file_get_contents($menucache_filename);
                     } else {
                         $menu = view("popups_menu")->render();

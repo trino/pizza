@@ -590,25 +590,25 @@ function getDiscount(subtotal){
 var pretiptotal = 0;
 var tip = 0.00;
 function changetip(){
-    var value = tip, ispercent = false, actual = tip;
+    var value = tip, ispercent = false;
     if(value < 0){
         ispercent = true;
-        value = -value * 100;
-        actual = value * actual;
+        value = value * -100;
     }
     var HTML = '<INPUT TYPE="TEXT" VALUE="' + value + '" ID="tip-value" ONCHANGE="recalctip();" ONKEYUP="recalctip();">';
     HTML += ' <LABEL><INPUT TYPE="RADIO" NAME="tip" ID="tip-percent" VALUE="%"' + iif(ispercent, " CHECKED", "") + ' ONCLICK="recalctip();"> % </LABEL>';
     HTML += ' <LABEL><INPUT TYPE="RADIO" NAME="tip" ID="tip-dollars" VALUE="$"' + iif(ispercent, "", " CHECKED") + ' ONCLICK="recalctip();"> $ </LABEL>';
-    HTML += '<BR>' + tippreset(0.05) + tippreset(0.10) + tippreset(0.15) + tippreset(1) + tippreset(3) + tippreset(5);
+    HTML += '&nbsp;' + tippreset(0) + '<BR>' + tippreset(0.05) + tippreset(0.10) + tippreset(0.15) + tippreset(1) + tippreset(3) + tippreset(5);
     HTML += '<TABLE>';
     HTML += '<TR><TD>Sub-total:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-subtotal">' + pretiptotal.toFixed(2) + '</SPAN></TD></TR>';
-    HTML += '<TR><TD>Tip:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-actual">' + actual.toFixed(2) + '</SPAN></TD></TR>';
-    HTML += '<TR><TD>Total:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-total">' + (pretiptotal+actual).toFixed(2) + '</SPAN></TD></TR>';
+    HTML += '<TR><TD>Tip:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-actual"></SPAN></TD></TR>';
+    HTML += '<TR><TD>Total:</TD><TD>$</TD><TD ALIGN="RIGHT"><SPAN ID="tip-total"></SPAN></TD></TR>';
     HTML += '</TABLE>';
     alert(HTML, "Driver's Tip");
+    recalctip();
     $("#alert-confirm").click(function(){recalctip(true);});
 }
-function settip(value){
+function settip(value, save){
     if(value > 0 && value < 1){
         value = value * 100;
         $("#tip-percent").prop("checked", true);
@@ -616,7 +616,7 @@ function settip(value){
         $("#tip-dollars").prop("checked", true);
     }
     $("#tip-value").val(value);
-    recalctip();
+    recalctip(save, value);
 }
 function tippreset(value){
     var HTML = '<BUTTON CLASS="btn btn-primary btn-space" ONCLICK="settip(' + value + ');">';
@@ -627,14 +627,13 @@ function tippreset(value){
     }
     return HTML + '</BUTTON>';
 }
-function recalctip(save){
+function recalctip(save, value){
     if(isUndefined(save)){save = false;}
-    var value = $("#tip-value").val().trim();
-    if(isNaN(value)){value = 0.00;} else {value = parseFloat(value);}
+    if(isUndefined(value)){value = $("#tip-value").val();}
+    if(isNaN(value) || isUndefined(value) || !value){value = 0.00;} else {value = parseFloat(value);}
     var tiptype = $("input[name='tip']:checked").val();
     var ispercent = tiptype == "%";
     var actual = value;
-
     if(ispercent) {
         value = -value*0.01;
         actual = -pretiptotal*value;
@@ -643,7 +642,17 @@ function recalctip(save){
     $("#tip-total").text((pretiptotal+actual).toFixed(2));
     if(save){
         tip = value;
-        generatereceipt();
+        if($("#tiprow").is(":visible")){
+            if(tip == 0){
+                $("#tiprow").fadeOut(fade_speed);
+            } else {
+                fadetext("#thetip", "$" + actual.toFixed(2));
+            }
+        } else if (tip > 0) {
+            $("#thetip").text("$" + actual.toFixed(2));
+            $("#tiprow").fadeIn(fade_speed);
+        }
+        fadetext("#thetotal", "$" + (pretiptotal+actual).toFixed(2));
     }
 }
 function calculatetip(totalcost){
@@ -655,6 +664,14 @@ function calculatetip(totalcost){
     var ret = tip;
     if(ret < 0){ret = -tip * totalcost;}
     return ret;
+}
+function addtip(value){
+    if(tip < 0){
+        tip = value;
+    } else {
+        tip += value;
+    }
+    settip(tip, true);
 }
 
 //convert the order to an HTML receipt
@@ -811,10 +828,11 @@ function generatereceipt(forcefade) {
         tempHTML += '<TR><TD>Tax &nbsp;</TD><TD> $' + taxes.toFixed(2) + '</TD></TR>';
 
         var thetip = calculatetip(totalcost);
-        tempHTML += '<TR><TD>Tip &nbsp;</TD><TD><BUTTON ONCLICK="changetip();">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
+        var tipstyle = iif(thetip == 0, ' STYLE="display: none;"');
+        tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;<SPAN ONCLICK="settip(0, true);"><i class="fas fa-times-circle" STYLE="color: red;"></i></SPAN></TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
         totalcost = totalcost + thetip;
 
-        tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong"> $' + totalcost.toFixed(2) + '</TD></TR>';
+        tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong" ID="thetotal"> $' + totalcost.toFixed(2) + '</TD></TR>';
         tempHTML += '</TABLE><div class="clearfix py-2"></div></DIV></DIV>';
         $("#confirmclearorder").show();
         fadetext("#checkout-total", '$' + totalcost.toFixed(2));
