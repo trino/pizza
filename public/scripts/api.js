@@ -640,7 +640,8 @@ function recalctip(save, value){
         actual = -pretiptotal*value;
     }
     $("#tip-actual").text(actual.toFixed(2));
-    $("#tip-total").text((pretiptotal+actual).toFixed(2));
+    var total = (pretiptotal+actual).toFixed(2);
+    $("#tip-total").text(total);
     if(save){
         tip = value;
         if($("#tiprow").is(":visible")){
@@ -653,7 +654,8 @@ function recalctip(save, value){
             $("#thetip").text("$" + actual.toFixed(2));
             $("#tiprow").fadeIn(fade_speed);
         }
-        fadetext("#thetotal", "$" + (pretiptotal+actual).toFixed(2));
+        fadetext("#thetotal", "$" + total);
+        fadetext("#checkout-total", '$' + total);
     }
 }
 function calculatetip(totalcost){
@@ -666,13 +668,40 @@ function calculatetip(totalcost){
     if(ret < 0){ret = -tip * totalcost;}
     return ret;
 }
-function addtip(value){
-    if(tip < 0){
+function addtip(value, removeit, removeall){
+    if(isUndefined(removeit)){removeit = false;}
+    if(isUndefined(removeall)){removeall = false;}
+    if(tip < 0) {
         tip = value;
+    } else if(removeall){
+        tip = tip % value;
+    } else if(removeit) {
+        tip -= value;
+        if (tip < 0) {tip = 0;}
     } else {
         tip += value;
     }
     settip(tip, true);
+    var HTML = '';
+    var tips = [5 , 3 , 1];
+    value = tip;
+    for(var index = 0; index < tips.length; index++){
+        var temptip = Math.floor(value / tips[index]);
+        if (temptip > 0) {
+            value = value % tips[index];
+            var tempHTML = '<div class="receipt_item">';
+            if(temptip > 1){
+                tempHTML += '<span class="item_qty" onclick="addtip(' + tips[index] + ', true, true);" title="Remove All">' + temptip + ' x&nbsp;</span> ';
+            }
+            tempHTML += '<span class="mr-auto itemname">$' + tips[index] + ' Tip</span><span>$' + (tips[index] * temptip) + '.00</span>';
+            tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ', true);"><i class="fa fa-minus"></i></button>';
+            tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ');"><i class="fa fa-plus"></i> </button></div>';
+            HTML += tempHTML;
+        }
+    }
+    //<div id="receipt_item_0" class="receipt_item"><span class="item_qty" onclick="removeall(1);" title="Remove All">5 x&nbsp;</span> <span class="mr-auto itemname">5 Lb Wings</span><span id="cost_0">$35.00</span><button class="bg-transparent " onclick="removeorderitem(0, 1);"><i class="fa fa-minus"></i></button><button class="bg-transparent" onclick="edititem(this, 0);"><i class="fa fa-plus"></i> </button></div>
+
+    fadetext("#tipcontrols", HTML);
 }
 
 //convert the order to an HTML receipt
@@ -794,6 +823,8 @@ function generatereceipt(forcefade) {
             HTML += tempHTML + '</DIV>';
         }
     }
+    HTML += '<DIV ID="tipcontrols"></DIV>';
+
     var discountpercent = getDiscount(subtotal);
     var discount = (discountpercent * 0.01 * subtotal).toFixed(2);
 
@@ -830,7 +861,7 @@ function generatereceipt(forcefade) {
 
         var thetip = calculatetip(totalcost);
         var tipstyle = iif(thetip == 0, ' STYLE="display: none;"');
-        tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;<SPAN ONCLICK="settip(0, true);" CLASS="cursor-pointer"><i class="fas fa-times-circle" STYLE="color: red;"></i></SPAN></TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
+        tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;</TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
         totalcost = totalcost + thetip;
 
         tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong" ID="thetotal"> $' + totalcost.toFixed(2) + '</TD></TR>';
@@ -877,7 +908,7 @@ function fadeinall(fadein, fadein2, doit){
 
 function fadetext(selector, newtext){
     $(selector).fadeOut(fade_speed, function () {
-        $(selector).text(newtext).fadeIn(fade_speed);
+        $(selector).html(newtext).fadeIn(fade_speed);
     });
 }
 

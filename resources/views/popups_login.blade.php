@@ -13,6 +13,7 @@
     $hours = first("SELECT * FROM hours WHERE restaurant_id = 0");
     if(!isset($minimal)){$minimal = false;}
     if(!isset($justright)){$justright = false;}
+    if(!isset($noclose)){$noclose = false;}
 ?>
 
 @if(!$justright)
@@ -21,6 +22,9 @@
             function showcheckout(){
                 showlogin();
             }
+            @if($noclose)
+                $(document).ready(function () {showlogin("document ready");});
+            @endif
         </SCRIPT>
         <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document">
@@ -37,7 +41,7 @@
                                 <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
                             </li>
                         </ul>
-                        <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button>
+                        @if(!$noclose) <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button> @endif
                     </div>
                     <div class="modal-body">
     @else
