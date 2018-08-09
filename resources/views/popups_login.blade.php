@@ -17,6 +17,11 @@
 
 @if(!$justright)
     @if($minimal)
+        <SCRIPT>
+            function showcheckout(){
+                showlogin();
+            }
+        </SCRIPT>
         <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
