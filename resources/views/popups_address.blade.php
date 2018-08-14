@@ -193,12 +193,12 @@
             });
         } else {
             confirm3("add_" + ID, "Are you sure you want to delete '" + $("#add_" + ID).text().trim() + "'?", 'Delete Address', function () {
-                $.post("<?= webroot("public/list/useraddresses"); ?>", {
+                $.post(webroot + "placeorder", {
                     _token: token,
-                    action: "deleteitem",
+                    action: "deleteaddress",
                     id: ID
                 }, function (result) {
-                    if (handleresult(result)) {
+                    if (handleresult(result, "toast")) {
                         toast("'" + $("#add_" + ID).text().trim() + "' deleted");
                         $("#add_" + ID).fadeOut(500, function () {
                             $("#add_" + ID).remove();
@@ -207,6 +207,11 @@
                             }
                         });
                         $(".saveaddresses option[value=" + ID + "]").remove();
+                        for(var index = 0; index < userdetails.Addresses.length; index++){
+                            if(userdetails.Addresses.id == ID){
+                                userdetails.Addresses.splice(index, 1);
+                            }
+                        }
                     }
                 });
             });

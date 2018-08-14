@@ -127,6 +127,14 @@ class HomeController extends Controller {
         if (isset($_POST["action"])) {
             $ret = array("Status" => true, "Reason" => "", "Type" => "System");
             switch ($_POST["action"]) {
+                case "deleteaddress":
+                    $user = first("SELECT user_id FROM useraddresses WHERE id = " . $_POST["id"])["user_id"];
+                    if($user == read("id")){
+                        deleterow("useraddresses", "id = " . $_POST["id"]);
+                    } else {
+                        $ret = array("Status" => false, "Reason" => "ACCESS DENIED", "Type" => "System");
+                    }
+                    break;
                 case "deletecard":
                     initStripe();
                     $user = first("SELECT * FROM users WHERE id = " . read("id"));

@@ -188,10 +188,12 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <SCRIPT>
     //https://stripe.com/docs/custom-form
+    var addaddress = '<option value="addaddress" id="addaddress">Add Address</option>';
+
     $(document).ready(function () {
         getcloseststore = true;
         visible_address(false);
-        $("#saveaddresses").append('<OPTION VALUE="addaddress" ID="addaddress">Add Address</OPTION>');
+        $("#saveaddresses").append(addaddress);
         $(".credit-info").change(function () {
             log(".credit-info change");
             creditcardstatus(false);

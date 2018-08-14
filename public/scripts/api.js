@@ -1091,15 +1091,25 @@ function removeorderitem(index, quantity) {
 
 //checks if the result is JSON, and processes the Status and Reasons
 function handleresult(result, title) {
+    var isToast = false;
+    if(!isUndefined(title)){isToast=title == "toast";}
     try {
         var data = JSON.parse(result);
         if (data["Status"] == "false" || !data["Status"]) {
-            alert(data["Reason"], title);
+            if(isToast){
+                toast(data["Reason"]);
+            } else {
+                alert(data["Reason"], title);
+            }
         } else {
             return true;
         }
     } catch (e) {
-        alert(result, title);
+        if(isToast){
+            toast(result);
+        } else {
+            alert(result, title);
+        }
     }
     return false;
 }
@@ -1266,25 +1276,7 @@ function placeorder(StripeResponse) {
                 $("#checkoutmodal").modal("hide");
                 handleresult(result, "ORDER RECEIPT");
                 if ($("#saveaddresses").val() == "addaddress") {
-                    var Address = {
-                        id: $(".ordersuccess").attr("addressid"),
-                        buzzcode: "",
-                        city: $("#add_city").val(),
-                        latitude: $("#add_latitude").val(),
-                        longitude: $("#add_longitude").val(),
-                        number: $("#add_number").val(),
-                        phone: userphonenumber(),
-                        postalcode: $("#add_postalcode").val(),
-                        province: $("#add_province").val(),
-                        street: $("#add_street").val(),
-                        unit: $("#add_unit").val(),
-                        user_id: $("#add_user_id").val()
-                    };
-                    if(IsAddressUnique(userdetails.Addresses, Address.id)) {
-                        userdetails.Addresses.push(Address);
-                        $("#addaddress").remove();
-                        $("#saveaddresses").append(AddressToOption(Address) + '<OPTION VALUE="addaddress" ID="addaddress">ADD ADDRESS</OPTION>');
-                    }
+                    ProcessNewAddress();
                 }
                 userdetails["Orders"].unshift({
                     id: $("#receipt_id").text(),
@@ -1299,6 +1291,28 @@ function placeorder(StripeResponse) {
         });
     } else {
         showlogin("placeorder");
+    }
+}
+
+function ProcessNewAddress(){
+    var Address = {
+        id: $(".ordersuccess").attr("addressid"),
+        buzzcode: "",
+        city: $("#add_city").val(),
+        latitude: $("#add_latitude").val(),
+        longitude: $("#add_longitude").val(),
+        number: $("#add_number").val(),
+        phone: userphonenumber(),
+        postalcode: $("#add_postalcode").val(),
+        province: $("#add_province").val(),
+        street: $("#add_street").val(),
+        unit: $("#add_unit").val(),
+        user_id: $("#add_user_id").val()
+    };
+    if(IsAddressUnique(userdetails.Addresses, Address.id)) {
+        userdetails.Addresses.push(Address);
+        $("#addaddress").remove();
+        $("#saveaddresses").append(AddressToOption(Address) + addaddress);
     }
 }
 
