@@ -1,7 +1,9 @@
 @extends('layouts_app')
 @section('content')
     <?php
-        $site_name = sitename;
+        //vardump($GLOBALS["app"]["config"]["database"]["constants"]);
+        //$admins = enumadmins(false); vardump($admins);
+
         $launchdate = "April 1, 2017";
         $datestamp = strtotime($launchdate);
         $SQLdate = date("Y-m-d", $datestamp);
@@ -15,7 +17,7 @@
         $units_donated = "Pizzas";
         //$donations = number_format((float)$orders * $donation_per_order, 0, '.', '');
         $donations = floor($orders * $donation_per_order);
-        $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
+        $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . sitename . '">info@trinoweb.ca</A>';
     ?>
     <STYLE>
         li > .title {
@@ -156,7 +158,7 @@
             <h3><?= getsetting("aboutus"); ?></h3>
             <div class="card-block text-white">
                 <p>
-                    <?= $site_name; ?> was founded with the simple belief that online food ordering doesn’t have to be so
+                    <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
                     complicated. We realize that restaurants are paying enormous commissions to existing online food
                     service providers. Ultimately, it’s YOU, the customer, who ends up paying the bills. We want to put
                     that money back where it belongs…in your pocket! Not only do we save you money, but we also use 100%
@@ -217,6 +219,8 @@
             }
 
             function newitem($Title, $Text, $Class = ""){
+                $Title = str_replace("[sitename]", sitename, $Title);
+                $Text = str_replace("[sitename]", sitename, $Text);
                 echo '<LI data-toggle="collapse" data-target="#' . newID() . '" ID="item_' . toclass($Title) . '">';
                 echo '<SPAN CLASS="title cursor-pointer ' . $Class . '">' . $Title . '</SPAN></LI>';
                 echo '<div id="' . lastID() . '" class="collapse">' . $Text . '</div>';
@@ -250,12 +254,12 @@
             newlist("General");
             newitem("Why can’t I order for pickup?", "We are committed to providing a premier end-to-end customer experience. In order to promote simplicity and ease-of-use, we only provide delivery service at this time. Please check our site regularly for updates on new service offerings.");
             newitem("Can I track my order once submitted?", "Once your order is submitted, it is accepted and confirmed by the choosen restaurant immediately. If there are any issues in preparing or delivering your order on time, we will contact you directly. Unfortunately, we do not currently have the ability to track the status of your order while it is being prepared and/or delivered.");
-            newitem("How do I know if the restaurant has accepted my order?", "All orders placed on HamiltonPizza.ca are instantly confirmed and accepted. You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order.");
+            newitem("How do I know if the restaurant has accepted my order?", "All orders placed on [sitename] are instantly confirmed and accepted. You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order.");
             newitem("What do I do if I need to make changes after submitting an order?", "You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order. Please contact the restaurant directly by phone should you wish to make any changes.");
-            newitem("I never received my order. Who do I contact?", "You may call our support line at Hamilton Pizza or call the restaurant for immediate assistance.");//Support line?
+            newitem("I never received my order. Who do I contact?", "You may call our support line at [sitename} or call the restaurant for immediate assistance.");//Support line?
             newitem("Why can’t I see certain items on the menu?", "Since we use a universal menu, certain items offered by particular restaurants may not be available through our service. Once you receive your order receipt via email, you may contact the restaurant directly should you wish to make any specific additions to your order.");
             newitem("Can I choose the restaurant that prepares my order?", "Yes, during check-out you have the ability to choose from any restaurant that is within your delivery range. By default, we choose the restaurant closest to your location to fulfill your order.");
-            newitem("Can I pay with cash or credit/debit once I receive my order?", "No. Unfortunately, all of our orders require pre-payment via debit/credit card. This allows us to instantly confirm and start preparing orders placed through Hamilton Pizza.");
+            newitem("Can I pay with cash or credit/debit once I receive my order?", "No. Unfortunately, all of our orders require pre-payment via debit/credit card. This allows us to instantly confirm and start preparing orders placed through [sitename].");
             newitem("Do you store my credit card information?", "We do not keep this information on our servers, but rather via our secure payment processing partner: Stripe. It is requested from Stripe when you sign in and stored on your browser, not our servers.");
 
             newlist("Your Account");
@@ -296,7 +300,7 @@
                 newitem("FILE NOT FOUND", "The order file is missing. Delete the order as the order itself is useless");
 
                 newlist("Communication Actions");
-                newitem("Editing actions", 'This can only done in <B><i class="fa fa-fw fa-user-plus"></i> Actions list</B>. This tells the system who to contact and how depending on specific events.<BR><SPAN class="reason">[reason]</SPAN> is replaced with the message entered by the restaurant<BR><SPAN class="reason">[name]</SPAN> is replaced with the name of the party<BR><SPAN class="reason">[url]</SPAN> with a link to the receipt that doesn&apos;t require logging in<BR><SPAN class="reason">[sitename]</SPAN> with &apos;' . $site_name . '&apos;<BR>and the [tags] must be lower-cased');
+                newitem("Editing actions", 'This can only done in <B><i class="fa fa-fw fa-user-plus"></i> Actions list</B>. This tells the system who to contact and how depending on specific events.<BR><SPAN class="reason">[reason]</SPAN> is replaced with the message entered by the restaurant<BR><SPAN class="reason">[name]</SPAN> is replaced with the name of the party<BR><SPAN class="reason">[url]</SPAN> with a link to the receipt that doesn&apos;t require logging in<BR><SPAN class="reason">[sitename]</SPAN> with &apos;' . sitename . '&apos;<BR>and the [tags] must be lower-cased');
                 actionitem("order_placed", "the order is placed");
                 actionitem("order_delivered", 'the <jump class="btn btn-sm btn-warning btn-border no-u">Delivered</jump> button is clicked');
                 actionitem("order_confirmed", 'the <jump class="btn btn-sm btn-primary btn-border no-u">Confirmed</jump> button is clicked');

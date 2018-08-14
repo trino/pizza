@@ -683,7 +683,7 @@ function addtip(value, removeit, removeall){
     }
     settip(tip, true);
     var HTML = '';
-    var tips = [5 , 3 , 1];
+    var tips = [1];//5 , 3 ,
     value = tip;
     for(var index = 0; index < tips.length; index++){
         var temptip = Math.floor(value / tips[index]);
@@ -693,14 +693,12 @@ function addtip(value, removeit, removeall){
             if(temptip > 1){
                 tempHTML += '<span class="item_qty" onclick="addtip(' + tips[index] + ', true, true);" title="Remove All">' + temptip + ' x&nbsp;</span> ';
             }
-            tempHTML += '<span class="mr-auto itemname">$' + tips[index] + ' Tip</span><span>$' + (tips[index] * temptip) + '.00</span>';
+            tempHTML += '<span class="mr-auto itemname cursor-pointer" ONCLICK="changetip();" >$' + tips[index] + ' Tip</span><span>$' + (tips[index] * temptip) + '.00</span>';
             tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ', true);"><i class="fa fa-minus"></i></button>';
             tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ');"><i class="fa fa-plus"></i> </button></div>';
             HTML += tempHTML;
         }
     }
-    //<div id="receipt_item_0" class="receipt_item"><span class="item_qty" onclick="removeall(1);" title="Remove All">5 x&nbsp;</span> <span class="mr-auto itemname">5 Lb Wings</span><span id="cost_0">$35.00</span><button class="bg-transparent " onclick="removeorderitem(0, 1);"><i class="fa fa-minus"></i></button><button class="bg-transparent" onclick="edititem(this, 0);"><i class="fa fa-plus"></i> </button></div>
-
     fadetext("#tipcontrols", HTML);
 }
 
@@ -861,7 +859,7 @@ function generatereceipt(forcefade) {
 
         var thetip = calculatetip(totalcost);
         var tipstyle = iif(thetip == 0, ' STYLE="display: none;"');
-        tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;</TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
+        //tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;</TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
         totalcost = totalcost + thetip;
 
         tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong" ID="thetotal"> $' + totalcost.toFixed(2) + '</TD></TR>';

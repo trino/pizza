@@ -92,6 +92,20 @@ function connectdb($database = false, $username = false, $password = false){
     return $con;
 }
 
+function enumadmins($TrueForEmailFalseForPhoneNumber, $CollapseIf1 = false, $Where = false){
+    if(is_string($TrueForEmailFalseForPhoneNumber)){
+        $Field = $TrueForEmailFalseForPhoneNumber;
+    } else if($TrueForEmailFalseForPhoneNumber){
+        $Field = "email";
+    } else {
+        $Field = "phone";
+    }
+    $data = Query("SELECT " . $Field . " FROM users WHERE profiletype = 1", true, "enumadmin's " . $Field . " " . $Where);
+    $data = collapsearray($data, $Field);
+    if($CollapseIf1 && count($data) == 1){return $data[0];}
+    return $data;
+}
+
 function needsphonenumber(){
     $always = false;//should be set to true, customers are really bad at keeping the phone number up to date
     if($always){return true;}

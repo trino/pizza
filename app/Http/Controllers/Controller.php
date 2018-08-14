@@ -10,12 +10,24 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function processadmin($data, $TrueForEmailFalseForPhoneNumber, $Where){
+        if(is_string($data) && $data == "admin") {
+            return enumadmins($TrueForEmailFalseForPhoneNumber, true, $Where);
+        }
+        return $data;
+    }
+
     //sends an email using a template
     public function sendEMail($template_name = "", $array = array()){
         if (isset($array["message"])) {
             $array["body"] = $array["message"];
             unset($array["message"]);
         }
+        if(!islive()){
+            $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
+            $array['email'] = "admin";
+        }
+        $array['email'] = $this->processadmin($array['email'], true, "Controller.SendEmail");
         if (isset($array['email']) && is_array($array['email'])) {
             $emails = $array['email'];
             foreach ($emails as $email) {
@@ -25,13 +37,6 @@ class Controller extends BaseController {
         } else if (isset($array['email']) && $array['email']) {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
-            }
-            if(!islive()){
-                $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
-                $array['email'] = "admin";
-            }
-            if ($array['email'] == "admin") {
-                $array['email'] = first("SELECT email FROM users WHERE profiletype = 1", true, "Controller.SendEmail")["email"];
             }
             try {
                 \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
@@ -73,7 +78,7 @@ class Controller extends BaseController {
         if ($this->isJson($data)) {
             $datatype = "json";
         }
-        $header = array('Content-type: application/' . $datatype, "User-Agent: Charlies");
+        $header = array('Content-type: application/' . $datatype, "User-Agent: " . sitename);
         if ($username && $password) {
             $header[] = "Authorization: Basic " . base64_encode($username . ":" . $password);
         } else if ($username) {
@@ -94,6 +99,7 @@ class Controller extends BaseController {
 
     //https://www.twilio.com/ $0.0075 per SMS, + $1 per month
     public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false){
+        $Phone = $this->processadmin($Phone, false, "Controller.sendSMS");
         if (is_array($Phone)) {
             foreach ($Phone as $PhoneNumber) {
                 $this->sendSMS($PhoneNumber, $Message, $Call);
@@ -101,11 +107,7 @@ class Controller extends BaseController {
             return true;
         }
         $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . $Phone . " - " . $Message;
-        if ($Phone == "admin") {
-            $Phone = first("SELECT phone FROM users WHERE profiletype = 1", true, "Controller.sendSMS");
-        } else {
-            $Phone = filternonnumeric($Phone);
-        }
+        $Phone = filternonnumeric($Phone);
         if (((islive() && ($Phone !== "9055123067")) || $force) && $Phone) {//never call me
             $sid = 'AC81b73bac3d9c483e856c9b2c8184a5cd';
             $token = "3fd30e06e99b5c9882610a033ec59cbd";

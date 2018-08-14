@@ -73,6 +73,22 @@
         function endwith($Text, $WithWhat){
             return strtolower(right($Text, strlen($WithWhat))) == strtolower($WithWhat);
         }
+
+        function maketip($tip, $cols = false){
+            if($cols) {echo '<DIV CLASS="col-md-4">';}
+            echo '<button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_tip" ONCLICK="addtip(' . $tip . ');">';
+            echo '<i class="fas fa-dollar-sign rounded-circle align-middle item-icon bg-warning sprite-tip sprite-medium"></i>
+                <span class="align-middle item-name">Tip</span>
+                <span class="ml-auto align-middle btn-sm-padding item-cost"> $' . $tip . '</span>
+            </button>';
+            if($cols) {echo '</DIV>';}
+        }
+
+        function makecategory(&$ID, $Name){
+            echo '<div class="text-danger strong list-group-item" ID="category_' . $ID . '">
+<h2 CLASS="pull-left align-middle h2-middle">' . $Name . '</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
+            $ID +=1;
+        }
     }
 
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
@@ -109,9 +125,7 @@
                 $CurrentCol += 1;
             }
             $itemsInCol += $menuitemcount;
-            echo '<div class="text-danger strong list-group-item" ID="category_' . $CurrentCat . '">
-<h2 CLASS="pull-left align-middle h2-middle">' . $category['category'] . '</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
-            $CurrentCat +=1;
+            makecategory($CurrentCat, $category['category']);
         ?>
         @foreach ($menuitems as $menuitem)
             <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
@@ -168,20 +182,22 @@
             <div class="col-lg-4 col-md-12 bg-white ismenu">
         @endif
     @endforeach
+
+    <?php
+        makecategory($CurrentCat, "Tips");
+        maketip(1);
+    ?>
 </div>
 
     <?php
+        /*
         echo '<DIV CLASS="row col-md-12 no-margin">';
         $tips = [1,3,5];
         foreach($tips as $tip){
-            echo '<DIV CLASS="col-md-4">';
-            echo '<button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_tip" ONCLICK="addtip(' . $tip . ');">';
-            echo '<i class="fas fa-dollar-sign rounded-circle align-middle item-icon bg-warning sprite-tip sprite-medium"></i>
-                <span class="align-middle item-name">Tip</span>
-                <span class="ml-auto align-middle btn-sm-padding item-cost"> $' . $tip . '</span>
-            </button></DIV>';
+            maketip($tip, 4);
         }
         echo '</DIV>';
+        */
     ?>
 
     </DIV>
