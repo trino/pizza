@@ -115,7 +115,7 @@
             <a style="color: white; text-decoration: none;" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
 
             <?php
-                if (!islive() || debugmode) {
+                if (debugmode) {
                     echo '<SPAN ID="debugbar" TITLE="This will not show on the live server">&emsp;IP: <B>' . $_SERVER['SERVER_ADDR'] . "</B> ROUTE: <B>" . $routename . '</B>';
                     $user = first("SELECT * FROM users WHERE profiletype = 1", true, "layouts_app");
                     $ispass = \Hash::check("admin", $user["password"]);
