@@ -85,14 +85,13 @@
                 value: formdata
             }, function (result) {
                 if (result) {
-                    var title = "Invalid data";
                     if (result == "Data saved") {
                         result = "Changes to your profile have been saved";
-                        title = "Success!";
                     }
                     if (result.contains("password mismatch")) {
                         validateselector("#reg_oldpassword", result, -1);
                     }
+                    toast(result);
                     return true;
                 }
             });

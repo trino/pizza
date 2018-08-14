@@ -609,8 +609,8 @@ function my_now($totime = false, $now = false){
     return date("Y-m-d H:i:s", $now);
 }
 
-//write text to royslog.txt
-function debugprint($text, $path = "royslog.txt", $DeleteFirst = false){
+//write text to error_log
+function debugprint($text, $path = "error_log", $DeleteFirst = false){
     $todaytime = date("Y-m-d") . " " . date("h:i:s a");
     $dashes = "----------------------------------------------------------------------------------------------\r\n";
     if (is_array($text)) {

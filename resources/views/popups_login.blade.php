@@ -19,13 +19,6 @@
 
 @if(!$justright)
     @if($minimal)
-        @if(!read("id"))
-            <SCRIPT>
-                @if($noclose)
-                    //$(document).ready(function () {showlogin("document ready");});
-                @endif
-            </SCRIPT>
-        @endif
         <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog large-modal-dialog" role="document">
                 <div class="modal-content large-modal-content">
@@ -86,6 +79,34 @@
                     <div class="input_right">
                         <INPUT TYPE="password" id="login_password" placeholder="Password" class="form-control" onkeydown="enterkey(event, 'login');" required>
                     </div>
+
+                    @if(debugmode)
+                    <div class="input_left_icon">
+                        <span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-user-secret text-white fa-stack-1x"></i></span>
+                    </div>
+                    <div class="input_right">
+                        <SELECT CLASS="form-control" TITLE="Only visible in debug mode, assumes password is 'admin'" ONCHANGE="selectuser(this);">
+                            <OPTION>User list</OPTION>
+                            <?php
+                                $users = Query("SELECT name, profiletype, email FROM users ORDER BY profiletype", true);
+                                $profiletype = -1;
+                                foreach($users as $user){
+                                    if($profiletype != $user["profiletype"]){
+                                        switch($user["profiletype"]){
+                                            case 0: $profiletype = "Users"; break;
+                                            case 1: $profiletype = "Admins"; break;
+                                            case 2: $profiletype = "Restaurants"; break;
+                                        }
+                                        echo '<OPTION DISABLED>' . $profiletype . '</OPTION>';
+                                        $profiletype = $user["profiletype"];
+                                    }
+                                    echo '<OPTION VALUE="' . $user["email"] . '">&nbsp;&nbsp;&nbsp;&nbsp;' . $user["name"] . '</OPTION>';
+                                }
+                            ?>
+                        </SELECT>
+                    </div>
+                    @endif
+
                     <div class="clearfix py-2"></div>
                     <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
                     <!--div class="clearfix py-2"></div>
@@ -97,7 +118,7 @@
             <div role="tabpanel" class="tab-pane fade" id="buzz">
                 <FORM id="addform">
                     <?php
-                        if (!read("id")) {
+                        if (!$minimal) {
                             echo view("popups_address", array("style" => 1, "required" => true, "icons" => true, "firefox" => false))->render();
                         }
                     ?>
@@ -206,8 +227,18 @@
     lockloading = true;
     blockerror = true;
 
+    function checkaddress(){
+        @if($minimal)
+            return true;
+        @endif
+        if(isvalidaddress()){
+            return true;
+        }
+        toast("Address is missing or invalid");
+    }
+
     function register() {
-        var addform2 = isvalidaddress();
+        var addform2 = checkaddress();
         if (addform2) {
             $("#reg_address-error").remove();
         } else if ($("#reg_address-error").length == 0) {
@@ -250,10 +281,12 @@
         $("form[name='regform']").validate({
             rules: {
                 name: "required",
-                formatted_address: {
-                    validaddress: true,
-                    required: true
-                },
+                @if(!$minimal)
+                    formatted_address: {
+                        validaddress: true,
+                        required: true
+                    },
+                @endif
                 email: {
                     required: true,
                     email: true,
@@ -287,29 +320,36 @@
                 }
             },
             submitHandler: function (form) {
-                if (isvalidaddress()) {
+                if (checkaddress()) {
                     var formdata = getform("#regform");
                     formdata["action"] = "registration";
                     formdata["_token"] = token;
-                    formdata["address"] = serializeaddress("#addform");
+                    formdata["address"] = "";
+                    var address = serializeaddress("#addform");
+                    if(address){formdata["address"] = address;}
                     skipunloadingscreen = true;
                     $.post(webroot + "auth/login", formdata, function (result) {
                         if (result) {
-                            try {
-                                @if(!islive())
-                                    if(formdata["name"] == "test") {
+                            result = JSON.parse(result);
+                            if(result.Status) {
+                                try {
+                                    @if(!islive())
+                                        if (formdata["name"] == "test") {
                                         formdata["email"] = "roy@trinoweb.com";
                                         formdata["password"] = "admin";
                                     }
-                                @endif
-                                $("#login_email").val(formdata["email"]);
-                                $("#login_password").val(formdata["password"]);
-                                redirectonlogin = true;
-                                handlelogin('login');
-                            } catch (e) {
-                                skipunloadingscreen = false;
-                                loading(false, "register");
-                                alert(result, "Registration Error");
+                                    @endif
+                                    $("#login_email").val(formdata["email"]);
+                                    $("#login_password").val(formdata["password"]);
+                                    redirectonlogin = true;
+                                    handlelogin('login');
+                                } catch (e) {
+                                    skipunloadingscreen = false;
+                                    loading(false, "register");
+                                    alert(result, "Registration Error");
+                                }
+                            } else {
+                                toast(result.Reason);
                             }
                         }
                     });
@@ -322,7 +362,21 @@
     });
     $(document).ready(function () {
         $("#profile").removeClass("fade").removeClass("in");
+        @if($minimal && $noclose)
+            CheckLoggedIn();
+        @endif
     });
+
+    function CheckLoggedIn(){
+        setTimeout(function(){
+            if(!userisloggedin()) {showlogin("document ready");}
+        }, 50);
+    }
+
+    function selectuser(element){
+        $("#login_email").val(element.value);
+        $("#login_password").val("admin");
+    }
 </SCRIPT>
 @endif
 <?php endfile("popups_login"); ?>

@@ -19,13 +19,10 @@ class Controller extends BaseController {
 
     //sends an email using a template
     public function sendEMail($template_name = "", $array = array()){
+        if(!$template_name){die("template_name not set");}
         if (isset($array["message"])) {
             $array["body"] = $array["message"];
             unset($array["message"]);
-        }
-        if(!islive()){
-            $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
-            $array['email'] = "admin";
         }
         $array['email'] = $this->processadmin($array['email'], true, "Controller.SendEmail");
         if (isset($array['email']) && is_array($array['email'])) {
@@ -34,6 +31,7 @@ class Controller extends BaseController {
                 $array["email"] = $email;
                 $this->sendEMail($template_name, $array);
             }
+            echo "send successfully";die();
         } else if (isset($array['email']) && $array['email']) {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";

@@ -138,10 +138,6 @@ includefile("public/scripts/api.js");
             theorder = JSON.parse(getCookie("theorder"));
         }
         generatereceipt();
-        @if(!read("id"))
-            //showlogin("document ready");
-        @endif
-
         $('[data-popup-close]').on('click', function (e) {
             var targeted_popup_class = jQuery(this).attr('data-popup-close');
             $('#' + targeted_popup_class).modal("hide");
@@ -317,7 +313,6 @@ includefile("public/scripts/api.js");
                         case "logout":
                             removeCookie();
                             logout();
-                            userdetails = false;
                             if (redirectonlogout) {
                                 skipunloadingscreen = true;
                                 reloadpage(true);
@@ -351,6 +346,8 @@ includefile("public/scripts/api.js");
         $(".loggedout").show();
         $(".clear_loggedout").html("");
         $(".profiletype").hide();
+        userdetails = false;
+        showlogin("logout");
     }
 
     var generalhours = <?= json_encode(gethours()) ?>;
@@ -643,13 +640,11 @@ includefile("public/scripts/api.js");
             reseturl("document ready");
         }
         <?php
-        if (read("id")) {
             if (islive()) {
                 echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live');";
             } else {
                 echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
             }
-        }
         ?>
         $("input").blur(function () {
             var ID = $(this).attr("id");
@@ -687,7 +682,6 @@ includefile("public/scripts/api.js");
     }
 
 
-    @if(read("id"))
     $(document).on("click", function () {
         if ($(".dropdown-menu").is(":visible")) {
             $(".dropdown-menu").hide();
@@ -788,10 +782,8 @@ includefile("public/scripts/api.js");
 
     @if(debugmode)
         window.onbeforeunload = function () {
-        return "Are you sure?";
-    };
-
-    @endif
+            return "Are you sure?";
+        };
     @endif
 
     function skiphash() {

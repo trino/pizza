@@ -57,9 +57,7 @@
                                     <div class="input_right">
                                         <div class="clear_loggedout addressdropdown proper-height" id="checkoutaddress"></div>
                                         <?php
-                                            if (read("id")) {
-                                                echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
-                                            }
+                                            echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
                                         ?>
                                         <div class="clearfix"></div>
                                         <DIV ID="error-saveaddresses"></DIV>
@@ -190,7 +188,6 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <SCRIPT>
     //https://stripe.com/docs/custom-form
-    @if(read("id"))
     $(document).ready(function () {
         getcloseststore = true;
         visible_address(false);
@@ -203,7 +200,6 @@
             }
         });
     });
-            @endif
 
     var shortitems = [];
 

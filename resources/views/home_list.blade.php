@@ -412,13 +412,13 @@
                 break;
 
             case "deletedebug"://delete the debug file
-                deletefile("royslog.txt");
+                deletefile("error_log");
                 break;
 
             case "checkdebug"://get datetime of debug log
                 $results["time"] = 0;
-                if (file_exists("royslog.txt")){
-                    $results["time"] = filemtime("royslog.txt");
+                if (file_exists("error_log")){
+                    $results["time"] = filemtime("error_log");
                 }
                 break;
 
@@ -825,9 +825,9 @@
                                         <PRE id="debuglogcontents"><?php
                                             $Contents = "";
                                             $filedate = 0;
-                                            if (file_exists("royslog.txt")){
-                                                $filedate = filemtime("royslog.txt");
-                                                $Contents = file_get_contents("royslog.txt");
+                                            if (file_exists("error_log")){
+                                                $filedate = filemtime("error_log");
+                                                $Contents = file_get_contents("error_log");
                                             }
                                             if(!$Contents) {$Contents = "The debug log is empty";}
                                             echo $Contents;

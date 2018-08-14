@@ -147,25 +147,26 @@ class AuthController extends Controller {
                         case "registration":
                             $RequireAuthorization = false;
                             $oldpassword = $_POST["password"];
-
                             $address = $_POST["address"];
-                            unset($address["formatted_address"]);
-                            unset($_POST["action"]);
-                            unset($_POST["_token"]);
-                            unset($_POST["address"]);
-                            $_POST["remember_token"] = "";
+                            $user = [
+                                "name" => $_POST["name"],
+                                "email" => $_POST["email"],
+                                "password" => \Hash::make($_POST["password"]),
+                                "created_at" => now(),
+                                "updated_at" => 0
+                            ];
                             if ($RequireAuthorization) {
-                                $_POST["authcode"] = $this->guidv4();
+                                $user["authcode"] = $this->guidv4();
                             }
-                            $_POST["created_at"] = now();
-                            $_POST["updated_at"] = 0;
-
-                            $_POST["password"] = \Hash::make($_POST["password"]);
-                            if(!islive() && strtolower($_POST["name"]) == "test"){
-                                $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1", true, "AuthController.login")["id"];
-                            } else {
-                                $address["user_id"] = insertdb("users", $_POST);
-                                insertdb("useraddresses", $address);
+                            $user["id"] = insertdb("users", $user);
+                            if(is_array($address)) {
+                                unset($address["formatted_address"]);
+                                if (!islive() && strtolower($_POST["name"]) == "test") {
+                                    $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1", true, "AuthController.login")["id"];
+                                } else {
+                                    $address["user_id"] = $user["id"];
+                                    insertdb("useraddresses", $address);
+                                }
                             }
 
                             $actions = actions("user_registered");//phone sms email

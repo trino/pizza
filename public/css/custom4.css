@@ -170,6 +170,10 @@ input, textarea {
     width: 0; /* remove scrollbar space */
 /*    background: transparent; /* optional: just make scrollbar invisible */
 /*}*/
+select option:disabled {
+    color: #000;
+    font-weight: bold;
+}
 
 /* optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {

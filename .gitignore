@@ -18,3 +18,4 @@ resources/views/error_log
 public/menucache.html
 royslog.txt
 *.html
+public/error_log

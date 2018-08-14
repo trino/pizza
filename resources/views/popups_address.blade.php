@@ -332,6 +332,8 @@
         var ret;
         if(isUndefined(asdata)){asdata = false;}
         if(asdata){
+            ret = $(asdata).html().trim().length;
+            if(ret == 0){return false;}
             ret = getform(asdata);
             ret["unit"] = ret["<?= $unitname; ?>"];
             delete ret["<?= $unitname; ?>"];

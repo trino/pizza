@@ -1231,9 +1231,9 @@ function last4(LongForm, includeExpiry){
         if(LongForm) {
             ret = card_types[card_type] + " x-" + card_number + " Expires: " + card_month + "/20" + card_year;
         } else if (includeExpiry){
-            ret = card_type + "" + card_number;
-        } else {
             ret = card_type + "" + card_number + "" + card_month + "" + card_year;
+        } else {
+            ret = card_type + "" + card_number;
         }
     }
     return ret.trim();

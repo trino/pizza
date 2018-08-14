@@ -43,16 +43,17 @@ class HomeController extends Controller {
         if (isset($_POST["action"])) {
             switch ($_POST["action"]) {
                 case "testemail":
-                    return $this->sendEMail("email_test", array(
+                    echo $this->sendEMail("email_test", array(
                         'mail_subject' => "test",
                         "email" => read("email")
                     ));
                     break;
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
-                case "testSMS": return $this->sendSMS(read("phone"), "This is a test SMS", false, true); break;
-                case "testCALL": return $this->sendSMS(read("phone"), "This is a test CALL", true, true); break;
-                case "testGATHER": return $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 1); break;
+                case "testSMS": echo $this->sendSMS(read("phone"), "This is a test SMS", false, true); break;
+                case "testCALL": echo $this->sendSMS(read("phone"), "This is a test CALL", true, true); break;
+                case "testGATHER": echo $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 1); break;
             }
+            return;
         }
         return view("home_list", array("table" => $table))->render();
     }
