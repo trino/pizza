@@ -314,7 +314,7 @@
         </TABLE>
 
     @if(isset($JSON))
-        <BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(' . $orderid . ', true);">LOAD ORDER</BUTTON>
+        <BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(<?= $orderid; ?>, true);">LOAD ORDER</BUTTON>
     @endif
     @if($includeextradata)
         <DIV CLASS="extrainfo">
