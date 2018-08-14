@@ -472,6 +472,15 @@ body.loading {
     margin-right: 0px;
 }
 
+.large-modal-dialog {
+    max-width: 70% !important;
+}
+.large-modal-content{
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
 .sub_item {
 }
 

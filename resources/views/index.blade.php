@@ -23,7 +23,7 @@
         if(!read("id") && !$minimal){
             echo view("popups_login")->render();
         } else {
-            if(!islive() || read("profiletype") == 1){
+            if(debugmode || read("profiletype") == 1){
                 echo view("popups_time")->render();
             }
             ?>

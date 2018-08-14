@@ -46,9 +46,11 @@
         <link href='<?= $css; ?>/Roboto-Slab.css' rel='stylesheet' type='text/css'-->
         <link rel="stylesheet" href="<?= $css; ?>/bootstrap.min.css">
         <?php
-            includefile("public/css/custom4.css");
-            includefile("public/css/sprite128.css");//128 pixel version of the sprite sheet
-            includefile("public/css/google.css");
+            $CSS = "public/css/";
+            includefile($CSS . "custom4.css");
+            includefile($CSS . "sprite128.css");//128 pixel version of the sprite sheet
+            includefile($CSS . "google.css");
+            includefile($CSS . "toast.css");
         ?>
         <script src="<?= $scripts; ?>/jquery.min.js"></script>
         <script src="<?= $scripts; ?>/tether.min.js"></script>
@@ -57,6 +59,7 @@
         @include("popups_alljs")
     </head>
     <body>
+        <div id="snackbar"></div>
         <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
         <div class="list-group-item container-fluid shadow bg-danger">
@@ -74,6 +77,7 @@
                         ?>
                         <li><A HREF="<?= webroot("editmenu", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Edit Menu</A></li>
                         <li><A HREF="<?= webroot("list/debug", true); ?>" CLASS="dropdown-item"><i class="fa fa-user-plus icon-width"></i> Debug log</A></li>
+                        <LI><A CLASS="dropdown-item" HREF="<?= webroot("map", true); ?>"><i class="fa fa-question-circle icon-width"></i> Map</A></LI>
                     </SPAN>
                     <SPAN class="loggedin">
                         <li id="profileinfo">
@@ -81,27 +85,21 @@
                             <i class="fa fa-user icon-width"></i> My Profile</A>
                         </li>
                         @if($routename != "help")
-                            <li class="profiletype_not profiletype_not2"><A class="dropdown-item" href="javascript:orders();"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
+                            <li class="profiletype_not profiletype_not2"><A CLASS="dropdown-item" HREF="javascript:orders();"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
                         @endif
                     </SPAN>
 
                 <SPAN class="loggedout">
-                    <LI><A CLASS="dropdown-item" href="javascript:showlogin();"><i class="fa fa-user icon-width"></i> Log In</A></LI>
+                    <LI><A CLASS="dropdown-item" HREF="javascript:showlogin();"><i class="fa fa-user icon-width"></i> Log In</A></LI>
                 </SPAN>
 
                 @if($routename == "help")
-                    <LI><A CLASS="dropdown-item" href="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-cart icon-width"></i> Menu</A></LI>
+                    <LI><A CLASS="dropdown-item" HREF="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-cart icon-width"></i> Menu</A></LI>
                 @else
-                    <LI><A CLASS="dropdown-item" href="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
+                    <LI><A CLASS="dropdown-item" HREF="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
                 @endif
 
-                @if(read("profiletype") == 1)
-                    <LI><A CLASS="dropdown-item" href="<?= webroot("map", true); ?>"><i class="fa fa-question-circle icon-width"></i> Map</A></LI>
-                @endif
-
-                @if(read("id"))
-                    <LI><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
-                @endif
+                <LI class="loggedin"><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
 
                 @if(false)
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("ourstory"); ?>"><?= makestring("{aboutus}"); ?></A></LI>

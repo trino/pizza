@@ -199,6 +199,7 @@
                     id: ID
                 }, function (result) {
                     if (handleresult(result)) {
+                        toast("'" + $("#add_" + ID).text().trim() + "' deleted");
                         $("#add_" + ID).fadeOut(500, function () {
                             $("#add_" + ID).remove();
                             if(!$("#addresses").html()){

@@ -14,23 +14,21 @@
     if(!isset($minimal)){$minimal = false;}
     if(!isset($justright)){$justright = false;}
     if(!isset($noclose)){$noclose = false;}
+    if(!isset($dohours)){$dohours = true;}
 ?>
 
 @if(!$justright)
     @if($minimal)
         @if(!read("id"))
-        <SCRIPT>
-            function showcheckout(){
-                showlogin();
-            }
-            @if($noclose)
-                $(document).ready(function () {showlogin("document ready");});
-            @endif
-        </SCRIPT>
+            <SCRIPT>
+                @if($noclose)
+                    //$(document).ready(function () {showlogin("document ready");});
+                @endif
+            </SCRIPT>
         @endif
         <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+            <div class="modal-dialog large-modal-dialog" role="document">
+                <div class="modal-content large-modal-content">
                     <div class="modal-header">
                         <ul class="nav nav-tabs mb-1" role="tablist">
                             <li class="nav-item">
@@ -46,26 +44,31 @@
                         @if(!$noclose) <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button> @endif
                     </div>
                     <div class="modal-body">
+                        <div class="row">
+                            <DIV CLASS="col-lg-6">
+                                <?= view("popups_login", array("justright" => true, "dohours" => false))->render(); ?>
+                            </DIV>
+                            <DIV CLASS="col-lg-6">
     @else
-    <div class="row">
-        <DIV CLASS="col-lg-4 col-md-5 bg-white">
+        <div class="row">
+            <DIV CLASS="col-lg-4 col-md-5 bg-white">
     @endif
 @endif
 
 @if(!$justright)
     <DIV CLASS="py-3 px-3">
         @if(!$minimal)
-        <ul class="nav nav-tabs mb-1" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
-            </li>
-            <A class="nav-link">
-                &nbsp;or&nbsp;
-            </A>
-            <li class="nav-item">
-                <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
-            </li>
-        </ul>
+            <ul class="nav nav-tabs mb-1" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
+                </li>
+                <A class="nav-link">
+                    &nbsp;or&nbsp;
+                </A>
+                <li class="nav-item">
+                    <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
+                </li>
+            </ul>
         @endif
         <!-- Tab panes -->
         <div class="tab-content">
@@ -125,29 +128,30 @@
 @endif
 
 @if($minimal)
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @else
     @if(!$justright)
-    </DIV>
-    <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
+        </DIV>
+        <div class="col-lg-8 col-md-7 py-3 bg-inverse padding-lr-15">
     @endif
 
-        <span class="bold bigtext"> <?= cityname ?>'s Premier Pizza Delivery Service</span><br><br>
+    <span class="bold bigtext"> <?= cityname ?>'s Premier Pizza Delivery Service</span><br><br>
 
-        <p class="pull-center">
-            <img style="max-width:100%;border:7px solid #eceeef!important" src="<?= webroot("images/ultimatecombo.png"); ?>" />
-        </p>
-        <p>We’ve partnered up with some of your favourite local pizza restaurants to bring you a one-stop online pizza shop. What makes us different? We offer the lowest prices in town and only use one menu – no more wasting time browsing through restaurants. Once you complete your order, we’ll immediately connect with our closest partner restaurant and start preparing your meal right away. Sounds pretty fast and easy right?
-        </p>
+    <p class="pull-center">
+        <img style="max-width:100%;border:7px solid #eceeef!important" src="<?= webroot("images/ultimatecombo.png"); ?>" />
+    </p>
+    <p>We’ve partnered up with some of your favourite local pizza restaurants to bring you a one-stop online pizza shop. What makes us different? We offer the lowest prices in town and only use one menu – no more wasting time browsing through restaurants. Once you complete your order, we’ll immediately connect with our closest partner restaurant and start preparing your meal right away. Sounds pretty fast and easy right?
+    </p>
 
-        <p>
-            Best of all, we are a 100% not-for-profit service. Every pizza ordered through our website helps us feed those in need within our local community. Join our movement by making an order today and feeding not just yourself, but someone else! Still not convinced? – Check out our <A HREF="<?= webroot("help"); ?>">FAQ</A> for more info.
-        </p>
+    <p>
+        Best of all, we are a 100% not-for-profit service. Every pizza ordered through our website helps us feed those in need within our local community. Join our movement by making an order today and feeding not just yourself, but someone else! Still not convinced? – Check out our <A HREF="<?= webroot("help"); ?>">FAQ</A> for more info.
+    </p>
 
-
+    @if($dohours)
         <div class="row">
             <div class="col-md-6 padleftright15">
                 <TABLE class="inline">
@@ -171,8 +175,6 @@
                 </TABLE>
             </div>
 
-
-
             <div class="col-md-6 padleftright15 dont-show">
                 <TABLE class="inline">
                     <TR>
@@ -187,11 +189,12 @@
                 </TABLE>
             </div>
         </div>
+    @endif
 
-        @if(!$justright)
-    </div>
-</div>
-        @endif
+    @if(!$justright)
+            </div>
+        </div>
+    @endif
 @endif
 
 

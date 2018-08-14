@@ -265,8 +265,8 @@ includefile("public/scripts/api.js");
             }
         }
         skipunloadingscreen = true;
-        var redirectonlogin = true;
-        var redirectonlogout = true;
+        var redirectonlogin = false;
+        var redirectonlogout = false;
         $.post(webroot + "auth/login", {
             action: action,
             _token: token,
@@ -306,6 +306,8 @@ includefile("public/scripts/api.js");
                             if (redirectonlogin) {
                                 skipunloadingscreen = true;
                                 reloadpage();
+                            } else {
+                                toast("Welcome back, " + userdetails["name"]);
                             }
                             break;
                         case "forgotpassword":
@@ -333,6 +335,7 @@ includefile("public/scripts/api.js");
                             if (!isUndefined(collapsecheckout)) {
                                 collapsecheckout();
                             }
+                            toast("You are logged out");
                             break;
                     }
                 }

@@ -1365,7 +1365,8 @@ function creditcards() {
 }
 
 function deletecard(Index, ID, last4, month, year) {
-    confirm3("card_" + Index, "Are you sure you want to delete the credit card:<br>x-" + last4.pad(4) + " Expiring on " + month + "/" + year + "?", 'Delete Credit Card', function () {
+    var cardname = $("#card_" + Index).text().trim(); "x-" + last4.pad(4) + " Expiring on " + month + "/" + year;
+    confirm3("card_" + Index, "Are you sure you want to delete the credit card:<br>" + cardname + "?", 'Delete Credit Card', function () {
         $.post(webroot + "placeorder", {
             _token: token,
             action: "deletecard",
@@ -1378,6 +1379,7 @@ function deletecard(Index, ID, last4, month, year) {
             if(!$("#cardlist").html()){
                 $("#cardlist").html(makestring("{nocreditcards}"));
             }
+            toast(cardname + " deleted");
         });
     });
 }
@@ -1604,6 +1606,13 @@ function ajaxerror(errortext, title){
     skipunloadingscreen=false;
     paydisabled=false;
     loading(false, "ajaxerror");
+}
+
+function toast(Text) {
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    x.innerHTML = Text;
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
 function rnd(min, max) {
@@ -1867,7 +1876,12 @@ function selectaddress(address){
     }
 }
 
+function userisloggedin(){
+    return userdetails.hasOwnProperty("id");
+}
+
 function showcheckout() {
+    if(!userisloggedin()){return showlogin();}
     $(getGoogleAddressSelector()).val("");
     //placeorderstate(false);
     var HTML = $("#checkoutaddress").html();

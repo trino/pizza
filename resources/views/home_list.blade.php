@@ -169,6 +169,8 @@
     $searchcols=false;
     $profiletype = read("profiletype");
     $actionlist = [];
+    $sort_col = false;
+    $sort_dir = "ASC";
     switch($table){
         case "all":case "debug"://system value
             $datafields=false;
@@ -200,7 +202,9 @@
             break;
         case "orders":
             $TableStyle=1;
-            $fields=array("id", "user_id", "price", "placed_at", "deliverytime", "status", "restaurant_id", "number", "unit", "street", "postalcode", "city", "province", "longitude", "latitude");
+            $fields=array("id", "user_id", "price", "placed_at", "deliverytime", "status", "restaurant_id", "number", "unit", "street", "postalcode", "city", "province", "longitude", "latitude", "attempts");
+            $sort_col = "id";
+            $sort_dir = "DESC";
             $specialformats=array("placed_at" => "date");
             $namefield="placed_at";
             $faicon = "dollar-sign";
@@ -951,7 +955,7 @@
                         ?>
                     };
 
-                    var sort_col = "", sort_dir = "";
+                    var sort_col = "<?= $sort_col; ?>", sort_dir = "<?= $sort_dir; ?>";
                     function sort(col, dir){
                         if(sort_col){
                             $(".selected-th").removeClass("selected-th");
