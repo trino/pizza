@@ -18,6 +18,7 @@
 
 @if(!$justright)
     @if($minimal)
+        @if(!read("id"))
         <SCRIPT>
             function showcheckout(){
                 showlogin();
@@ -26,6 +27,7 @@
                 $(document).ready(function () {showlogin("document ready");});
             @endif
         </SCRIPT>
+        @endif
         <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
