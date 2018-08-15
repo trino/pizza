@@ -38,7 +38,7 @@ setupconstants();
 $webroot = webroot();
 $Filename = base_path() . "/ai.sql";
 function webroot($file = "", $justroot = false){
-    $isSecure = true;//(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
+    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
     $webroot = $_SERVER["REQUEST_URI"];
     $start = strpos($webroot, "/", 1) + 1;
     $webroot = substr($webroot, 0, $start);
