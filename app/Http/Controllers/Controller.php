@@ -37,7 +37,6 @@ class Controller extends BaseController {
                 $array["email"] = $email;
                 $this->sendEMail($template_name, $array);
             }
-            echo "send successfully";die();
         } else if (isset($array['email']) && $array['email']) {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
@@ -45,7 +44,8 @@ class Controller extends BaseController {
             if((!islive() || debugmode)){
                 if(!$this->isadmin($array['email'])) {
                     $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
-                    $array['email'] = "admin";
+                    $array['email'] = $this->processadmin("admin", true, "Controller.SendEmail");;
+                    if(is_array($array['email'])){return $this->sendEMail($template_name, $array);}
                 }
             }
             try {

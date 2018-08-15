@@ -1273,7 +1273,6 @@ function placeorder(StripeResponse) {
             placeorderstate(false);
             paydisabled = false;
             if (result.contains("ordersuccess")) {
-                $("#checkoutmodal").modal("hide");
                 handleresult(result, "ORDER RECEIPT");
                 if ($("#saveaddresses").val() == "addaddress") {
                     ProcessNewAddress();
@@ -1283,6 +1282,7 @@ function placeorder(StripeResponse) {
                     placed_at: $("#receipt_placed_at").text()
                 });
                 clearorder();
+                $("#checkoutmodal").modal("hide");
             } else if(result.contains("[STRIPE]")) {
                 validateinput("#saved-credit-info", result.replace("[STRIPE]", ""));
             } else {
@@ -1314,6 +1314,7 @@ function ProcessNewAddress(){
         $("#addaddress").remove();
         $("#saveaddresses").append(AddressToOption(Address) + addaddress);
     }
+    return userdetails.Addresses;
 }
 
 function IsAddressUnique(Addresses, ID){
