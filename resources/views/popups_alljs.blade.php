@@ -248,6 +248,7 @@ includefile("public/scripts/api.js");
         }
     }
 
+    var firstsignin = false;
     function handlelogin(action) {
         if (isUndefined(action)) {
             action = "verify";
@@ -302,6 +303,9 @@ includefile("public/scripts/api.js");
                             if (redirectonlogin) {
                                 skipunloadingscreen = true;
                                 reloadpage();
+                            } else if(firstsignin) {
+                                toast("Welcome, " + userdetails["name"]);
+                                firstsignin = false;
                             } else {
                                 toast("Welcome back, " + userdetails["name"]);
                             }
@@ -410,6 +414,7 @@ includefile("public/scripts/api.js");
 
     function showlogin(){
         $("#loginmodal").modal("show");
+        suppressback = Date.now() + 200;
     }
 
     //handle a user login
@@ -759,7 +764,7 @@ includefile("public/scripts/api.js");
         if (window.location.hash.length > 0) {
             prevhash = window.location.hash;
         }
-        if (!skiphash()) {
+        if (!skiphash() && document.readyState === 'complete') {
             if (!HandleBack("hashchange: " + WHERE + " (" + window.location.hash + ")") && WHERE == "popstate") {
                 log("Back button allowed");
                 history.back();

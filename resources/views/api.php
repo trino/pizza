@@ -639,7 +639,7 @@ function orderpath($OrderID, $userid = false){
         $userid = $userid["user_id"];
         $dir = public_path("orders/user" . $userid);//no / at the end
         $newfilename = $dir . "/" . $OrderID . ".json";
-        //if (!is_dir($dir)) {mkdir($dir, 0777, true);}
+        if (!is_dir($dir)) {mkdir($dir, 0777, true);}
         return $newfilename;
     }
     return "";
@@ -805,12 +805,8 @@ function verbosedate($date){
     }
     $append = "";
     switch (date("G:i", $date)) {
-        case "0:00":
-            $append = " (Midnight)";
-            break;
-        case "12:00":
-            $append = " (Noon)";
-            break;
+        case  "0:00": $append = " (Midnight)"; break;
+        case "12:00": $append = " (Noon)"; break;
     }
     return date("l F j, Y @ g:i A", $date) . $append;
 }

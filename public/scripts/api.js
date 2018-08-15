@@ -2538,7 +2538,9 @@ function ismodalvisible(){
 }
 function CloseModal(Why){
     if(ismodalvisible()) {
-        log("Closing modal: " + Why);
+        var modalname = $(".modal:visible").attr("id");
+        log("Closing #" + modalname + " modal: " + Why);
+        if(modalname == "loginmodal"){return false;}
         $(".modal:visible").modal("hide");
         return true;
     }

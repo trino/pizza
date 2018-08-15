@@ -248,6 +248,7 @@
         var addform = validateform("#addform") && addform2;
         if(validateform('#regform') && addform) {
             loading(true, "register");
+            firstsignin = true;
             $('#regform').submit();
         }
     }
@@ -360,17 +361,16 @@
             onfocusout: false
         });
     });
+
+    @if($minimal && $noclose)
+          CheckLoggedIn();
+    @endif
     $(document).ready(function () {
         $("#profile").removeClass("fade").removeClass("in");
-        @if($minimal && $noclose)
-            CheckLoggedIn();
-        @endif
     });
 
     function CheckLoggedIn(){
-        setTimeout(function(){
-            if(!userisloggedin()) {showlogin("document ready");}
-        }, 50);
+        if(!userisloggedin() && !$('#loginmodal').is(':visible')) {showlogin("document ready");}
     }
 
     function selectuser(element){

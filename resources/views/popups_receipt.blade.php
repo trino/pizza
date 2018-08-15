@@ -127,9 +127,9 @@
             $card_types = [1 => "American Express", 2 => "Visa", 3 => "MasterCard"];
             $card_type = left($last4, 1);
             $card_number = mid($last4, 1, 4);
-            $card_month = mid($last4, 5, 2);
-            $card_year = right($last4, 2);
-            return $card_types[$card_type] . " x-" . $card_number . " Expires: " . $card_month . "/20" . $card_year;
+            //$card_month = mid($last4, 5, 2);
+            //$card_year = right($last4, 2);
+            return $card_types[$card_type] . " x-" . $card_number;// . " Expires: " . $card_month . "/20" . $card_year;
         }
     }
     //edit countdown timer duration

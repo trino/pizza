@@ -217,8 +217,12 @@ class HomeController extends Controller {
             if(isset($_POST["tip"]) && is_numeric($_POST["tip"])){$tip = $_POST["tip"];}
             $info["tip"] = $tip;
             $orderid = insertdb("orders", $info);
-            $dir = public_path("orders");//no / at the end (was in "user" . $info["user_id"])
-            //if (!is_dir($dir)) {mkdir($dir, 0777, true);}
+
+            $dir = public_path("orders");
+            if (!is_dir($dir)) {mkdir($dir, 0777);}
+
+            $dir = $dir . "/user" . $info["user_id"];//no / at the end (was in "user" . $info["user_id"])
+            if (!is_dir($dir)) {mkdir($dir, 0777);}
             $filename = $dir . "/" . $orderid . ".json";
             file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
             if(defined("username") && posix_geteuid() != fileowner($filename)){
