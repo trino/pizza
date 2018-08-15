@@ -218,26 +218,29 @@
         }
     }
 
-    function initAutocomplete() {
+    function initAutocomplete(ElementID, Action, AutoFix) {
+        if(isUndefined(ElementID)){ElementID = "formatted_address";}
+        if(isUndefined(Action)){
+            Action = function(){fillInAddress(ElementID);}
+        }
         var cityBounds = new google.maps.LatLngBounds(
                 //new google.maps.LatLng(42.873863, -81.501312), new google.maps.LatLng(43.043212, -81.092071)//southWest, northEast (LONDON ONTARIO)
                 new google.maps.LatLng(43.164135, -79.981296), new google.maps.LatLng(43.264183, -79.512758)//southWest, northEast (HAMILTON ONTARIO)
         );//city boundaries
 
-        formatted_address = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(document.getElementById('formatted_address')), {
+        var formatted_address = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById(ElementID)), {
                 bounds: cityBounds,//limit to a specific city
                 types: ['geocode'],
                 componentRestrictions: {country: "ca"}
         });
-        formatted_address.addListener('place_changed', fillInAddress);
-        autofix();
+        formatted_address.addListener('place_changed', Action);
+        if(!isUndefined(AutoFix)){autofix();}
+        return formatted_address;
     }
 
-    function fillInAddress() {
-        // Get the place details from the formatted_address object.
-        var place = formatted_address.getPlace();
-        log(JSON.stringify(place));
+    function formataddress(place, streetformat){
+        log("formataddress: " + JSON.stringify(place));
         var lat = place.geometry.location.lat();
         var lng = place.geometry.location.lng();
 
@@ -256,7 +259,7 @@
             postal_code: 'short_name'
         };
         //Example: 2396 Kingsway, locality: Vancouver, administrative_area_level_1: British Columbia, country: Canada, postal_code: V5R 5G9
-        var streetformat = "[street_number] [route], [locality], [administrative_area_level_1_s]";// [postal_code]";
+        if(isUndefined(streetformat)){streetformat = "[street_number] [route], [locality], [administrative_area_level_1_s]";}// [postal_code]";
         for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];
             if (componentForm[addressType]) {
@@ -264,13 +267,22 @@
                 addressdata[addressType] = val;
                 streetformat = streetformat.replace("[" + addressType + "]", val);
                 $('.' + addressType).val(val);
-
                 val = place.address_components[i]['short_name'];
                 streetformat = streetformat.replace("[" + addressType + "_s]", val);
                 val = place.address_components[i]['long_name'];
                 streetformat = streetformat.replace("[" + addressType + "_l]", val);
             }
         }
+        addressdata.streetformat = streetformat;
+        return addressdata;
+    }
+
+
+    function fillInAddress(ElementID) {
+        // Get the place details from the formatted_address object.
+        var place = formatted_address.getPlace();
+        var addressdata = formataddress(place);
+        var streetformat = addressdata.streetformat;
         if (isnewaddress(addressdata["street_number"], addressdata["route"], addressdata["locality"])) {
             $("#saveaddressbtn").removeAttr("disabled");
         } else {
@@ -358,7 +370,7 @@
             <SCRIPT LANGUAGE="JavaScript">
                 window.onload = function () {
                     log("init autocomplete");
-                    initAutocomplete();
+                    formatted_address = initAutocomplete();
                 };
             </SCRIPT>
         <?php

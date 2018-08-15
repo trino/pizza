@@ -1332,10 +1332,15 @@ function ProcessNewAddress(){
     };
     if(IsAddressUnique(userdetails.Addresses, Address.id)) {
         userdetails.Addresses.push(Address);
-        $("#addaddress").remove();
-        $("#saveaddresses").append(AddressToOption(Address) + addaddress);
+        $("#saveaddresses").append(AddressToOption(Address));
+        refreshAddAddress();
     }
     return userdetails.Addresses;
+}
+
+function refreshAddAddress(){
+    $("#addaddress").remove();
+    $("#saveaddresses").append('<option value="addaddress" id="addaddress">Add Address</option>');
 }
 
 function IsAddressUnique(Addresses, ID){
@@ -1935,6 +1940,7 @@ function showcheckout() {
     if(needscreditrefresh){changecredit(false, 'showcheckout2');}
     validateinput();
     selectaddress();
+    refreshAddAddress();
 }
 
 function clearvalidation(specificselector){

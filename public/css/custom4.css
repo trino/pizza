@@ -482,6 +482,10 @@ body.loading {
     margin-right: auto;
 }
 
+.address:focus{
+    z-index: 999;
+}
+
 .nowrap {
     white-space: nowrap;
 }

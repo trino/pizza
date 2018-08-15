@@ -120,7 +120,11 @@
             <div role="tabpanel" class="tab-pane fade" id="buzz">
                 <FORM id="addform">
                     <?php
-                        if (!$minimal) {
+                        if ($minimal) {
+                            echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-map-marker text-white fa-stack-1x"></i></span></div><div class="input_right">';
+                            echo view("popups_second_address", array("name" => "signupaddress", "unit" => true))->render();
+                            echo '</DIV>';
+                        } else {
                             echo view("popups_address", array("style" => 1, "required" => true, "icons" => true, "firefox" => false))->render();
                         }
                     ?>
@@ -328,7 +332,7 @@
                     formdata["action"] = "registration";
                     formdata["_token"] = token;
                     formdata["address"] = "";
-                    var address = serializeaddress("#addform");
+                    var address = getAddress("#gmap_signupaddress");//serializeaddress("#addform")
                     if(address){formdata["address"] = address;}
                     skipunloadingscreen = true;
                     $.post(webroot + "auth/login", formdata, function (result) {
@@ -378,6 +382,23 @@
     function selectuser(element){
         $("#login_email").val(element.value);
         $("#login_password").val("admin");
+    }
+
+    function getAddress(selector){
+        selector = $(selector);
+        var ret = {
+            number: selector.attr("address_street_number"),
+            unit: $("#signupaddress_unit").val(),
+            buzzcode: "",
+            street: selector.attr("address_route"),
+            postalcode: selector.attr("address_postal_code"),
+            city: selector.attr("address_locality"),
+            province: selector.attr("address_administrative_area_level_1"),
+            latitude: selector.attr("place_geometry_location_lat"),
+            longitude: selector.attr("place_geometry_location_lng")
+        };
+        log("Address: " + JSON.stringify(ret));
+        return ret;
     }
 </SCRIPT>
 @endif
