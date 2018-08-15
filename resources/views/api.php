@@ -38,7 +38,7 @@ setupconstants();
 $webroot = webroot();
 $Filename = base_path() . "/ai.sql";
 function webroot($file = "", $justroot = false){
-    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
+    $isSecure = true;//(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
     $webroot = $_SERVER["REQUEST_URI"];
     $start = strpos($webroot, "/", 1) + 1;
     $webroot = substr($webroot, 0, $start);
@@ -567,6 +567,7 @@ $con = connectdb();
 $settings = loadsettings();
 define("debugmode", $GLOBALS["settings"]["debugmode"]);
 
+/*
 if (isFileUpToDate("lastSQL", $Filename)) {
     $lastSQLupdate = getsetting("lastSQL", "0");
     $lastFILupdate = filemtime($Filename);
@@ -576,6 +577,7 @@ if (isFileUpToDate("lastSQL", $Filename)) {
     setsetting("lastSQL", $lastFILupdate);
     echo '<DIV CLASS="red">' . $lastSQLupdate . ' SQL was out of date, imported AI.sql on ' . $lastFILupdate . '</DIV>';
 }
+*/
 
 function read($Name){
     if (\Session::has('session_' . $Name)) {
