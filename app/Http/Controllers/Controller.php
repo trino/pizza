@@ -16,9 +16,11 @@ class Controller extends BaseController {
         }
         return $data;
     }
-    public function isadmin($email){
-        $emailaddresses = enumadmins(true);
-        return in_array($email, $emailaddresses);
+    public function isadmin($emailORphone){
+        $TrueForEmailFalseForPhoneNumber = !isvalidphone($emailORphone);
+        $emailaddresses = enumadmins($TrueForEmailFalseForPhoneNumber);
+        if(!$emailORphone){$emailORphone = filternonnumeric($emailORphone);}
+        return in_array($emailORphone, $emailaddresses);
     }
 
     //sends an email using a template
@@ -109,8 +111,8 @@ class Controller extends BaseController {
     public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false){
         $Phone = $this->processadmin($Phone, false, "Controller.sendSMS");
         if (is_array($Phone)) {
-            foreach ($Phone as $PhoneNumber) {
-                $this->sendSMS($PhoneNumber, $Message, $Call);
+            foreach ($Phone as $Index => $PhoneNumber) {
+                $this->sendSMS($PhoneNumber, str_replace("[index]", $Index, $Message), $Call);
             }
             return true;
         }
@@ -135,7 +137,11 @@ class Controller extends BaseController {
                 $Message = str_replace("http:", "https:", $Message);
                 $data = array("From" => $fromnumber, "To" => $Phone, "Body" => $Message);
             }
-            return $this->cURL($URL, http_build_query($data), $sid, $token);
+            $return = $this->cURL($URL, http_build_query($data), $sid, $token);
+            if($return){
+                if(debugmode){debugprint($ret . " - " . $return);}
+                return $return;
+            }
         }
         debugprint('ERROR - ' . $ret . " - Is not live/valid or is a blocked number, did not contact");
     }

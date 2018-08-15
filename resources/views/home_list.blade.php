@@ -1,6 +1,17 @@
 <?php
     use App\Http\Controllers\HomeController;//used for order "changestatus"
     startfile("home_list");
+
+    /*$_POST = [
+        "action" => "getpage",
+        "makenew" => false,
+        "sort_col" => false,
+        "sort_dir" => false,
+        "itemsperpage" => 25,
+        "page" => 0,
+        "test" => true
+    ];*/
+
     $RestaurantID= "";
     $extratitle = "";
     $secondword = "list";
@@ -169,8 +180,8 @@
     $searchcols=false;
     $profiletype = read("profiletype");
     $actionlist = [];
-    $sort_col = false;
-    $sort_dir = "ASC";
+    $sort_col = "";
+    $sort_dir = "";
     switch($table){
         case "all":case "debug"://system value
             $datafields=false;
@@ -560,6 +571,7 @@
                 $results["Status"] = false;
                 $results["Reason"] = "'" . $_POST["action"] . "' is unhandled \r\n" . print_r($_POST, true);
         }
+        if(isset($_POST["test"])){vardump($results);die();}
         echo str_replace(":null", ':""', json_encode($results));//must return something
         die();
     } else {
@@ -796,8 +808,12 @@
                                     @if($table == "debug")
                                         <A TITLE="Send a test email" class="hyperlink" id="testemail" href="javascript:testemail(0);"><i class="fa fa-envelope"></i></A>
                                         <A TITLE="Send a test SMS" class="hyperlink" id="testsms" href="javascript:testemail(1);"><i class="fa fa-phone"></i> SMS <?= read("phone"); ?></A>
+                                        <A TITLE="Send a test SMS" class="hyperlink" id="testsms" href="javascript:testemail(4);"><i class="fa fa-phone"></i> SMS admins</A>
                                         <A TITLE="Send a test CALL" class="hyperlink" id="testcall" href="javascript:testemail(2);"><i class="fa fa-phone"></i> Call <?= read("phone"); ?></A>
+                                        <A TITLE="Send a test CALL" class="hyperlink" id="testcall" href="javascript:testemail(5);"><i class="fa fa-phone"></i> Call admins</A>
                                         <A TITLE="Send a test GATHER" class="hyperlink" id="testcallinput" href="javascript:testemail(3);"><i class="fa fa-phone"></i> Gather <?= read("phone"); ?></A>
+
+
                                         <A TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="javascript:deletedebug();"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
@@ -1089,7 +1105,7 @@
                         if(index<0){index = currentpage;}
                         blockerror = true;
                         selecteditems = [];//clear selection
-                        $.post(currentURL, {
+                        var parameters = {
                             action: "getpage",
                             _token: token,
                             itemsperpage: itemsperpage,
@@ -1099,7 +1115,8 @@
                             search: $("#searchtext").val(),
                             sort_col: sort_col,
                             sort_dir: sort_dir
-                        }).done(function (result) {
+                        }
+                        $.post(currentURL, parameters).done(function (result) {
                             log("getpage: " + result);
                             try {
                                 var data = JSON.parse(result);
@@ -1423,7 +1440,11 @@
                                     });
                                 @endif
                             } catch (e){
-                                $("#body").html(e + " NON-JSON DETECTED: <BR>" + result);
+                                if(result){
+                                    $("#body").html("ERROR: " + e + "<BR>NON-JSON DETECTED: <BR>" + result);
+                                } else {
+                                    $("#body").html("ERROR: No data received from " + currentURL + "<BR>Parameters: " + JSON.stringify(parameters));
+                                }
                                 return false;
                             }
                         }).fail(function(xhr, status, error) {
@@ -1827,6 +1848,8 @@
                             case 1: name = "SMS"; break;
                             case 2: name = "CALL"; break;
                             case 3: name = "GATHER"; break;
+                            case 4: name = "SMSADMINS"; break;
+                            case 5: name = "CALLADMINS"; break;
                         }
                         $("#debuglogcontents").html("Sending " + name + ". Please standby");
                         $.post(currentURL, {

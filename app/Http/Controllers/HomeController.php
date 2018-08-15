@@ -41,6 +41,7 @@ class HomeController extends Controller {
 
     public function tablelist($table){
         if (isset($_POST["action"])) {
+            $ret = true;
             switch ($_POST["action"]) {
                 case "testemail":
                     echo $this->sendEMail("email_test", array(
@@ -50,10 +51,13 @@ class HomeController extends Controller {
                     break;
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)
                 case "testSMS": echo $this->sendSMS(read("phone"), "This is a test SMS", false, true); break;
+                case "testSMSADMINS": echo $this->sendSMS("admin", "This is test SMS [index] for all admins", false, true); break;
                 case "testCALL": echo $this->sendSMS(read("phone"), "This is a test CALL", true, true); break;
+                case "testCALLADMINS": echo $this->sendSMS("admin", "This is test CALL [index] for all admins", true, true); break;
                 case "testGATHER": echo $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 1); break;
+                default: $ret = false;
             }
-            return;
+            if($ret){return;}
         }
         return view("home_list", array("table" => $table))->render();
     }
