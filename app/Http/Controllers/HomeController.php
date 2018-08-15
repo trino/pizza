@@ -264,7 +264,7 @@ class HomeController extends Controller {
                             $failedat = "Create customer";
                             $customer = \Stripe\Customer::create(array(
                                 "source" => $info["stripeToken"],
-                                "description" => $user["name"] . ' (ID:' . $user["id"] . ')'
+                                "description" => $user["name"] . iif(debugmode, ' (ID:' . $user["id"] . ')')
                             ));
                             $customer_id = $customer["id"];
                             insertdb("users", array("id" => $user["id"], "stripecustid" => $customer_id));//attempt to update user profile

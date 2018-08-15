@@ -16,6 +16,10 @@ class Controller extends BaseController {
         }
         return $data;
     }
+    public function isadmin($email){
+        $emailaddresses = enumadmins(true);
+        return in_array($email, $emailaddresses);
+    }
 
     //sends an email using a template
     public function sendEMail($template_name = "", $array = array()){
@@ -35,6 +39,12 @@ class Controller extends BaseController {
         } else if (isset($array['email']) && $array['email']) {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
+            }
+            if((!islive() || debugmode)){
+                if(!$this->isadmin($array['email'])) {
+                    $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
+                    $array['email'] = "admin";
+                }
             }
             try {
                 \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
