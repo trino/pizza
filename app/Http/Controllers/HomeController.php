@@ -242,6 +242,7 @@ class HomeController extends Controller {
                 insertdb("users", array("id" => $info["user_id"], "name" => $_POST["name"], "phone" => $_POST["phone"]));//attempt to update user profile
             }
 
+            $chargeinfo = [];
             if(!isset($_POST["last4"])){$_POST["last4"] = "";}
             $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user", "last4" => $_POST["last4"]))->render();
             //if ($text) {return $text;} //shows email errors. Uncomment when email works
@@ -295,6 +296,8 @@ class HomeController extends Controller {
                         if($charge["outcome"]["type"] == "authorized") {
                             insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"], "last4" => $_POST["last4"]));//will only happen if the $charge succeeds
                             $this->order_placed($orderid, $info);
+                            $chargeinfo = $charge["source"];
+                            $chargeinfo['customer'] = $customer_id;
                             //die("Charged: " . $charge["source"]["id"]);
                         } else {
                             die($charge["outcome"]["type"]);
@@ -322,7 +325,7 @@ class HomeController extends Controller {
                     return "[STRIPE]" . $error;// The card has been declined
                 }
             }
-            return '<div CLASS="ordersuccess" addressid="' . $addressID . '"></div>' . $HTML;
+            return '<div CLASS="ordersuccess" addressid="' . $addressID . '" STYLE="display:none;">' . json_encode($chargeinfo) . '</div>' . $HTML;
         } else {
             return $addressID;
         }

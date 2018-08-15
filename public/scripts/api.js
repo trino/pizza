@@ -1212,9 +1212,9 @@ function isnewcard(){
     return $("#saved-credit-info").val() == "";
 }
 
+var credit_card_types = {1: "American Express", 2: "Visa", 3: "MasterCard"};
 function last4(LongForm, includeExpiry){
     var value = $("#saved-credit-info option:selected").val(), ret = "", endit = 0;
-    var card_types = {1: "American Express", 2: "Visa", 3: "MasterCard"};
     if(isUndefined(LongForm)){LongForm = false;}
     if(isUndefined(includeExpiry)){includeExpiry = true;}
     if(value){
@@ -1224,9 +1224,9 @@ function last4(LongForm, includeExpiry){
             ret = ret.left(endit);
         }
         if(!LongForm){
-            ret = ret.replace(card_types[1], 1);
-            ret = ret.replace(card_types[2], 2);
-            ret = ret.replace(card_types[3], 3);
+            ret = ret.replace(credit_card_types[1], 1);
+            ret = ret.replace(credit_card_types[2], 2);
+            ret = ret.replace(credit_card_types[3], 3);
             ret = ret.replace(' Expires: ', '');
             ret = ret.replace(' x-', '');
             ret = ret.replace("/20", '');
@@ -1239,7 +1239,7 @@ function last4(LongForm, includeExpiry){
         var card_month = $("select[data-stripe=exp_month]").val();
         var card_year = $("select[data-stripe=exp_year]").val();
         if(LongForm) {
-            ret = card_types[card_type] + " x-" + card_number + " Expires: " + card_month + "/20" + card_year;
+            ret = credit_card_types[card_type] + " x-" + card_number + " Expires: " + card_month + "/20" + card_year;
         } else if (includeExpiry){
             ret = card_type + "" + card_number + "" + card_month + "" + card_year;
         } else {
@@ -1277,6 +1277,10 @@ function placeorder(StripeResponse) {
                 if ($("#saveaddresses").val() == "addaddress") {
                     ProcessNewAddress();
                 }
+                if ($("#saved-credit-info").val() == "" ){
+                    ProcessNewCreditCard($(".ordersuccess").html());
+                }
+                if(!debugmode) {$(".ordersuccess").html("");}
                 userdetails["Orders"].unshift({
                     id: $("#receipt_id").text(),
                     placed_at: $("#receipt_placed_at").text()
@@ -1294,6 +1298,23 @@ function placeorder(StripeResponse) {
     }
 }
 
+function filternumeric(text){
+    return text.replace(/[^0-9\.]/g,'');
+}
+function filternonnumeric(text){
+    return text.replace(/\D/g,'');
+}
+
+function ProcessNewCreditCard(Card){
+    Card = JSON.parse(Card);
+    Card.AddedBy = "ProcessNewCreditCard";
+    if(userdetails.hasOwnProperty("Stripe")) {
+        userdetails.Stripe.push(Card);
+    } else {
+        userdetails.Stripe = [Card];
+    }
+    return Card;
+}
 function ProcessNewAddress(){
     var Address = {
         id: $(".ordersuccess").attr("addressid"),
@@ -1339,7 +1360,7 @@ $(window).on('shown.bs.modal', function () {
     switch (modalID) {
         case "profilemodal":
             $("#addresslist").html(addresses());
-            $("#cardlist").html(creditcards()); break;
+            $("#creditcardlist").html(creditcards()); break;
     }
     window.location.hash = "modal";
 });
@@ -1366,7 +1387,7 @@ function addresses() {
 }
 
 function creditcards() {
-    var HTML = '<DIV CLASS="se23ction"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
+    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
     if (!loadsavedcreditinfo()) {
         return HTML + makestring("{nocreditcards}");
     }
@@ -1391,7 +1412,7 @@ function deletecard(Index, ID, last4, month, year) {
                 $("#card_" + Index).remove();
             });
             removeindex(userdetails.Stripe, Index);//remove it from userdetails
-            if(!$("#cardlist").html()){
+            if(userdetails.Stripe.length == 0){
                 $("#cardlist").html(makestring("{nocreditcards}"));
             }
             toast(cardname + " deleted");
@@ -1728,12 +1749,6 @@ function stripeResponseHandler(status, response) {
                 ajaxerror(response.error.message);
             } else {
                 log("Stripe successful - token: " + response.id);
-                if (!changecredit(true, 'stripeResponseHandler')) {//save new card to userdetails
-                    if (!isArray(userdetails.Stripe)) {
-                        userdetails.Stripe = new Array();
-                    }//check to be sure
-                    userdetails.Stripe.push(getnewcard(response.id));
-                }
                 loading(false, "stripe");
                 placeorder(response.id);
             } break;
@@ -1742,24 +1757,6 @@ function stripeResponseHandler(status, response) {
         ajaxerror(response["error"]["message"]);
         loading(false, "stripe");
     }
-}
-
-function getnewcard(ID) {
-    var card_number = $("input[data-stripe=number]").val().replace(/\D/g, '');
-    var card_brand = "Unknown (" + card_number.left(1) + ")";
-    switch (card_number.left(1)) {
-        case "3": card_brand = "American Express"; break;
-        case "4": card_brand = "Visa"; break;
-        case "5": card_brand = "Master Card"; break;
-    }
-    return {
-        id: ID,
-        brand: card_brand,
-        last4: card_number.right(4),
-        exp_month: Number($("select[data-stripe=exp_month]").val()),
-        exp_year: "20" + $("select[data-stripe=exp_year]").val(),
-        cvc: $("input[data-stripe=cvc]").val()
-    };
 }
 
 var closest = false;

@@ -29,7 +29,7 @@
                 </div>
 
                 <div CLASS="editprofilediv">
-                    <DIV ID="cardlist"></DIV>
+                    <DIV ID="creditcardlist"></DIV>
                 </div>
 
                 <div class="alert alert-info mt-3 mb-0 font-size-85rem">
