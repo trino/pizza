@@ -20,20 +20,22 @@
 @if(!$justright)
     @if($minimal)
         <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog large-modal-dialog" role="document">
-                <div class="modal-content large-modal-content">
+            <div class="modal-dialog large-modal" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <ul class="nav nav-tabs mb-1" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
-                            </li>
-                            <A class="nav-link">
-                                &nbsp;or&nbsp;
-                            </A>
-                            <li class="nav-item">
-                                <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
-                            </li>
-                        </ul>
+                        <DIV CLASS="col-lg-6 offset-lg-6">
+                            <ul class="nav nav-tabs mb-1 row" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active bold" href="#profile" role="tab" data-toggle="tab" id="logintab" onclick="skiploadingscreen = false; ajaxerror();">Log in</a>
+                                </li>
+                                <A class="nav-link">
+                                    &nbsp;or&nbsp;
+                                </A>
+                                <li class="nav-item">
+                                    <a class="nav-link bold" href="#buzz" role="tab" data-toggle="tab" id="signuptab" onclick="skiploadingscreen = true; ajaxerror();">Sign up</a>
+                                </li>
+                            </ul>
+                        </DIV>
                         @if(!$noclose) <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i class="fa fa-times"></i></button> @endif
                     </div>
                     <div class="modal-body">

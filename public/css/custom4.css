@@ -476,16 +476,10 @@ body.loading {
     margin-right: 0px;
 }
 
-.large-modal-dialog {
+.large-modal {
     max-width: 70% !important;
-}
-.large-modal-content{
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.sub_item {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .nowrap {
