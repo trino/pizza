@@ -201,7 +201,7 @@
 
     @if($party != "private")
         <div class="alert alert-success text-center text-sm-center mb-4">
-            <h2>{{ $Delivery . $duration }}</h2>
+            {{ $Delivery . $duration }}
         </div>
     @endif
 
@@ -260,14 +260,9 @@
 
         <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
             <TR>
-                <TD WIDTH="49%" ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
+                <TD ID="custaddress" ONCLICK="addmarker('<?= $Order["name"] . "\'s Address', " . $Order["latitude"] . ", " . $Order["longitude"]; ?>, true);">
                     <?php
                         if($party != "private"){
-                            echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
-                            echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
-                            if($Order["unit"]){echo $Order["unit"]. '<BR>';}
-                            echo formatphone($Order["phone"]);
-                            $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
                             $Restaurant = first("SELECT * FROM restaurants WHERE id = " . $Order["restaurant_id"]);
                             if(isset($Restaurant["address_id"])){
                                 $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
@@ -289,11 +284,32 @@
                                     "longitude" => "0"
                                 ];
                             }
+
+                                echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
+
+                    echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "<br><br>" ;
+                        /*
+                        $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
+
+                */
+                            echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
+                                . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
+                                . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
+
+
+
+                            echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
+                            echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
+                            if($Order["unit"]){echo $Order["unit"]. '<BR>';}
+                            echo formatphone($Order["phone"]);
+                            $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
+
+
+
                         }
                     ?>
                 </TD>
-                <TD WIDTH="2%"></TD>
-                <TD WIDTH="49%" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
+                <!--TD WIDTH="49%" ID="restaddress" ONCLICK="addmarker('<?= $Restaurant["name"] . "\'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                     <h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order # <span ID="receipt_id"><?= $orderid; ?></span></h2>
                     <?php
                         echo $Restaurant["name"] . "<BR>" . $Raddress["number"] . " " . $Raddress["street"] . "<br>" .
@@ -302,7 +318,7 @@
                                 . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
                                 . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
                     ?>
-                </TD>
+                </TD-->
             </TR>
             <?php
                 if(isset($isinmodal)){

@@ -219,7 +219,7 @@
             <div class="list-group-item toppinglistitem">
                 <h2 class="text-normal" id="myModalLabel">
                     <SPAN ID="modal-itemname"></SPAN><br>
-                    <small ID="toppingcost" class="nowrap text-muted">$<SPAN id="modal-toppingcost"></SPAN> per topping</small>
+                    <small ID="toppingcost" class="nowrap">$<SPAN id="modal-toppingcost"></SPAN> per topping</small>
                 </h2>
                 <button data-dismiss="modal" class="btn align-middle ml-auto bg-transparent"><i class="fa fa-times"></i></button>
             </div>

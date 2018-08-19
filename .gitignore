@@ -21,3 +21,6 @@ royslog.txt
 public/error_log
 public/error_log
 *.php___jb_bak___
+ai.sql
+config/database.php
+config/mail.php

@@ -426,7 +426,7 @@ function loadmodal(element, notparent) {
         }
     }
     currentitemID = -1;
-    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline"><i class="fa fa-check mr-2"></i></div><div class="pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div></SPAN>';
+    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline"><i class="fa fa-shopping-cart"></i></div><div class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div></SPAN>';
     if (!isUndefined(notparent)) {
         $("#menumodal").modal("show");
         refreshremovebutton();
@@ -2365,7 +2365,7 @@ function list_addons(table, halves) {
             }
         }
 
-        HTML += '<button class="fourthwidth toppings_btn list-group-item-action bg-white" id="removeitemfromorder"><i class="fa fa-arrow-left removeitemarrow"></i></button>' +
+        HTML += '<button class="fourthwidth toppings_btn list-group-item-action bg-light" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>' +
             '<button class="btn-primary fourthwidth toppings_btn strong" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
 
         $("#addonlist").html(HTML);
