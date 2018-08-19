@@ -1,3 +1,4 @@
+
 :root {
     --min-height-global: 55px;
 }
@@ -357,8 +358,8 @@ h2 {
 }
 
 .bigtext {
-    font-size: 2.25rem;
-    line-height: 3.1rem;
+    font-size: 2rem;
+    line-height: 2rem;
 }
 
 .pull-center {
@@ -477,11 +478,7 @@ body.loading {
     margin-right: 0px;
 }
 
-.large-modal {
-    max-width: 70% !important;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 
 .address:focus{
     z-index: 999;
