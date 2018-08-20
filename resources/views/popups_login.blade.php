@@ -173,7 +173,7 @@ if (!isset($dohours)) {
                                                             <FORM id="addform">
                                                                 <?php
                                                                 if ($minimal) {
-                                                                    echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-map-marker text-white fa-stack-1x"></i></span></div><div class="input_right">';
+                                                                    echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-car text-white fa-stack-1x"></i></span></div><div class="input_right">';
                                                                     echo view("popups_second_address", array("name" => "signupaddress", "unit" => true))->render();
                                                                     echo '</DIV>';
                                                                 } else {
@@ -244,8 +244,9 @@ if (!isset($dohours)) {
 </div>
 
                     @if($dohours)
-                        <div class="row">
-                            <div class="col-md-6 ">
+                            <div class="col-md-12 ">
+                                <div class="py-3 px-3">
+
                                 <TABLE class="inline">
                                     <TR>
                                         <TD COLSPAN="3"><p class="lead strong">HOURS OF OPERATION</p></TD>
@@ -280,7 +281,8 @@ if (!isset($dohours)) {
                                     ?>
                                 </TABLE>
                             </div>
-                        </div>
+                            </div>
+
                     @endif
 
                     @if(!$justright)

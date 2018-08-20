@@ -804,20 +804,20 @@ includefile("public/scripts/api.js");
 <div class="modal z-index-9999" id="alertmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content ">
             <div class="modal-header">
                 <h2 id="alertmodallabel">Title</h2>
                 <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i
                             class="fa fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <div class="pull-center" id="exclame">
+                <!--div class="pull-center mb-1" id="exclame">
 
                     <span class="fa-stack fa-3x">
-                          <i class="text-muted fa fa-circle fa-stack-2x"></i>
+                          <i class="text-danger fa fa-circle fa-stack-2x"></i>
                           <i class="fa fa-exclamation text-white fa-stack-1x"></i>
                         </span>
-                </div>
+                <div-->
                 <DIV ID="alertmodalbody" class="py-1"></DIV>
                 <div CLASS="pull-center">
                     <button class="btn text-white alert-button" id="alert-cancel" data-dismiss="modal">
