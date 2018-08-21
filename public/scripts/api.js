@@ -65,11 +65,12 @@ String.prototype.mid = function (start, length) {
 
 String.prototype.GetBetween = function (startingtext, endingtext) {
     var target = this;
-    var start = target.indexOf(startingtext);
-    if(start == -1){return "";}
-    var endit = target.indexOf(endingtext, start);
-    if(endit == -1){return "";}
-    return target.substring(start+1, endit);
+    if(target.indexOf(startingtext) < 0 || target.indexOf(endingtext) < 0) return false;
+    var SP = target.indexOf(startingtext)+startingtext.length;
+    var string1 = target.substr(0,SP);
+    var string2 = target.substr(SP);
+    var TP = string1.length + string2.indexOf(endingtext);
+    return target.substring(SP,TP);
 };
 
 String.prototype.SetSlice = function (Start, End, ReplaceText) {
@@ -1273,12 +1274,8 @@ function placeorder(StripeResponse) {
             placeorderstate(false);
             paydisabled = false;
             if (result.contains("ordersuccess")) {
-                handleresult(result, "ORDER RECEIPT");
                 if ($("#saveaddresses").val() == "addaddress") {
-                    ProcessNewAddress();
-                }
-                if ($("#saved-credit-info").val() == "" ){
-                    ProcessNewCreditCard($(".ordersuccess").html());
+                    ProcessNewAddress(result);
                 }
                 if(!debugmode) {$(".ordersuccess").html("");}
                 userdetails["Orders"].unshift({
@@ -1287,6 +1284,10 @@ function placeorder(StripeResponse) {
                 });
                 clearorder();
                 $("#checkoutmodal").modal("hide");
+                handleresult(result, "ORDER RECEIPT");
+                if ($("#saved-credit-info").val() == ""){
+                    ProcessNewCreditCard($(".ordersuccess").html());
+                }
             } else if(result.contains("[STRIPE]")) {
                 validateinput("#saved-credit-info", result.replace("[STRIPE]", ""));
             } else {
@@ -1313,11 +1314,12 @@ function ProcessNewCreditCard(Card){
     } else {
         userdetails.Stripe = [Card];
     }
+    log("New card detected: " + JSON.stringify(Card));
     return Card;
 }
-function ProcessNewAddress(){
+function ProcessNewAddress(result){
     var Address = {
-        id: $(".ordersuccess").attr("addressid"),
+        id: result.GetBetween('addressid="', '"'),//$(".ordersuccess").attr("addressid"),
         buzzcode: "",
         city: $("#add_city").val(),
         latitude: $("#add_latitude").val(),
@@ -1334,6 +1336,9 @@ function ProcessNewAddress(){
         userdetails.Addresses.push(Address);
         $("#saveaddresses").append(AddressToOption(Address));
         refreshAddAddress();
+        log("New address detected: " + JSON.stringify(Address));
+    } else {
+        log("Duplicate address detected: " + JSON.stringify(Address));
     }
     return userdetails.Addresses;
 }
@@ -1714,6 +1719,7 @@ function placeorderstate(state){
 var paydisabled = false;
 function payfororder() {
     log("PAYFORORDER");
+    $('input').blur();
     ajaxerror();
     validateinput();
     if (!canplaceanorder(true, "payfororder")) {
@@ -2582,6 +2588,10 @@ function scrolltobottom() {
     function removeElement(element){element&&element.parentNode&&element.parentNode.removeChild(element);}
     return NProgress;});
 
+function isReady(){
+    return document.readyState === 'complete';
+}
+
 function loading(state, where) {
     if (state) {
         ajaxerror();
@@ -2592,7 +2602,6 @@ function loading(state, where) {
         NProgress.done();
     }
 }
-loading(true, "page");
 
 $.ajaxSetup({ xhr: function () {
     var xhr = new window.XMLHttpRequest();

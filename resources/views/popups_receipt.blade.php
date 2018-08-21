@@ -218,7 +218,8 @@
     @endif
 
     <?php
-        $dir = public_path("orders");/* "user" . $Order["user_id"]);*/
+        $dir = public_path("orders") . "/user" . $Order["user_id"];
+        if (!is_dir($dir)) {mkdir($dir, 0777);}
         $HTMLfilename = $dir . "/" . $orderid . "-" . $style . ".html";
         if(isset($Order["last4"]) && $Order["last4"]){$last4 = $Order["last4"];}
         if(file_exists($HTMLfilename)){

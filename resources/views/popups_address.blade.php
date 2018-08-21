@@ -76,6 +76,7 @@
     @if($form) </FORM> @endif
 
 <SCRIPT>
+    var formatted_address = "has not initialized";
     //if($firefox)
     /*  why is this commented out?
         if(is_firefox_for_android) {
@@ -208,7 +209,7 @@
                         });
                         $(".saveaddresses option[value=" + ID + "]").remove();
                         for(var index = 0; index < userdetails.Addresses.length; index++){
-                            if(userdetails.Addresses.id == ID){
+                            if(userdetails.Addresses[index].id == ID){
                                 userdetails.Addresses.splice(index, 1);
                             }
                         }
@@ -219,24 +220,24 @@
     }
 
     function initAutocomplete(ElementID, Action, AutoFix) {
-        if(isUndefined(ElementID)){ElementID = "formatted_address";}
-        if(isUndefined(Action)){
-            Action = function(){fillInAddress(ElementID);}
-        }
+        var needstoset = false;
+        if(isUndefined(ElementID)){ElementID = "formatted_address"; needstoset = true;}
+        if(isUndefined(Action)){Action = function(){fillInAddress(ElementID);}}
         var cityBounds = new google.maps.LatLngBounds(
                 //new google.maps.LatLng(42.873863, -81.501312), new google.maps.LatLng(43.043212, -81.092071)//southWest, northEast (LONDON ONTARIO)
                 new google.maps.LatLng(43.164135, -79.981296), new google.maps.LatLng(43.264183, -79.512758)//southWest, northEast (HAMILTON ONTARIO)
         );//city boundaries
 
-        var formatted_address = new google.maps.places.Autocomplete(
+        var addressbar = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(document.getElementById(ElementID)), {
                 bounds: cityBounds,//limit to a specific city
                 types: ['geocode'],
                 componentRestrictions: {country: "ca"}
         });
-        formatted_address.addListener('place_changed', Action);
+        addressbar.addListener('place_changed', Action);
         if(!isUndefined(AutoFix)){autofix();}
-        return formatted_address;
+        if(needstoset){formatted_address = addressbar;};
+        return addressbar;
     }
 
     function formataddress(place, streetformat){
