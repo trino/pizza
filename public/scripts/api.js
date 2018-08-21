@@ -881,6 +881,11 @@ function generatereceipt(forcefade) {
     if (fadein || forcefade) {
         fadeinall(fadein, fadein2);
     }
+    if($(".circlebutton").hasClass("dont-show")){
+        setTimeout(function(){
+            $(".circlebutton").removeClass("dont-show").hide().fadeIn(fade_speed);
+        }, fade_speed);
+    }
 }
 
 function fadeinall(fadein, fadein2, doit){
@@ -1719,7 +1724,6 @@ function placeorderstate(state){
 var paydisabled = false;
 function payfororder() {
     log("PAYFORORDER");
-    $('input').blur();
     ajaxerror();
     validateinput();
     if (!canplaceanorder(true, "payfororder")) {
@@ -1731,6 +1735,7 @@ function payfororder() {
     var $form = $('#orderinfo');
     var stripetoken = changecredit(true, 'payfororder');
     log("Attempt to pay: " + stripetoken);
+    $('input').blur();
     if (isnewcard()) {
         log("Stripe data");
         loading(true, "stripe");
