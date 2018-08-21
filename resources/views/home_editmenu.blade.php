@@ -439,6 +439,7 @@
                         HTML += makeinput2(cols, table_name, data, "Calories", "calories", "text", "for 2 items, separate with a / (ie: 200/400). For more items, use a - (ie: 200-400)");
                         HTML += makeinput2(cols, table_name, data, "Allergens", "allergens", "allergens");
                         HTML += makeinput2(cols, table_name, data, "Enabled", "enabled", "checkbox", "Will it show in the menu?");
+                        HTML += makeinput2(cols, table_name, data, "Has Tax", "hastax", "checkbox", "Will it have tax?");
                         break;
                     default:
                         HTML = table_name + " is unhandled";

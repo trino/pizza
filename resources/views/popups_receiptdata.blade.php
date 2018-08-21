@@ -92,6 +92,10 @@ if (!function_exists("findkey")) {
             return $count . "x ";
         }
     }
+
+    function hastax($item, $notaxlist){
+        return !in_array($item, $notaxlist);
+    }
 }
 
 //check all data again, do not trust the prices from the user!!
@@ -108,6 +112,7 @@ foreach($tables["additional_toppings"] as $key => $value){
         $GLOBALS["discounts"][$value["size"]] = $value["price"];
     }
 }
+$notaxlist = flattenarray(Query("SELECT id FROM menu WHERE hastax = '0' AND enabled = '1' ORDER BY id asc", true, "popups_receiptdata"), "id");
 
 if (file_exists($filename)) {
     $filename = file_get_contents($filename);
@@ -132,6 +137,7 @@ if (file_exists($filename)) {
 
         //convert the JSON into an HTML receipt, using only item/addon IDs, reobtaining cost/names from the database for security
         $subtotal = 0;
+        $subtotal_notax = 0;
 
         if(!is_array($items)){
             $items =  (array) $items;
@@ -283,14 +289,19 @@ if (file_exists($filename)) {
                     if ($style == 2 && $HTML) {
                         echo '<TR><TD COLSPAN="' . $colspan . '">' . $HTML . '</TD></TR>';
                     }
-                    $subtotal += $itemtotal;
+
+                    if(hastax($item->itemid, $notaxlist)){
+                        $subtotal += $itemtotal;
+                    } else {
+                        $subtotal_notax += $itemtotal;
+                    }
                 }
             }
         }
 
         $tax_percent = 0.13;
         $colspanminus1 = $colspan - 1;
-        echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($subtotal, 2) . '</TD></TR>';
+        echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($subtotal + $subtotal_notax, 2) . '</TD></TR>';
         $discountpercent = getdiscount($subtotal);
         if($discountpercent > 0){
             $discount = number_format($discountpercent * 0.01 * $subtotal, 2);
@@ -298,7 +309,7 @@ if (file_exists($filename)) {
             $subtotal = $subtotal - $discount;
         }
         $tax = ($subtotal + $deliveryfee) * $tax_percent;
-        $total = $subtotal + $deliveryfee + $tax;
+        $total = $subtotal + $subtotal_notax + $deliveryfee + $tax;
         if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($tax, 2) . '</TD></TR>';
         if($Order["tip"] > 0){
@@ -307,7 +318,7 @@ if (file_exists($filename)) {
         }
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">' . $Bold . 'Total &nbsp;</SPAN></TD><TD ALIGN="RIGHT">' . $Bold . ' $' . number_format($total, 2) . '</SPAN></TD></TR>';
 
-        echo '<TR><TD COLSPAN="' . $colspan . '"  ALIGN="RIGHT">(LAST4)</TD></TR>';
+        echo '<TR><TD COLSPAN="' . abs($colspan) . '"  ALIGN="RIGHT">(LAST4)</TD></TR>';
 
         //if($party != "private"){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">&nbsp;</TD><TD ALIGN="RIGHT"><span>Paid</span></TD></TR>';}
         insertdb("orders", array("id" => $orderid, "price" => $total));//saved for stripe

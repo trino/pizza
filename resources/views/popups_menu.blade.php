@@ -101,6 +101,7 @@
     $groups = array();
     $toppings_display = getaddons("toppings", $isfree, $qualifiers, $addons, $groups);
     $wings_display = getaddons("wings_sauce", $isfree, $qualifiers, $addons, $groups);
+    $notaxes = flattenarray(Query("SELECT id FROM menu WHERE hastax = '0' AND enabled = '1' ORDER BY id asc", true, "popups_menu.getaddons"), "id");
 
     $tables = array("toppings", "wings_sauce");
     $totalmenuitems = countSQL("menu");
@@ -184,8 +185,8 @@
     @endforeach
 
     <?php
-        makecategory($CurrentCat, "Tips");
-        maketip(1);
+        //makecategory($CurrentCat, "Tips");
+        //maketip(1);
     ?>
 </div>
 
@@ -242,6 +243,7 @@
     var minimumfee = <?= $minimum; ?>;
     var classlist = <?= json_encode($classlist); ?>;
     var ordinals = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"];
+    var notaxes = <?= json_encode($notaxes); ?>;
 
     $(".hoveritem").hover(
         function(e){

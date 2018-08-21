@@ -703,13 +703,18 @@ function addtip(value, removeit, removeall){
     fadetext("#tipcontrols", HTML);
 }
 
+
+function hastax(item){
+    return notaxes.indexOf(item["itemid"]) == -1;
+}
+
 //convert the order to an HTML receipt
 function generatereceipt(forcefade) {
     if ($("#myorder").length == 0) {
         log("ABORT");
         return false;
     }
-    var HTML = '<div class="clearfix"></div>', tempHTML = "", subtotal = 0, fadein = false, oldvalues = "", fadein2 = false;
+    var HTML = '<div class="clearfix"></div>', tempHTML = "", subtotal = 0, fadein = false, oldvalues = "", fadein2 = false, subtotal_notax = 0;
     if (isUndefined(forcefade)) {
         forcefade = false;
     }
@@ -755,7 +760,12 @@ function generatereceipt(forcefade) {
                     //fadein2 = "#subitem_" + itemid
                 }
             }
-            subtotal += Number(totalcost);
+
+            if(hastax(item)) {
+                subtotal += Number(totalcost);
+            } else {
+                subtotal_notax += Number(totalcost);
+            }
 
             if (sprite == "sides") {
                 sprite = toclassname(item["itemname"].trim()).replaceAll("_", "-");
@@ -828,7 +838,7 @@ function generatereceipt(forcefade) {
     var discount = (discountpercent * 0.01 * subtotal).toFixed(2);
 
     var taxes = (subtotal + deliveryfee - discount) * 0.13;//ontario only
-    totalcost = subtotal - discount + deliveryfee + taxes;
+    totalcost = subtotal + subtotal_notax - discount + deliveryfee + taxes;
 
     visible("#checkout", userdetails);
     createCookieValue("theorder", JSON.stringify(theorder));
@@ -851,17 +861,17 @@ function generatereceipt(forcefade) {
         if (fadein || forcefade) {
             tempHTML += 'style="display:none;"';
         }
-        tempHTML += '><div><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + subtotal.toFixed(2) + '</TD></TR>';
+        tempHTML += '><div><TABLE><TR><TD>Sub-total &nbsp;</TD><TD> $' + (subtotal+subtotal_notax).toFixed(2) + '</TD></TR>';
         if(discount>0){
             tempHTML += '<TR><TD>Discount (' + discountpercent + '%) &nbsp;</TD><TD> $' + discount + '</TD></TR>';
         }
         if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery &nbsp;</TD><TD> $' + deliveryfee.toFixed(2) + '</TD></TR>';}
         tempHTML += '<TR><TD>Tax &nbsp;</TD><TD> $' + taxes.toFixed(2) + '</TD></TR>';
 
-        var thetip = calculatetip(totalcost);
-        var tipstyle = iif(thetip == 0, ' STYLE="display: none;"');
+        //var thetip = calculatetip(totalcost);
+        //var tipstyle = iif(thetip == 0, ' STYLE="display: none;"');
         //tempHTML += '<TR ID="tiprow"' + tipstyle + '><TD>Tip &nbsp;</TD><TD><BUTTON ONCLICK="changetip();" ID="thetip" CLASS="btn btn-sm btn-secondary">$ ' + thetip.toFixed(2) + '</BUTTON></TD></TR>';
-        totalcost = totalcost + thetip;
+        //totalcost = totalcost + thetip;
 
         tempHTML += '<TR><TD class="strong">Total &nbsp;</TD><TD class="strong" ID="thetotal"> $' + totalcost.toFixed(2) + '</TD></TR>';
         tempHTML += '</TABLE><div class="clearfix py-2"></div></DIV></DIV>';
