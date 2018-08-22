@@ -12,7 +12,7 @@
 	function env($key, $value){
 		return $value;
 	}
-	
+
 	function database_path($value){
 		return "";
 	}

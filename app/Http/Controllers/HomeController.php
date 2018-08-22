@@ -404,7 +404,7 @@ class HomeController extends Controller {
                 }
                 if($gather){
                     //$orders = first("SELECT count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3")["count"];
-                    $orders = collapsearray(query("SELECT users.name FROM orders RIGHT JOIN users ON users.id = orders.user_id WHERE stripeToken <> '' AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3"), "name");
+                    $orders = collapsearray(query("SELECT users.name FROM orders RIGHT JOIN users ON users.id = orders.user_id WHERE stripeToken <> '' AND paid = 1 AND status = 0 AND restaurant_id = " . $info["restaurant_id"], true, "HomeController.order_placed3"), "name");
                     if(!$restaurant){$restaurant = $this->processrestaurant($info["restaurant_id"]);}
                     $action["message"] = str_replace("[#]", count($orders), $action["message"]);
                     $action["message"] = str_replace("[from]", implode2(", ", " and ", $orders), $action["message"]);
