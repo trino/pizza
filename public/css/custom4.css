@@ -533,6 +533,35 @@ body.loading {
     */
 }
 
+@media screen and (min-width: 991px) {
+    .modal-blue {
+        background: linear-gradient(
+                to right,
+                #007BFF 0%,
+                #007BFF 50%,
+                #FFFFFF 50%,
+                #FFFFFF 100%
+        );
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .modal-blue-content {
+        margin-left: -1px !important;
+    }
+
+    .modal-blue-div{
+        position: absolute;
+        left: 100%;
+        width: 2px;
+        bottom: 0px;
+        top: 0px;
+        background-color: #007BFF;
+    }
+}
+
+a.link-white, a.link-white:hover, a.link-white:active, a.link-white:visited { color: white; }
+
 .halfwidth {
     width: 50%;
     float: left !important;

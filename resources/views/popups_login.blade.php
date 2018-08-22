@@ -43,10 +43,11 @@
                             <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle"><i
                                         class="fa fa-times"></i></button> @endif
                     </div-->
-                    <div class="modal-body">
+                    <div class="modal-body modal-blue">
                         <div class="row">
-                            <DIV CLASS="col-lg-6">
+                            <DIV CLASS="col-lg-6 bg-primary text-white modal-blue-content">
                                 <?= view("popups_login", array("justright" => true, "dohours" => false))->render(); ?>
+                                <DIV CLASS="modal-blue-div"></DIV>
                             </DIV>
                             <DIV CLASS="col-lg-6">
     @else
@@ -205,7 +206,7 @@
             Best of all, we are a 100% not-for-profit service. Every pizza ordered through our website helps
             us feed those in need within our local community. Join our movement by making an order today and
             feeding not just yourself, but someone else! Still not convinced? – Check out our
-            <A HREF="<?= webroot("help"); ?>">FAQ</A> for more info.
+            <A HREF="<?= webroot("help"); ?>" CLASS="link-white">FAQ</A> for more info.
         </p>
     </div>
 

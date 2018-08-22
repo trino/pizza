@@ -3,7 +3,7 @@
     if(isset($body)){
         echo $body;
     }
-?>
+?><BR>
 -
 <br>Thank you,
 <br>The <?= sitename; ?> Team

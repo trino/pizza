@@ -10,6 +10,7 @@
     if (isset($autored))                {$required .= ' autored="' . $autored . '"';}
     if(!isset($title))                  {$title = "Address";}
     if(isset($address))                 {$GLOBALS["address"] = $address;}
+    if(isset($unsetaddress))            {unset($GLOBALS["address"]);}
 
     function address($key){
         if(isset($GLOBALS["address"][$key])){

@@ -125,6 +125,7 @@ class AuthController extends Controller {
                             if (strtolower($email) == "roy@trinoweb.com") {
                                 $ret["Reason"] = "I refuse to reset this account";
                             } else {
+                                $user["alldata"] = $user;
                                 $text = $this->sendEMail("email_forgotpassword", $user);
                                 if ($text) {//email failed to send
                                     $ret["Reason"] = $text;

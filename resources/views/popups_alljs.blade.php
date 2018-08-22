@@ -210,7 +210,8 @@ includefile("public/scripts/api.js");
                 _token: token,
                 action: "getreceipt",
                 orderid: ID,
-                JSON: getJSON
+                JSON: getJSON,
+                party: "private"
             }, function (result) {
                 if (getJSON) {
                     //JSON recieved, put it in the order
