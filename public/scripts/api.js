@@ -1289,6 +1289,7 @@ function placeorder(StripeResponse) {
             placeorderstate(false);
             paydisabled = false;
             if (result.contains("ordersuccess")) {
+                var creditinfoval = $("#saved-credit-info").val();
                 if ($("#saveaddresses").val() == "addaddress") {
                     ProcessNewAddress(result);
                 }
@@ -1303,7 +1304,7 @@ function placeorder(StripeResponse) {
                 clearorder();
                 $("#checkoutmodal").modal("hide");
                 handleresult(result, "ORDER RECEIPT");
-                if ($("#saved-credit-info").val() == ""){
+                if (creditinfoval == ""){
                     ProcessNewCreditCard($(".ordersuccess").html());
                 }
             } else if(result.contains("[STRIPE]")) {
@@ -1331,6 +1332,9 @@ function ProcessNewCreditCard(Card){
         userdetails.Stripe.push(Card);
     } else {
         userdetails.Stripe = [Card];
+    }
+    if(!userdetails.stripecustid){
+        userdetails.stripecustid = Card.customer;
     }
     log("New card detected: " + JSON.stringify(Card));
     return Card;
