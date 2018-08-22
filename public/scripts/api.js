@@ -1315,7 +1315,7 @@ function placeorder(StripeResponse) {
                     ProcessNewCreditCard($(".ordersuccess").html());
                     toasttext.push("New credit card saved to Stripe");
                 }
-                toast(toasttext.join("<BR>"));
+                //toast(toasttext.join("<BR>"));
             } else if(result.contains("[STRIPE]")) {
                 validateinput("#saved-credit-info", result.replace("[STRIPE]", ""));
             } else {
@@ -1709,7 +1709,7 @@ function toast(Text) {
     var x = document.getElementById("snackbar");
     x.className = "show";
     x.innerHTML = Text;
-    log("toast: " + toast);
+    //log("toast: " + Text);
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 

@@ -692,7 +692,6 @@ includefile("public/scripts/api.js");
         @endif
     }
 
-
     $(document).on("click", function () {
         if ($(".dropdown-menu").is(":visible")) {
             $(".dropdown-menu").hide();
