@@ -120,6 +120,7 @@ includefile("public/scripts/api.js");
     }
 </STYLE>
 <script>
+    var currentURL = "<?= Request::url(); ?>";
     var debugmode = '<?= !islive(); ?>' == '1';
     var timestampoffset;
     timestampoffset = parseInt('<?= time(); ?>') - totimestamp();
@@ -351,7 +352,7 @@ includefile("public/scripts/api.js");
         $(".clear_loggedout").html("");
         $(".profiletype").hide();
         userdetails = false;
-        showlogin("logout");
+        if(isIndex()){showlogin("logout");}
     }
 
     var generalhours = <?= json_encode(gethours()) ?>;
@@ -412,9 +413,19 @@ includefile("public/scripts/api.js");
         $("#openingtime").html(HTML);
     });
 
-    function showlogin(){
-        $("#loginmodal").modal("show");
-        suppressback = Date.now() + 200;
+    function isIndex(){
+        return currentRoute == "/" || currentRoute == "index";
+    }
+
+    function showlogin(Why){
+        if(isUndefined(Why)){Why = "Unknown";}
+        log("showlogin: " + Why + " route: " + currentRoute + " isIndex: " + isIndex());
+        if(isIndex()){
+            $("#loginmodal").modal("show");
+            suppressback = Date.now() + 200;
+        } else if(Why == "login") {
+            window.location = webroot;
+        }
     }
 
     //handle a user login
@@ -807,8 +818,9 @@ includefile("public/scripts/api.js");
         <div class="modal-content ">
             <div class="modal-header">
                 <h2 id="alertmodallabel">Title</h2>
-                <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle"><i
-                            class="fa fa-times"></i></button>
+                <button data-dismiss="modal" class="btn  ml-auto bg-transparent align-middle">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
             <div class="modal-body">
                 <!--div class="pull-center mb-1" id="exclame">

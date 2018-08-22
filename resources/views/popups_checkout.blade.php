@@ -26,7 +26,7 @@
                 <div class="modal-body">
                     <?php
                         $order = [ "useraddress", "restaurant","userphone", "deliverytime",  "creditcard", "notes"];
-                        $needsphone = needsphonenumber();
+                        $needsphone = true;//needsphonenumber();
                         $index = array_search("userphone", $order);
                         if (!$needsphone && $index !== false) {
                             unset($order[$index]);
@@ -63,17 +63,19 @@
                                         <DIV ID="error-saveaddresses"></DIV>
                                     </div>
                                 <?php break; case "userphone": if($needsphone){ ?>
-                                    <div class="input_left_icon redhighlite" id="red_phone">
-                                        <span class="fa-stack fa-2x">
-                                           <i class="fa fa-circle fa-stack-2x"></i>
-                                           <i class="fa fa-mobile text-white fa-stack-1x medtext"></i>
-                                        </span>
-                                    </div>
-                                    <div class="input_right">
-                                        <input type="tel" name="phone" id="order_phone" class="form-control session_phone_val"
-                                               placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true"
-                                               value="<?= read('phone'); ?>">
-                                    </div>
+                                    <DIV ID="userphone">
+                                        <div class="input_left_icon redhighlite" id="red_phone">
+                                            <span class="fa-stack fa-2x">
+                                               <i class="fa fa-circle fa-stack-2x"></i>
+                                               <i class="fa fa-mobile text-white fa-stack-1x medtext"></i>
+                                            </span>
+                                        </div>
+                                        <div class="input_right">
+                                            <input type="tel" name="phone" id="order_phone" class="form-control session_phone_val"
+                                                   placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true"
+                                                   value="<?= read('phone'); ?>">
+                                        </div>
+                                    </DIV>
                                 <?php } break; case "restaurant": ?>
                                     <div class="input_left_icon" id="red_rest">
                                         <span class="fa-stack fa-2x">

@@ -12,7 +12,18 @@ use App\Repositories\TaskRepository;
 
 class HomeController extends Controller {
     public function index(Request $request){
-        return view("home_keyword")->render();
+        return view("index")->render();
+    }
+
+    public function debug(Request $request){
+        $CRLF = "\r\n";
+        if(count($_POST) == 0){$_POST = $_GET;}
+        $text = "Twilio error:";
+        foreach($_POST as $key => $index){
+            $text .= $CRLF . $key . "=" . $index;
+        }
+        debugprint($text);
+        return $text;
     }
 
     public function help(Request $request){
@@ -71,9 +82,26 @@ class HomeController extends Controller {
 
     public function robocall(Request $request){
         if(!isset($_GET["message"]) && isset($_POST["message"])){
-            $_GET["message"] = $_POST["message"];
+            $message = $_POST["message"];
+        } else {
+            $message = $_GET["message"];
         }
-        die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>');
+
+        $say = '<Say voice="woman" language="en">';
+        $url = serverurl;
+        if(defined("callurl")){$url = callurl;}//localhost must use a non-local URL
+        if(isset($_GET["gather"])){// https://www.twilio.com/docs/voice/twiml/gather
+            $message = '<Gather numDigits="1" action="http://' . $url . '/gather.php?gather=' . $_GET["gather"] . "&amp;message=" . urlencode($message) . '" method="GET" timeout="10">
+                        ' . $say . $message . '</Say>
+                   </Gather>
+                   ' . $say . 'We did not receive any input. Goodbye!</Say>';
+        } else {
+            $message = '<Gather numDigits="1" action="http://' . $url . '/gather.php?message=' . urlencode($message) . '" method="GET" timeout="10">
+                        ' . $say . $message . '</Say>
+                   </Gather>';
+        }
+        die('<?xml version="1.0" encoding="UTF-8"?><Response>' . $message . '</Response>');
+        /*die('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="woman" language="en">' . $_GET["message"] . '</Say></Response>');*/
     }
 
     public function edit(Request $request){
@@ -401,7 +429,7 @@ class HomeController extends Controller {
                             } else {
                                 $date = trim(right($value, 4));
                                 $value = str_replace($date, GenerateTime($date), $value);
-                                $value = GenerateDate($value);
+                                $value = str_replace(":", ", ", GenerateDate($value));
                             }
                             break;
                     }
@@ -428,8 +456,7 @@ class HomeController extends Controller {
                 if ($action["phone"]) {
                     //if SMS restaurant then SMS user of the restaurant instead since all of the restaurant phones are land lines
                     $action["message"] = str_replace("[url]", "", $action["message"]);
-                    $action["message"] = $this->replacetag($action["message"], "press9torepeat");
-
+                    //$action["message"] = $this->replacetag($action["message"], "press9torepeat");
                     if ($phone_restro) {$phone = $phone_restro;}
                     debugprint("Calling " . $party . ": " . $phone);
                     $SMSdata = $this->sendSMS($phone, $action["message"], true, false, $gather);

@@ -108,7 +108,7 @@ class Controller extends BaseController {
     }
 
     //https://www.twilio.com/ $0.0075 per SMS, + $1 per month
-    public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false){
+    public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false, $delay_seconds = 2){
         $Phone = $this->processadmin($Phone, false, "Controller.sendSMS");
         if (is_array($Phone)) {
             foreach ($Phone as $Index => $PhoneNumber) {
@@ -126,8 +126,11 @@ class Controller extends BaseController {
                 //$Message = "http://" . serverurl . "/call?message=" . urlencode($Message);
                 //do not change this to https, http is required for twilio to actually work
                 $url = serverurl;
+                $Message .= ". Press 9 to repeat this message. Local data";
                 if(defined("callurl")){$url = callurl;}//localhost must use a non-local URL
                 $Message = filternonalphanumeric(htmlentities($Message), '', ',.');
+                if($url == "serverurl" || $url == "callurl"){$url = $_SERVER['HTTP_HOST'];}
+                if($url == "localhost"){$url = "hamiltonpizza.ca";}
                 $Message = "http://" . $url . "/call?message=" . urlencode($Message);
                 if($gather !== false){$Message .= "&gather=" . $gather;}
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Calls";
@@ -138,9 +141,12 @@ class Controller extends BaseController {
                 $data = array("From" => $fromnumber, "To" => $Phone, "Body" => $Message);
             }
             $return = $this->cURL($URL, http_build_query($data), $sid, $token);
+            sleep($delay_seconds);
             if($return){
                 if(debugmode){debugprint($ret . " - " . $return);}
-                return $return;
+                $data["URL"] = $URL;
+                $data["Return"] = $return;
+                return json_encode($data);
             }
         }
         debugprint('ERROR - ' . $ret . " - Is not live/valid or is a blocked number, did not contact");

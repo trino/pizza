@@ -1292,6 +1292,9 @@ function placeorder(StripeResponse) {
                 if ($("#saveaddresses").val() == "addaddress") {
                     ProcessNewAddress(result);
                 }
+                if(!userdetails.phone){
+                    userdetails.phone = $("#order_phone").val();
+                }
                 if(!debugmode) {$(".ordersuccess").html("");}
                 userdetails["Orders"].unshift({
                     id: $("#receipt_id").text(),
@@ -1919,7 +1922,7 @@ function userisloggedin(){
 }
 
 function showcheckout() {
-    if(!userisloggedin()){return showlogin();}
+    if(!userisloggedin()){return showlogin("showcheckout");}
     $(getGoogleAddressSelector()).val("");
     //placeorderstate(false);
     var HTML = $("#checkoutaddress").html();
@@ -1946,7 +1949,11 @@ function showcheckout() {
     }
     $("#checkoutaddress").html(HTML);
     $("#deliverytime").val($("#deliverytime option:first").val());
+
+    visible("#userphone", !userdetails.phone);
+    $("#order_phone").val(userdetails.phone);
     $("#checkoutmodal").modal("show");
+
     $(function () {
         $("#orderinfo").validate({
             submitHandler: function (form) {

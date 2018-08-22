@@ -370,11 +370,17 @@ function Query($query, $all = false, $Where = "Unknown"){
     return $data;
 }
 
-function GenerateDate($Date){
+function GenerateDate($Date, $Ignored = false, $ShortForm = false){
     $today = date("F j");
     $Date = str_replace($today, "Today, " . $today, $Date);
     $tomorrow = date("F j", strtotime("+ 1 day"));
     $Date = str_replace($tomorrow, "Tomorrow, " . $tomorrow, $Date);
+    if($ShortForm){
+        $monthnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        foreach($monthnames as $monthname){
+            $Date = str_replace($monthname, left($monthname, 3), $Date);
+        }
+    }
     return $Date;
 }
 

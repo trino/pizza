@@ -24,7 +24,7 @@
             }
         }
 
-        $query = "SELECT *, min(attempts) as new_attempts, count(*) as count FROM orders WHERE stripeToken <> '' AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id ORDER BY attempts ASC";
+        $query = "SELECT *, min(attempts) as new_attempts, count(*) as count FROM orders WHERE stripeToken <> '' AND paid = 1 AND status = 0 AND attempts < " . ($max_attempts+1) . " GROUP BY restaurant_id ORDER BY attempts ASC";
         $orders = query($query, true, "CRON");
         if($orders){
             foreach($orders as $index => $order){

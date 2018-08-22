@@ -90,7 +90,7 @@
                     </SPAN>
 
                 <SPAN class="loggedout">
-                    <LI><A CLASS="dropdown-item" HREF="javascript:showlogin();"><i class="fa fa-user icon-width"></i> Log In</A></LI>
+                    <LI><A CLASS="dropdown-item" HREF="javascript:showlogin('login');"><i class="fa fa-user icon-width"></i> Log In</A></LI>
                 </SPAN>
 
                 @if($routename == "help")
