@@ -152,13 +152,13 @@
                                             <INPUT class="credit-info no-top-margin" TYPE="hidden" name="istest" id="istest">
                                         </div>
                                         @if(!islive() || read("profiletype") == 1)
-                                            <div class="thirdwidth">
-                                                <a class="credit-info float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear Restaurant</a>
+                                            <div class="thirdwidth credit-info">
+                                                <a class="float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear Restaurant</a>
                                             </DIV>
-                                            <div class="thirdwidth">
-                                                <a class="credit-info float-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
+                                            <div class="thirdwidth credit-info">
+                                                <a class="float-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
                                             </DIV>
-                                            <div class="thirdwidth">
+                                            <div class="thirdwidth credit-info">
                                                 <SELECT ID="testresult" CLASS="form-control" ONCHANGE="testcard();">
                                                     <OPTION VALUE="">Successful card</OPTION>
                                                     <OPTION VALUE="4000000000005126">expired or canceled card</OPTION>

@@ -1295,6 +1295,8 @@ function placeorder(StripeResponse) {
                 if ($("#saveaddresses").val() == "addaddress") {
                     ProcessNewAddress(result);
                     toasttext.push("New address saved");
+                } else {
+                    toasttext.push("Used existing address");
                 }
                 if(!userdetails.phone || $("#order_phone").val()){
                     userdetails.phone = $("#order_phone").val();
@@ -1311,7 +1313,7 @@ function placeorder(StripeResponse) {
                 });
                 if (creditinfoval == ""){
                     ProcessNewCreditCard($(".ordersuccess").html());
-                    toasttext.join("New credit card saved to Stripe");
+                    toasttext.push("New credit card saved to Stripe");
                 }
                 toast(toasttext.join("<BR>"));
             } else if(result.contains("[STRIPE]")) {
@@ -1380,15 +1382,16 @@ function ProcessNewAddress(result){
         unit: $("#add_unit").val(),
         user_id: $("#add_user_id").val()
     };
-    if(IsAddressUnique(userdetails.Addresses, Address.id)) {
+    var AddressID = IsAddressUnique(userdetails.Addresses, Address.id);
+    if(AddressID == -1) {
         userdetails.Addresses.push(Address);
         $("#saveaddresses").append(AddressToOption(Address));
         refreshAddAddress();
         log("New address detected: " + JSON.stringify(Address));
     } else {
-        log("Duplicate address detected: " + JSON.stringify(Address));
+        log("Duplicate address of " + AddressID + " detected: " + JSON.stringify(Address));
     }
-    return userdetails.Addresses;
+    return AddressID > -1;
 }
 
 function refreshAddAddress(){
@@ -1398,9 +1401,9 @@ function refreshAddAddress(){
 
 function IsAddressUnique(Addresses, ID){
     for(var i=0; i<Addresses.length; i++){
-        if(Addresses[i].id == ID){return false;}
+        if(Addresses[i].id == ID){return i;}
     }
-    return true;
+    return -1;
 }
 
 if (!Date.now) {
@@ -1706,6 +1709,7 @@ function toast(Text) {
     var x = document.getElementById("snackbar");
     x.className = "show";
     x.innerHTML = Text;
+    log("toast: " + toast);
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
