@@ -1,7 +1,22 @@
 <?php
+	define("base_path", base_path());
+
 	function base_path(){
-        return __DIR__;
-    }
+		return __DIR__;
+	}
+
+	function public_path(){
+		return base_path;
+	}
+
+	function env($key, $value){
+		return $value;
+	}
+	
+	function database_path($value){
+		return "";
+	}
+
 	$path = base_path() . "/resources/views/api.php";
 	//error_reporting(E_ALL);ini_set('display_errors', 1);
 	include $path;
