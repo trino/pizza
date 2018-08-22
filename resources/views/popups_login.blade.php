@@ -268,21 +268,19 @@
         blockerror = true;
 
         function checkaddress() {
-            @if($minimal)
-                return true;
-            @endif
-            if (isvalidaddress()) {
+            if (isvalidaddress2("#gmap_signupaddress")) {
                 return true;
             }
-            toast("Address is missing or invalid");
+            if(debugmode) {toast("Address is missing or invalid");}
         }
 
         function register() {
+            validateinput();
             var addform2 = checkaddress();
             if (addform2) {
-                $("#reg_address-error").remove();
-            } else if ($("#reg_address-error").length == 0) {
-                $('<label id="reg_address-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#gmapc");
+                $("#gmap_signupaddress-error").remove();
+            } else if ($("#gmap_signupaddress-error").length == 0) {
+                $('<label id="gmap_signupaddress-error" class="error" for="reg_name">Please check your address</label>').insertAfter("#gmac_signupaddress");
             }
             redirectonlogin = false;
             var addform = validateform("#addform") && addform2;
@@ -377,10 +375,10 @@
                                 if (result.Status) {
                                     try {
                                         @if(!islive())
-                                        if (formdata["name"] == "test") {
-                                            formdata["email"] = "roy@trinoweb.com";
-                                            formdata["password"] = "admin";
-                                        }
+                                            if (formdata["name"] == "test") {
+                                                formdata["email"] = "roy@trinoweb.com";
+                                                formdata["password"] = "admin";
+                                            }
                                         @endif
                                         $("#login_email").val(formdata["email"]);
                                         $("#login_password").val(formdata["password"]);
@@ -405,7 +403,7 @@
         });
 
         @if($minimal && $noclose)
-        CheckLoggedIn();
+            CheckLoggedIn();
         @endif
         $(document).ready(function () {
             $("#profile").removeClass("fade").removeClass("in");

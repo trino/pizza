@@ -134,7 +134,6 @@ includefile("public/scripts/api.js");
     }
 
     $(document).ready(function () {
-        loading(false, "page");
         if (getCookie("theorder")) {
             theorder = JSON.parse(getCookie("theorder"));
         }
@@ -307,7 +306,6 @@ includefile("public/scripts/api.js");
                                 reloadpage();
                             } else if(firstsignin) {
                                 toast("Welcome, " + userdetails["name"]);
-                                firstsignin = false;
                             } else {
                                 toast("Welcome back, " + userdetails["name"]);
                             }
@@ -353,6 +351,7 @@ includefile("public/scripts/api.js");
         $(".clear_loggedout").html("");
         $(".profiletype").hide();
         userdetails = false;
+        firstsignin = false;
         if(isIndex()){showlogin("logout");}
     }
 
@@ -375,19 +374,11 @@ includefile("public/scripts/api.js");
                     }
                 } else {
                     loading(true, "ajaxStart");
-                    //previoushash = window.location.hash;
-                    //window.history.pushState({}, document.title, '#loading');
                 }
             },
             ajaxStop: function () {
                 if (!skipunloadingscreen) {
                     loading(false, "ajaxStop");
-                    /*if (previoushash) {
-                        if(previoushash.left(1) != "#"){previoushash = "#" + previoushash;}
-                        window.history.pushState({}, document.title, previoushash);
-                    } else {
-                        reseturl();
-                    }*/
                 }
                 skipone = Date.now() + 100;//
             }
@@ -684,17 +675,20 @@ includefile("public/scripts/api.js");
     });
 
     function testcard() {
-        var cardnumber = ['4242424242424242', '4000001240000000', '4012888888881881', '4000056655665556', '5555555555554444', '5200828282828210', '5105105105105100', '378282246310005', '371449635398431'];
-        cardnumber = cardnumber[random(0, cardnumber.length - 1)];
+        var cardnumbers = ['4242424242424242', '4000001240000000', '4012888888881881', '4000056655665556', '5555555555554444', '5200828282828210', '5105105105105100', '378282246310005', '371449635398431'];
+        var cardnumber = $("#testresult").val();
+        if(cardnumber.length == 0){
+            cardnumber = cardnumbers[random(0, cardnumbers.length - 1)];
+        }
         $('input[data-stripe=number]').val(cardnumber).trigger("click");
         $('input[data-stripe=address_zip]').val('L8L6V6').trigger("click");
         $('input[data-stripe=cvc]').val(rnd(100, 999)).trigger("click");
         $('select[data-stripe=exp_year]').val({{ right($CURRENT_YEAR,2) }} +1).trigger("click");
         @if(islive())
-        log("Changing stripe key");
-        $("#istest").val("true");
-        setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
-        log("Stripe key changed");
+            log("Changing stripe key");
+            $("#istest").val("true");
+            setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
+            log("Stripe key changed");
         @endif
     }
 

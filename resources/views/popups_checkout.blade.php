@@ -148,17 +148,33 @@
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="thirdwidth">
-                                            <input type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control no-top-margin"
-                                                   autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
+                                            <input type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control no-top-margin" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
                                             <INPUT class="credit-info no-top-margin" TYPE="hidden" name="istest" id="istest">
-                                            @if(!islive() || read("profiletype") == 1)
-                                                <a class="credit-info float-right btn" onclick="testcard();"
-                                                   TITLE="Don't remove this, I need it!">Test Card</a>
-                                                <a class="credit-info float-right btn"
-                                                   onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear Restaurant</a>
-                                            @endif
-                                            <div class="clearfix"></div>
                                         </div>
+                                        @if(!islive() || read("profiletype") == 1)
+                                            <div class="thirdwidth">
+                                                <a class="credit-info float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear Restaurant</a>
+                                            </DIV>
+                                            <div class="thirdwidth">
+                                                <a class="credit-info float-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
+                                            </DIV>
+                                            <div class="thirdwidth">
+                                                <SELECT ID="testresult" CLASS="form-control" ONCHANGE="testcard();">
+                                                    <OPTION VALUE="">Successful card</OPTION>
+                                                    <OPTION VALUE="4000000000005126">expired or canceled card</OPTION>
+                                                    <OPTION VALUE="4000000000000101">cvc check failed</OPTION>
+                                                    <OPTION VALUE="4000000000009235">risk level elevated</OPTION>
+                                                    <OPTION VALUE="4100000000000019">risk level highest</OPTION>
+                                                    <OPTION VALUE="4000000000000002">card declined</OPTION>
+                                                    <OPTION VALUE="4000000000009995">insufficient funds</OPTION>
+                                                    <OPTION VALUE="4000000000000127">incorrect cvc</OPTION>
+                                                    <OPTION VALUE="4000000000000069">expired card</OPTION>
+                                                    <OPTION VALUE="4000000000000119">processing error</OPTION>
+                                                    <OPTION VALUE="4242424242424241">incorrect number</OPTION>
+                                                </SELECT>
+                                            </DIV>
+                                        @endif
+                                        <div class="clearfix"></div>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="input_left_icon"></div>

@@ -1288,25 +1288,32 @@ function placeorder(StripeResponse) {
         }, function (result) {
             placeorderstate(false);
             paydisabled = false;
+            forceloading(false, "placeorder");
             if (result.contains("ordersuccess")) {
                 var creditinfoval = $("#saved-credit-info").val();
+                var toasttext = ["Order was placed successfully"];
                 if ($("#saveaddresses").val() == "addaddress") {
                     ProcessNewAddress(result);
+                    toasttext.push("New address saved");
                 }
-                if(!userdetails.phone){
+                if(!userdetails.phone || $("#order_phone").val()){
                     userdetails.phone = $("#order_phone").val();
+                    $("#user_phone").val(userdetails.phone);
+                    toasttext.push("New phone number saved");
                 }
                 if(!debugmode) {$(".ordersuccess").html("");}
-                userdetails["Orders"].unshift({
-                    id: $("#receipt_id").text(),
-                    placed_at: $("#receipt_placed_at").text()
-                });
                 clearorder();
                 $("#checkoutmodal").modal("hide");
                 handleresult(result, "ORDER RECEIPT");
+                userdetails["Orders"].unshift({
+                    id: $("#receipt_id").text(),
+                    placed_at: formattednow()
+                });
                 if (creditinfoval == ""){
                     ProcessNewCreditCard($(".ordersuccess").html());
+                    toasttext.join("New credit card saved to Stripe");
                 }
+                toast(toasttext.join("<BR>"));
             } else if(result.contains("[STRIPE]")) {
                 validateinput("#saved-credit-info", result.replace("[STRIPE]", ""));
             } else {
@@ -1316,6 +1323,25 @@ function placeorder(StripeResponse) {
     } else {
         showlogin("placeorder");
     }
+}
+
+function formattednow(timestamp){
+    if(isUndefined(timestamp)){timestamp = Date.now();}
+    var the_date = new Date(timestamp);
+    var days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    //Wednesday August 22, 2018 @ 1:34 PM
+    var day_of_month = the_date.getDate();//1-31
+    var day_of_week = the_date.getDay();//0-6
+    var the_month = the_date.getMonth();//0-11
+    var the_year = the_date.getFullYear();//2017
+    var hours24 = the_date.getHours();//0-23
+    var hours12 = hours24;
+    if(hours12 == 0){hours12 = 12;} else if(hours12 > 12){hours12 = hours12 - 12;}
+    var minutes = the_date.getMinutes();//0-59
+    var antepost = iif(hours24 < 12, "AM", "PM");
+    if(minutes<10){minutes = "0" + minutes;}
+    return days_of_week[day_of_week] + " " + months[the_month] + " " + day_of_month + ", " + the_year + " @ " + hours12 + ":" + minutes + " " + antepost;
 }
 
 function filternumeric(text){
@@ -1749,6 +1775,7 @@ function payfororder() {
         return cantplaceorder("payfororder");
     }
     placeorderstate(true);
+    forceloading(true, "payfororder");
     var $form = $('#orderinfo');
     var stripetoken = changecredit(true, 'payfororder');
     log("Attempt to pay: " + stripetoken);
@@ -1764,6 +1791,14 @@ function payfororder() {
         placeorder();//no stripe token, use customer ID on the server side
     }
     $(".saveaddresses").removeClass("dont-show");
+}
+
+function forceloading(state, where){
+    if(state){loading(true, where);}
+    skiploadingscreen = state;
+    lockloading = state;
+    skipunloadingscreen = state;
+    if(!state){loading(false, where);}
 }
 
 function stripeResponseHandler(status, response) {
@@ -1788,7 +1823,7 @@ function stripeResponseHandler(status, response) {
     }
     if (errormessage) {
         ajaxerror(response["error"]["message"]);
-        loading(false, "stripe");
+        forceloading(false, "stripe error");
     }
 }
 

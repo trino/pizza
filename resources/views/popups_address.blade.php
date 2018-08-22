@@ -262,6 +262,8 @@
         };
         //Example: 2396 Kingsway, locality: Vancouver, administrative_area_level_1: British Columbia, country: Canada, postal_code: V5R 5G9
         if(isUndefined(streetformat)){streetformat = "[street_number] [route], [locality], [administrative_area_level_1_s]";}// [postal_code]";
+        //if(isUndefined(streetformat)){streetformat = "street_number: [street_number] route: [route], locality: [locality], administrative_area_level_1_s: [administrative_area_level_1_s]";}// [postal_code]";
+
         for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];
             if (componentForm[addressType]) {

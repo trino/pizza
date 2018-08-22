@@ -13,6 +13,7 @@
         <?= $name; ?>_address = initAutocomplete('gmap_<?= $name; ?>', function(){
             var place = <?= $name; ?>_address.getPlace();
             var address = formataddress(place);
+            $("#gmap_<?= $name; ?>").val(address["streetformat"]);
             savedata("#gmap_<?= $name; ?>", "address_", address);
             savedata("#gmap_<?= $name; ?>", "place_", place);
             @if($function) <?= $function; ?>(place); @endif
@@ -27,5 +28,15 @@
                 $(Selector).attr(DataName + key, Data[key]);
             }
         }
+    }
+
+    function isvalidaddress2(ElementID){
+        ElementID = $(ElementID);
+        var Attributes = ["address_streetformat", "place_geometry_location_lat", "place_geometry_location_lng"];
+        for(var i = 0; i < Attributes.length; i++){
+            var Attribute = Attributes[i];
+            if(!ElementID.hasAttr(Attribute) || ! ElementID.attr(Attribute)){return false;}
+        }
+        return ElementID.attr("address_streetformat") == ElementID.val();
     }
 </SCRIPT>

@@ -256,34 +256,35 @@
         }
         $HTML = str_replace("(LAST4)", $last4, $HTML);
         $HTML = str_replace('COLSPAN="-4"', 'COLSPAN="2"', $HTML);
+
         echo $HTML;
-        if($party != "private"){ ?>
+        if($party != "private"){
+            $Restaurant = first("SELECT * FROM restaurants WHERE id = " . $Order["restaurant_id"]);
+            if(isset($Restaurant["address_id"])){
+                $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
+            } else {
+                $unknown = "UNKNOWN";
+                $Restaurant = [
+                        "name" => $unknown,
+                        "phone" => "",
+                ];
+                $Raddress = [
+                        "name" => $unknown,
+                        "number" => $unknown,
+                        "street" => $unknown,
+                        "city" => $unknown,
+                        "province" => $unknown,
+                        "postalcode" => $unknown,
+                        "unit" => $unknown,
+                        "latitude" => "0",
+                        "longitude" => "0"
+                ];
+            }
+        ?>
             <TABLE WIDTH="100%" STYLE="border-collapse:collapse;">
                 <TR>
                     <TD ONCLICK="addmarker('<?= $Restaurant["name"] . "'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                         <?php
-                            $Restaurant = first("SELECT * FROM restaurants WHERE id = " . $Order["restaurant_id"]);
-                            if(isset($Restaurant["address_id"])){
-                                $Raddress = first("SELECT * FROM useraddresses WHERE id = " . $Restaurant["address_id"]);
-                            } else {
-                                $unknown = "UNKNOWN";
-                                $Restaurant = [
-                                    "name" => $unknown,
-                                    "phone" => "",
-                                ];
-                                $Raddress = [
-                                    "name" => $unknown,
-                                    "number" => $unknown,
-                                    "street" => $unknown,
-                                    "city" => $unknown,
-                                    "province" => $unknown,
-                                    "postalcode" => $unknown,
-                                    "unit" => $unknown,
-                                    "latitude" => "0",
-                                    "longitude" => "0"
-                                ];
-                            }
-
                             echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
                             echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "<br><br>" ;
                             echo $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
