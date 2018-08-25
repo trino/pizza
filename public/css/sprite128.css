@@ -5,10 +5,10 @@
     height: 128px;
     margin-right: .75rem !important;
 }
-.sprite-tip{
+.sprite-tip{/*
     width: 128px !important;
     height: 128px !important;
-    margin-right: .75rem !important;
+    margin-right: .75rem !important;*/
 }
 .sprite-medium {
     zoom: 0.3;
@@ -47,7 +47,7 @@
 .sprite-ginger-ale { background-position: -1920px -192px; }
 .sprite-diet-coca-cola { background-position: -2112px -192px; }
 .sprite-nestea { background-position: -2304px -192px; }
-.sprite-2l-brisk-iced-tea { background-position: -2496px -192px; }
+.sprite-tip { background-position: -2496px -192px; }
 .sprite-dr-pepper { background-position: -2496px -192px; }
 .sprite-7-up { background-position: -2880px -192px; }
 .sprite-root-beer { background-position: -3072px -192px; }

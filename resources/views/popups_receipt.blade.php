@@ -200,7 +200,7 @@
 ?>
 
     @if($party != "private")
-        <div class="alert alert-success text-center text-sm-center mb-4">
+        <div class="alert alert-success text-center text-sm-center mb-2">
             {{ $Delivery . $duration }}
         </div>
         <p class="text-center">Please allow + or - 10 minutes for delivery.</p>
@@ -285,8 +285,8 @@
                 <TR>
                     <TD ONCLICK="addmarker('<?= $Restaurant["name"] . "'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                         <?php
-                            echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
-                            echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "<br><br>" ;
+
+                            /*
                             echo $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
                             echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
                                 . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
@@ -294,11 +294,19 @@
 
 
                             echo '</TD><TD ID="custaddress" ONCLICK="addmarker(' . "'" . $Order["name"] . "\'s Address\', " . $Order["latitude"] . ", " . $Order["longitude"] . ', true);" WIDTH="49%" ID="restaddress">';
+                            */
+
+
                             echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
                             echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
+
                             if($Order["unit"]){echo $Order["unit"]. '<BR>';}
                             echo formatphone($Order["phone"]);
                             $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
+
+
+                        echo '<br><br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
+                        echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "" ;
                         ?>
                     </TD>
                 </TR>
@@ -323,7 +331,7 @@
                 <DIV CLASS="clearfix"></DIV>
             @endif
             <p>
-            <a class="btn-link btn pl-0" href="<?= webroot("help"); ?>">FAQs</a>
+            <a class="btn-link btn pl-0" href="<?= webroot("help"); ?>">About Us</a>
             </p>
         </DIV>
     @endif

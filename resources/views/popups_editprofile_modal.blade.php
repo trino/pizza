@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="alert alert-info mt-3 mb-0 font-size-85rem">
-                     Add a new address or credit/debit card on checkout
+                     Add new address or credit card on checkout
                     <br>  <a href="help" class="btn-link">More info</a>
                 </div>
                 <div CLASS="editprofilediv mt-2 dont-show">

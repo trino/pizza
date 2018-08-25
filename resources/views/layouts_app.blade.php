@@ -38,7 +38,7 @@
 
             <meta http-equiv="content-language" content="en-CA">
         <meta name="mobile-web-app-capable" content="yes">
-        <title><?= sitename; ?> - Delivery</title>
+        <title><?= cityname ?> Pizza Delivery</title>
         <link rel="icon" sizes="128x128" href="<?= webroot("images/pizza128.png"); ?>">
         <link rel="icon" sizes="192x192" href="<?= webroot("images/pizza192.png"); ?>">
         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -62,7 +62,7 @@
         <div id="snackbar"></div>
         <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
-        <div class="list-group-item container-fluid shadow bg-success">
+        <div class="list-group-item container-fluid shadow bg-danger">
             <button data-toggle="dropdown" style="width:38px; outline: none !important;
    box-shadow: none;" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
                 <i class="fa fa-bars text-white"></i>
@@ -96,14 +96,14 @@
                 @if($routename == "help")
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("", true); ?>"><i class="fa fa fa-shopping-cart icon-width"></i> Menu</A></LI>
                 @else
-                    <LI><A CLASS="dropdown-item" HREF="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> FAQs</A></LI>
+                    <LI><A CLASS="dropdown-item" HREF="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> About Us</A></LI>
                 @endif
 
                 <LI class="loggedin"><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
 
                 @if(false)
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("ourstory"); ?>"><?= makestring("{aboutus}"); ?></A></LI>
-                    <LI><A CLASS="dropdown-item" HREF="<?= webroot("help"); ?>">FAQs</A></LI>
+                    <LI><A CLASS="dropdown-item" HREF="<?= webroot("help"); ?>">About Us</A></LI>
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("tos"); ?>">TOS</A></LI>
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("privacy"); ?>">Privacy Policy</A></LI>
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("contact"); ?>">Contact Us</A></LI>

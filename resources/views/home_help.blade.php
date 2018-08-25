@@ -154,9 +154,12 @@
         }
     </SCRIPT>
     <DIV class="row">
-        <div class="col-sm-6 py-3 bg-danger">
+        <div class="col-sm-6 py-3 bg-dark">
             <h3><?= getsetting("aboutus"); ?></h3>
             <div class="card-block text-white">
+                <span class="bold bigtext"> Feed Yourself + Someone Else</span>
+                <br><br>
+
                 <p>
                     <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
                     complicated. We realize that restaurants are paying enormous commissions to existing online food
@@ -172,8 +175,7 @@
                 <p>
                     Join us in our mission to change the way we order our food online and make your first order today!
                 </p>
-                <hr>
-                <div class="btn-outlined-danger text-center pt-1">
+<br>                <div class="btn-outlined-danger text-center pt-1">
                     <strong>August, 2018</strong>
                     <p> Orders: <?= $orders; ?>
                         <br> Donated: <?= $donations . " " . $units_donated; ?>
@@ -181,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <DIV CLASS="col-sm-6">
+        <DIV CLASS="col-sm-6 bg-dark text-white">
             <?= view("popups_login", array("justright" => true))->render(); ?>
         </DIV>
     </DIV>

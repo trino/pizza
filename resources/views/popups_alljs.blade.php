@@ -825,7 +825,7 @@ includefile("public/scripts/api.js");
                 <div-->
                 <DIV ID="alertmodalbody" class="py-1"></DIV>
                 <div CLASS="pull-center">
-                    <button class="btn text-white alert-button" id="alert-cancel" data-dismiss="modal">
+                    <button class="btn btn-outline-primary alert-button" id="alert-cancel" data-dismiss="modal">
                         CANCEL
                     </button>
                     <button class="btn btn-primary alert-button" id="alert-confirm" data-dismiss="modal">
