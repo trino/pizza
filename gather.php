@@ -18,7 +18,7 @@
 	}
 
 	$path = base_path() . "/resources/views/api.php";
-	//error_reporting(E_ALL);ini_set('display_errors', 1);
+	error_reporting(E_ALL);ini_set('display_errors', 1);
 	include $path;
 	$message = "Thank you";
 	$say = '<Say voice="woman" language="en">';
@@ -31,6 +31,7 @@
 	if(isset($_GET["gather"]) && $digit == "1"){
 		$query = "UPDATE orders SET status = 1 WHERE restaurant_id = " . $_GET["gather"];
 		query($query);
+		$message = "Updated orders for store " . $_GET["gather"];
 	} else if ($digit == "9"){
 		$message = $_GET["message"];
 		$url = 'http://hamiltonpizza.ca/gather.php?message=' . urlencode($message);
