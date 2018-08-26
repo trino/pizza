@@ -201,7 +201,7 @@
 
     @if($party != "private")
         <div class="alert alert-success text-center text-sm-center mb-2">
-            {{ $Delivery . $duration }}
+            <strong>{{ $Delivery . $duration }}</strong>
         </div>
         <p class="text-center">Please allow + or - 10 minutes for delivery.</p>
     @endif
@@ -291,15 +291,10 @@
                             echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
                                 . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
                                 . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
-
-
                             echo '</TD><TD ID="custaddress" ONCLICK="addmarker(' . "'" . $Order["name"] . "\'s Address\', " . $Order["latitude"] . ", " . $Order["longitude"] . ', true);" WIDTH="49%" ID="restaddress">';
                             */
-
-
                             echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
                             echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
-
                             if($Order["unit"]){echo $Order["unit"]. '<BR>';}
                             echo formatphone($Order["phone"]);
                             $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];

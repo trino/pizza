@@ -246,11 +246,13 @@ if (!isset($dohours)) {
                             feeding not just yourself, but someone else! Still not convinced? – Check out our
                             <A HREF="<?= webroot("help"); ?>" CLASS="link-white">About Us</A> for more info.
                         </p>
+
+                        <p><a CLASS="link-white btn btn-danger" href="https://hammerpizza.ca/blog/pizza-giveaway/">Want to win some free pizzas?</a></p>
                     </div>
 
                     @if($dohours)
                         <div class="col-md-12 ">
-                            <div class="py-3 px-3">
+                            <div class="pb-2 px-3">
 
                                 <TABLE class="inline">
                                     <TR>

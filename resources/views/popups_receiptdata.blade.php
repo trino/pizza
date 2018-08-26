@@ -328,7 +328,7 @@ if (file_exists($filename)) {
     }
 
     if ($Order["cookingnotes"]){
-        echo '<TR><TD COLSPAN="' . 2 . '"><br><B>Notes </B><br>' . $Order["cookingnotes"] . '</TD></TR>';
+        echo '<TR><TD COLSPAN="' . 2 . '"><h2>Notes </h2>' . $Order["cookingnotes"] . '</TD></TR>';
     }
 
     /*

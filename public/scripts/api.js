@@ -2436,8 +2436,8 @@ function list_addons(table, halves) {
             }
         }
 
-        HTML += '<button class="fourthwidth toppings_btn list-group-item-action bg-light" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>' +
-            '<button class="btn-primary fourthwidth toppings_btn strong" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
+        HTML += '<button class="fourthwidth toppings_btn list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>' +
+            '<button class="btn-primary fourthwidth toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
 
         $("#addonlist").html(HTML);
         $(".addon-addon").click(
