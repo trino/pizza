@@ -126,7 +126,7 @@ class Controller extends BaseController {
                 //$Message = "http://" . serverurl . "/call?message=" . urlencode($Message);
                 //do not change this to https, http is required for twilio to actually work
                 $url = serverurl;
-                $Message .= ". Press 9 to repeat this message. Local data";
+                $Message .= ". Press 9 to repeat this message.";
                 if(defined("callurl")){$url = callurl;}//localhost must use a non-local URL
                 $Message = filternonalphanumeric(htmlentities($Message), '', ',.');
                 if($url == "serverurl" || $url == "callurl"){$url = $_SERVER['HTTP_HOST'];}

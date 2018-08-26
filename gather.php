@@ -31,6 +31,7 @@
 	if(isset($_GET["gather"]) && $digit == "1"){
 		$query = "UPDATE orders SET status = 1 WHERE restaurant_id = " . $_GET["gather"];
 		query($query);
+		//$message = "Updated orders for store " . $_GET["gather"];
 	} else if ($digit == "9"){
 		$message = $_GET["message"];
 		$url = 'http://hamiltonpizza.ca/gather.php?message=' . urlencode($message);
