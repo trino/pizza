@@ -99,6 +99,9 @@
                     <LI><A CLASS="dropdown-item" HREF="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> About Us</A></LI>
                 @endif
 
+                <LI><A CLASS="dropdown-item" HREF="https://hammerpizza.ca/blog/pizza-giveaway/"><i class="fa fa-star icon-width"></i> Weekly Giveaway</A></LI>
+
+
                 <LI class="loggedin"><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
 
                 @if(false)
@@ -110,7 +113,7 @@
                 @endif
             </ul>
 
-            <a style="color: white; text-decoration: none;" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
+            <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
 
             <?php
                 if (debugmode) {
