@@ -134,10 +134,18 @@ if(is_string($filename)){
         if(isset($item["itemaddons"])){
             foreach($item["itemaddons"] as $itemindex => $addon){
                 $item["itemaddons"][$itemindex] = (object) $addon;
+                if(isset($item["itemaddons"][$itemindex]->addons)){
+                    $addons = [];
+                    foreach($item["itemaddons"][$itemindex]->addons as $addon){
+                        $addons[] = (object) $addon;
+                    }
+                    $item["itemaddons"][$itemindex]->addons = $addons;
+                }
             }
         }
         $items[] = (object) $item;
     }
+    //vardump($items); die();
 }
 
 if($filefound){
