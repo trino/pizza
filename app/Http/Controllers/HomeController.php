@@ -373,7 +373,7 @@ class HomeController extends Controller {
                     return "[STRIPE]" . $error;// The card has been declined
                 }
             }
-            return '<div CLASS="ordersuccess" addressid="' . $addressID . '" STYLE="display:none;">' . json_encode($chargeinfo) . '</div>' . $HTML;
+            return '<div CLASS="ordersuccess" orderid="' . $orderid . '" addressid="' . $addressID . '" STYLE="display:none;">' . json_encode($chargeinfo) . '</div>' . $HTML;
         } else {
             return $addressID;
         }

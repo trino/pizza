@@ -1308,8 +1308,9 @@ function placeorder(StripeResponse) {
                 $("#checkoutmodal").modal("hide");
                 handleresult(result, "ORDER RECEIPT");
                 userdetails["Orders"].unshift({
-                    id: $("#receipt_id").text(),
-                    placed_at: formattednow()
+                    id: $(".ordersuccess").attr("orderid"),
+                    placed_at: formattednow(),
+                    html: result
                 });
                 if (creditinfoval == ""){
                     ProcessNewCreditCard($(".ordersuccess").html());
