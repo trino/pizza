@@ -145,6 +145,34 @@ class HomeController extends Controller {
         return view("home_contact")->render();
     }
 
+    public function saveorder($info, $order){
+        $orderid = insertdb("orders", $info);
+        $dir = public_path("orders");
+        if (!is_dir($dir)) {mkdir($dir, 0777);}
+        $dir = $dir . "/user" . $info["user_id"];//no / at the end (was in "user" . $info["user_id"])
+        if (!is_dir($dir)) {mkdir($dir, 0777);}
+        $filename = $dir . "/" . $orderid . ".json";
+        file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
+        if(defined("username") && posix_geteuid() != fileowner($filename)){chown($filename, username);}
+        chmod($filename, 0755);
+        return $orderid;
+    }
+
+    public function loaduser($userid = false, $newdata = false){
+        //duplicate code from placeorder since it can't be used without an order id
+        if(!$userid){$userid = read("id");}//$info["user_id"]
+        $user = first("SELECT * FROM users WHERE id = " . $userid, true, "HomeController.loaduser");
+        if($newdata) {//attempt to update user profile
+            if (!isset($newdata["phone"])) {$newdata["phone"] = $user["phone"];}
+            if ($user["name"] != $newdata["name"] || $user["phone"] != $newdata["phone"]) {
+                $user["name"] = $newdata["name"];
+                $user["phone"] = $newdata["phone"];
+                insertdb("users", array("id" => $userid, "name" => $newdata["name"], "phone" => $newdata["phone"]));
+            }
+        }
+        return $user;
+    }
+
     public function placeorder($POST = ""){
         if (!read("id")) {
             return array("Status" => false, "Reason" => "You are not logged in");
@@ -169,7 +197,7 @@ class HomeController extends Controller {
                     break;
                 case "deletecard":
                     initStripe();
-                    $user = first("SELECT * FROM users WHERE id = " . read("id"));
+                    $user = $this->loaduser();
                     try {
                         $ret["Status"] = false;
                         $cu = \Stripe\Customer::retrieve($user["stripecustid"]);
@@ -248,34 +276,25 @@ class HomeController extends Controller {
             $tip = 0.00;
             if(isset($_POST["tip"]) && is_numeric($_POST["tip"])){$tip = $_POST["tip"];}
             $info["tip"] = $tip;
-            $orderid = insertdb("orders", $info);
-
-            $dir = public_path("orders");
-            if (!is_dir($dir)) {mkdir($dir, 0777);}
-
-            $dir = $dir . "/user" . $info["user_id"];//no / at the end (was in "user" . $info["user_id"])
-            if (!is_dir($dir)) {mkdir($dir, 0777);}
-            $filename = $dir . "/" . $orderid . ".json";
-            file_put_contents($filename, json_encode($order, JSON_PRETTY_PRINT));
-            if(defined("username") && posix_geteuid() != fileowner($filename)){
-                chown($filename, username);
-            }
-            chmod($filename, 0755);
-
-            $user = $this->order_placed($orderid, $info, -2);//get user data without processing the event
-            if(!isset($_POST["phone"])){$_POST["phone"] = $user["phone"];}
-            if ($user["name"] != $_POST["name"] || $user["phone"] != $_POST["phone"]) {
-                $user["name"] = $_POST["name"];
-                $user["phone"] = $_POST["phone"];
-                insertdb("users", array("id" => $info["user_id"], "name" => $_POST["name"], "phone" => $_POST["phone"]));//attempt to update user profile
-            }
-
+            $amount = false;
+            $savebefore = false;//false is not recommended
             $chargeinfo = [];
             if(!isset($_POST["last4"])){$_POST["last4"] = "";}
-            $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user", "last4" => $_POST["last4"]))->render();
+            $user = $this->loaduser($info["user_id"], $_POST);
+
+            if($savebefore){
+                $orderid = $this->saveorder($info, $order);
+                $HTML = view("popups_receipt", array("orderid" => $orderid, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user", "last4" => $_POST["last4"]))->render();
+                $description = "Order ID: " . $orderid;
+            } else {
+                $HTML = view("popups_receipt", array("Order" => array_merge($info, $user), "data" => $order, "timer" => true, "place" => "placeorder", "style" => 2, "includeextradata" => true, "party" => "user", "last4" => $_POST["last4"]))->render();
+                $amount = getbetween($HTML, '<SPAN ID="total">', '</SPAN>');
+                $description = "Customer ID: " . $user["id"] . " at: " . my_now();
+            }
+
             //if ($text) {return $text;} //shows email errors. Uncomment when email works
             if (isset($info["stripeToken"]) || $user["stripecustid"]) {//process stripe payment here
-                $amount = select_field_where("orders", "id=" . $orderid, "price");
+                if(!$amount) {$amount = select_field_where("orders", "id=" . $orderid, "price");}
                 if($GLOBALS["settings"]["onlyfiftycents"]) {
                     $amount = 50;//dont remove this
                 } else if (strpos($amount, ".")) {
@@ -312,7 +331,7 @@ class HomeController extends Controller {
                             "currency" => "cad",
                             //"source" => $info["stripeToken"],//charge card directly
                             "customer" => $customer_id,//charge customer ID
-                            "description" => "Order ID: " . $orderid
+                            "description" => $description
                         );
                         if (isset($_POST["creditcard"]) && $_POST["creditcard"]) {
                             $charge["source"] = $_POST["creditcard"];//charge a specific credit card
@@ -322,6 +341,7 @@ class HomeController extends Controller {
                         $failedat = "Charge the card";
                         $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
                         if($charge["outcome"]["type"] == "authorized") {
+                            if(!$savebefore) {$orderid = $this->saveorder($info, $order);}
                             insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"], "last4" => $_POST["last4"]));//will only happen if the $charge succeeds
                             $this->order_placed($orderid, $info);
                             $chargeinfo = $charge["source"];
@@ -349,7 +369,7 @@ class HomeController extends Controller {
                     $error = " Order ID " . $orderid . " total was $0.00";
                 }
                 if ($error) {
-                    debugprint("Order ID: " . $orderid . " - Stripe error: " . $error);
+                    debugprint("Stripe error: " . $error);
                     return "[STRIPE]" . $error;// The card has been declined
                 }
             }

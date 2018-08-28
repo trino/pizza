@@ -425,6 +425,17 @@ if(!function_exists("is_iterable")) {
     }
 }
 
+function getbetween($text, $start, $end = false){
+    $startpos = strpos($text, $start);
+    if($startpos === false){return false;}
+    $text = right($text, strlen($text) - ($startpos + strlen($start)));
+    if($end === false){return $text;}
+    $startpos = strpos($text, $end);
+    if($startpos === false){return false;}
+    $text = left($text, $startpos);
+    return $text;
+}
+
 //$src = source array, $keys = the keys to remove
 function removekeys($src, $keys){
     return array_diff_key($src, array_flip($keys));

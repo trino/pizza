@@ -692,6 +692,9 @@ includefile("public/scripts/api.js");
         var cardnumber = $("#testresult").val();
         if(cardnumber.length == 0){
             cardnumber = cardnumbers[random(0, cardnumbers.length - 1)];
+        } else if($("#saved-credit-info").val()) {
+            $("#saved-credit-info").val("");
+            changecredit(true, 'testcard');
         }
         $('input[data-stripe=number]').val(cardnumber).trigger("click");
         $('input[data-stripe=address_zip]').val('L8L6V6').trigger("click");

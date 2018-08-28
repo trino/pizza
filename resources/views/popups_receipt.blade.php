@@ -1,41 +1,44 @@
 @extends(isset($isGET) ? 'layouts_app' : 'layouts_blank')
 @section('content')
     <?php
-    //echo 'ORDER ID: ' . $orderid . '<BR>';
-
     //do not in-line the styles as this is used in emails
     //http://localhost/ai/public/list/orders?action=getreceipt&orderid=224
     startfile("popups_receipt");
     $debugmode = !islive();
     $debug = "";
-    $Order = first("SELECT orders.*, users.name, users.id as userid, users.email FROM orders, users WHERE orders.id = " . $orderid . " HAVING user_id = users.id");
-    /* testing
-    $Order["userid"] = 12;
-    if($Order["userid"] <> read("id") && $party == "user"){$party = "private";}
-            echo "Order User ID: " . $Order["userid"];
-            echo "PARTY: " . $party;
-    */
-    $filename = orderpath($orderid);//
-    if (!isset($includeextradata)) {
-        $includeextradata = false;
-    }
-    if (isset($JSON)) {//get raw JSON instead
-        $style = 2;
-        if ($JSON && $JSON != "false") {
-            if (file_exists($filename)) {
-                $Order["Order"] = json_decode(file_get_contents($filename));
-                echo json_encode($Order);
-                die();//only the JSON is desired, send it
-            }
-            echo json_encode(array("Status" => false, "Reason" => "File not found"));
-            die();
+    if(!isset($Order) && isset($orderid)){
+        $Order = first("SELECT orders.*, users.name, users.id as userid, users.email FROM orders, users WHERE orders.id = " . $orderid . " HAVING user_id = users.id");
+        /* testing
+        $Order["userid"] = 12;
+        if($Order["userid"] <> read("id") && $party == "user"){$party = "private";}
+                echo "Order User ID: " . $Order["userid"];
+                echo "PARTY: " . $party;
+        */
+        $filename = orderpath($orderid);//
+        if (!isset($includeextradata)) {
+            $includeextradata = false;
         }
-    } else if (!isset($style)) {
-        $style = 1;
-    }
-    if (!$Order) {
-        echo 'Order not found';
-        return false;
+        if (isset($JSON)) {//get raw JSON instead
+            $style = 2;
+            if ($JSON && $JSON != "false") {
+                if (file_exists($filename)) {
+                    $Order["Order"] = json_decode(file_get_contents($filename));
+                    echo json_encode($Order);
+                    die();//only the JSON is desired, send it
+                }
+                echo json_encode(array("Status" => false, "Reason" => "File not found"));
+                die();
+            }
+        } else if (!isset($style)) {
+            $style = 1;
+        }
+        if (!$Order) {
+            echo 'Order not found';
+            return false;
+        }
+    } else if(isset($data)) {
+        $filename = $data;
+        $orderid = false;
     }
     switch ($style) {
         case 1:
@@ -208,7 +211,6 @@
 
     @if($includeextradata)
         @if($timer)
-
             <!--div style="font-size: 2rem !important;" CLASS="mb-2 countdown btn-lg badge badge-pill badge-success" hours="<?= $hours; ?>" minutes="<?= $minutes; ?>" seconds="<?= $seconds; ?>"
              title="Time is approximate and not a guarantee"><?= $time; ?></div-->
         @elseif($place != "email")
@@ -240,8 +242,10 @@
             //echo "last4-3: " . $last4;
             //vardump($data);
             $HTML = view("popups_receiptdata", $data)->render();
-            if (!is_dir($dir)) {mkdir($dir, 0777, true);}
-            file_put_contents($HTMLfilename, $HTML);
+            if($orderid){
+                if (!is_dir($dir)) {mkdir($dir, 0777, true);}
+                file_put_contents($HTMLfilename, $HTML);
+            }
         }
 
         if((read("id") != $Order["user_id"] && read("profiletype") == 0) || $party == "Private"){
@@ -255,7 +259,7 @@
             $last4 = "";
         }
         $HTML = str_replace("(LAST4)", $last4, $HTML);
-        $HTML = str_replace('COLSPAN="-4"', 'COLSPAN="2"', $HTML);
+        $HTML = str_replace(array('COLSPAN="-4"', 'COLSPAN="0"'), 'COLSPAN="2"', $HTML);
 
         echo $HTML;
         if($party != "private"){
