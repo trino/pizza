@@ -17,7 +17,7 @@
             $css = webroot("public/css");
             $routename = Route::getCurrentRoute()->uri();
             $minimal = true;//also change in index.blade.php
-            $noclose = !read("id");
+            $noclose = false;//!read("id");
         ?>
 
         <script type="text/javascript">

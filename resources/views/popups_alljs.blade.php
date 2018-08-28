@@ -352,7 +352,8 @@ includefile("public/scripts/api.js");
         $(".profiletype").hide();
         userdetails = false;
         firstsignin = false;
-        if(isIndex()){showlogin("logout");}
+        //if(isIndex()){showlogin("logout");}
+        handlelinks();
     }
 
     var generalhours = <?= json_encode(gethours()) ?>;
@@ -420,6 +421,16 @@ includefile("public/scripts/api.js");
         }
     }
 
+    var links = "";
+    function handlelinks(){
+        if(links.length == 0){links = $(".profiletype1").html();}
+        if(userdetails == false || userdetails["profiletype"] != 1){
+            $(".profiletype1").html("");
+        } else {
+            $(".profiletype1").html(links);
+        }
+    }
+
     //handle a user login
     function login(user, isJSON) {
         if (isUndefined(user)) {
@@ -439,6 +450,8 @@ includefile("public/scripts/api.js");
         $(".loggedout").hide();//hide loggedout class
         $(".profiletype").hide();//hide all profile type clasdses
         $(".profiletype" + user["profiletype"]).show();//show classes for this profile type
+
+        handlelinks();
 
         $(".profiletype_not").show();
         $(".profiletype_not" + user["profiletype"]).hide();
