@@ -1965,8 +1965,13 @@ function userisloggedin(){
     return userdetails.hasOwnProperty("id");
 }
 
+var needscheckout = false;
 function showcheckout() {
-    if(!userisloggedin()){return showlogin("showcheckout");}
+    if(!userisloggedin()){
+        needscheckout = true;
+        return showlogin("showcheckout");
+    }
+    needscheckout = false;
     $(getGoogleAddressSelector()).val("");
     //placeorderstate(false);
     var HTML = $("#checkoutaddress").html();

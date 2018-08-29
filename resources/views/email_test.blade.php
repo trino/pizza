@@ -6,4 +6,4 @@
 ?><BR>
 -
 <br>Thank you,
-<br>The <?= sitename; ?> Team
+<br>The <A HREF="https://<?= callurl ?>"><?= sitename; ?> Team</A>
