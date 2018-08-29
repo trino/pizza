@@ -16,6 +16,7 @@
     if (!isset($justright)) {$justright = false;}
     if (!isset($noclose)) {$noclose = false;}
     if (!isset($dohours)) {$dohours = true;}
+    if (!isset($showlogin)) {$showlogin = true;}
 ?>
 
 @if(!$justright)
@@ -119,7 +120,7 @@
                     ?>
                 </FORM>
                 <FORM Name="regform" id="regform">
-                    <?= view("popups_edituser", array("phone" => false, "autocomplete" => "new-password", "required" => true, "icons" => true))->render(); ?>
+                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true))->render(); ?>
                 </FORM>
                 <div class="clearfix py-2"></div>
                 <button class="btn btn-block btn-primary" onclick="register();">
@@ -291,10 +292,14 @@
                 rules: {
                     name: "required",
                     @if(!$minimal)
-                    formatted_address: {
-                        validaddress: true,
-                        required: true
-                    },
+                        formatted_address: {
+                            validaddress: true,
+                            required: true
+                        },
+                        phone: {
+                            phonenumber: true,
+                            required: true
+                        },
                     @endif
                     email: {
                         required: true,
@@ -326,7 +331,8 @@
                         required: "Please enter your email address",
                         email: "Please enter a valid email address",
                         remote: "Please enter a unique email address"
-                    }
+                    },
+                    phone: "Please enter a valid phone number"
                 },
                 submitHandler: function (form) {
                     if (checkaddress()) {
@@ -372,16 +378,16 @@
             });
         });
 
-        @if($minimal && $noclose)
-            CheckLoggedIn();
+        @if($showlogin)
+            CheckLoggedIn("popups_login");
         @endif
         $(document).ready(function () {
             $("#profile").removeClass("fade").removeClass("in");
         });
 
         function CheckLoggedIn() {
-            if (!userisloggedin() && !$('#loginmodal').is(':visible') && currentRoute == "/") {
-                //showlogin("document ready: " + currentRoute);
+            if (!userisloggedin() && !$('#loginmodal').is(':visible') && isIndex()) {
+                showlogin("document ready: " + currentRoute);
             }
         }
 

@@ -148,10 +148,10 @@ class AuthController extends Controller {
                         case "registration":
                             $RequireAuthorization = false;
                             $oldpassword = $_POST["password"];
-                            $address = $_POST["address"];
                             $user = [
                                 "name" => $_POST["name"],
                                 "email" => $_POST["email"],
+                                "phone" => $_POST["phone"],
                                 "password" => \Hash::make($_POST["password"]),
                                 "created_at" => now(),
                                 "updated_at" => 0
@@ -160,13 +160,17 @@ class AuthController extends Controller {
                                 $user["authcode"] = $this->guidv4();
                             }
                             $user["id"] = insertdb("users", $user);
-                            if(is_array($address)) {
-                                unset($address["formatted_address"]);
-                                if (!islive() && strtolower($_POST["name"]) == "test") {
-                                    $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1", true, "AuthController.login")["id"];
-                                } else {
-                                    $address["user_id"] = $user["id"];
-                                    insertdb("useraddresses", $address);
+
+                            if(isset($_POST["address"])) {
+                                $address = $_POST["address"];
+                                if (is_array($address)) {
+                                    unset($address["formatted_address"]);
+                                    if (!islive() && strtolower($_POST["name"]) == "test") {
+                                        $address["user_id"] = first("SELECT id FROM users WHERE profiletype = 1", true, "AuthController.login")["id"];
+                                    } else {
+                                        $address["user_id"] = $user["id"];
+                                        insertdb("useraddresses", $address);
+                                    }
                                 }
                             }
 

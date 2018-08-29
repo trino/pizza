@@ -65,7 +65,8 @@
         <div class="list-group-item container-fluid shadow bg-danger">
             <button data-toggle="dropdown" style="width:38px; outline: none !important;
    box-shadow: none;" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
-                <i class="fa fa-bars text-white"></i>
+                <i class="fa fa-bars text-white loggedout"></i>
+                <i class="fa fa-user icon-width loggedin"></i>
             </button>
 
             <ul class="dropdown-menu dropdown-menu-left" ID="dropdown-menu">
