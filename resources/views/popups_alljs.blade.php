@@ -11,6 +11,7 @@
 
     function log(text) {
         @if(debugmode) console.log(text); @endif
+        return text;
     }
 
     !function (e) {
@@ -412,10 +413,13 @@ includefile("public/scripts/api.js");
 
     function showlogin(Why){
         if(isUndefined(Why)){Why = "Unknown";}
-        log("showlogin: " + Why + " route: " + currentRoute + " isIndex: " + isIndex());
+        log("showlogin: " + Why + " route: " + currentRoute + " isIndex: " + isIndex() + " Islogged in:" + userisloggedin());
         if(isIndex()){
-            $("#loginmodal").modal("show");
-            suppressback = Date.now() + 200;
+            if(!userisloggedin()) {
+                $("#loginmodal").modal("show");
+                $("#logintab").click();
+                suppressback = Date.now() + 200;
+            }
         } else if(Why == "login") {
             window.location = webroot;
         }

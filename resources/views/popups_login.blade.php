@@ -378,16 +378,14 @@
             });
         });
 
-        @if($showlogin)
-            CheckLoggedIn("popups_login");
-        @endif
         $(document).ready(function () {
             $("#profile").removeClass("fade").removeClass("in");
+            @if($showlogin) CheckLoggedIn("popups_login"); @endif
         });
 
-        function CheckLoggedIn() {
+        function CheckLoggedIn(Where) {
             if (!userisloggedin() && !$('#loginmodal').is(':visible') && isIndex()) {
-                showlogin("document ready: " + currentRoute);
+                showlogin("document ready: " + currentRoute + " Where: " + Where);
             }
         }
 
