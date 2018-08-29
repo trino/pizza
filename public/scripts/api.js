@@ -1703,7 +1703,7 @@ function ajaxerror(errortext, title){
     }
     skipunloadingscreen=false;
     paydisabled=false;
-    loading(false, "ajaxerror");
+    forceloading(false, "ajaxerror");
 }
 
 function toast(Text) {
@@ -1712,6 +1712,7 @@ function toast(Text) {
     x.innerHTML = Text;
     //log("toast: " + Text);
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    forceloading(false, "toast");
 }
 
 function rnd(min, max) {
