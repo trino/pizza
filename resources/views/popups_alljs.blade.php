@@ -482,6 +482,7 @@ includefile("public/scripts/api.js");
                 return false;
             }
         }
+        if(needscheckout){showcheckout();}
         return true;
     }
 
