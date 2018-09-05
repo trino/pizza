@@ -15,7 +15,7 @@ Customer Order
             "party" => $party
     ))->render();
     $Styles = array(
-        "TD" => "border: 0px solid #eceeef; display: table-cell;",
+        "TD" => "border: none !important; display: table-cell;",
         "TH" => "border-color: #55595c; border-bottom: 0px solid #eceeef; padding:0rem; display: table-cell; border-right: 0px solid #eceeef;",
         "th" => "border-color: #55595c; border-bottom: 0px solid #eceeef; padding: 0rem; display: table-cell;"//hack for last TH in a TR
     );

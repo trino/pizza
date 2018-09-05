@@ -838,12 +838,6 @@ includefile("public/scripts/api.js");
                 </button>
             </div>
             <div class="modal-body">
-                <!--div class="pull-center mb-1" id="exclame">
-                    <span class="fa-stack fa-3x">
-                          <i class="text-danger fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-exclamation text-white fa-stack-1x"></i>
-                        </span>
-                <div-->
                 <DIV ID="alertmodalbody" class="py-1"></DIV>
                 <div CLASS="pull-center">
                     <button class="btn btn-outline-primary alert-button" id="alert-cancel" data-dismiss="modal">

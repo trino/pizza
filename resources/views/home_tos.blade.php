@@ -13,7 +13,9 @@
         $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
         $GLOBALS["currentnumber"] = 1;
         function p($isletter = false){
-            if($isletter){
+            if($isletter == "hidden"){
+                echo '<P STYLE="display: none;">';
+            } else if($isletter){
                 echo '<P CLASS="tab">' . $GLOBALS["currentletter"] . ") ";
                 $GLOBALS["currentletter"] = chr(ord($GLOBALS["currentletter"]) + 1);
             } else {
@@ -34,11 +36,8 @@
     <p>If you are accepting these terms of use on behalf a corporation or other entity, you represent and warrant that you have the necessary right and authority to enter into these terms of
         use on behalf of such corporation or entity and to bind such corporation or entity to these terms of use. </p>
 
-    <?php /*p(); Our Service: The  $site_name service allows users to place "Meal of the Day" orders for food delivery or take out from participating restaurants identified on the website (the
-                'Service'). You can use the Service from a computer or personal mobile device via an internet connection or data plan $site_name, and the restaurants offering service, are not
-                responsible for any data or Internet usage fees. $site_name is an ordering service only, and does not prepare the food or provide delivery service. Therefore we are not liable
-                for the actions or omissions of any third-party independent courier contractors or restaurants that provide services through our Service. This is not limited to but includes issues
-                regarding food quality or timeliness of delivery. </p> */ ?>
+    <?= p("hidden"); ?> Our Service: The {{ $site_name }} service allows users to place orders for food delivery or take out from participating restaurants identified on the website (the                 'Service'). You can use the Service from a computer or personal mobile device via an internet connection or data plan $site_name, and the restaurants offering service, are not                   responsible for any data or Internet usage fees. $site_name is an ordering service only, and does not prepare the food or provide delivery service. Therefore we are not liable for the           actions or omissions of any third-party independent courier contractors or restaurants that provide services through our Service. This is not limited to but includes issues
+        regarding food quality or timeliness of delivery. </p>
 
     <?= p(); ?>Account Registration: You must create an account on the Website in order to place orders through the Service. Registration includes your delivery and payment information. As a
     registered user, you will have private access to member services such as the ability to review previous orders. All personal information provided by you will be handled in accordance

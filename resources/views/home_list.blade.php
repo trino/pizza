@@ -550,10 +550,8 @@
                     foreach($results["data"] as $index => $value){
                         $JSON = "";
                         if(containsitems($value["id"], $search, $_POST["search"], $JSON)){
-                            /*
-                            $data["orderid"] = $value["id"];
-                            $results["data"][$index]["html"] = view("popups_receipt", $data)->render();//won't work, gets cached
-                            */
+                            //$data["orderid"] = $value["id"]; wont work, gets cached
+                            //$results["data"][$index]["html"] = view("popups_receipt", $data)->render();
                         } else {
                             unset($results["data"][$index]);
                         }
@@ -912,7 +910,7 @@
                                         }
                                         echo 'Menu cache last update: <SPAN ID="filetime">' . $filetime . '</SPAN>';
                                         echo '<BR><a class="btn btn-sm btn-danger cursor-pointer" onclick="settingaction(1);" id="setting1">Delete Session Variables and Cookie</a>';
-                                        if($profiletype == 1){//non-admins should not have access to all the data!
+                                        if($profiletype == 1){
                                             echo '<BR><A class="btn btn-sm btn-primary cursor-pointer" HREF="' . webroot("list/dump") . '" download="ai.sql">Export SQL</A>';
                                         }
                                         break;

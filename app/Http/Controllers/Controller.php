@@ -16,6 +16,7 @@ class Controller extends BaseController {
         }
         return $data;
     }
+
     public function isadmin($emailORphone){
         $TrueForEmailFalseForPhoneNumber = !isvalidphone($emailORphone);
         $emailaddresses = enumadmins($TrueForEmailFalseForPhoneNumber);
