@@ -178,7 +178,7 @@
 <br>                <div class="btn-outlined-danger text-center pt-1">
                     <strong>August, 2018</strong>
                     <p> Orders: <?= $orders; ?>
-                        <br> Donated: <?= $donations . " " . $units_donated; ?>
+                        <br> Donated: <?= $donations+1 . " " . $units_donated; ?>
                         <br> Charity: Hamilton Food Centre</p>
                 </div>
             </div>
