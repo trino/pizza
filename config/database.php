@@ -32,7 +32,7 @@ return [
     */
 
     'constants' => [
-        "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/ai/",
+        "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/pizza/",
         "callurl" => "hamiltonpizza.ca",
         "sitename" => "Hamilton Pizza (localhost)",
         "cityname" => "local",
