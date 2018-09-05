@@ -108,16 +108,33 @@ class Controller extends BaseController {
     }
 
     //https://www.twilio.com/ $0.0075 per SMS, + $1 per month
-    public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false, $delay_seconds = 2){
+    public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false){
         $Phone = $this->processadmin($Phone, false, "Controller.sendSMS");
         if (is_array($Phone)) {
+            $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . implode(", ", $Phone);
             foreach ($Phone as $Index => $PhoneNumber) {
-                $this->sendSMS($PhoneNumber, str_replace("[index]", $Index, $Message), $Call);
+                $ret .= "\r\n" . $this->sendSMS($PhoneNumber, str_replace("[index]", $Index, $Message), $Call, $force, $gather);
+                sleep(1);
             }
-            return true;
+            return $ret;
         }
-        $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . $Phone . " - " . $Message;
+
         $Phone = filternonnumeric($Phone);
+        $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . $Phone . " - " . $Message;
+
+        /*
+        if(!is_array($Phone)){$Phone = [$Phone];}
+        foreach($Phone as $ID => $Value){
+            $Phone[$ID] = filternonnumeric($Value);
+        }
+        if(!$force && in_array("9055123067", $Phone)){
+            unset($Phone[array_search("9055123067", $Phone)]);
+        }
+        $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . implode(", ", $Phone) . " - " . $Message;//$Phone = filternonnumeric($Phone);
+        if ((islive() || $force) && count($Phone)) {//never call me
+        if(is_array($Phone) && count($Phone) == 1){$Phone = $Phone[0];}
+        */
+
         if (((islive() && ($Phone !== "9055123067")) || $force) && $Phone) {//never call me
             $sid = 'AC81b73bac3d9c483e856c9b2c8184a5cd';
             $token = "3fd30e06e99b5c9882610a033ec59cbd";
@@ -141,7 +158,6 @@ class Controller extends BaseController {
                 $data = array("From" => $fromnumber, "To" => $Phone, "Body" => $Message);
             }
             $return = $this->cURL($URL, http_build_query($data), $sid, $token);
-            sleep($delay_seconds);
             if($return){
                 if(debugmode){debugprint($ret . " - " . $return);}
                 $data["URL"] = $URL;
