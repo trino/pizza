@@ -13,29 +13,39 @@
         function printarow($Name, $Prepend, $field) {
             if($GLOBALS["icons"]){
                 if(!isset($field["icon"])){$field["icon"] = "fa-user";}
-                echo '<div class="input_left_icon"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa ' . $field["icon"] . ' text-white fa-stack-1x"></i></span></div><div class="input_right">';
+                $STYLE="";
+                if($field["type"] == "html"){
+                    $STYLE=' STYLE="height: 49px; display: table"';
+                }
+                echo '<div class="input_left_icon"><span class="fa-stack fa-2x" ID="c' . $Name . '"><i class="fa fa-circle fa-stack-2x"></i><i class="fa ' . $field["icon"] . ' text-white fa-stack-1x"></i></span></div><div class="input_right"' . $STYLE . '>';
             }
-            echo '<INPUT TYPE="' . $field["type"] . '" NAME="' . $field["name"] . '" ID="' . $Prepend . '_' . $field["name"] . '"';
-            if (isset($field["class"]))                                     {echo ' CLASS="' . trim($field["class"]) . '" ';}
-            if (isset($field["value"]))                                     {echo ' value="' . $field["value"] . '" ';}
-            if (isset($field["min"]))                                       {echo ' min="' . $field["min"] . '" ';}
-            if (isset($field["maxlen"]))                                    {echo ' min="' . $field["maxlen"] . '" ';}
-            if (isset($field["max"]))                                       {echo ' max="' . $field["max"] . '" ';}
-            if (isset($field["readonly"]))                                  {echo ' readonly';}
-            if (isset($field["autocomplete"]) && $field["autocomplete"])    {echo ' autocomplete="' . $field["autocomplete"] . '"';}
-            if (isset($field["title"]) && $field["title"])                  {echo ' title="' . $field["title"] . '"';}
-            if (isset($field["placeholder"]))                               {echo ' placeholder="' . $field["placeholder"] . '" ';}
-            if (isset($field["corner"]))                                    {echo ' STYLE="border-' . $field["corner"] . '-radius: 5px;"';}
-            if (isset($field["required"]) && $field["required"])            {echo ' REQUIRED';}
-            echo '>';
+            if($field["type"] == "html"){
+                echo '<DIV STYLE="display:table-cell; vertical-align: middle;">' . $field["html"] . '</DIV>';
+                //if(isset($field["outsidehtml"])){echo '<DIV CLASS="clearfix"></DIV>' . $field["outsidehtml"];}
+            } else {
+                echo '<INPUT TYPE="' . $field["type"] . '" NAME="' . $field["name"] . '" ID="' . $Prepend . '_' . $field["name"] . '"';
+                if (isset($field["class"]))                                     {echo ' CLASS="' . trim($field["class"]) . '" ';}
+                if (isset($field["value"]))                                     {echo ' value="' . $field["value"] . '" ';}
+                if (isset($field["min"]))                                       {echo ' min="' . $field["min"] . '" ';}
+                if (isset($field["maxlen"]))                                    {echo ' min="' . $field["maxlen"] . '" ';}
+                if (isset($field["max"]))                                       {echo ' max="' . $field["max"] . '" ';}
+                if (isset($field["readonly"]))                                  {echo ' readonly';}
+                if (isset($field["autocomplete"]) && $field["autocomplete"])    {echo ' autocomplete="' . $field["autocomplete"] . '"';}
+                if (isset($field["title"]) && $field["title"])                  {echo ' title="' . $field["title"] . '"';}
+                if (isset($field["placeholder"]))                               {echo ' placeholder="' . $field["placeholder"] . '" ';}
+                if (isset($field["corner"]))                                    {echo ' STYLE="border-' . $field["corner"] . '-radius: 5px;"';}
+                if (isset($field["required"]) && $field["required"])            {echo ' REQUIRED';}
+                echo '>';
+            }
             if($GLOBALS["icons"]){ echo '</DIV>';}
         }
     }
 
-    if (!isset($password)) {$password = true;}
-    if (!isset($email)) {$email = true;}
-    if (!isset($autocomplete)) {$autocomplete = "";}
-    if (!isset($required)) {$required = false;}
+    if (!isset($password))      {$password = true;}
+    if (!isset($age))           {$age = false;}
+    if (!isset($email))         {$email = true;}
+    if (!isset($autocomplete))  {$autocomplete = "";}
+    if (!isset($required))      {$required = false;}
     $GLOBALS["icons"] = isset($icons) && $icons;
     if(isset($class)){$class .= " form-control ";} else {$class = "form-control ";}
 
@@ -61,11 +71,27 @@
     if (isset($address) && $address) {
         echo view("popups_address", array("style" => 1))->render();
     }
+    if ($age) {
+        printarow("minimumage", $name, array("name" => "minimumage", "type" => "html", "class" => $class, "required" => true, "icon" => "fa-birthday-cake", "html" =>
+                'Are you over 19?
+                    <LABEL CLASS="radio-label"><INPUT TYPE="radio" NAME="minimumage" ID="minimumage" VALUE="yes" ONCLICK="clickage(true);" ERROR="You must be over 19 to use this site">Yes</LABEL>
+                    <LABEL CLASS="radio-label"><INPUT TYPE="radio" NAME="minimumage" VALUE="no"  ONCLICK="clickage(false);" CHECKED>No</LABEL>
+                    <DIV ID="error-minimumage" CLASS="error"></DIV>
+                '
+        ));
+    }
     echo '</DIV>';
 ?>
 <SCRIPT>
     var minlength = 5;
     redirectonlogout = true;
+
+    function clickage(value){
+        if(value){
+            $("#error-minimumage").text("");
+            $("#cAge").removeClass("redhighlite");
+        }
+    }
 
     function userform_submit(isSelf) {
         if(validateform("#userform")) {
@@ -140,7 +166,7 @@
                         return $("form[name='user']").find("input[name=oldpassword]").val().length > 0;
                     },
                     minlength: minlength
-                }
+                },
             },
             messages: {
                 name: "Please enter your name",

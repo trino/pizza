@@ -1,223 +1,223 @@
 @extends('layouts_app')
 @section('content')
     <?php
-    $dead_color = "#dadada";//RED
-    $live_color = "#FF0000";//GREEN
-    $invalid_color = "#000000";//BLACK
-    $local_color = "#000064";//BLUE
+        $dead_color = "#dadada";//RED
+        $live_color = "#FF0000";//GREEN
+        $invalid_color = "#000000";//BLACK
+        $local_color = "#000064";//BLUE
 
-    if (!islive() || read("profiletype") == 1) {
-       // echo view("popups_time")->render();
-    }
-    use App\Http\Controllers\HomeController;//used for order "closestrestaurant"
-    //profiletypes: 0=user, 1=admin, 2=restaurant
-    echo '<DIV CLASS="row"><DIV CLASS="col-md-9">';
-    echo view("popups_address", array("dontincludeGoogle" => true, "unit" => false, "title" => "", "address" => $_GET))->render();
-    echo '</DIV><DIV CLASS="col-md-3" ><BUTTON  CLASS="btn btn-sm btn-success full-width full-height" ONCLICK="search();">Search</BUTTON></DIV></DIV>';
-    function get_number($GET){
-        if (isset($_GET[$GET]) && is_numeric($_GET[$GET])) {
-            return $_GET[$GET];
+        if (!islive() || read("profiletype") == 1) {
+           // echo view("popups_time")->render();
         }
-        return false;
-    }
-    $markers = array();
-    $latitude = get_number("latitude");
-    $longitude = get_number("longitude");
-    $radius = iif(read("profiletype") == 1, 100, 10);//range
-    $restaurants = [];//is a user, no address specified (list no restaurants)
-    $restaurant_id = -1;
-    if (read("profiletype") == 2 || isset($_GET["restaurantid"])) {//is a restaurant, or restaurant ID specified (list only their restaurant)
-        if (isset($_GET["restaurantid"])) {//restaurant ID specified
-            $restaurant_id = $_GET["restaurantid"];
-        } else {//is a restaurant
-            $restaurant_id = findrestaurant(read("id"));
+        use App\Http\Controllers\HomeController;//used for order "closestrestaurant"
+        //profiletypes: 0=user, 1=admin, 2=restaurant
+        echo '<DIV CLASS="row"><DIV CLASS="col-md-9">';
+        echo view("popups_address", array("dontincludeGoogle" => true, "unit" => false, "title" => "", "address" => $_GET))->render();
+        echo '</DIV><DIV CLASS="col-md-3" ><BUTTON  CLASS="btn btn-sm btn-success full-width full-height" ONCLICK="search();">Search</BUTTON></DIV></DIV>';
+        function get_number($GET){
+            if (isset($_GET[$GET]) && is_numeric($_GET[$GET])) {
+                return $_GET[$GET];
+            }
+            return false;
         }
-        if (is_numeric($restaurant_id)) {
-            $restaurants = Query("SELECT * FROM restaurants WHERE id = " . $restaurant_id, true, "home_map");
-        } else {
-            $restaurant_id = "'" . $restaurant_id . "'";
+        $markers = array();
+        $latitude = get_number("latitude");
+        $longitude = get_number("longitude");
+        $radius = iif(read("profiletype") == 1, 100, 10);//range
+        $restaurants = [];//is a user, no address specified (list no restaurants)
+        $restaurant_id = -1;
+        if (read("profiletype") == 2 || isset($_GET["restaurantid"])) {//is a restaurant, or restaurant ID specified (list only their restaurant)
+            if (isset($_GET["restaurantid"])) {//restaurant ID specified
+                $restaurant_id = $_GET["restaurantid"];
+            } else {//is a restaurant
+                $restaurant_id = findrestaurant(read("id"));
+            }
+            if (is_numeric($restaurant_id)) {
+                $restaurants = Query("SELECT * FROM restaurants WHERE id = " . $restaurant_id, true, "home_map");
+            } else {
+                $restaurant_id = "'" . $restaurant_id . "'";
+            }
+        } else if (read("profiletype") == 1 && (!$latitude && !$longitude)) {//is an admin, no address specified (list all restaurants)
+            $restaurants = Query("SELECT * FROM restaurants WHERE address_id > 0", true, "home_map");
+        } else if ($latitude && $longitude) {//address specified (list restaurants within range)
+            $restaurants = App::make('App\Http\Controllers\HomeController')->closestrestaurant(["limit" => 5, "latitude" => $latitude, "longitude" => $longitude, "radius" => $radius, "merge" => true], false, false);
+            $markers[] = array($_GET["formatted_address"], $_GET["formatted_address"], $_GET["latitude"], $_GET["longitude"], -1, -1);
+            //closestrestaurant($data[restaurant_id, limit, latitude, longitude, radius, merge], $gethours = false, $includesql = true)
         }
-    } else if (read("profiletype") == 1 && (!$latitude && !$longitude)) {//is an admin, no address specified (list all restaurants)
-        $restaurants = Query("SELECT * FROM restaurants WHERE address_id > 0", true, "home_map");
-    } else if ($latitude && $longitude) {//address specified (list restaurants within range)
-        $restaurants = App::make('App\Http\Controllers\HomeController')->closestrestaurant(["limit" => 5, "latitude" => $latitude, "longitude" => $longitude, "radius" => $radius, "merge" => true], false, false);
-        $markers[] = array($_GET["formatted_address"], $_GET["formatted_address"], $_GET["latitude"], $_GET["longitude"], -1, -1);
-        //closestrestaurant($data[restaurant_id, limit, latitude, longitude, radius, merge], $gethours = false, $includesql = true)
-    }
-    $addressIDs = array();
-    foreach ($restaurants as $restaurant) {
-        if (!in_array($restaurant["address_id"], $addressIDs)) {
-            $addressIDs[] = $restaurant["address_id"];
-        }
-    }
-    if ($addressIDs) {
-        $addressIDs = implode(",", $addressIDs);
-        $addresses = Query("SELECT * FROM useraddresses WHERE id IN (" . $addressIDs . ")", true, "home_map");
-        $hours = Query("SELECT * FROM hours WHERE restaurant_id IN (0," . $addressIDs . ")", true, "home_map");
-    }
-    function findwhere($array, $key, $value, $retdata = false){
-        foreach ($array as $index => $data) {
-            if ($data[$key] == $value) {
-                if ($retdata) {
-                    return $data;
-                }
-                return $index;
+        $addressIDs = array();
+        foreach ($restaurants as $restaurant) {
+            if (!in_array($restaurant["address_id"], $addressIDs)) {
+                $addressIDs[] = $restaurant["address_id"];
             }
         }
-        return false;
-    }
-    function clean($text){
-        $text = stripslashes($text);
-        $text = iconv('UTF-8', 'UTF-8//IGNORE', $text);
-        return $text;
-    }
-    function restaurantdata($restaurant, $includeName = true, $newline = '<BR>'){
-        $HTML = iif($includeName, $restaurant["name"]);
-        if (strlen(filternonnumeric($restaurant["email"])) == 10 && !textcontains($restaurant["email"], "@")) {
-            $restaurant["phone"] = $restaurant["email"];
-            $restaurant["email"] = "";
+        if ($addressIDs) {
+            $addressIDs = implode(",", $addressIDs);
+            $addresses = Query("SELECT * FROM useraddresses WHERE id IN (" . $addressIDs . ")", true, "home_map");
+            $hours = Query("SELECT * FROM hours WHERE restaurant_id IN (0," . $addressIDs . ")", true, "home_map");
         }
-        if ($restaurant["email"]) {
-            $HTML .= $newline . "Email: " . $restaurant["email"];
-        }
-        if ($restaurant["phone"]) {
-            $HTML .= $newline . "Phone: " . formatphone($restaurant["phone"]);
-        }
-        $HTML .= $newline . "Address: " . addressdata($restaurant["address"], $newline);
-        $HTML .= $newline . "Hours: " . hourdata($restaurant["hours"]);
-        $HTML .= $newline . "Is live: " . iif($restaurant["is_delivery"], "Yes", "No");
-        if (startswith($HTML, $newline)) {
-            $HTML = right($HTML, strlen($HTML) - strlen($newline));
-        }
-        return $HTML;
-    }
-    function addressdata($address, $newline){
-        $debugdata = "";
-        if (!is_numeric($address["latitude"]) || !is_numeric($address["longitude"])) {
-            $debugdata = $newline . "Invalid Latitude and/or Longitude data for address ID: " . $address["id"];
-        }
-        if ($address["number"] == 0) {
-            return $address["street"] . $debugdata;
-        } else {
-            return $address["number"] . " " . iif($address["unit"], " (Unit" . $address["unit"] . ")") . $address["street"] . ", " . $address["city"] . ", " . $address["province"] . " " . $address["postalcode"] . $debugdata;
-        }
-    }
-    function hourdata($hours){
-        $dayofweek = date("w");
-        $time = date("Gi");
-        $today_open = $hours[$dayofweek . "_open"];
-        $today_close = $hours[$dayofweek . "_close"];
-        $dayofweek = $dayofweek - 1;
-        if ($dayofweek == -1) {
-            $dayofweek = 6;
-        }
-        $yesterday_open = $hours[$dayofweek . "_open"];
-        $yesterday_close = $hours[$dayofweek . "_close"];
-        if ($today_close > $today_open && $today_open < $time && $today_close > $time) {
-            return "Open: " . GenerateTime($today_open) . " - Close: " . GenerateTime($today_close);
-        } else if ($today_close < $today_open && $today_open < $time) {
-            return "Open: " . GenerateTime($today_open) . " - Close: " . GenerateTime($today_close);
-        } else if ($yesterday_close < $yesterday_open && $yesterday_close > $time) {
-            return "Open: " . GenerateTime($yesterday_open) . " - Close: " . GenerateTime($yesterday_close);
-        } else if ($time > $today_close && $today_close > 0) {
-            return "Closed at: " . GenerateTime($today_close);
-        }
-        return "Closed";
-    }
-
-
-
-    if (isset($_GET["restaurantid"])) {
-        echo '<DIV CLASS="row"><DIV ID="orders_list" CLASS="col-md-12"></DIV><DIV CLASS="col-md-12">';
-    } else {
-        echo '<DIV CLASS="row">';
-        if (count($restaurants)) {
-            foreach ($restaurants as $index => $restaurant) {
-                $address = findwhere($addresses, "id", $restaurant["address_id"], true);
-                $hoursID = findwhere($hours, "restaurant_id", $restaurant["id"]);
-                if ($hoursID == false) {
-                    $hoursID = findwhere($hours, "restaurant_id", 0);
-                }
-                $restaurant["hours"] = $hours[$hoursID];
-                $restaurant["address"] = $address;
-                $distance = "";
-                if (isset($restaurant["distance"])) {
-                    $distance = " (" . round($restaurant["distance"], 2) . " km)";
-                }
-                if ($address !== false) {
-                    $class = "invalid";
-                    $restaurant["name"] = clean($restaurant["name"]);
-                    if (is_numeric($address["latitude"]) && is_numeric($address["longitude"])) {
-                        $markers[] = array(
-                            $restaurant["name"],
-                            restaurantdata($restaurant),
-                            $address["latitude"],
-                            $address["longitude"],
-                            iif($restaurant["is_delivery"], "1", "0"),
-                            $restaurant["id"]
-                        );
-                        $class = iif($restaurant["is_delivery"], "live", "dead");
+        function findwhere($array, $key, $value, $retdata = false){
+            foreach ($array as $index => $data) {
+                if ($data[$key] == $value) {
+                    if ($retdata) {
+                        return $data;
                     }
-                    echo '<div class = "col-md-3 col-xs-6"><A style="background:#e6ecf0; font-weight:normal !important;font-size:75% !important;overflow: hidden !important;white-space: nowrap !important;"
- CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers) - 1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] . '"';
-                    for ($day = 0; $day < 7; $day++) {
-                        echo $day . '_open="' . $restaurant["hours"][$day . "_open"] . '" ' . $day . '_close="' . $restaurant["hours"][$day . "_close"] . '"';
-                    }
-                    echo '>' . $restaurant["name"] . $distance . '</A></div>';
+                    return $index;
                 }
             }
-        } else if ($latitude && $longitude) {
-            echo 'No restaurants found within ' . $radius . " km";
-        } else {
-            echo 'No address specified';
+            return false;
         }
-        echo '</DIV><DIV CLASS="row"><DIV CLASS="col-md-12">';
-    }
-    $JSONmarkers = json_encode($markers);
-    if (!$JSONmarkers) {
-        $JSONmarkers = "[]";
-        echo "Markers failed to encode to JSON";
-        vardump($markers);
-    } else {
-        echo view("popups_googlemaps");
-    }
-    $GET = $_GET;
-    unset($GET["restaurantid"]);
+        function clean($text){
+            $text = stripslashes($text);
+            $text = iconv('UTF-8', 'UTF-8//IGNORE', $text);
+            return $text;
+        }
+        function restaurantdata($restaurant, $includeName = true, $newline = '<BR>'){
+            $HTML = iif($includeName, $restaurant["name"]);
+            if (strlen(filternonnumeric($restaurant["email"])) == 10 && !textcontains($restaurant["email"], "@")) {
+                $restaurant["phone"] = $restaurant["email"];
+                $restaurant["email"] = "";
+            }
+            if ($restaurant["email"]) {
+                $HTML .= $newline . "Email: " . $restaurant["email"];
+            }
+            if ($restaurant["phone"]) {
+                $HTML .= $newline . "Phone: " . formatphone($restaurant["phone"]);
+            }
+            $HTML .= $newline . "Address: " . addressdata($restaurant["address"], $newline);
+            $HTML .= $newline . "Hours: " . hourdata($restaurant["hours"]);
+            $HTML .= $newline . "Is live: " . iif($restaurant["is_delivery"], "Yes", "No");
+            if (startswith($HTML, $newline)) {
+                $HTML = right($HTML, strlen($HTML) - strlen($newline));
+            }
+            return $HTML;
+        }
+        function addressdata($address, $newline){
+            $debugdata = "";
+            if (!is_numeric($address["latitude"]) || !is_numeric($address["longitude"])) {
+                $debugdata = $newline . "Invalid Latitude and/or Longitude data for address ID: " . $address["id"];
+            }
+            if ($address["number"] == 0) {
+                return $address["street"] . $debugdata;
+            } else {
+                return $address["number"] . " " . iif($address["unit"], " (Unit" . $address["unit"] . ")") . $address["street"] . ", " . $address["city"] . ", " . $address["province"] . " " . $address["postalcode"] . $debugdata;
+            }
+        }
+        function hourdata($hours){
+            $dayofweek = date("w");
+            $time = date("Gi");
+            $today_open = $hours[$dayofweek . "_open"];
+            $today_close = $hours[$dayofweek . "_close"];
+            $dayofweek = $dayofweek - 1;
+            if ($dayofweek == -1) {
+                $dayofweek = 6;
+            }
+            $yesterday_open = $hours[$dayofweek . "_open"];
+            $yesterday_close = $hours[$dayofweek . "_close"];
+            if ($today_close > $today_open && $today_open < $time && $today_close > $time) {
+                return "Open: " . GenerateTime($today_open) . " - Close: " . GenerateTime($today_close);
+            } else if ($today_close < $today_open && $today_open < $time) {
+                return "Open: " . GenerateTime($today_open) . " - Close: " . GenerateTime($today_close);
+            } else if ($yesterday_close < $yesterday_open && $yesterday_close > $time) {
+                return "Open: " . GenerateTime($yesterday_open) . " - Close: " . GenerateTime($yesterday_close);
+            } else if ($time > $today_close && $today_close > 0) {
+                return "Closed at: " . GenerateTime($today_close);
+            }
+            return "Closed";
+        }
+
+
+
+        if (isset($_GET["restaurantid"])) {
+            echo '<DIV CLASS="row"><DIV ID="orders_list" CLASS="col-md-12"></DIV><DIV CLASS="col-md-12">';
+        } else {
+            echo '<DIV CLASS="row">';
+            if (count($restaurants)) {
+                foreach ($restaurants as $index => $restaurant) {
+                    $address = findwhere($addresses, "id", $restaurant["address_id"], true);
+                    $hoursID = findwhere($hours, "restaurant_id", $restaurant["id"]);
+                    if ($hoursID == false) {
+                        $hoursID = findwhere($hours, "restaurant_id", 0);
+                    }
+                    $restaurant["hours"] = $hours[$hoursID];
+                    $restaurant["address"] = $address;
+                    $distance = "";
+                    if (isset($restaurant["distance"])) {
+                        $distance = " (" . round($restaurant["distance"], 2) . " km)";
+                    }
+                    if ($address !== false) {
+                        $class = "invalid";
+                        $restaurant["name"] = clean($restaurant["name"]);
+                        if (is_numeric($address["latitude"]) && is_numeric($address["longitude"])) {
+                            $markers[] = array(
+                                $restaurant["name"],
+                                restaurantdata($restaurant),
+                                $address["latitude"],
+                                $address["longitude"],
+                                iif($restaurant["is_delivery"], "1", "0"),
+                                $restaurant["id"]
+                            );
+                            $class = iif($restaurant["is_delivery"], "live", "dead");
+                        }
+                        echo '<div class = "col-md-3 col-xs-6"><A style="background:#e6ecf0; font-weight:normal !important;font-size:75% !important;overflow: hidden !important;white-space: nowrap !important;"
+     CLASS="rest-' . $class . '" lat="' . $address["latitude"] . '" long="' . $address["longitude"] . '" HREF="#" ONCLICK="return clickrest(this);" marker="' . (count($markers) - 1) . '" TITLE="' . restaurantdata($restaurant, false, ' - ') . '" ID="rest_' . $restaurant["id"] . '" NAME="' . $restaurant["name"] . '"';
+                        for ($day = 0; $day < 7; $day++) {
+                            echo $day . '_open="' . $restaurant["hours"][$day . "_open"] . '" ' . $day . '_close="' . $restaurant["hours"][$day . "_close"] . '"';
+                        }
+                        echo '>' . $restaurant["name"] . $distance . '</A></div>';
+                    }
+                }
+            } else if ($latitude && $longitude) {
+                echo 'No restaurants found within ' . $radius . " km";
+            } else {
+                echo 'No address specified';
+            }
+            echo '</DIV><DIV CLASS="row"><DIV CLASS="col-md-12">';
+        }
+        $JSONmarkers = json_encode($markers);
+        if (!$JSONmarkers) {
+            $JSONmarkers = "[]";
+            echo "Markers failed to encode to JSON";
+            vardump($markers);
+        } else {
+            echo view("popups_googlemaps");
+        }
+        $GET = $_GET;
+        unset($GET["restaurantid"]);
     ?>
-    <DIV ID="orders" STYLE="display:none;" CLASS="row">
-        <DIV ID="orders_header" CLASS="col-md-12 col-right">
-            Orders for: <SPAN ID="rest_name"><?php
-                if (isset($_GET["restaurantid"])) {
-                    if (is_numeric($_GET["restaurantid"])) {
-                        $restaurant = first("SELECT name FROM restaurants WHERE id = " . $_GET["restaurantid"], true, "home_map");
-                        echo $restaurant["name"];
-                    } else {
-                        echo "[Any Restaurant]";
-                    }
-                }
-                ?></SPAN>
-            <INPUT TYPE="BUTTON" VALUE="View Map" CLASS="vieworders float-right" ONCLICK="vieworders();">
+            <DIV ID="orders" STYLE="display:none;" CLASS="row">
+                <DIV ID="orders_header" CLASS="col-md-12 col-right">
+                    Orders for: <SPAN ID="rest_name"><?php
+                        if (isset($_GET["restaurantid"])) {
+                            if (is_numeric($_GET["restaurantid"])) {
+                                $restaurant = first("SELECT name FROM restaurants WHERE id = " . $_GET["restaurantid"], true, "home_map");
+                                echo $restaurant["name"];
+                            } else {
+                                echo "[Any Restaurant]";
+                            }
+                        }
+                        ?></SPAN>
+                    <INPUT TYPE="BUTTON" VALUE="View Map" CLASS="vieworders float-right" ONCLICK="vieworders();">
+                </DIV>
+                <DIV ID="orders_sidebar" CLASS="col-md-4">
+                    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                    <link rel="stylesheet" href="/resources/demos/style.css">
+                    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                    <INPUT TYPE="BUTTON" VALUE="Select Today" ONCLICK="selectdate();" CLASS="half-width">
+                    <INPUT TYPE="BUTTON" VALUE="Refresh/Search" ONCLICK="refresh();" CLASS="half-width">
+                    <BR>Start date:<BR>
+                    <div id="datepicker"></div>
+                    <LABEL><INPUT TYPE="checkbox" ID="useenddate" ONCHANGE="selectdate();"> Use end date:</LABEL><BR>
+                    <div id="datepicker_end"></div>
+                    <INPUT TYPE="text" PLACEHOLDER="Search term" ID="searchterm" ONBLUR="selectdate();" ONKEYPRESS="searchbutton(event);">
+                    @if(!isset($_GET["restaurantid"]))
+                        <DIV ID="orders_list"></DIV>
+                    @endif
+                </DIV>
+                <DIV ID="orders_content" CLASS="col-md-8 col-right"></DIV>
+            </DIV>
         </DIV>
-        <DIV ID="orders_sidebar" CLASS="col-md-4">
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <INPUT TYPE="BUTTON" VALUE="Select Today" ONCLICK="selectdate();" CLASS="half-width">
-            <INPUT TYPE="BUTTON" VALUE="Refresh/Search" ONCLICK="refresh();" CLASS="half-width">
-            <BR>Start date:<BR>
-            <div id="datepicker"></div>
-            <LABEL><INPUT TYPE="checkbox" ID="useenddate" ONCHANGE="selectdate();"> Use end date:</LABEL><BR>
-            <div id="datepicker_end"></div>
-            <INPUT TYPE="text" PLACEHOLDER="Search term" ID="searchterm" ONBLUR="selectdate();"
-                   ONKEYPRESS="searchbutton(event);">
-            @if(!isset($_GET["restaurantid"]))
-                <DIV ID="orders_list"></DIV> @endif
-        </DIV>
-        <DIV ID="orders_content" CLASS="col-md-8 col-right"></DIV>
     </DIV>
-    </DIV>
-    </DIV>
-    </DIV>
+</DIV>
     <STYLE>
         .rest-dead {
             color: <?= $dead_color; ?>;

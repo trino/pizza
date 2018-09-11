@@ -12,14 +12,13 @@
     <i class="fa fa-shopping-cart mr-2"></i> CHECKOUT
 </button>
 
-<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-     data-keyboard="false" data-backdrop="static">
+<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="myModalLabel" class="align-middle">Hi, <SPAN CLASS="session_name"></SPAN></h2>
-                <button data-dismiss="modal" data-popup-close="checkoutmodal"
-                        class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times"></i>
+                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent">
+                    <i class="fa fa-times"></i>
                 </button>
             </div>
             <FORM ID="orderinfo" name="orderinfo">

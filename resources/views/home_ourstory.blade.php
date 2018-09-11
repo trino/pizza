@@ -1,30 +1,5 @@
 @extends('layouts_app')
 @section('content')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <?
-    dd();
-    ?>
     <STYLE>
         H3{
             margin-bottom: 5px;
@@ -58,13 +33,9 @@
                 <br><br>
 
                 Thank you for your support.
-
-
-
-
             </p>
-            <hr>
 
+            <hr>
             <div class="btn-outlined-danger text-center pt-1">
                 <strong>June, 2017</strong>
                 <p>

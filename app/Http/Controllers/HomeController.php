@@ -57,7 +57,8 @@ class HomeController extends Controller {
                 case "testemail":
                     echo $this->sendEMail("email_test", array(
                         'mail_subject' => "test",
-                        "email" => read("email")
+                        "email" => read("email"),
+                        "body" => "This is a test email sent from the debug page"
                     ));
                     break;
                 //sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false)

@@ -1,4 +1,10 @@
 <?php
+if (!function_exists("islive")) {
+    function islive() {
+        return false;
+    }
+}
+
 return [
 
     /*
