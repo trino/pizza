@@ -33,9 +33,9 @@ return [
 
     'constants' => [
         "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/ai/",
-        "callurl" => "hamiltonpizza.ca",
-        "sitename" => "Hamilton Pizza (localhost)",
-        "cityname" => "local",
+        "callurl" => "hammerpizza.ca",
+        "sitename" => "Hammer Pizza",
+        "cityname" => "Hamilton",
         "islive" => false,
         "headercolor" => "#DC3545",
         "timezone" => "America/Toronto",
