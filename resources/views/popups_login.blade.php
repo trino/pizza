@@ -63,6 +63,8 @@ In the 2016 versions its in Settings > Editor > Code Style */
     if (!isset($noclose)) {$noclose = false;}
     if (!isset($dohours)) {$dohours = true;}
     if (!isset($showlogin)) {$showlogin = true;}
+    $database = $GLOBALS["app"]["config"]["database"]["connections"]["mysql"]["database"];
+    $iscanbii = $database == "canbii";
     // @formatter:off
 ?>
 
@@ -165,7 +167,7 @@ In the 2016 versions its in Settings > Editor > Code Style */
                     ?>
                 </FORM>
                 <FORM Name="regform" id="regform">
-                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true))->render(); ?>
+                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true, "age" => $database == "canbii"))->render(); ?>
                 </FORM>
                 <div class="clearfix py-2"></div>
                 <button class="btn btn-block btn-primary" onclick="register();">
@@ -325,6 +327,19 @@ In the 2016 versions its in Settings > Editor > Code Style */
             $("#dropdown-menu").hide();
         });
 
+        $.validator.addMethod('radioage', function (Data, element) {
+            var name = $(element).attr("name");
+            var ret = $('input[name=' + name + ']:checked').val() == "yes";
+            if(ret) {
+                $("#error-" + name).text("");
+                $("#c" + name).removeClass("redhighlite");
+            } else {
+                $("#error-" + name).text( $("#" + name).attr("error") );
+                $("#c" + name).addClass("redhighlite");
+            }
+            return ret;
+        }, "");
+
         $(function () {
             $("#signform").validate({
                 rules: {
@@ -347,14 +362,14 @@ In the 2016 versions its in Settings > Editor > Code Style */
                 rules: {
                     name: "required",
                     @if(!$minimal)
-                    formatted_address: {
-                        validaddress: true,
-                        required: true
-                    },
-                    phone: {
-                        phonenumber: true,
-                        required: true
-                    },
+                        formatted_address: {
+                            validaddress: true,
+                            required: true
+                        },
+                        phone: {
+                            phonenumber: true,
+                            required: true
+                        },
                     @endif
                     email: {
                         required: true,
@@ -374,7 +389,12 @@ In the 2016 versions its in Settings > Editor > Code Style */
                     },
                     password: {
                         minlength: minlength
-                    }
+                    },
+                    @if($iscanbii)
+                        minimumage:{
+                            radioage: true
+                        }
+                    @endif
                 },
                 messages: {
                     name: "Please enter your name",
@@ -388,7 +408,7 @@ In the 2016 versions its in Settings > Editor > Code Style */
                         remote: "Please enter a unique email address"
                     },
                     phone: "Please enter a valid phone number"
-                },
+                    },
                 submitHandler: function (form) {
                     if (checkaddress()) {
                         var formdata = getform("#regform");

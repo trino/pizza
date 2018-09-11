@@ -1,4 +1,9 @@
-
+.bg-green{
+    background-color: #008000 !important;
+}
+.text-green{
+    color: #008000;
+}
 
 :root {
     --min-height-global: 55px;
@@ -111,10 +116,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .hyperlink:hover {
     text-decoration: underline;
-}
-
-.align-middle {
-
 }
 
 .close-button, .cancel-button {
@@ -1047,6 +1048,10 @@ table tr td:last-child, table tr th:last-child {
     height: 1px;
 }
 
+.radio-label{
+    margin-left: 10px;
+}
+
 .pull-down-right {
     position: absolute;
     bottom: 8px;
@@ -1064,10 +1069,6 @@ table tr td:last-child, table tr th:last-child {
     border: solid black;
     background-color: white;
     z-index: 999;
-}
-
-.receipt-buttons {
-
 }
 
 /* firefox specific */

@@ -1,7 +1,4 @@
 <?php
-if(!isset($_SERVER["SERVER_NAME"])) {
-    $_SERVER["SERVER_NAME"] = "TEST";
-}
 
 return [
 
@@ -32,21 +29,19 @@ return [
     | so make sure you have the driver for your particular database of
     | choice installed on your machine before you begin development.
     |
-
-        $GLOBALS["app"]["config"]["database"]["constants"]
     */
 
     'constants' => [
         "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/pizza/",
         "callurl" => "hamiltonpizza.ca",
-        "sitename" => "Canbii (localhost)",
+        "sitename" => "Hamilton Pizza (localhost)",
         "cityname" => "local",
         "islive" => false,
         "timezone" => "America/Toronto",
 
-        "emailheadercolor" => "#008000",//can't be a CSS color
-        "headercolor" => "bg-green",
-        "textcolor" => "text-green"
+        "emailheadercolor" => "#DC3545",//can't be a CSS color
+        "headercolor" => "bg-danger",
+        "textcolor" => "text-danger"
     ],
 
     'connections' => [
@@ -61,7 +56,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
-            'database' => 'canbii',
+            'database' => env('DB_DATABASE', 'ai'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),

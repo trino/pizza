@@ -11,6 +11,7 @@ function setupconstants(){
     global $islive;
     $dirroot = str_replace("/public/", "", str_replace("\\", "/", public_path()) . "/");
     $data = include($dirroot . "/config/database.php");
+    //$data = $GLOBALS["app"]["config"]["database"]; vardump($data);die();
     if(!defined("serverurl")){
         foreach($data["constants"] as $key => $value){
             switch(filternumeric($key)){
@@ -423,6 +424,10 @@ if(!function_exists("is_iterable")) {
     function is_iterable($var) {
         return (is_array($var) || $var instanceof Traversable);
     }
+}
+
+function constants($key){
+    return $GLOBALS["app"]["config"]["database"]["constants"][$key];
 }
 
 function getbetween($text, $start, $end = false){

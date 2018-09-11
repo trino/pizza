@@ -61,7 +61,7 @@
 <div id="snackbar"></div>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
-<div class="list-group-item container-fluid shadow bg-danger">
+<div class="list-group-item container-fluid shadow {{ headercolor }}">
     <button data-toggle="dropdown" style="width:38px; outline: none !important;
    box-shadow: none;" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars text-white loggedout"></i>

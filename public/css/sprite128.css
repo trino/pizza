@@ -1,3 +1,18 @@
+.canbii{
+    width: 128px;
+    height: 128px;
+    margin-right: .75rem !important;
+    background-color: #008000 !important;
+}
+.caticon{
+    width: 128px;
+    height: 128px;
+}
+.item-icon{
+    text-align: center;
+    color: white;
+}
+
 .sprite {
     background-image: url('../../public/images/grid128.png');
     background-repeat: no-repeat;

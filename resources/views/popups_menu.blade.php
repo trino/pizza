@@ -66,7 +66,7 @@
 
         //converts a string to a class name (lowercase, replace spaces with underscores)
         function toclass($text){
-            $text = strtolower(str_replace(" ", "_", trim($text)));
+            $text = strtolower(str_replace([" ", "/"], "_", trim($text)));
             return $text;
         }
 
@@ -85,11 +85,22 @@
         }
 
         function makecategory(&$ID, $Name){
-            echo '<div class="text-danger strong list-group-item" ID="category_' . $ID . '">
+            echo '<div class="' . textcolor . ' strong list-group-item" ID="category_' . $ID . '" catname="' . toclass($Name) . '">
 <h2 CLASS="pull-left align-middle h2-middle">' . $Name . '</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
             $ID +=1;
         }
+
+        function geticon($fontawesomeicons, $category){
+            foreach($fontawesomeicons as $icon => $categories){
+                if(in_array($category, $categories)){
+                    return '<i class="fa-6x caticon ' . $icon . '"></i>';
+                }
+            }
+        }
     }
+
+    $database = $GLOBALS["app"]["config"]["database"]["connections"]["mysql"]["database"];
+    $CSS = iif($database == "canbii", "canbii", "sprite");
 
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
     $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true, "popups_menu.categories");
@@ -109,98 +120,87 @@
     $itemsInCol = 0;
     $CurrentCol = 1;
     $CurrentCat = 0;
+
+    $newcolumns = ["dips", "sides", "indica_premium", "sativa_premium"];//which categories to start a new column on
+    $fontawesomeicons = [
+        "far fa-moon"   => ["indica_basic", "sativa_basic", "hybrid_basic"],
+        "far fa-sun"    => ["indica_hq", "sativa_high_quality", "hybrid_high_quality"],
+        "fas fa-cloud"  => ["indica_premium", "sativa_premium", "hybrid_premium"]
+    ];
     echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 ?>
 <DIV CLASS="col-md-9">
     <DIV CLASS="row no-margin">
-<div class="col-lg-4 col-md-12 bg-white ismenu">
-    @foreach ($categories as $category)
-        <?php
-            $toppings_extra = '+';
-            $catclass = toclass($category['category']);
-            $classlist[] = $catclass;
-            $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' order by id", true, "popups_menu.foreach");
-            $menuitemcount = count($menuitems);
-            if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
-                $itemsInCol = 0;
-                $CurrentCol += 1;
-            }
-            $itemsInCol += $menuitemcount;
-            makecategory($CurrentCat, $category['category']);
-        ?>
-        @foreach ($menuitems as $menuitem)
-            <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
-                 itemid="{{$menuitem["id"]}}"
-                 itemname="{{trim($menuitem['item'])}}"
-                 itemprice="{{$menuitem['price']}}"
-                 itemsize="{{getsize($menuitem['item'], $isfree)}}"
-                 itemcat="{{$menuitem['category']}}"
-                 calories="{{$menuitem['calories']}}"
-                 allergens="{{$menuitem['allergens']}}"
-                 <?php
-                    $itemclass = $catclass;
-                    if ($itemclass == "sides") {
-                        $itemclass = str_replace("_", "-", toclass($menuitem['item']));
-                        if (endwith($itemclass, "lasagna")) {
-                            $itemclass = "lasagna";
-                        } else if (endwith($itemclass, "chicken-nuggets")) {
-                            $itemclass = "chicken-nuggets";
-                        } else if (endwith($itemclass, "salad")) {
-                            $itemclass = "salad";
-                        } else if ($itemclass == "panzerotti") {
-                            $icon = $toppings_extra;
-                        }
-                    } else if ($itemclass == "pizza") {
-                        if (left($menuitem['item'], 1) == "2") {
-                            $itemclass = "241_pizza";
-                        }
-                        $icon = $toppings_extra;
+        <div class="col-lg-4 col-md-12 bg-white ismenu">
+            @foreach ($categories as $category)
+                <?php
+                    $toppings_extra = '+';
+                    $catclass = toclass($category['category']);
+                    $classlist[] = $catclass;
+                    $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' order by id", true, "popups_menu.foreach");
+                    $menuitemcount = count($menuitems);
+                    if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
+                        $itemsInCol = 0;
+                        $CurrentCol += 1;
                     }
-                    $itemclass .= " sprite-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
+                    $itemsInCol += $menuitemcount;
+                    makecategory($CurrentCat, $category['category']);
+                ?>
+                @foreach ($menuitems as $menuitem)
+                    <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
+                         itemid="{{$menuitem["id"]}}"
+                         itemname="{{trim($menuitem['item'])}}"
+                         itemprice="{{$menuitem['price']}}"
+                         itemsize="{{getsize($menuitem['item'], $isfree)}}"
+                         itemcat="{{$menuitem['category']}}"
+                         calories="{{$menuitem['calories']}}"
+                         allergens="{{$menuitem['allergens']}}"
+                         <?php
+                            $itemclass = $catclass;
+                            if ($itemclass == "sides") {
+                                $itemclass = str_replace("_", "-", toclass($menuitem['item']));
+                                if (endwith($itemclass, "lasagna")) {
+                                    $itemclass = "lasagna";
+                                } else if (endwith($itemclass, "chicken-nuggets")) {
+                                    $itemclass = "chicken-nuggets";
+                                } else if (endwith($itemclass, "salad")) {
+                                    $itemclass = "salad";
+                                } else if ($itemclass == "panzerotti") {
+                                    $icon = $toppings_extra;
+                                }
+                            } else if ($itemclass == "pizza") {
+                                if (left($menuitem['item'], 1) == "2") {
+                                    $itemclass = "241_pizza";
+                                }
+                                $icon = $toppings_extra;
+                            }
+                            $itemclass .= " " . $CSS . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
 
-                    $total = 0;
-                    foreach ($tables as $table) {
-                        echo $table . '="' . $menuitem[$table] . '" ';
-                        $total += $menuitem[$table];
-                    }
-                    if ($total) {
-                        $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
-                    } else {
-                        $HTML = ' onclick="additemtoorder(this, -1);"';
-                        $icon = '';
-                    }
-                    echo $HTML;
-                    ?>
-                >
-
-                <span class="align-middle item-icon rounded-circle bg-warning sprite sprite-{{$itemclass}} sprite-medium"></span>
-                <span class="align-middle item-name">{{$menuitem['item']}} </span>
-                <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
-            </button>
-        @endforeach
-        @if($catclass=="dips" || $catclass=="sides")
-            </div>
-            <div class="col-lg-4 col-md-12 bg-white ismenu">
-        @endif
-    @endforeach
-
-    <?php
-        //makecategory($CurrentCat, "Tips");
-        //maketip(1);
-    ?>
-</div>
-
-    <?php
-        /*
-        echo '<DIV CLASS="row col-md-12 no-margin">';
-        $tips = [1,3,5];
-        foreach($tips as $tip){
-            maketip($tip, 4);
-        }
-        echo '</DIV>';
-        */
-    ?>
-
+                            $total = 0;
+                            foreach ($tables as $table) {
+                                echo $table . '="' . $menuitem[$table] . '" ';
+                                $total += $menuitem[$table];
+                            }
+                            if ($total) {
+                                $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
+                            } else {
+                                $HTML = ' onclick="additemtoorder(this, -1);"';
+                                $icon = '';
+                            }
+                            echo $HTML;
+                            ?>
+                        >
+                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass}} sprite-medium"><?= geticon($fontawesomeicons, $catclass); ?></span>
+                        <span class="align-middle item-name">{{$menuitem['item']}} </span>
+                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
+                    </button>
+                @endforeach
+                @if(in_array($catclass, $newcolumns))
+                        </div>
+                    <div class="col-lg-4 col-md-12 bg-white ismenu">
+                @endif
+            @endforeach
+        </div>
     </DIV>
 </DIV>
 
