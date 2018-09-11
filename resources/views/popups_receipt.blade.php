@@ -203,10 +203,8 @@
 ?>
 
     @if($party != "private")
-        <div class="alert alert-success text-center text-sm-center mb-2">
-            <strong>{{ $Delivery . $duration }}</strong>
-        </div>
-        <p class="text-center">Please allow + or - 10 minutes for delivery.</p>
+            <h2 class="text-center" style="color: #FF0000">{{ $Delivery . $duration }}</h2>
+            <p class="text-center">Please allow + or - 10 minutes for delivery.</p>
     @endif
 
     @if($includeextradata)
