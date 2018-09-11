@@ -1422,10 +1422,57 @@ $(window).on('shown.bs.modal', function () {
     switch (modalID) {
         case "profilemodal":
             $("#addresslist").html(addresses());
-            $("#creditcardlist").html(creditcards()); break;
+            $("#creditcardlist").html(creditcards());
+            checknewsletter();
+            break;
     }
     window.location.hash = "modal";
 });
+
+function checknewsletter(status, where){
+    if(isUndefined(where)){where = "show profilemodal";}
+    console.log("checknewsletter: " + where);
+    if(isUndefined(status)) {
+        if (userdetails.hasOwnProperty("newsletter") && userdetails.newsletter) {
+            checknewsletter(userdetails.newsletter, "has subscribed");
+        } else if(userdetails === false) {
+            checknewsletter(false, "no userdetails");
+        } else {
+            $("#newsletter").html("Checking subscription status...");
+            $.post(webroot + "newsletter/issubscribed", {
+                _token: token,
+                email: userdetails.email
+            }, function (result) {
+                if (handleresult(result)) {
+                    result = JSON.parse(result);
+                    checknewsletter(result["Reason"]);
+                }
+            });
+        }
+    } else if(where == "changesubsscriptionstatus") {
+        $("#newsletter").html("Changing subscription status...");
+        $.post(webroot + "newsletter/subscribe", {
+            _token: token,
+            email: userdetails.email,
+            name: userdetails.name,
+            phone: userdetails.phone,
+            status: status
+        }, function (result) {
+            console.log("changesubsscriptionstatus: " + result);
+            checknewsletter(status, "changed status");
+        });
+    } else {
+        var HTML = "";
+        userdetails.newsletter = status;
+        where = "'changesubsscriptionstatus'";
+        if(status){
+            HTML = 'Subscribed. <BUTTON CLASS="btn btn-primary btn-sm" ONCLICK="checknewsletter(false, ' + where + ');">Would you like to unsubscribe?</BUTTON>';
+        } else {
+            HTML = 'Not subscribed. <BUTTON CLASS="btn btn-primary btn-sm" ONCLICK="checknewsletter(true, ' + where + ');">Would you like to subscribe?</BUTTON>';
+        }
+        $("#newsletter").html(HTML);
+    }
+}
 
 //generate a list of addresses and send it to the alert modal
 function addresses() {

@@ -426,8 +426,8 @@ if(!function_exists("is_iterable")) {
     }
 }
 
-function constants($key){
-    return $GLOBALS["app"]["config"]["database"]["constants"][$key];
+function constants($key, $file = "database", $section = "constants"){
+    return $GLOBALS["app"]["config"][$file][$section][$key];
 }
 
 function getbetween($text, $start, $end = false){

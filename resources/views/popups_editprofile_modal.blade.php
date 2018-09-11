@@ -32,6 +32,11 @@
                     <DIV ID="creditcardlist"></DIV>
                 </div>
 
+                <DIV CLASS="editprofilediv">
+                    <H2>Newsletter</H2>
+                    <DIV ID="newsletter"></DIV>
+                </DIV>
+
                 <div class="alert alert-info mt-3 mb-0 font-size-85rem">
                      Add new address or credit card on checkout
                     <br>  <a href="help" class="btn-link">More info</a>
