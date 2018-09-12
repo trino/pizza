@@ -29,6 +29,7 @@
                     <div class="input_right">
                         <TEXTAREA CLASS="width-full" rows="10" NAME="contact_text" id="contact_text"></TEXTAREA>
                     </div>
+                    <INPUT TYPE="submit" CLASS="btn-block btn {{btncolor}}" VALUE="SEND">
                 </FORM>
             @endif
         </DIV>
