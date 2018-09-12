@@ -41,7 +41,9 @@ return [
 
         "emailheadercolor" => "#DC3545",//can't be a CSS color
         "headercolor" => "bg-danger",
-        "textcolor" => "text-danger"
+        "headertextcolor" => "white",
+        "textcolor" => "text-danger",
+        "btncolor" => "btn-primary"
     ],
 
     'connections' => [

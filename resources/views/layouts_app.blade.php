@@ -62,13 +62,18 @@
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
 <div class="list-group-item container-fluid shadow {{ headercolor }}">
-    <button data-toggle="dropdown" style="width:38px; outline: none !important;
-   box-shadow: none;" aria-haspopup="true" aria-expanded="false" class="btn bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
-        <i class="fa fa-bars text-white loggedout"></i>
-        <i class="fa fa-user text-white loggedin"></i>
+    <?php
+        if(defined("logo")){
+            echo '<IMG CLASS="sitelogo" SRC="' . webroot("images/" . logo) . '">';
+        }
+    ?>
+
+    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-settings bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
+        <i class="fa fa-bars loggedout {{ headertextcolor }}"></i>
+        <i class="fa fa-user loggedin {{ headertextcolor }}"></i>
     </button>
 
-    <ul class="dropdown-menu dropdown-menu-left" ID="dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu-right" ID="dropdown-menu">
         <SPAN class="loggedin profiletype profiletype1">
             <?php
                 foreach (array("users", "restaurants", "useraddresses", "orders", "additional_toppings", "actions", "shortage", "settings", "hours") as $table) {
@@ -111,7 +116,7 @@
         @endif
     </ul>
 
-    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot("index"); ?>" class="white text-center" href="/"><?= strtoupper(sitename); ?></a>
+    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot("index"); ?>" class="{{ headertextcolor }} text-center" href="/"><?= strtoupper(sitename); ?></a>
 
     <?php
         if (debugmode) {

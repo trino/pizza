@@ -2,7 +2,26 @@
     background-color: #008000 !important;
 }
 .text-green{
-    color: #008000;
+    color: #008000 !important;
+}
+.bg-white{
+    background-color: white !important;
+}
+
+.btn-settings{
+    width: 38px;
+    outline: none !important;
+    box-shadow: none;
+    position: absolute;
+    right: 5px;
+}
+.dropdown-menu-right{
+    right: 0;
+    left: auto;
+}
+.sitelogo{
+    max-height: 48px;
+    margin-right: 10px;
 }
 
 :root {
@@ -482,10 +501,12 @@ body.loading {
     margin-right: 0px;
 }
 
-
-
 .address:focus{
     z-index: 999;
+}
+
+option {
+    white-space: pre;
 }
 
 .nowrap {

@@ -42,8 +42,11 @@ return [
         "timezone" => "America/Toronto",
 
         "emailheadercolor" => "#008000",//can't be a CSS color
-        "headercolor" => "bg-green",
-        "textcolor" => "text-green"
+        "headercolor" => "bg-white",
+        "headertextcolor" => "text-green",
+        "textcolor" => "text-green",
+        "btncolor" => "bg-green",
+        "logo" => "canbiilogo.png"
     ],
 
     'connections' => [

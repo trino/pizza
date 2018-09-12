@@ -8,7 +8,7 @@
 
 <div id="myorder" class="orderfont"></div>
 
-<button id="checkout-btn" class="list-padding btn btn-primary btn-block" onclick="showcheckout();" style="display: none;">
+<button id="checkout-btn" class="list-padding btn {{ btncolor }} btn-block" onclick="showcheckout();" style="display: none;">
     <i class="fa fa-shopping-cart mr-2"></i> CHECKOUT
 </button>
 

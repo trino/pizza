@@ -11,6 +11,7 @@
     }
     if (!function_exists("printarow")) {
         function printarow($Name, $Prepend, $field) {
+            $field["type"] = strtolower($field["type"]);
             if($GLOBALS["icons"]){
                 if(!isset($field["icon"])){$field["icon"] = "fa-user";}
                 $STYLE="";
@@ -22,6 +23,15 @@
             if($field["type"] == "html"){
                 echo '<DIV STYLE="display:table-cell; vertical-align: middle;">' . $field["html"] . '</DIV>';
                 //if(isset($field["outsidehtml"])){echo '<DIV CLASS="clearfix"></DIV>' . $field["outsidehtml"];}
+            } else if($field["type"] == "select") {
+                echo '<SELECT NAME="' . $field["name"] . '" ID="' . $Prepend . '_' . $field["name"] . '"';
+                    if (isset($field["class"]))                                 {echo ' CLASS="' . trim($field["class"]) . '" ';}
+                echo '>';
+                if (isset($field["placeholder"]))                               {echo '<OPTION DISABLED SELECTED VALUE="">' . $field["placeholder"] . '</OPTION>';}
+                foreach($field["options"] as $value => $option){
+                    echo '<OPTION VALUE="' . $value . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $option . '</OPTION>';
+                }
+                echo '</SELECT>';
             } else {
                 echo '<INPUT TYPE="' . $field["type"] . '" NAME="' . $field["name"] . '" ID="' . $Prepend . '_' . $field["name"] . '"';
                 if (isset($field["class"]))                                     {echo ' CLASS="' . trim($field["class"]) . '" ';}
@@ -72,12 +82,8 @@
         echo view("popups_address", array("style" => 1))->render();
     }
     if ($age) {
-        printarow("minimumage", $name, array("name" => "minimumage", "type" => "html", "class" => $class, "required" => true, "icon" => "fa-birthday-cake", "html" =>
-                'Are you over 19?
-                    <LABEL CLASS="radio-label"><INPUT TYPE="radio" NAME="minimumage" ID="minimumage" VALUE="yes" ONCLICK="clickage(true);" ERROR="You must be over 19 to use this site">Yes</LABEL>
-                    <LABEL CLASS="radio-label"><INPUT TYPE="radio" NAME="minimumage" VALUE="no"  ONCLICK="clickage(false);" CHECKED>No</LABEL>
-                    <DIV ID="error-minimumage" CLASS="error"></DIV>
-                '
+        printarow("minimumage", $name, array("name" => "minimumage", "type" => "select", "class" => "required valid " . $class, "required" => true, "icon" => "fa-birthday-cake",
+            "placeholder" => "Are you over 19?", "options" => ["yes" => "Yes", "No"]
         ));
     }
     echo '</DIV>';
@@ -85,13 +91,6 @@
 <SCRIPT>
     var minlength = 5;
     redirectonlogout = true;
-
-    function clickage(value){
-        if(value){
-            $("#error-minimumage").text("");
-            $("#cAge").removeClass("redhighlite");
-        }
-    }
 
     function userform_submit(isSelf) {
         if(validateform("#userform")) {

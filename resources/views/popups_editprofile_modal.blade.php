@@ -32,7 +32,7 @@
                     <DIV ID="creditcardlist"></DIV>
                 </div>
 
-                <DIV CLASS="editprofilediv">
+                <DIV CLASS="editprofilediv dont-show">
                     <H2>Newsletter</H2>
                     <DIV ID="newsletter"></DIV>
                 </DIV>

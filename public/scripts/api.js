@@ -1423,7 +1423,7 @@ $(window).on('shown.bs.modal', function () {
         case "profilemodal":
             $("#addresslist").html(addresses());
             $("#creditcardlist").html(creditcards());
-            checknewsletter();
+            //checknewsletter();
             break;
     }
     window.location.hash = "modal";

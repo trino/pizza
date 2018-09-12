@@ -6,6 +6,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Newsletter;
 
 class AuthController extends Controller {
     use AuthenticatesUsers;
@@ -156,6 +157,7 @@ class AuthController extends Controller {
                                 "created_at" => now(),
                                 "updated_at" => 0
                             ];
+                            $this->Subscribe($_POST["name"], $_POST["email"], $_POST["phone"]);
                             if ($RequireAuthorization) {
                                 $user["authcode"] = $this->guidv4();
                             }
@@ -223,6 +225,14 @@ class AuthController extends Controller {
         die(json_encode($ret));
     }
 
+    function Subscribe($name, $email, $phone){
+        $firstname = $name;
+        $lastname = "";
+        $names = explode(" ", $firstname);
+        if(isset($names[0])) {$firstname = $names[0];}
+        if(count($names) > 1){$lastname = $names[count($names) - 1];}
+        Newsletter::subscribeOrUpdate($email, ["FNAME" => $firstname, "LNAME" => $lastname, "PHONE" => $phone]);
+    }
 
     //make a GUID
     function guidv4() {
