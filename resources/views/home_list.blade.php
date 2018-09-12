@@ -59,8 +59,8 @@
         $formatted = formatfield($field);
         echo '<TH CLASS="th-left col_' . $field . '"';
         if($NoWrap){ echo ' NOWRAP';}
-        echo '><DIV CLASS="pull-center nowrap"><i class="btn btn-sm btn-primary pull-left desc_' . $field . '" onclick="sort(' . "'" . $field . "', 'DESC'" . ')" TITLE="Sort by ' . $formatted;
-        echo ' descending"><I CLASS="fa fa-arrow-down"></I></i>' . $formatted . ' <i class="btn btn-sm btn-primary pull-right asc_' . $field . '" onclick="sort(' . "'" . $field . "', 'ASC'" . ')" TITLE="Sort by ' . $formatted;
+        echo '><DIV CLASS="pull-center nowrap"><i class="btn btn-sm ' . btncolor . ' pull-left desc_' . $field . '" onclick="sort(' . "'" . $field . "', 'DESC'" . ')" TITLE="Sort by ' . $formatted;
+        echo ' descending"><I CLASS="fa fa-arrow-down"></I></i>' . $formatted . ' <i class="btn btn-sm ' . btncolor . 'pull-right asc_' . $field . '" onclick="sort(' . "'" . $field . "', 'ASC'" . ')" TITLE="Sort by ' . $formatted;
         echo ' ascending"><I CLASS="fa fa-arrow-up"></I></i></DIV></TH>';
     }
     function changeorderstatus($ID, $Status, $Reason, $DeleteFile = false){
@@ -778,7 +778,7 @@
                         <div class="card-block bg-danger">
                             <h2 class="pull-left text-white h2class">
                                 <div class="dropdown">
-                                    <Button class="btn btn-primary dropdown-toggle text-white" type="button" data-toggle="dropdown" onclick="$('#alllist').toggle();">
+                                    <Button class="btn {{ btncolor }} dropdown-toggle text-white" type="button" data-toggle="dropdown" onclick="$('#alllist').toggle();">
                                         <i class="fa fa-{{ $faicon }}"></i>
                                         {{ ucfirst($table) . ' ' . $secondword . ' ' . $extratitle }}
                                     </Button>
@@ -879,15 +879,15 @@
                             <?php
                                 switch($table){
                                     case "useraddresses":
-                                        echo '<A ONCLICK="saveaddress(0);" CLASS="btn btn-sm btn-success">New</A> ';
-                                        echo '<A ONCLICK="saveaddress(selecteditem);" CLASS="btn btn-sm btn-secondary" id="saveaddress" DISABLED>Save</A>';
+                                        echo '<A ONCLICK="saveaddress(0);" CLASS="btn btn-sm ' . btncolor . '">New</A> ';
+                                        echo '<A ONCLICK="saveaddress(selecteditem);" CLASS="btn btn-sm ' . btncolor . '" id="saveaddress" DISABLED>Save</A>';
                                         $_GET["dontincludeGoogle"] = true;
                                         echo view("popups_address", $_GET)->render();
                                         break;
                                     case "restaurants":
                                         echo view("popups_address", array("dontincludeGoogle" => true))->render();
                                         echo '<DIV ID="addressdropdown" class="addressdropdown dont-show"></DIV>';
-                                        echo '<A ONCLICK="saveaddress(-1);" CLASS="btn btn-sm btn-success m-t-1">Add to dropdowns</A>';
+                                        echo '<A ONCLICK="saveaddress(-1);" CLASS="btn btn-sm ' . btncolor . ' m-t-1">Add to dropdowns</A>';
                                         break;
                                     case "orders":
                                         if(isset($_GET["restaurant"]) && $_GET["restaurant"]){
@@ -911,7 +911,7 @@
                                         echo 'Menu cache last update: <SPAN ID="filetime">' . $filetime . '</SPAN>';
                                         echo '<BR><a class="btn btn-sm btn-danger cursor-pointer" onclick="settingaction(1);" id="setting1">Delete Session Variables and Cookie</a>';
                                         if($profiletype == 1){
-                                            echo '<BR><A class="btn btn-sm btn-primary cursor-pointer" HREF="' . webroot("list/dump") . '" download="ai.sql">Export SQL</A>';
+                                            echo '<BR><A class="btn btn-sm ' . btncolor . ' cursor-pointer" HREF="' . webroot("list/dump") . '" download="ai.sql">Export SQL</A>';
                                         }
                                         break;
                                 }
@@ -1217,15 +1217,15 @@
                                         tempHTML += '<TD CLASS="' + evenodd + '" NOWRAP>';
                                         switch(table){
                                             case "users":
-                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" href="' + baseURL + 'useraddresses?user_id=' + ID + '">Addresses</A> ';
-                                                tempHTML += '<A CLASS="btn btn-sm btn-secondary cursor-pointer" href="{{ webroot("public/user/info/", true) }}' + ID + '">Edit</A> ';
-                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" ONCLICK="changepass(' + ID + ');" TITLE="Change their password">Password</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm {{btncolor}} cursor-pointer" href="' + baseURL + 'useraddresses?user_id=' + ID + '">Addresses</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm {{btncolor}} cursor-pointer" href="{{ webroot("public/user/info/", true) }}' + ID + '">Edit</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm {{btncolor}} cursor-pointer" ONCLICK="changepass(' + ID + ');" TITLE="Change their password">Password</A> ';
                                                 break;
                                             case "useraddresses":
-                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" onclick="editaddress(' + ID + ');">Edit</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm {{btncolor}} cursor-pointer" onclick="editaddress(' + ID + ');">Edit</A> ';
                                                 break;
                                             case "orders":
-                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" onclick="vieworder(' + ID + ');">View</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm {{btncolor}} cursor-pointer" onclick="vieworder(' + ID + ');">View</A> ';
                                                 if(restaurantID){
                                                     var Name = ID;
                                                     if(data.table[i]["unit"].length > 0){
@@ -1236,14 +1236,14 @@
                                                 }
                                                 break;
                                             case "restaurants":
-                                                tempHTML += '<A CLASS="btn btn-sm btn-success cursor-pointer" HREF="{{ webroot("public/list/orders?restaurant=", true) }}' + ID + '">View</A> ';
+                                                tempHTML += '<A CLASS="btn btn-sm {{btncolor}} cursor-pointer" HREF="{{ webroot("public/list/orders?restaurant=", true) }}' + ID + '">View</A> ';
                                                 break;
                                         }
                                         if(profiletype == 1) {
                                             tempHTML += '<A CLASS="btn btn-sm btn-danger cursor-pointer" onclick="deleteitem(' + ID + ');">Delete</A>';
-                                            tempHTML += '<label CLASS="btn btn-sm cursor-pointer"><input type="checkbox" class="selitem" index="' + ID + '" onclick="selecttableitem(this, ' + ID + ');"> Select</label>';
+                                            tempHTML += '<label CLASS="btn btn-sm {{btncolor}} cursor-pointer"><input type="checkbox" class="selitem" index="' + ID + '" onclick="selecttableitem(this, ' + ID + ');"> Select</label>';
                                             if(table == "actions" && prititle){
-                                                tempHTML += ' <A CLASS="btn btn-sm btn-success cursor-pointer" HREF="#" ONCLICK="alert(' + "'" + prititle + "', 'Help for the " + data.table[i]["eventname"] + " event');" + '">Help</A>';
+                                                tempHTML += ' <A CLASS="btn btn-sm {{btncolor}} cursor-pointer" HREF="#" ONCLICK="alert(' + "'" + prititle + "', 'Help for the " + data.table[i]["eventname"] + " event');" + '">Help</A>';
                                             } else {
                                                 tempHTML += " " + prititle;
                                             }
@@ -1269,7 +1269,7 @@
                                         if(sort_col == fields[i]){HTML += ' SELECTED';}
                                         HTML += '>' + tofieldname(fields[i]) + '</OPTION>';
                                     }
-                                    HTML += '</SELECT><i ID="direction" class="btn btn-xs btn-primary btn-toggle fa fa-arrow-';
+                                    HTML += '</SELECT><i ID="direction" class="btn btn-xs {{btncolor}} btn-toggle fa fa-arrow-';
                                     if(sort_dir == "DESC"){HTML += "down";} else {HTML += 'up';}
                                     $("#sortcols").html(HTML + '" onclick="updatesort(2);" TITLE="Change direction"></i>');
                                 }
@@ -1759,7 +1759,7 @@
                         currentpage = Number(currentpage);
                         var pages = Math.ceil(Number(itemcount) / itemsperpage);
                         lastpage = pages-1;
-                        var HTML = '<BUTTON CLASS="btn btn-sm btn-success" onclick="newitem();">New</BUTTON> Double click a cell to edit it';
+                        var HTML = '<BUTTON CLASS="btn btn-sm {{btncolor}}" onclick="newitem();">New</BUTTON> Double click a cell to edit it';
                         if(TableStyle == '1'){HTML = '<SPAN ID="sortcols"></SPAN>';}
                         HTML += '<TABLE BORDER="1" CLASS="pull-right"><TR>';
                         var printpages = 10;
@@ -2511,7 +2511,7 @@
                                 ?>
                             </SPAN>
                             <div class="clearfix"></div>
-                            <BUTTON onclick="savecombo();" class="btn btn-sm btn-primary pull-right margin-top">Save Changes</BUTTON>
+                            <BUTTON onclick="savecombo();" class="btn btn-sm {{btncolor}} pull-right margin-top">Save Changes</BUTTON>
                         </div>
                     </div>
                 </div>

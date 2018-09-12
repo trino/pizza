@@ -148,7 +148,7 @@
                     }
                 }
             ?>
-            <BUTTON CLASS="btn btn-sm btn-primary cursor-pointer" ONCLICK="createstore();">Create</BUTTON>
+            <BUTTON CLASS="btn btn-sm btn-success cursor-pointer" ONCLICK="createstore();">Create</BUTTON>
         </DIV>
     </DIV>
     <SCRIPT>

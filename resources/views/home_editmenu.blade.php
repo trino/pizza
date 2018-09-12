@@ -128,9 +128,9 @@
                                                     }
                                                 ?>
                                             </UL>
-                                            <button class="btn btn-block btn-success" onclick="$('.newitembtn').trigger('click');">New</button>
-                                            <button ID="savechanges" class="btn btn-block btn-success changes dont-show" onclick="savechanges();">Save Changes</button>
-                                            <button ID="discardchanges" class="btn btn-block btn-secondary changes dont-show" onclick="discard(false);">Discard Changes</button>
+                                            <button class="btn btn-block {{btncolor}}" onclick="$('.newitembtn').trigger('click');">New</button>
+                                            <button ID="savechanges" class="btn btn-block {{btncolor}} changes dont-show" onclick="savechanges();">Save Changes</button>
+                                            <button ID="discardchanges" class="btn btn-block {{btncolor}} changes dont-show" onclick="discard(false);">Discard Changes</button>
                                             <DIV id="allergens"></DIV>
                                         </div>
                                     </DIV>
@@ -287,7 +287,7 @@
                 for(var tableindex = 0; tableindex < tables.length; tableindex++){
                     var table_name = tables[tableindex];
                     var table_data = alldata[table_name];
-                    var HTML = '<button class="btn btn-block btn-success newitembtn" onclick="newitem(' + "'" + table_name + "'" + ');">New</button><BR>';
+                    var HTML = '<button class="btn btn-block {{btncolor}} newitembtn" onclick="newitem(' + "'" + table_name + "'" + ');">New</button><BR>';
                     for(var dataindex = 0; dataindex < table_data.length; dataindex++){
                         HTML += makeHTML(table_data[dataindex], table_name, isEvenOrOdd(dataindex));
                     }
@@ -332,7 +332,7 @@
 
             function getmenuitems(category){
                 category=category.trim();
-                var HTML = '<button class="btn btn-block btn-success" onclick="newitem(' + "'menu', '" + category + "'" + ');">New</button><BR>';
+                var HTML = '<button class="btn btn-block {{btncolor}}" onclick="newitem(' + "'menu', '" + category + "'" + ');">New</button><BR>';
                 for(var index = 0; index< alldata["menu"].length; index++){
                     var data = alldata["menu"][index];
                     if(data["category"].trim().isEqual(category)){
@@ -447,7 +447,7 @@
 
                 HTML = '<DIV CLASS="row"><DIV CLASS="col-md-11' + HTMLclass +  '">' + HTML + '</DIV><DIV CLASS="col-md-1' + HTMLclass +  '">';
                 HTML += '<BUTTON class="btn btn-danger" TITLE="Delete this item" onclick="deleteitem(' + "'" + table_name + "', '" + data["id"] + "'" + ');"><i class="fa fa-trash"></i></BUTTON> ';
-                HTML += '<BUTTON class="btn btn-primary' + HTMLclass + 'undo" TITLE="Undo all changes to this item" onclick="undo(' + "'" + table_name + "', '" + data["id"] + "'" + ');"' + undostyle + '><i class="fa fa-undo"></i></BUTTON>';
+                HTML += '<BUTTON class="btn {{btncolor}}' + HTMLclass + 'undo" TITLE="Undo all changes to this item" onclick="undo(' + "'" + table_name + "', '" + data["id"] + "'" + ');"' + undostyle + '><i class="fa fa-undo"></i></BUTTON>';
                 return HTML + '</DIV></DIV><DIV CLASS="col-md-12' + HTMLclass +  '"><HR></DIV>';
             }
 

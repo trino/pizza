@@ -147,7 +147,7 @@
                     @endif
 
                     <div class="clearfix py-2"></div>
-                    <BUTTON CLASS="btn-block btn btn-primary" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
+                    <BUTTON CLASS="btn-block btn {{btncolor}}" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
                     <!--div class="clearfix py-2"></div>
                     <A CLASS="btn-block btn-sm btn btn-link btn-secondary" href="<?= webroot("help"); ?>#Why do I need an account">Why do I need an account?</A-->
                     <div class="clearfix py-2"></div>
@@ -170,7 +170,7 @@
                     <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true, "age" => $database == "canbii"))->render(); ?>
                 </FORM>
                 <div class="clearfix py-2"></div>
-                <button class="btn btn-block btn-primary" onclick="register();">
+                <button class="btn btn-block {{btncolor}}" onclick="register();">
                     SIGN UP
                 </button>
             </div>

@@ -45,7 +45,7 @@ return [
         "headercolor" => "bg-white",
         "headertextcolor" => "text-green",
         "textcolor" => "text-green",
-        "btncolor" => "bg-green",
+        "btncolor" => "btn-success",
         "logo" => "canbiilogo.png"
     ],
 

@@ -318,7 +318,7 @@
         <?php } ?>
 
     @if(isset($JSON))
-        <BUTTON CLASS="btn btn-block btn-primary mb-3 mt-2" ONCLICK="orders(<?= $orderid; ?>, true);">LOAD ORDER</BUTTON>
+        <BUTTON CLASS="btn btn-block {{btncolor}} mb-3 mt-2" ONCLICK="orders(<?= $orderid; ?>, true);">LOAD ORDER</BUTTON>
     @endif
     @if($includeextradata)
         <DIV CLASS="extrainfo">
@@ -328,7 +328,7 @@
                 <DIV CLASS="clearfix"></DIV>
             @endif
             <p>
-            <a class="btn-link btn pl-0" href="<?= webroot("help"); ?>">About Us</a>
+            <a class="btn-link btn {{btncolor}} pl-0" href="<?= webroot("help"); ?>">About Us</a>
             </p>
         </DIV>
     @endif

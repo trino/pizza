@@ -843,7 +843,7 @@ includefile("public/scripts/api.js");
                     <button class="btn btn-outline-primary alert-button" id="alert-cancel" data-dismiss="modal">
                         CANCEL
                     </button>
-                    <button class="btn btn-primary alert-button" id="alert-confirm" data-dismiss="modal">
+                    <button class="btn {{btncolor}} alert-button" id="alert-confirm" data-dismiss="modal">
                         OK
                     </button>
                 </div>

@@ -136,7 +136,7 @@
         </DIV>
 
         <DIV CLASS="col-md-2">
-            <BUTTON CLASS="btn btn-primary float-bottom form-control" ONCLICK="search();">Search</BUTTON>
+            <BUTTON CLASS="btn {{btncolor}} float-bottom form-control" ONCLICK="search();">Search</BUTTON>
         </DIV>
 
         <DIV CLASS="col-md-4">
@@ -161,7 +161,7 @@
                 <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="ASC" CHECKED>ASC</LABEL>
                 <LABEL><INPUT TYPE="RADIO" NAME="sortorder" VALUE="DESC">DESC</LABEL>
             </FORM>
-            <BUTTON CLASS="btn btn-primary float-bottom float-right" ONCLICK="save();"><i class="fas fa-cog"></i> Save and apply changes</BUTTON>
+            <BUTTON CLASS="btn {{btncolor}} float-bottom float-right" ONCLICK="save();"><i class="fas fa-cog"></i> Save and apply changes</BUTTON>
         </DIV>
     </DIV>
 

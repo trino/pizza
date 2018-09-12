@@ -19,7 +19,7 @@
                     <DIV CLASS="error" id="edituser_error"></DIV>
                     <DIV class="clearfix mt-1"></DIV>
 
-                    <DIV CLASS="pull-center"><BUTTON CLASS="btn btn-primary alert-button" onclick="return userform_submit(true);">SAVE</BUTTON></DIV>
+                    <DIV CLASS="pull-center"><BUTTON CLASS="btn {{btncolor}} alert-button" onclick="return userform_submit(true);">SAVE</BUTTON></DIV>
                 </FORM>
 
                 <P><DIV CLASS="ajaxprompt"></DIV><P>
@@ -42,8 +42,8 @@
                     <br>  <a href="help" class="btn-link">More info</a>
                 </div>
                 <div CLASS="editprofilediv mt-2 dont-show">
-                    <button ONCLICK="handlelogin('logout');" CLASS="btn btn-primary pull-left" href="#">LOG OUT</button>
-                    <button ONCLICK="orders();" CLASS="btn btn-primary pull-right" href="#">PAST ORDERS</button>
+                    <button ONCLICK="handlelogin('logout');" CLASS="btn {{btncolor}} pull-left" href="#">LOG OUT</button>
+                    <button ONCLICK="orders();" CLASS="btn {{btncolor}} pull-right" href="#">PAST ORDERS</button>
                     <div class="clearfix"></div>
                 </div>
             </div>

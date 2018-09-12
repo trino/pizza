@@ -54,7 +54,7 @@
     echo '</TD><TD>';
     maketimeselect('all_close');
     echo '</TD></TR></TABLE></TD><TD>';
-    echo '<BUTTON ID="savebutton" ONCLICK="doesneedsaving(false);" style="display: none;" class="btn btn-sm btn-primary pull-center">Save Changes</BUTTON>';
+    echo '<BUTTON ID="savebutton" ONCLICK="doesneedsaving(false);" style="display: none;" class="btn btn-sm btn-success pull-center">Save Changes</BUTTON>';
     echo '</TD></TABLE>';
 
     function maketimeselect($ID){

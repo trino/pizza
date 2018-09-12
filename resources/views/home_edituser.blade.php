@@ -162,7 +162,7 @@
                         <h2 class="pull-left">
                             <A HREF="{{ webroot("public") }}"><i class="fa fa-home" aria-hidden="true"></i></A> Edit user
                         </h2>
-                        <A HREF="{{ webroot("list/useraddresses?user_id=" . $user_id, true) }}" class="btn btn-sm btn-secondary waves-effect float-right">Edit Addresses</A>
+                        <A HREF="{{ webroot("list/useraddresses?user_id=" . $user_id, true) }}" class="btn btn-sm {{btncolor}} waves-effect float-right">Edit Addresses</A>
                     </div>
                     <div class="card-block">
                         <div class="row">
@@ -173,7 +173,7 @@
     @include("popups_edituser")
     <DIV CLASS="row">
         <DIV CLASS="col-md-12" align="center">
-            <BUTTON CLASS="btn btn-primary" onclick="return userform_submit(false);">Save</BUTTON>
+            <BUTTON CLASS="btn {{btncolor}}" onclick="return userform_submit(false);">Save</BUTTON>
         </DIV>
     </DIV>
 </FORM>

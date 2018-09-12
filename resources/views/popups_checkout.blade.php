@@ -191,8 +191,7 @@
                 <DIV class="ajaxprompt"></DIV>
 
                 <div class="modal-body no-padding">
-                    <button class="btn-block list-padding radius-bottom btn btn-primary text-white payfororder"
-                            onclick="payfororder(); return false;">
+                    <button class="btn-block list-padding radius-bottom btn {{btncolor}} text-white payfororder" onclick="payfororder(); return false;">
                         <i class="fa fa-check mr-2"></i> ORDER
                     </button>
                     <span class="payment-errors error"></span>
@@ -347,6 +346,6 @@
     <DIV CLASS="centered firefox-child bg-white">
         <i class="fab fa-firefox"></i> Firefox Address editor
         <DIV ID="gmapffac" class="bg-white"></DIV>
-        <BUTTON ONCLICK="fffa();" CLASS="btn btn-primary radius0 btn-full pull-down-right">OK</BUTTON>
+        <BUTTON ONCLICK="fffa();" CLASS="btn {{btncolor}} radius0 btn-full pull-down-right">OK</BUTTON>
     </DIV>
 </DIV>

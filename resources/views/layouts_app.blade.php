@@ -154,10 +154,10 @@
     <div class="container-fluid d-none d-sm-block list-group-item">
         <div class="row">
             <div class="col-sm-12">
-                <a CLASS="btn btn-sm text-muted" href="<?= webroot("help"); ?>">
+                <A CLASS="btn btn-sm text-muted" href="<?= webroot("help"); ?>">
                     <i class="fa fa-question-circle icon-width helpbtn"></i>
                     FAQs
-                </a>
+                </A>
                 @if(isset($_GET["time"]))
                     <SPAN id="servertime" CLASS="text-muted pull-right">Server time: <?= my_now(); ?></SPAN>
                 @endif
