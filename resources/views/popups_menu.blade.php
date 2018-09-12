@@ -90,9 +90,10 @@
             $ID +=1;
         }
 
-        function geticon($fontawesomeicons, $category){
+        function geticon($fontawesomeicons, $category, $color = false){
             foreach($fontawesomeicons as $icon => $categories){
-                if(in_array($category, $categories)){
+                if(in_array($category, $categories["categories"])){
+                    if($color){return $categories["color"];}
                     return '<i class="fa-6x caticon ' . $icon . '"></i>';
                 }
             }
@@ -123,9 +124,9 @@
 
     $newcolumns = ["dips", "sides", "indica_premium", "sativa_premium"];//which categories to start a new column on
     $fontawesomeicons = [
-        "far fa-moon"   => ["indica_basic", "sativa_basic", "hybrid_basic"],
-        "far fa-sun"    => ["indica_hq", "sativa_high_quality", "hybrid_high_quality"],
-        "fas fa-cloud"  => ["indica_premium", "sativa_premium", "hybrid_premium"]
+        "far fa-moon"   => ["color" => "bg-dark-blue",  "categories" => ["indica_basic", "indica_hq", "indica_premium"]],
+        "far fa-sun"    => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
+        "fas fa-cloud"  => ["color" => "bg-green",      "categories" => ["hybrid_basic", "hybrid_high_quality", "hybrid_premium"]]
     ];
     echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 ?>
@@ -190,7 +191,7 @@
                             echo $HTML;
                             ?>
                         >
-                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass}} sprite-medium"><?= geticon($fontawesomeicons, $catclass); ?></span>
+                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium"><?= geticon($fontawesomeicons, $catclass); ?></span>
                         <span class="align-middle item-name">{{$menuitem['item']}} </span>
                         <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
                     </button>

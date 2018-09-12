@@ -2,7 +2,6 @@
     width: 128px;
     height: 128px;
     margin-right: .75rem !important;
-    background-color: #008000 !important;
 }
 .caticon{
     width: 128px;
@@ -11,6 +10,15 @@
 .item-icon{
     text-align: center;
     color: white;
+}
+.bg-green{
+    background-color: #008000 !important;
+}
+.bg-dark-blue{
+    background-color: darkblue !important;
+}
+.bg-light-blue{
+    background-color: lightblue !important;
 }
 
 .sprite {
