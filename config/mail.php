@@ -63,7 +63,10 @@ return [
 
     //'from' => ['address' => 'roy@trinoweb.com', 'name' => 'Hamilton Pizza'],
     //'from' => ['address' => 'hamiltonpizza.ca@gmail.com', 'name' => 'Hamilton Pizza'],
-    'from' => ['address' => 'admin@trinoweb.com', 'name' => $GLOBALS["app"]["config"]["database"]["constants"]["sitename"]],
+    'from' => [
+        'address' => 'admin@trinoweb.com',
+        'name' => $GLOBALS["app"]["config"]["database"]["constants"]["sitename"]
+    ],
 
     /*
     |--------------------------------------------------------------------------
