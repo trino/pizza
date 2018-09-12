@@ -32,7 +32,7 @@ class NewsletterController extends Controller {
             $names = explode(" ", $firstname);
             if(isset($names[0])) {$firstname = $names[0];}
             if(count($names) > 1){$lastname = $names[count($names) - 1];}
-            Newsletter::subscribeOrUpdate($email, ["firstName" => $firstname, "lastName" => $lastname, "phone" => $_POST["email"]]);
+            Newsletter::subscribeOrUpdate($email, ["FNAME" => $firstname, "LNAME" => $lastname, "PHONE" => $_POST["phone"]]);
         } else {
             Newsletter::delete($email);
         }
