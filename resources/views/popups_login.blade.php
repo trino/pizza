@@ -84,7 +84,7 @@
                             </li>
                         </ul>
                         @if(!$noclose)
-                            <button data-dismiss="modal" class="btn btn-sm ml-auto align-middle bg-transparent"><i class="fa fa-times"></i></button>
+                            <button data-dismiss="modal" class="btn ml-auto align-middle bg-transparent"><i class="fa fa-times"></i></button>
                         @endif
                     </div>
                 <div class="modal-body" oldclass="modal-blue">

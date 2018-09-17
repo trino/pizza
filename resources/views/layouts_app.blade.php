@@ -61,7 +61,7 @@
 <div id="snackbar"></div>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
-<div class="list-group-item container-fluid shadow {{ headercolor }}">
+<div style="padding: .5rem .75rem;" class="list-group-item container-fluid {{ headercolor }}">
     <?php
         if(defined("logo")){
             echo '<IMG CLASS="sitelogo" SRC="' . webroot("images/" . logo) . '">';
@@ -116,7 +116,7 @@
         @endif
     </ul>
 
-    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot("index"); ?>" class="{{ headertextcolor }} text-center" href="/"><?= strtoupper(sitename); ?></a>
+    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot("index"); ?>" class="{{ headertextcolor }} " href="/"><?= sitename; ?></a>
 
     <?php
         if (debugmode) {

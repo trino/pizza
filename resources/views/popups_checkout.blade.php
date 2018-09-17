@@ -1,7 +1,7 @@
 <?php startfile("popups_checkout"); ?>
 
 <div class="list-group-item">
-    <h2 CLASS="float-left">My Order</h2>
+    <h2 CLASS="float-left text-success">My Order</h2>
     <span class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium hidden"></span>
     <button class="ml-auto bg-transparent" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
@@ -17,7 +17,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="myModalLabel" class="align-middle">Hi, <SPAN CLASS="session_name"></SPAN></h2>
-                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn btn-sm ml-auto align-middle bg-transparent">
+                <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn ml-auto align-middle bg-transparent">
                     <i class="fa fa-times"></i>
                 </button>
             </div>

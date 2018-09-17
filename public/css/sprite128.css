@@ -12,13 +12,15 @@
     color: white;
 }
 .bg-green{
-    background-color: #008000 !important;
+    background-color: #5cb85c !important;
 }
 .bg-dark-blue{
     background-color: darkblue !important;
+    background-color: #0275d8 !important;
 }
 .bg-light-blue{
     background-color: lightblue !important;
+    background-color: #f0ad4e!important;
 }
 
 .sprite {

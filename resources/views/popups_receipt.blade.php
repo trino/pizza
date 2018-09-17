@@ -203,8 +203,8 @@
 ?>
 
     @if($party != "private")
-            <h2 class="text-center" style="color: #FF0000">{{ $Delivery . $duration }}</h2>
-            <p class="text-center">Please allow + or - 10 minutes for delivery.</p>
+            <h2 class="text-center py-2" style="color: #FF0000">{{ $Delivery . $duration }}</h2>
+            <!--p class="text-center">Please allow + or - 10 minutes for delivery.</p-->
     @endif
 
     @if($includeextradata)
@@ -250,9 +250,9 @@
             $last4 = "Private information";//do not allow other users to view this data!!!
         }
         if(is_numeric($last4)){
-            $last4 = '<font color="#ff0000">Paid by ' . formatlast4($last4) . '</font>';
+            $last4 = '<strong style="color:#ff0000">Paid by ' . formatlast4($last4) . '</strong>';
         } else if ($last4){
-            $last4 = '<font color="#ff0000">' . $last4 . '</font>';
+            $last4 = '<strong style="color:#ff0000">' . $last4 . '</strong>';
         } else {
             $last4 = "";
         }

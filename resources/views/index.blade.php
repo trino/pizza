@@ -59,7 +59,7 @@
         <?php } ?>
     @include("popups_editprofile_modal")
     <div class="fixed-action-btn hidden-lg-up sticky-footer d-lg-none">
-        <button class="circlebutton bg-danger dont-show" onclick="window.scrollTo(0,document.body.scrollHeight);" TITLE="Scroll to the top of the page">
+        <button class="circlebutton bg-success dont-show" onclick="window.scrollTo(0,document.body.scrollHeight);" TITLE="Scroll to the top of the page">
             <span class="white" id="checkout-total"></span>
         </button>
     </div>

@@ -42,9 +42,9 @@ return [
         "timezone" => "America/Toronto",
 
         "emailheadercolor" => "#008000",//can't be a CSS color
-        "headercolor" => "bg-white",
-        "headertextcolor" => "text-green",
-        "textcolor" => "text-green",
+        "headercolor" => "bg-success",
+        "headertextcolor" => "text-primary",
+        "textcolor" => "text-danger",
         "btncolor" => "btn-success",
         "logo" => "canbiilogo.png"
     ],

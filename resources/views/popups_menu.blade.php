@@ -94,7 +94,7 @@
             foreach($fontawesomeicons as $icon => $categories){
                 if(in_array($category, $categories["categories"])){
                     if($color){return $categories["color"];}
-                    return '<i class="fa-6x caticon ' . $icon . '"></i>';
+                    return '<i class="fa-5x caticon ' . $icon . '"></i>';
                 }
             }
         }
@@ -122,9 +122,9 @@
     $CurrentCol = 1;
     $CurrentCat = 0;
 
-    $newcolumns = ["dips", "sides", "indica_premium", "sativa_premium"];//which categories to start a new column on
+    $newcolumns = ["dips", "sides", "1oz_indica", "indica_basic", "sativa_premium"];//which categories to start a new column on
     $fontawesomeicons = [
-        "far fa-moon"   => ["color" => "bg-dark-blue",  "categories" => ["indica_basic", "indica_hq", "indica_premium"]],
+        "far fa-moon"   => ["color" => "bg-dark-blue",  "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
         "far fa-sun"    => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
         "fas fa-cloud"  => ["color" => "bg-green",      "categories" => ["hybrid_basic", "hybrid_high_quality", "hybrid_premium"]]
     ];
@@ -191,9 +191,17 @@
                             echo $HTML;
                             ?>
                         >
-                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium"><?= geticon($fontawesomeicons, $catclass); ?></span>
+                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium" style="zoom: .5">
+                            <img src="../public/images/weed.jpg" />
+                        </span>
+
+                        <!--span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium">
+                            <?= geticon($fontawesomeicons, $catclass); ?></span-->
+
+
+
                         <span class="align-middle item-name">{{$menuitem['item']}} </span>
-                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
+                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 0)}}<?= $icon; ?></span>
                     </button>
                 @endforeach
                 @if(in_array($catclass, $newcolumns))
