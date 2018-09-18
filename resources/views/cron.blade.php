@@ -39,6 +39,7 @@
         if(!$enabled){
             printline('<A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A>');
         } else if(!debugmode) {
+            printline('CRON: ' . count($orders) . ' ' . storenames . ' have unconfirmed orders');
         }
 
         function printline($text, $sidetext = false){
