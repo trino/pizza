@@ -162,14 +162,14 @@
 
                 <p>
                     <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
-                    complicated. We realize that restaurants are paying enormous commissions to existing online food
+                    complicated. We realize that {{storenames}} are paying enormous commissions to existing online food
                     service providers. Ultimately, it’s YOU, the customer, who ends up paying the bills. We want to put
                     that money back where it belongs…in your pocket! Not only do we save you money, but we also use 100%
                     of all our profits to give back and help out the local community.
                 </p>
                 <p>
                     How do we do it? We leverage an easy-to-use online platform, one universal menu for all users alike,
-                    and local partnerships with restaurants who share our vision. In an effort to be completely
+                    and local partnerships with {{storenames}} who share our vision. In an effort to be completely
                     transparent, we will post a summary all of our contributions below, updated on a monthly basis.
                 </p>
                 <p>
@@ -255,12 +255,12 @@
 
             newlist("General");
             newitem("Why can’t I order for pickup?", "We are committed to providing a premier end-to-end customer experience. In order to promote simplicity and ease-of-use, we only provide delivery service at this time. Please check our site regularly for updates on new service offerings.");
-            newitem("Can I track my order once submitted?", "Once your order is submitted, it is accepted and confirmed by the choosen restaurant immediately. If there are any issues in preparing or delivering your order on time, we will contact you directly. Unfortunately, we do not currently have the ability to track the status of your order while it is being prepared and/or delivered.");
-            newitem("How do I know if the restaurant has accepted my order?", "All orders placed on [sitename] are instantly confirmed and accepted. You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order.");
-            newitem("What do I do if I need to make changes after submitting an order?", "You will receive an email receipt of your order details, including the contact information for the restaurant fulfilling your order. Please contact the restaurant directly by phone should you wish to make any changes.");
-            newitem("I never received my order. Who do I contact?", "You may call our support line at [sitename} or call the restaurant for immediate assistance.");//Support line?
-            newitem("Why can’t I see certain items on the menu?", "Since we use a universal menu, certain items offered by particular restaurants may not be available through our service. Once you receive your order receipt via email, you may contact the restaurant directly should you wish to make any specific additions to your order.");
-            newitem("Can I choose the restaurant that prepares my order?", "Yes, during check-out you have the ability to choose from any restaurant that is within your delivery range. By default, we choose the restaurant closest to your location to fulfill your order.");
+            newitem("Can I track my order once submitted?", "Once your order is submitted, it is accepted and confirmed by the choosen " . storename . " immediately. If there are any issues in preparing or delivering your order on time, we will contact you directly. Unfortunately, we do not currently have the ability to track the status of your order while it is being prepared and/or delivered.");
+            newitem("How do I know if the " . storename . " has accepted my order?", "All orders placed on [sitename] are instantly confirmed and accepted. You will receive an email receipt of your order details, including the contact information for the " . storename . " fulfilling your order.");
+            newitem("What do I do if I need to make changes after submitting an order?", "You will receive an email receipt of your order details, including the contact information for the " . storename . " fulfilling your order. Please contact the restaurant directly by phone should you wish to make any changes.");
+            newitem("I never received my order. Who do I contact?", "You may call our support line at [sitename} or call the " . storename . " for immediate assistance.");//Support line?
+            newitem("Why can’t I see certain items on the menu?", "Since we use a universal menu, certain items offered by particular " . storenames . " may not be available through our service. Once you receive your order receipt via email, you may contact the restaurant directly should you wish to make any specific additions to your order.");
+            newitem("Can I choose the " . storename . " that prepares my order?", "Yes, during check-out you have the ability to choose from any restaurant that is within your delivery range. By default, we choose the " . storename . " closest to your location to fulfill your order.");
             newitem("Can I pay with cash or credit/debit once I receive my order?", "No. Unfortunately, all of our orders require pre-payment via debit/credit card. This allows us to instantly confirm and start preparing orders placed through [sitename].");
             newitem("Do you store my credit card information?", "We do not keep this information on our servers, but rather via our secure payment processing partner: Stripe. It is requested from Stripe when you sign in and stored on your browser, not our servers.");
 
@@ -283,16 +283,16 @@
             newitem("Remove an item from your cart", 'Click <button class="btn-sm"><i class="fa fa-minus"></i></button> to the right of the item in the receipt');
             newitem("Duplicating an item in your cart", 'Click <button class="btn-sm"><i class="fa fa-plus"></i></button> to the right of the item in the receipt (if it is a simple item without any addons/toppings)');
             newitem("Empty your cart", 'Click <i class="fa fa-times"></i> at the top-left corner of your receipt');
-            newitem('<i class="fa fa-fw fa-shopping-cart"></i> CHECKOUT', "Click this when you're done placing your order. You'll need to enter your <jump>Payment Information</jump>, <jump>Delivery Address</jump>, <jump>Preferred Restaurant</jump>, <jump>Delivery Time</jump>, then click <BUTTON CLASS='btn " . btncolor . " btn-sm'>Place order</BUTTON>.<BR>This button will only be visible once your order meets the minumum of: $" . $minimum . " before taxes and delivery", "btn btn-sm btn-block btn-wide " . btncolor);
+            newitem('<i class="fa fa-fw fa-shopping-cart"></i> CHECKOUT', "Click this when you're done placing your order. You'll need to enter your <jump>Payment Information</jump>, <jump>Delivery Address</jump>, <jump>Preferred " . ucfirst(storename) . "</jump>, <jump>Delivery Time</jump>, then click <BUTTON CLASS='btn " . btncolor . " btn-sm'>Place order</BUTTON>.<BR>This button will only be visible once your order meets the minumum of: $" . $minimum . " before taxes and delivery", "btn btn-sm btn-block btn-wide " . btncolor);
             newitem("Payment Information", "If you have a saved card (note: Cards are saved with Stripe, not our servers) you can select it from the dropdown, or use 'Add Card' to add a new one. Otherwise just enter your credit card information");
             newitem("Delivery Address", "If you have a saved address you can select it from the dropdown, or select 'Add Address' to add a new address. Otherwise just enter a valid Hamilton address");
-            newitem("Preferred Restaurant", "Select which restaurant you want to recieve your order from");
+            newitem("Preferred " . ucfirst(storename), "Select which " . storename . " you want to recieve your order from");
             newitem("Delivery time", "Leave as 'Deliver Now' to have the store deliver it ASAP. Otherwise they'll try to deliver as close to your selected time as possible.");
 
             if (read("id") && read("profiletype") > 0) {
-                newlist("Restaurants");
-                newitem("Registering", "You can only register as a regular user. To get escalated to a restaurant account requires you to contact an admin at: " . $email);
-                newitem('<i class="fa fa-fw fa-user-plus"></i> Orders List', "Shows a list of orders for your restaurant");
+                newlist(ucfirst(storename));
+                newitem("Registering", "You can only register as a regular user. To get escalated to a " . storename . " account requires you to contact an admin at: " . $email);
+                newitem('<i class="fa fa-fw fa-user-plus"></i> Orders List', "Shows a list of orders for your " . storename);
                 newitem("View", "View the contents of the order, a map showing the customer's address, and gives the options to Confirm, Email and Decline the order", "btn btn-sm btn-border btn-wide " . btncolor);
                 newitem("Delete", "Trigger the <jump class='event'>order_declined</jump> event and delete the order from the system", "btn btn-sm btn-border btn-wide " . btncolor);
                 newitem("Confirmed", "Mark the order as confirmed and trigger the <jump class='event'>order_confirmed</jump> event", "btn btn-sm btn-border btn-wide " . btncolor);
@@ -302,17 +302,17 @@
                 newitem("FILE NOT FOUND", "The order file is missing. Delete the order as the order itself is useless");
 
                 newlist("Communication Actions");
-                newitem("Editing actions", 'This can only done in <B><i class="fa fa-fw fa-user-plus"></i> Actions list</B>. This tells the system who to contact and how depending on specific events.<BR><SPAN class="reason">[reason]</SPAN> is replaced with the message entered by the restaurant<BR><SPAN class="reason">[name]</SPAN> is replaced with the name of the party<BR><SPAN class="reason">[url]</SPAN> with a link to the receipt that doesn&apos;t require logging in<BR><SPAN class="reason">[sitename]</SPAN> with &apos;' . sitename . '&apos;<BR>and the [tags] must be lower-cased');
+                newitem("Editing actions", 'This can only done in <B><i class="fa fa-fw fa-user-plus"></i> Actions list</B>. This tells the system who to contact and how depending on specific events.<BR><SPAN class="reason">[reason]</SPAN> is replaced with the message entered by the ' . storename . '<BR><SPAN class="reason">[name]</SPAN> is replaced with the name of the party<BR><SPAN class="reason">[url]</SPAN> with a link to the receipt that doesn&apos;t require logging in<BR><SPAN class="reason">[sitename]</SPAN> with &apos;' . sitename . '&apos;<BR>and the [tags] must be lower-cased');
                 actionitem("order_placed", "the order is placed");
                 actionitem("order_delivered", 'the <jump class="btn btn-sm btn-warning btn-border no-u">Delivered</jump> button is clicked');
                 actionitem("order_confirmed", 'the <jump class="btn btn-sm btn-primary btn-border no-u">Confirmed</jump> button is clicked');
                 actionitem("order_declined", 'the <jump class="btn btn-sm btn-border no-u">Declined</jump> or <jump class="btn btn-sm btn-danger btn-border no-u">Deleted</jump> buttons are clicked.');
-                actionitem("user_registered", 'a new user is registered. (Since no restaurant is involved in this event, do not set the party of this event to the Restaurant)');
-                actionitem("cron_job/cron_job_final", 'unconfirmed orders are in the system, waiting for the store to confirm receipt. cron_job_final is for the admin after max_attempts(settings) have been made<BR>[#] is the number of orders<BR>[restaurant] is the name of the restaurant<BR>[s] is the s added to the word order if there is more than one order<BR>[from] is a list of the user names who placed an order');
+                actionitem("user_registered", 'a new user is registered. (Since no ' . storename . ' is involved in this event, do not set the party of this event to the Restaurant)');
+                actionitem("cron_job/cron_job_final", 'unconfirmed orders are in the system, waiting for the store to confirm receipt. cron_job_final is for the admin after max_attempts(settings) have been made<BR>[#] is the number of orders<BR>[restaurant] is the name of the' . storename . '<BR>[s] is the s added to the word order if there is more than one order<BR>[from] is a list of the user names who placed an order');
 
                 if (read("profiletype") == 1) {
                     newlist("Administrators");
-                    newitem("Escalating a user account to a restaurant", 'Go to <B><i class="fa fa-fw fa-user-plus"></i> Users list</B>, click the Profiletype column for that user, and click "Restaurant" from the drop-down menu');
+                    newitem("Escalating a user account to a " . storename, 'Go to <B><i class="fa fa-fw fa-user-plus"></i> Users list</B>, click the Profiletype column for that user, and click "Restaurant" from the drop-down menu');
                     newitem("Changing the price of a topping or the delivery fee", 'Go to <B><i class="fa fa-fw fa-user-plus"></i> Additional_toppings list</B>, click the price column for that item, then change the text in the text box');
                     newlist('<i class="fa fa-fw fa-user-plus"></i> Edit Menu');
                     newitem("Size Costs", "Edit the cost of toppings for each size of pizza, and the delivery fee");

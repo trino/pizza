@@ -1755,7 +1755,7 @@ function ajaxerror(errortext, title){
 
 function toast(Text) {
     var x = document.getElementById("snackbar");
-    x.className = "show";
+    x.className = "show snackbar-" + database;
     x.innerHTML = Text;
     //log("toast: " + Text);
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
@@ -2255,31 +2255,8 @@ if (isUndefined(unikeys)) {
         noaddresses: 'No Addresses Saved',
         mycreditcard: 'My Credit Cards',
         nocreditcards: 'No Credit Cards',
-        norestaurants: 'No restaurant within range'
+        norestaurants: 'No {storename} within range'
     };
-}
-
-function makestring(Text, Variables) {
-    if (Text.startswith("{") && Text.endswith("}")) {
-        Text = unikeys[Text.mid(1, Text.length - 2)];
-    }
-    if (!isUndefined(Variables)) {
-        if(isObject(Variables)) {
-            var keys = Object.keys(Variables);
-            for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
-                var value = Variables[key];
-                Text = Text.replaceAll("\\[" + key + "\\]", value);
-            }
-        } else {
-            if(!isArray(Variables)){Variables = [Variables];}
-            for (var i = 0; i < Variables.length; i++) {
-                var value = Variables[i];
-                Text = Text.replaceAll("\\[" + i + "\\]", value);
-            }
-        }
-    }
-    return Text;
 }
 
 var oneclick = true, currentstyle = 1, currentbasecost = 0, currentaddoncost = 0;

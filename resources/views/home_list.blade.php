@@ -231,7 +231,7 @@
                         $RestaurantID = $_GET["restaurant"]["id"];
                         $_GET["restaurant"] = $_GET["restaurant"]["id"];
                     } else {
-                        die("Address not found for this restaurant, contact tech support");
+                        die("Address not found for this " . storename . ", contact tech support");
                     }
                     $adminsonly=false;
                 }
@@ -896,7 +896,7 @@
                                             $Restaurant = first("SELECT * FROM restaurants WHERE id=" . $_GET["restaurant"]);
                                             if($Restaurant){
                                                 $Address = first("SELECT * FROM useraddresses WHERE id=" . $Restaurant["address_id"]);
-                                                $Address["name"] = "Restaurant's Address";
+                                                $Address["name"] = ucfirst(storename) . "'s Address";
                                                 echo view("popups_googlemaps", $Address);
                                             }
                                         }
@@ -923,7 +923,7 @@
             @if($profiletype == 1 || !$adminsonly)
                 <SCRIPT>//              0            1           2           3            4
                     var statuses = ["Pending", "Confirmed", "Decline Order", "Delivered", "Canceled"];
-                    var usertype = ["Customer", "Admin", "Restaurant"];
+                    var usertype = ["Customer", "Admin", "{{ ucfirst(storename) }}"];
                     var profiletype = '<?= $profiletype; ?>';
 
                     var delivery_time = <?= getdeliverytime(); ?>;
@@ -1142,7 +1142,7 @@
                                                 case "maxdistance_local":   prititle = "How far a store can be away from the customer while NOT on the live server"; break;
                                                 case "lastupdate":          prititle = "Used for auto-updating the SQL file. Set to 0 to force an update"; break;
                                                 case "headercolor":         prititle = "What color to use for the titlebar"; break;
-                                                case "max_attempts":        prititle = "How many times to try calling the restaurant for a new order"; break;
+                                                case "max_attempts":        prititle = "How many times to try calling the {{storename}} for a new order"; break;
                                             }
                                         } else if(table == "additional_toppings"){
                                             switch(data.table[i]["size"]){
@@ -1157,11 +1157,11 @@
                                             }
                                         } else if(table == "actions"){
                                             switch(data.table[i]["eventname"]){
-                                                case "order_placed":        prititle = "[url] - URL to the order<BR>[name] - Name of the restaurant<T>A customer places an order"; break;
-                                                case "order_declined":case "order_confirmed": prititle = "[reason] - The reason specified by the restaurant<T>The restaurant declines or confirms an order"; break;
+                                                case "order_placed":        prititle = "[url] - URL to the order<BR>[name] - Name of the {{storename}}<T>A customer places an order"; break;
+                                                case "order_declined":case "order_confirmed": prititle = "[reason] - The reason specified by the {{storename}}<T>The {{storename}} declines or confirms an order"; break;
                                                 case "user_registered":     prititle = "None<T>A new customer registers on the site"; break;
                                                 case "cron_job": case "cron_job_final":
-                                                                            prititle = "[#] - The number of orders waiting<T>[s] - puts an 's' if the number of orders isn't 1<T>[attempt] - Which attempt number is being made ('final' for the last one)<T>[restaurant] - the name of the restaurant<T>[from] - the list of user names who ordered<T>The CRON job loops through all unconfirmed orders"; break;
+                                                                            prititle = "[#] - The number of orders waiting<T>[s] - puts an 's' if the number of orders isn't 1<T>[attempt] - Which attempt number is being made ('final' for the last one)<T>[restaurant] - the name of the {{storename}}<T>[from] - the list of user names who ordered<T>The CRON job loops through all unconfirmed orders"; break;
                                                 case "press9torepeat":      prititle = "[press9torepeat] in any call action will be replaced with this text"; break;
                                             }
                                             if(prititle) {
@@ -1283,7 +1283,7 @@
                                         if (isUndefined(column)) {
                                             switch(table){
                                                 case "restaurants":
-                                                    confirm2('The restaurant address can not be edited directly from here. Would you like to go to the address editor?', 'Edit Address', function(){
+                                                    confirm2('The {{storename}} address can not be edited directly from here. Would you like to go to the address editor?', 'Edit Address', function(){
                                                         ID = $("#restaurants_" + ID + "_address_id").text();
                                                         window.location = webroot + "list/useraddresses?key=id&value=" + ID;
                                                     });
@@ -1392,7 +1392,7 @@
                                                             default:
                                                                 switch(colname){
                                                                     case "actions.message":
-                                                                        title = "[reason] will be replaced with the reason the restaurant owner specifies. [url] will be replaced with a URL to the receipt. [sitename] with '<?= sitename; ?>', [name] with the name of the party";
+                                                                        title = "[reason] will be replaced with the reason the {{storename}} owner specifies. [url] will be replaced with a URL to the receipt. [sitename] with '<?= sitename; ?>', [name] with the name of the party";
                                                                         break;
                                                                 }
                                                                 HTML = '<INPUT TYPE="TEXT" ID="' + ID + "_" + field + '" VALUE="' + HTML + '" CLASS="textfield" COLNAME="' + colname;

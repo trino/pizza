@@ -337,11 +337,11 @@
                 validateinput("#restaurant", true);
             } else {
                 $("#red_rest").addClass("redhighlite");
-                var message = "Please select your desired restaurant";
+                var message = "Please select your desired {{storename}}";
                 var children = $("#restaurant").children();
                 if(children.length == 1){
                     if(children[0].text == makestring("{norestaurants}")){
-                        message = "No restaurants within range";
+                        message = "No {{storenames}} within range";
                     }
                 }
                 validateinput("#restaurant", message);

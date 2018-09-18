@@ -125,6 +125,35 @@ includefile("public/scripts/api.js");
     var debugmode = '<?= !islive(); ?>' == '1';
     var timestampoffset;
     timestampoffset = parseInt('<?= time(); ?>') - totimestamp();
+    var database = "<?= database; ?>";
+
+    function makestring(Text, Variables) {
+        <?php
+            foreach($GLOBALS["settings"] as $key => $value){
+                echo 'Text = Text.replaceAll("{' . $key . '}", "' . $value . '");';
+            }
+        ?>
+        if (Text.startswith("{") && Text.endswith("}")) {
+            Text = unikeys[Text.mid(1, Text.length - 2)];
+        }
+        if (!isUndefined(Variables)) {
+            if(isObject(Variables)) {
+                var keys = Object.keys(Variables);
+                for (var i = 0; i < keys.length; i++) {
+                    var key = keys[i];
+                    var value = Variables[key];
+                    Text = Text.replaceAll("\\[" + key + "\\]", value);
+                }
+            } else {
+                if(!isArray(Variables)){Variables = [Variables];}
+                for (var i = 0; i < Variables.length; i++) {
+                    var value = Variables[i];
+                    Text = Text.replaceAll("\\[" + i + "\\]", value);
+                }
+            }
+        }
+        return Text;
+    }
 
     function userphonenumber() {
         @if(needsphonenumber())
@@ -551,7 +580,7 @@ includefile("public/scripts/api.js");
             }
         }
         $("#formatted_address").val(Text);
-        $("#restaurant").html('<OPTION VALUE="0" SELECTED>Restaurant</OPTION>');
+        $("#restaurant").html('<OPTION VALUE="0" SELECTED>{{ucfirst(storename)}}</OPTION>');
         addresshaschanged();
     }
 

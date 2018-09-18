@@ -71,7 +71,7 @@
             </DIV>
 
             <DIV CLASS="col-md-2">
-                Restaurant:
+                {{ucfirst(storename)}}:
                 <SELECT ID="rest_id" CLASS="form-control" ONCHANGE="restchange();">
                     <OPTION VALUE="0">All</OPTION>
                     <?php
@@ -396,7 +396,7 @@
                     }
                 });
                 if(found == 0){
-                    setAll("rest_id", "No restaurants found");
+                    setAll("rest_id", "No {{storenames}} found");
                 }
             }
             loadmap();

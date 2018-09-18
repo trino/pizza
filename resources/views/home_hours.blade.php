@@ -33,7 +33,7 @@
             break;
     }
     $restaurants = query($query, true, "home_hours");
-    echo '<LABEL>Restaurant: <SELECT ID="restaurant" ONCHANGE="loadhours();"><OPTION VALUE="0">[Default hours]</OPTION>';
+    echo '<LABEL>' . ucfirst(storename) . ': <SELECT ID="restaurant" ONCHANGE="loadhours();"><OPTION VALUE="0">[Default hours]</OPTION>';
     foreach($restaurants as $restaurant){
         echo '<OPTION VALUE="' . $restaurant["id"] . '">' . $restaurant["name"] . '</OPTION>';
     }

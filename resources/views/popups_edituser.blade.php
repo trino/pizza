@@ -83,7 +83,7 @@
     }
     if ($age) {
         printarow("minimumage", $name, array("name" => "minimumage", "type" => "select", "class" => "required valid " . $class, "required" => true, "icon" => "fa-birthday-cake",
-            "placeholder" => "Are you over 19?", "options" => ["yes" => "Yes", "No"]
+            "placeholder" => "Are you over 19?", "options" => ["yes" => "I am over 19", "no" => "I am under 19"]
         ));
     }
     echo '</DIV>';

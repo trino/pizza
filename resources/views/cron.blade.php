@@ -6,7 +6,7 @@
     }
 </STYLE>
 <TABLE BORDER="1" STYLE="margin: auto;">
-    <TR><TH>ID</TH><TH>Restaurant</TH><TH>Orders</TH><TH>Attempt</TH><TH>Call</TH></TR>
+    <TR><TH>ID</TH><TH>{{ucfirst(storename)}}</TH><TH>Orders</TH><TH>Attempt</TH><TH>Call</TH></TR>
     <?php //  http://localhost/pizza/public/cron
         $max_attempts = getsetting("max_attempts", 3);
         $enabled = isset($_GET["call"]) || !debugmode || islive();
@@ -39,7 +39,6 @@
         if(!$enabled){
             printline('<A HREF="' . Request::url() . '?call" TITLE="click to enable it">Calling system is disabled</A>');
         } else if(!debugmode) {
-            printline('CRON: ' . count($orders) . ' restaurants have unconfirmed orders');
         }
 
         function printline($text, $sidetext = false){
@@ -83,7 +82,7 @@
             $count += $order["count"];
             echo '<TD ALIGN="right">' . $order["count"] . '</TD>';
             echo '<TD' . iif($isfinal, ' CLASS="finalattempt"') . ' ALIGN="right">' . getordinal($order["attempts"]) . '</TD>';
-            echo '<TD ALIGN="center"><INPUT TYPE="checkbox" DISABLED TITLE="Will only call if the system is enabled, and the order has a valid restaurant"';
+            echo '<TD ALIGN="center"><INPUT TYPE="checkbox" DISABLED TITLE="Will only call if the system is enabled, and the order has a valid ' . storename . '"';
             $data = "[" . $order["restaurant_id"] . "NOT SENT]";
             if($enabled && $restaurant !== false){
                 $data = processorder($order["id"], $isfinal);

@@ -13,7 +13,7 @@
 
         $phone = filternonnumeric($_POST["phonenumber"]);
         if(restaurantexists($_POST["restaurant"], $_POST["emailaddress"], $phone)){
-            die("This restaurant exists already");
+            die("This " . storename . " exists already");
         }
 
         if(!$_POST["add_number"] && !$_POST["add_street"] && !$_POST["add_city"] && !$_POST["add_province"] && !$_POST["add_postalcode"]){
@@ -69,7 +69,7 @@
             $hoursid = "[Yes]";
         }
 
-        echo "<B>Created</B><BR>Restaurant ID: " . $restaurantid;
+        echo "<B>Created</B><BR>" . ucfirst(storename) . " ID: " . $restaurantid;
         echo "<BR>User ID: " . $userid;
         echo "<BR>Address ID: " . $addressid;
         echo "<BR>Hours ID: " . $hoursid;

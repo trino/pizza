@@ -324,7 +324,7 @@
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
                 <h2 class="mt-4">Questions about your order?</h2>
-                <p>Please contact the restaurant directly.</p>
+                <p>Please contact the {{storename}} directly.</p>
                 <DIV CLASS="clearfix"></DIV>
             @endif
             <p>

@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="input_right">
                                         <SELECT class="form-control" ID="restaurant" ONCHANGE="restchange('elementchange');">
-                                            <OPTION VALUE="0" SELECTED>Select Restaurant</OPTION>
+                                            <OPTION VALUE="0" SELECTED>Select {{ucfirst(storename)}}</OPTION>
                                         </SELECT>
                                     </div>
                                 <?php break; case "notes": ?>
@@ -152,7 +152,7 @@
                                         </div>
                                         @if(!islive() || read("profiletype") == 1)
                                             <div class="thirdwidth credit-info">
-                                                <a class="float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No restaurant within range</OPTION>');">Clear Restaurant</a>
+                                                <a class="float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No {{storename}} within range</OPTION>');">Clear {{ucfirst(storename)}}</a>
                                             </DIV>
                                             <div class="thirdwidth credit-info">
                                                 <a class="float-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
@@ -245,11 +245,11 @@
 
     function alertshortage() {
         if (shortitems.length) {
-            var otherstores = " or select a different restaurant to continue";
+            var otherstores = " or select a different {{storename}} to continue";
             if (closest.length == 1) {
                 otherstores = "";
             }
-            ajaxerror("Sorry, but this restaurant is currently out of:<BR><UL><LI>" + shortitems.join("</LI><LI>") + "</LI></UL><BR>Please remove them from your order" + otherstores, "Product Shortage");
+            ajaxerror("Sorry, but this {{storename}} is currently out of:<BR><UL><LI>" + shortitems.join("</LI><LI>") + "</LI></UL><BR>Please remove them from your order" + otherstores, "Product Shortage");
             return true;
         }
         return false;

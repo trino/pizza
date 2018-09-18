@@ -36,18 +36,18 @@
     <p>If you are accepting these terms of use on behalf a corporation or other entity, you represent and warrant that you have the necessary right and authority to enter into these terms of
         use on behalf of such corporation or entity and to bind such corporation or entity to these terms of use. </p>
 
-    <?= p("hidden"); ?> Our Service: The {{ $site_name }} service allows users to place orders for food delivery or take out from participating restaurants identified on the website (the                 'Service'). You can use the Service from a computer or personal mobile device via an internet connection or data plan $site_name, and the restaurants offering service, are not                   responsible for any data or Internet usage fees. $site_name is an ordering service only, and does not prepare the food or provide delivery service. Therefore we are not liable for the           actions or omissions of any third-party independent courier contractors or restaurants that provide services through our Service. This is not limited to but includes issues
+    <?= p("hidden"); ?> Our Service: The {{ $site_name }} service allows users to place orders for food delivery or take out from participating {{storename}}s identified on the website (the                 'Service'). You can use the Service from a computer or personal mobile device via an internet connection or data plan $site_name, and the restaurants offering service, are not                   responsible for any data or Internet usage fees. $site_name is an ordering service only, and does not prepare the food or provide delivery service. Therefore we are not liable for the           actions or omissions of any third-party independent courier contractors or restaurants that provide services through our Service. This is not limited to but includes issues
         regarding food quality or timeliness of delivery. </p>
 
     <?= p(); ?>Account Registration: You must create an account on the Website in order to place orders through the Service. Registration includes your delivery and payment information. As a
     registered user, you will have private access to member services such as the ability to review previous orders. All personal information provided by you will be handled in accordance
     with our Privacy Policy.</p>
 
-    <?= p(); ?>Placing Your Order: Once you have selected the meal(s) of the day you wish to order from your chosen restaurant, you will provide any other required information and be given the
+    <?= p(); ?>Placing Your Order: Once you have selected the meal(s) of the day you wish to order from your chosen {{storename}}, you will provide any other required information and be given the
     opportunity to submit your order by clicking the 'place my order', or similar, button. Please review your order carefully as you CANNOT make changes to an order once it has been
     submitted. Your order CANNOT be cancelled once it has been submitted. </p>
 
-    <?= p(); ?>Order Processing: Once you submit an order, it will be sent immediately to the restaurant from which you ordered. You are responsible to ensure all your account information such as
+    <?= p(); ?>Order Processing: Once you submit an order, it will be sent immediately to the {{storename}} from which you ordered. You are responsible to ensure all your account information such as
     order details, delivery address, billing, etc., is current, complete, and accurate.</p>
 
     <?= p(); ?>Order Delivery: When you place a pickup or delivery order, you may select the time you would like your order to be picked up or delivered to you. Please note this time is only an
@@ -98,9 +98,9 @@
     your own personal non-commercial use. You agree not to misuse the Website (e.g. hacking and 'scrapping'), not to modify the digital or paper copies of any material that you download or
     print, and not to use any materials on the Website or the Website itself for commercial purposes. </p>
 
-    <?= p(); ?>Customer Care: If you experience any issues with your Order, we recommend that you contact the Restaurant directly in the first instance to discuss the issue. We find this is the
-    most effective way to resolve the issue. With that said, your patronage and support is very important to us. If you cannot reach the Restaurant or have trouble resolving the issue with
-    the Restaurant, please contact us at {!! $email !!} within 48 hours of the incident. We will do our best to resolve the issue on your behalf but we cannot guarantee that we will be
+    <?= p(); ?>Customer Care: If you experience any issues with your Order, we recommend that you contact the {{storename}} directly in the first instance to discuss the issue. We find this is the
+    most effective way to resolve the issue. With that said, your patronage and support is very important to us. If you cannot reach the {{storename}} or have trouble resolving the issue with
+    the {{storename}}, please contact us at {!! $email !!} within 48 hours of the incident. We will do our best to resolve the issue on your behalf but we cannot guarantee that we will be
     able to do so. </p>
 
     <?= p(); ?>Feedback: If you submit any suggestions, comments, or other feedback in regards to anything on the Website and/or Our Service, {{ $site_name }} may use such Feedback in the Website
@@ -169,7 +169,7 @@
 
     <p>- Site activity information and cookies (Please refer to Use of Cookies)</p>
 
-    <p>- Voluntary information provided by you, which may include restaurant reviews and ratings, referrals, special order instructions, feedback, and other actions performed on the Website or App</p>
+    <p>- Voluntary information provided by you, which may include {{storename}} reviews and ratings, referrals, special order instructions, feedback, and other actions performed on the Website or App</p>
 
     <p>Use and Disclosure of the Information:</p>
 
@@ -245,8 +245,8 @@
 
     <h4>Allergy & Dietary Information</h4>
     <p>{{ $site_name }} tries to accurately copy the description of dishes.</p>
-    <p>However, it is the restaurants that prepares the dishes, please use the notes section on the receipt to specify particular allergies.</p>
-    <p>If you are in any doubt about the presence of allergens, you should confirm with the restaurant.</p>
+    <p>However, it is the {{storenames}} that prepares the dishes, please use the notes section on the receipt to specify particular allergies.</p>
+    <p>If you are in any doubt about the presence of allergens, you should confirm with the {{storename}}.</p>
     <p>Last updated: February 15, 2017</p>
     </div>
 </div>

@@ -38,7 +38,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
-    <title><?= cityname ?> Pizza Delivery</title>
+    <title><?= cityname . " " . product ?> Delivery</title>
     <link rel="icon" sizes="128x128" href="<?= webroot("images/pizza128.png"); ?>">
     <link rel="icon" sizes="192x192" href="<?= webroot("images/pizza192.png"); ?>">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>

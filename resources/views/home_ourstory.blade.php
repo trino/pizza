@@ -23,7 +23,7 @@
         <DIV CLASS="col-lg-12 bg-white list-padding list-card">
             <h3><?= makestring("{aboutus}"); ?></h3>
             <p>
-                <?= $site_name; ?> is a pizza delivery service that's "faster than picking up the phone".
+                <?= $site_name; ?> is a {{ product }} delivery service that's "faster than picking up the phone".
 
                 Created by Van and Roy of Hamilton; we've seen what's out there for online ordering and we're confident that we can do better.
                 <br><br>

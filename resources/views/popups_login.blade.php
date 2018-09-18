@@ -134,7 +134,7 @@
                                             switch ($user["profiletype"]) {
                                                 case 0: $profiletype = "Users"; break;
                                                 case 1: $profiletype = "Admins"; break;
-                                                case 2: $profiletype = "Restaurants"; break;
+                                                case 2: $profiletype = ucfirst(storename); break;
                                             }
                                             echo '<OPTION DISABLED>' . $profiletype . '</OPTION>';
                                             $profiletype = $user["profiletype"];
@@ -218,16 +218,16 @@
     @endif
 
     <div class="py-3 px-3">
-        <span class="bold bigtext"> <?= cityname ?>'s Premier Pizza Delivery Service</span><br><br>
+        <span class="bold bigtext"> <?= cityname ?>'s Premier {{ucfirst(product)}} Delivery Service</span><br><br>
         <!--p class="pull-center">
         <img style="max-width:100%;border:7px solid #eceeef!important" src="<?= webroot("images/ultimatecombo.png"); ?>"/>
         </p-->
         <p>
             <!--i class="fa fa-gavel fa-2x"></i-->
-            We’ve partnered up with some of your favourite local pizza restaurants to bring you a one-stop
+            We’ve partnered up with some of your favourite local pizza {{storenames}} to bring you a one-stop
             online pizza shop. What makes us different? We offer the lowest prices in town and only use one
-            menu – no more wasting time browsing through restaurants. Once you complete your order, we’ll
-            immediately connect with our closest partner restaurant and start preparing your meal right
+            menu – no more wasting time browsing through {{storenames}}. Once you complete your order, we’ll
+            immediately connect with our closest partner {{storename}} and start preparing your meal right
             away. Sounds pretty fast and easy right?
         </p>
         <p>

@@ -12,6 +12,7 @@ function setupconstants(){
     $dirroot = str_replace("/public/", "", str_replace("\\", "/", public_path()) . "/");
     $data = include($dirroot . "/config/database.php");
     //$data = $GLOBALS["app"]["config"]["database"]; vardump($data);die();
+    if(!defined("database")){define("database", $data["connections"]["mysql"]["database"]);}
     if(!defined("serverurl")){
         foreach($data["constants"] as $key => $value){
             switch(filternumeric($key)){
@@ -580,6 +581,7 @@ function loadsettings(){
     $settings = first("SELECT * FROM `settings` WHERE keyname NOT IN (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "') AND keyname NOT IN ('lastSQL', 'menucache')", false, "API.loadsettings");
     foreach($settings as $ID => $Value){
         $settings[$Value["keyname"]] = $Value["value"];
+        define($Value["keyname"], $Value["value"]);
         unset($settings[$ID]);
     }
     return $settings;
@@ -587,7 +589,6 @@ function loadsettings(){
 
 $con = connectdb();
 $settings = loadsettings();
-define("debugmode", $GLOBALS["settings"]["debugmode"]);
 
 /*
 if (isFileUpToDate("lastSQL", $Filename)) {

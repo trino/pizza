@@ -167,7 +167,7 @@
                     }
                 }
             } else if ($latitude && $longitude) {
-                echo 'No restaurants found within ' . $radius . " km";
+                echo 'No ' . storename . ' found within ' . $radius . " km";
             } else {
                 echo 'No address specified';
             }
@@ -192,7 +192,7 @@
                                 $restaurant = first("SELECT name FROM restaurants WHERE id = " . $_GET["restaurantid"], true, "home_map");
                                 echo $restaurant["name"];
                             } else {
-                                echo "[Any Restaurant]";
+                                echo "[Any " . storename . "]";
                             }
                         }
                         ?></SPAN>

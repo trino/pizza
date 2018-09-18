@@ -106,6 +106,10 @@
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
     $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true, "popups_menu.categories");
     $isfree = collapsearray(Query("SELECT * FROM additional_toppings", true, "popups_menu.isfree"), "price", "size");
+    foreach($GLOBALS["settings"] as $key => $value){
+        if(is_numeric($value)){$isfree[$key] = $value;}
+    }
+
     $deliveryfee = $isfree["Delivery"];
     $minimum = $isfree["Minimum"];
     $addons = array();
