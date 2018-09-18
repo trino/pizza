@@ -191,8 +191,8 @@
                             echo $HTML;
                             ?>
                         >
-                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium" style="zoom: .5">
-                            <img src="../public/images/weed.jpg" />
+                        <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium" style="max-height:100%">
+                            <img src="{{ webroot("public/images/weed.jpg")}}" />
                         </span>
 
                         <!--span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium">
