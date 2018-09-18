@@ -17,6 +17,12 @@ class Controller extends BaseController {
         return $data;
     }
 
+    function striphtml($HTML){
+        $HTML = preg_replace('#<[^>]+>#', ' ', $HTML);
+        $HTML = preg_replace('#\s+#', ' ', $HTML);
+        return trim($HTML);
+    }
+
     public function isadmin($emailORphone){
         $TrueForEmailFalseForPhoneNumber = !isvalidphone($emailORphone);
         $emailaddresses = enumadmins($TrueForEmailFalseForPhoneNumber);
@@ -42,6 +48,7 @@ class Controller extends BaseController {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
             }
+            $array['mail_subject'] = $this->striphtml($array['mail_subject']);
             if((!islive() || debugmode)){
                 if(!$this->isadmin($array['email'])) {
                     $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
