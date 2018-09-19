@@ -202,12 +202,41 @@
                     }
                 }
 
+                $itemname = str_replace(array("[", "]"), "", $item->itemname);
+                $units = "";
+                if($quantity > 1){
+                    //if(isset($item->units)){
+                    //    $units = " (" . $item->units . ")";
+                    //} else if (textcontains($item->itemname, "[") && textcontains($item->itemname, "]")) {
+                        $units = getbetween($item->itemname, "[", "]");
+                        if(textcontains($units, "/")){
+                            $top = getbetween("[" . $units, "[", "/");
+                            $bottom = getbetween($units . "]", "/", "]");
+                            $unit = filternumeric($bottom);
+                            $bottom = filternonnumeric($bottom);
+                            $top = $top * $quantity;
+                            $whole = floor( $top / $bottom );
+                            $top = $top % $bottom;
+                            if($whole == 0){$whole = "";}
+                            if($top == 0){
+                                $value = $whole;
+                            } else {
+                                $value = $whole . '<SUP>' . $top . '</SUP>/<SUB>' . $bottom . '</SUB>';
+                            }
+                        } else {
+                            $value = filternonnumeric($units) * $quantity;
+                            $unit = filternumeric($units);
+                        }
+                        $units = " (" . $value . $unit . ")";
+                    //}
+                }
+
                 switch ($style) {
                     case 1:
                         if ($debugmode) {
                             $debug = ' TITLE="' . $onlydebug . var_export($item, true) . '"';
                         }
-                        echo '<TR><TD>' . showifabove1($quantity) . '</TD><TD' . $debug . '>' . $item->itemname . '</TD>';
+                        echo '<TR><TD>' . showifabove1($quantity) . '</TD><TD' . $debug . '>' . $itemname . $units . '</TD>';
                         if ($debugmode) {
                             $debug = ' TITLE="' . $onlydebug . print_r($menuitem, true) . '"';
                         }
@@ -216,17 +245,17 @@
                     case 2:
                         $imagefile = str_replace(" ", "-", strtolower($menuitem["category"]));
                         if (right($imagefile, 5) == "pizza" || !iconexists($imagefile)) {
-                            $imagefile = str_replace(" ", "-", strtolower($item->itemname));
+                            $imagefile = str_replace(" ", "-", strtolower($itemname));
                             if (!iconexists($imagefile)) {
                                 $imagefile = "pizza";
 
-                                if (strtolower(right(trim($item->itemname), 5)) == "salad") {
+                                if (strtolower(right(trim($itemname), 5)) == "salad") {
                                     $imagefile = "salad";
                                 }
                             }
                         }
                         $colspan = $colspan - 2;
-                        echo '<TR><TD valign="middle">' . $Bold . showifabove1($quantity, 'x&nbsp;') . $item->itemname . '</SPAN></TD><TD ALIGN="RIGHT" WIDTH="5%">';
+                        echo '<TR><TD valign="middle">' . $Bold . showifabove1($quantity, 'x&nbsp;') . $itemname . $units . '</SPAN></TD><TD ALIGN="RIGHT" WIDTH="5%">';
                         break;
                 }
 

@@ -100,8 +100,7 @@
         }
     }
 
-    $database = $GLOBALS["app"]["config"]["database"]["connections"]["mysql"]["database"];
-    $CSS = iif($database == "canbii", "canbii", "sprite");
+    $CSS = iif(database == "canbii", "canbii", "sprite");
 
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
     $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true, "popups_menu.categories");
@@ -196,15 +195,20 @@
                             ?>
                         >
                         <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium" style="max-height:100%">
-                            <img src="{{ webroot("public/images/weed.jpg")}}" />
+                            <?php
+                                if(database == "canbii"){
+                                    echo '<img src="' . webroot("public/images/weed.jpg") . '" />';
+                                }
+                            ?>
                         </span>
-
-                        <!--span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium">
-                            <?= geticon($fontawesomeicons, $catclass); ?></span-->
-
-
-
-                        <span class="align-middle item-name">{{$menuitem['item']}} </span>
+                        <?php
+                            if(database == "ai"){
+                                echo '<span class="align-middle item-icon rounded-circle bg-warning ' . $CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true);                                  echo ' sprite-medium">';
+                                echo geticon($fontawesomeicons, $catclass);
+                                echo '</span>';
+                            }
+                        ?>
+                        <span class="align-middle item-name">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
                         <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 0)}}<?= $icon; ?></span>
                     </button>
                 @endforeach

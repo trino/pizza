@@ -513,11 +513,11 @@ function getitemtext(itemindex, text){
     itemindex = getsrcid(itemindex);
     var id = "#receipt_item_" + itemindex + " .";
     if(isUndefined(text)) {
-        text = [$(id + "item_qty").text(), $(id + "itemname").text()];
+        text = [$(id + "item_qty").text(), $(id + "itemname").html()];
         return text;
     }
     $(id + "item_qty").text(text[0]);
-    if(text[1]){$(id + "itemname").text(text[1]);}
+    if(text[1]){$(id + "itemname").html(text[1]);}
     return $("#receipt_item_" + itemindex);
 }
 
@@ -562,6 +562,7 @@ function unclone() {
 function cloneitem(me, itemid) {
     var clone = JSON.parse(JSON.stringify(theorder[itemid]));
     clone.clone = true;
+    clone.quantity = 1;
     theorder.push(clone);
     var oldtext = getitemtext(itemid);
     var oldcost = $('#cost_' + itemid).text();
@@ -784,7 +785,38 @@ function generatereceipt(forcefade) {
             if(quantity > 1) {
                 tempHTML += quantity + ' x&nbsp;';
             }
-            tempHTML += '</SPAN> <span class="mr-auto itemname">' + item["itemname"] + '</SPAN>';
+
+            var itemname = item["itemname"];
+
+            if(itemname.contains("[") && itemname.contains("]")){
+                var units = itemname.between("[", "]").replaceAll(" ", "");
+                itemname = itemname.replace("[", "").replace("]", "");
+                var value = "", unit = "";
+                if(quantity > 1) {
+                    if (units.contains("/")) {
+                        var top = ("[" + units).between("[", "/");
+                        var bottom = (units + "]").between("/", "]");
+                        var unit = filternumeric(bottom);
+                        bottom = filternonnumeric(bottom);
+                        top = top * quantity;
+                        var whole = Math.floor(top / bottom);
+                        top = top % bottom;
+                        if (whole == 0) {whole = "";}
+                        if (top == 0) {
+                            value = whole;
+                        } else {
+                            value = whole + '<SUP>' + top + '</SUP>/<SUB>' + bottom + '</SUB>';
+                        }
+                    } else {
+                        value = filternonnumeric(units) * quantity;
+                        unit = filternumeric(units);
+                    }
+                    itemname += " (" + value + unit + ")";
+                    theorder[itemid].units = value + unit;
+                }
+            }
+
+            tempHTML += '</SPAN> <span class="mr-auto itemname">' + itemname + '</SPAN>';
             tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
             tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
             if (hasaddons) {
@@ -1348,7 +1380,7 @@ function formattednow(timestamp){
 }
 
 function filternumeric(text){
-    return text.replace(/[^0-9\.]/g,'');
+    return text.replace(/[0-9]/g, '');
 }
 function filternonnumeric(text){
     return text.replace(/\D/g,'');

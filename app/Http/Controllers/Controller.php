@@ -56,100 +56,16 @@ class Controller extends BaseController {
                     if(is_array($array['email'])){return $this->sendEMail($template_name, $array);}
                 }
             }
-            $mandrill = false;//'YOUR_API_KEY'
-            if($mandrill) {
-                require_once base_path() . '/vendor/spatie/mandrill/src/Mandrill.php';
-                $mandrill = new Mandrill($mandrill);
-                try {//https://mandrillapp.com/api/docs/messages.php.html#method-send-template
-                    $HTML = view($template_name)->render();
-                    $template_name = 'example template_name';
-                    if(!isset($array['id']) || !isset($array['name'])){
-                        $user = first("SELECT id, name FROM 'users' WHERE email = '" . $array['email'] . "'");
-                        if($user){
-                            if(!isset($array['id']))        {$array['id'] = $user["id"];}
-                            if(!isset($array['name']))      {$array['name'] = $user["name"];}
-                        } else {
-                            if(!isset($array['id']))        {$array['id'] = 0;}
-                            if(!isset($array['name']))      {$array['name'] = "Guest";}
-                        }
-                    }
-                    if(!isset($array['tags'])){
-                        switch($template_name){
-                            case "email_forgotpassword":    $array['tags'] = "forgot-password"; break;
-                            case "email_test":              $array['tags'] = "generic,test"; break;
-                            case "email_verify":            $array['tags'] = "verify"; break;
-                            case "email_receipt":           $array['tags'] = "receipt"; break;
-                        }
-                    }
-                    $template_content = array(array(
-                        'name' =>       $array['name'],
-                        'content' =>    'example content'
-                    ));
-                    $message = array(
-                        'html' =>       $HTML,
-                        'text' =>       strip_tags($HTML),
-                        'subject' =>    $array['mail_subject'],
-                        'from_email' => $GLOBALS["app"]["config"]["mail"]["from"]["address"],
-                        'from_name' =>  $GLOBALS["app"]["config"]["mail"]["from"]["name"],
-                        'to' => array(array(
-                            'email' => $array['email'],
-                            'name' => $array['name'],
-                            'type' => 'to'
-                        )),
-                        'headers' => array('Reply-To' => $GLOBALS["app"]["config"]["mail"]["from"]["address"]),
-                        'important' => false,               'track_opens' => null,
-                        'track_clicks' => null,             'auto_text' => null,
-                        'auto_html' => null,                'inline_css' => null,
-                        'url_strip_qs' => null,             'preserve_recipients' => null,
-                        'view_content_link' => null,        'tracking_domain' => null,
-                        'signing_domain' => null,           'return_path_domain' => null,
-                        'merge' => true,                    'merge_language' => 'mailchimp',
-                        'global_merge_vars' => array(array(
-                            'name' => 'merge1',
-                            'content' => 'merge1 content'
-                        )),
-                        'merge_vars' => array(array(
-                            'rcpt' => $array['email'],
-                            'vars' => array(array(
-                                'name' => 'merge2',
-                                'content' => 'merge2 content'
-                            ))
-                        )),
-                        'tags' => explode(",", $array['tags']),
-                        'subaccount' => 'customer-123',
-                        'google_analytics_domains' => array($_SERVER["SERVER_NAME"]),
-                        'google_analytics_campaign' => 'info@trinoweb.com',
-                        'metadata' => array('website' => $_SERVER["SERVER_NAME"]),
-                        'recipient_metadata' => array(array(
-                            'rcpt' => $array['email'],
-                            'values' => array('user_id' => $array['id'])
-                        ))
-                    );
-                    $async = false;
-                    $ip_pool = 'Main Pool';
-                    $result = $mandrill->messages->sendTemplate($template_name, $template_content, $message, $async, $ip_pool, '2000-01-01 00:00:00');
-                } catch(Mandrill_Error $e) {
-                    $text = get_class($e) . ": " . $e->getMessage();
-                    $email = view($template_name, $array);
-                    debugprint($template_name . " EMAIL TO " . $array['email'] . " FAILED: " . $text . "<P>" . $email);
-                    return "Email error: " . $text;
-                }
-            } else {
-                try {
-                    \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
-                        $messages->to($array['email'])->subject($array['mail_subject']);
-                    });
-                } catch (\Swift_TransportException $e) {
-                    $text = $e->getMessage();
-                    $email = view($template_name, $array);
-                    debugprint($template_name . " EMAIL TO " . $array['email'] . " FAILED: " . $text . "<P>" . $email);
-                    return "Email error: " . $text;
-                }
+            try {
+                \Mail::send($template_name, $array, function ($messages) use ($array, $template_name) {
+                    $messages->to($array['email'])->subject($array['mail_subject']);
+                });
+            } catch (\Swift_TransportException $e) {
+                $text = $e->getMessage();
+                $email = view($template_name, $array);
+                debugprint($template_name . " EMAIL TO " . $array['email'] . " FAILED: " . $text . "<P>" . $email);
+                return "Email error: " . $text;
             }
-        } else {
-            $array["template_name"] = $template_name;
-            var_dump($array);
-            die();
         }
     }
 

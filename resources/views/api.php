@@ -12,7 +12,11 @@ function setupconstants(){
     $dirroot = str_replace("/public/", "", str_replace("\\", "/", public_path()) . "/");
     $data = include($dirroot . "/config/database.php");
     //$data = $GLOBALS["app"]["config"]["database"]; vardump($data);die();
-    if(!defined("database")){define("database", $data["connections"]["mysql"]["database"]);}
+    if(!defined("database")){
+        $database = $data["connections"]["mysql"]["database"];
+        if(textcontains($database, "canbii")){$database = "canbii";} else {$database = "ai";}
+        define("database", $database);
+    }
     if(!defined("serverurl")){
         foreach($data["constants"] as $key => $value){
             switch(filternumeric($key)){
@@ -45,12 +49,17 @@ function webroot($file = "", $justroot = false){
     $start = strpos($webroot, "/", 1) + 1;
     $webroot = substr($webroot, 0, $start);
     $protocol = "http";
-    if (islive()) {
+    $public = "";
+    if(strpos(serverurl, ".com") !== false){
+        if($file && strpos($file, "public/") === false){
+            $public = "public/";
+        }
+        return serverurl . "/" . $public . $file;
+    } else if (islive()) {
         $webroot = "/";
         if ($isSecure) {
             $protocol = "https";
         }
-        $public = "";
         if(strpos($file, "images/") !== false){$public = "public/";}
     } else {
         $justroot = false;
@@ -808,6 +817,8 @@ function isencrypted($text){
 
 function islive(){
     setupconstants();
+    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
+    if($isSecure){return true;}
     $server = $_SERVER["SERVER_NAME"];
     return textcontains($server, serverurl);
     /*if($server == "localhost" || $server == "127.0.0.1"){return false;}

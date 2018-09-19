@@ -63,8 +63,7 @@
     if (!isset($noclose)) {$noclose = false;}
     if (!isset($dohours)) {$dohours = true;}
     if (!isset($showlogin)) {$showlogin = true;}
-    $database = $GLOBALS["app"]["config"]["database"]["connections"]["mysql"]["database"];
-    $iscanbii = $database == "canbii";
+    $iscanbii = database == "canbii";
     // @formatter:off
 ?>
 
@@ -167,7 +166,7 @@
                     ?>
                 </FORM>
                 <FORM Name="regform" id="regform">
-                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true, "age" => $database == "canbii"))->render(); ?>
+                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true, "age" => database == "canbii"))->render(); ?>
                 </FORM>
                 <div class="clearfix py-2"></div>
                 <button class="btn btn-block {{btncolor}}" onclick="register();">
