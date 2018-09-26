@@ -156,13 +156,23 @@
                                             <INPUT class="credit-info no-top-margin" TYPE="hidden" name="istest" id="istest">
                                         </div>
                                         @if(!islive() || read("profiletype") == 1 || $testing)
-                                            <div class="thirdwidth credit-info">
-                                                <a class="float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No {{storename}} within range</OPTION>');">Clear {{ucfirst(storename)}}</a>
+                                            <?php
+                                                //Dont remove this, I need it!
+                                                $reason = [];
+                                                if(!islive())               {   $reason[] = "Is not live";      }
+                                                if(read("profiletype") == 1){   $reason[] = "Admin detected";   }
+                                                if($testing)                {   $reason[] = "Testing mode";     }
+                                                if(!$reason){$reason = "Unknown";} else {$reason = join(", ", $reason);}
+                                            ?>
+                                            <div class="thirdwidth credit-info" TITLE="{{ $reason }}">
+                                                <a class="float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No {{storename}} within range</OPTION>');">
+                                                    Clear {{ucfirst(storename)}}
+                                                </a>
                                             </DIV>
-                                            <div class="thirdwidth credit-info">
-                                                <a class="float-right btn" onclick="testcard();" TITLE="Don't remove this, I need it!">Test Card</a>
+                                            <div class="thirdwidth credit-info" TITLE="{{ $reason }}">
+                                                <a class="float-right btn" onclick="testcard();">Test Card</a>
                                             </DIV>
-                                            <div class="thirdwidth credit-info">
+                                            <div class="thirdwidth credit-info" TITLE="{{ $reason }}">
                                                 <SELECT ID="testresult" CLASS="form-control" ONCHANGE="testcard();">
                                                     <OPTION VALUE="">Successful card</OPTION>
                                                     <OPTION VALUE="4000000000005126">expired or canceled card</OPTION>

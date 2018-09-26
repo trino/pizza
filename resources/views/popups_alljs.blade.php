@@ -128,14 +128,14 @@ includefile("public/scripts/api.js");
     var database = "<?= database; ?>";
 
     function makestring(Text, Variables) {
+        if (Text.startswith("{") && Text.endswith("}")) {
+            Text = unikeys[Text.mid(1, Text.length - 2)];
+        }
         <?php
             foreach($GLOBALS["settings"] as $key => $value){
                 echo 'Text = Text.replaceAll("{' . $key . '}", "' . $value . '");';
             }
         ?>
-        if (Text.startswith("{") && Text.endswith("}")) {
-            Text = unikeys[Text.mid(1, Text.length - 2)];
-        }
         if (!isUndefined(Variables)) {
             if(isObject(Variables)) {
                 var keys = Object.keys(Variables);
