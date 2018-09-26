@@ -1,6 +1,8 @@
 <?php
     use App\Http\Controllers\HomeController;//used for order "changestatus"
     startfile("home_list");
+    $S="Send a test ";
+    $T="Send 2 test ";
 
     /*$_POST = [
         "action" => "getpage",
@@ -770,6 +772,13 @@
                 .margin-top{
                     margin-top: 20px;
                 }
+
+                .cursor-right{
+                    cursor: pointer;
+                    float: right;
+                    position: relative;
+                    bottom: 10px;
+                }
             </STYLE>
             <SCRIPT SRC="https://www.w3schools.com/lib/w3color.js"></SCRIPT>
             <div class="row m-t-1">
@@ -803,16 +812,17 @@
                                     <INPUT TYPE="hidden" id="searchtext">
                                 @endif
                                 @if($table != "all" && $profiletype == 1)
+                                    <A HREF="{{ webroot("list/all", true) }}" TITLE="Back" CLASS="cursor-right"><i class="fa fa-arrow-left"></i></A>
                                     @if($table == "debug")
-                                        <A TITLE="Send a test email" class="hyperlink" id="testemail" href="javascript:testemail(0);"><i class="fa fa-envelope"></i></A>
-                                        <A TITLE="Send a test SMS" class="hyperlink" id="testsms" href="javascript:testemail(1);"><i class="fa fa-phone"></i> SMS <?= read("phone"); ?></A>
-                                        <A TITLE="Send a test SMS" class="hyperlink" id="testsms" href="javascript:testemail(4);"><i class="fa fa-phone"></i> SMS admins</A>
-                                        <A TITLE="Send a test CALL" class="hyperlink" id="testcall" href="javascript:testemail(2);"><i class="fa fa-phone"></i> Call <?= read("phone"); ?></A>
-                                        <A TITLE="Send a test CALL" class="hyperlink" id="testcall" href="javascript:testemail(5);"><i class="fa fa-phone"></i> Call admins</A>
-                                        <A TITLE="Send a test GATHER" class="hyperlink" id="testcallinput" href="javascript:testemail(3);"><i class="fa fa-phone"></i> Gather <?= read("phone"); ?></A>
-
-
-                                        <A TITLE="Delete the debug log" class="hyperlink" id="deletedebug" href="javascript:deletedebug();"><i class="fa fa-trash"></i></A>
+                                        <A TITLE="{{$S}}email" class="hyperlink" id="testemail" href="javascript:testemail(0);"><i class="fa fa-envelope"></i> Email <?= read("email"); ?></A>
+                                        <A TITLE="{{$S}}SMS" class="hyperlink" id="testsms" href="javascript:testemail(1);"><i class="fa fa-phone"></i> SMS <?= read("phone"); ?></A>
+                                        <A TITLE="{{$S}}SMS" class="hyperlink" id="testsms" href="javascript:testemail(4);"><i class="fa fa-phone"></i> SMS admins</A>
+                                        <A TITLE="{{$S}}CALL" class="hyperlink" id="testcall" href="javascript:testemail(2);"><i class="fa fa-phone"></i> Call <?= read("phone"); ?></A>
+                                        <A TITLE="{{$S}}CALL" class="hyperlink" id="testcall" href="javascript:testemail(5);"><i class="fa fa-phone"></i> Call admins</A>
+                                        <A TITLE="{{$S}}GATHER" class="hyperlink" id="testcallinput" href="javascript:testemail(3);"><i class="fa fa-phone"></i> Gather <?= read("phone"); ?></A>
+                                        <A TITLE="{{$T}}SMSs" class="hyperlink" id="test2sms" href="javascript:testemail(6);"><i class="fa fa-phone"></i> SMS <?= read("phone"); ?> twice</A>
+                                        <A TITLE="{{$T}}CALLs" class="hyperlink" id="test2call" href="javascript:testemail(7);"><i class="fa fa-phone"></i> Call <?= read("phone"); ?> twice</A>
+                                        <A TITLE="Delete the debug log" class="cursor-right" id="deletedebug" href="javascript:deletedebug();"><i class="fa fa-trash"></i></A>
                                     @else
                                         <A onclick="selecttableitems(0);" href="#"><i class="fa fa-square"></i> Select None</A>
                                         <A onclick="selecttableitems(-1);" href="#" ID="invert"><i class="fa fa-check-square"></i><i class="fa fa-square"></i> Invert Selection</A>
@@ -820,7 +830,6 @@
                                         <A onclick="deletetableitems();" href="#"><i class="fa fa-trash"></i> Delete Selected</A>
                                         <!--A onclick="deletetable();" TITLE="Delete the entire table" class="hyperlink" id="deletetable"><i class="fa fa-trash-o"></i></A-->
                                     @endif
-                                    <A HREF="{{ webroot("list/all", true) }}" TITLE="Back"><i class="fa fa-arrow-left"></i></A>
                                 @endif
                             </h2>
                         </div>
@@ -1848,6 +1857,8 @@
                             case 3: name = "GATHER"; break;
                             case 4: name = "SMSADMINS"; break;
                             case 5: name = "CALLADMINS"; break;
+                            case 6: name = "SMSTWICE"; break;
+                            case 7: name = "CALLTWICE"; break;
                         }
                         $("#debuglogcontents").html("Sending " + name + ". Please standby");
                         $.post(currentURL, {

@@ -67,6 +67,14 @@ class HomeController extends Controller {
                 case "testCALL": echo $this->sendSMS(read("phone"), "This is a test CALL", true, true); break;
                 case "testCALLADMINS": echo $this->sendSMS("admin", "This is test CALL [index] for all admins", true, true); break;
                 case "testGATHER": echo $this->sendSMS(read("phone"), "This is a test GATHER CALL", true, true, 1); break;
+                case "testSMSTWICE":
+                    echo $this->sendSMS(read("phone"), "This is test SMS 1", false, true) . "|";
+                    echo $this->sendSMS(read("phone"), "This is test SMS 2", false, true);
+                    break;
+                case "testCALLTWICE":
+                    echo $this->sendSMS(read("phone"), "This is test CALL 1", true, true) . "|";
+                    echo $this->sendSMS(read("phone"), "This is test CALL 2", true, true);
+                    break;
                 default: $ret = false;
             }
             if($ret){return;}
