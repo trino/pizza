@@ -1017,4 +1017,10 @@ function makestring($string, $variables = []){
     }
     return $string;
 }
+
+function striphtml($HTML){
+    $HTML = preg_replace('#<[^>]+>#', ' ', $HTML);
+    $HTML = preg_replace('#\s+#', ' ', $HTML);
+    return trim($HTML);
+}
 ?>

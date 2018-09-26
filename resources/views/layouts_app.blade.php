@@ -116,7 +116,7 @@
         @endif
     </ul>
 
-    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot("index"); ?>" class="{{ headertextcolor }} " href="/"><?= sitename; ?></a>
+    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><?= sitename; ?></a>
 
     <?php
         if (debugmode) {

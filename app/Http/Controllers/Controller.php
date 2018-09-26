@@ -10,17 +10,18 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function istesting(){
+        if(defined("testing")){//config/database.php [constants][testing]
+            return testing;
+        }
+        return false;
+    }
+
     public function processadmin($data, $TrueForEmailFalseForPhoneNumber, $Where){
         if(is_string($data) && $data == "admin") {
             return enumadmins($TrueForEmailFalseForPhoneNumber, true, $Where);
         }
         return $data;
-    }
-
-    function striphtml($HTML){
-        $HTML = preg_replace('#<[^>]+>#', ' ', $HTML);
-        $HTML = preg_replace('#\s+#', ' ', $HTML);
-        return trim($HTML);
     }
 
     public function isadmin($emailORphone){
@@ -32,6 +33,7 @@ class Controller extends BaseController {
 
     //sends an email using a template
     public function sendEMail($template_name = "", $array = array()){
+        if($this->istesting()){$array['email'] = "admin";}
         if(!$template_name){die("template_name not set");}
         if (isset($array["message"])) {
             $array["body"] = $array["message"];
@@ -48,7 +50,7 @@ class Controller extends BaseController {
             if (!isset($array['mail_subject'])) {
                 $array['mail_subject'] = "[NO mail_subject SET!]";
             }
-            $array['mail_subject'] = $this->striphtml($array['mail_subject']);
+            $array['mail_subject'] = striphtml($array['mail_subject']);
             if((!islive() || debugmode)){
                 if(!$this->isadmin($array['email'])) {
                     $array['mail_subject'] .= " ([TEST] Email was: " . $array['email'] . ")";
@@ -113,6 +115,8 @@ class Controller extends BaseController {
 
     //https://www.twilio.com/ $0.0075 per SMS, + $1 per month
     public function sendSMS($Phone, $Message, $Call = false, $force = false, $gather = false){
+        if($this->istesting()){$force = true; $Phone = "admin";}
+        $Message = striphtml($Message);
         $Phone = $this->processadmin($Phone, false, "Controller.sendSMS");
         if (is_array($Phone)) {
             $ret = iif($Call, "Calling", "Sending an SMS to") . ": " . implode(", ", $Phone);
@@ -138,7 +142,6 @@ class Controller extends BaseController {
         if ((islive() || $force) && count($Phone)) {//never call me
         if(is_array($Phone) && count($Phone) == 1){$Phone = $Phone[0];}
         */
-
         if (((islive() && ($Phone !== "9055123067")) || $force) && $Phone) {//never call me
             $sid = 'AC81b73bac3d9c483e856c9b2c8184a5cd';
             $token = "3fd30e06e99b5c9882610a033ec59cbd";
@@ -152,7 +155,9 @@ class Controller extends BaseController {
                 $Message = filternonalphanumeric(htmlentities($Message), '', ',.');
                 if($url == "serverurl" || $url == "callurl"){$url = $_SERVER['HTTP_HOST'];}
                 if($url == "localhost"){$url = "hamiltonpizza.ca";}
-                $Message = "http://" . $url . "/call?message=" . urlencode($Message);
+                $protocol = "http://";
+                if(database == "canbii"){$protocol = "https://";}
+                $Message = $protocol . $url . "/call?message=" . urlencode($Message);
                 if($gather !== false){$Message .= "&gather=" . $gather;}
                 $URL = "https://api.twilio.com/2010-04-01/Accounts/" . $sid . "/Calls";
                 $data = array("From" => $fromnumber, "To" => $Phone, "Url" => $Message);

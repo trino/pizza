@@ -10,6 +10,10 @@
         <H4 CLASS="title">Terms of use</H4>
     <?php
         $site_name = sitename;
+        $start = strpos($site_name, "<");
+        if($start !== false){
+            $site_name = trim(left($site_name, $start));
+        }
         $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . $site_name . '">info@trinoweb.ca</A>';
         $GLOBALS["currentnumber"] = 1;
         function p($isletter = false){
@@ -243,11 +247,13 @@
     <p>If you have any questions, concerns or comments, or would like access to your information, or would like to update your information, please contact us at {!! $email !!}.</p>
     <br>
 
-    <h4>Allergy & Dietary Information</h4>
-    <p>{{ $site_name }} tries to accurately copy the description of dishes.</p>
-    <p>However, it is the {{storenames}} that prepares the dishes, please use the notes section on the receipt to specify particular allergies.</p>
-    <p>If you are in any doubt about the presence of allergens, you should confirm with the {{storename}}.</p>
-    <p>Last updated: February 15, 2017</p>
+    @if(database == "ai")
+        <h4>Allergy & Dietary Information</h4>
+        <p>{{ $site_name }} tries to accurately copy the description of dishes.</p>
+        <p>However, it is the {{storenames}} that prepares the dishes, please use the notes section on the receipt to specify particular allergies.</p>
+        <p>If you are in any doubt about the presence of allergens, you should confirm with the {{storename}}.</p>
+        <p>Last updated: February 15, 2017</p>
+    @endif
     </div>
 </div>
 @endsection

@@ -184,7 +184,7 @@
         <div class="col-md-6" style="padding-top: 1rem">
             <center>
                 <img src="<?= webroot("images/delivery.jpg"); ?>" class="width-50"/>
-                <h2 class="text-danger mt-3 pull-center">Online Pizza Delivery</h2>
+                <h2 class="text-danger mt-3 pull-center">Online <?= product ?> Delivery</h2>
                 ${{ $minimum }} Minimum<br>
                 ${{ $delivery }} Delivery<br>
                 Credit/Debit Only
@@ -192,14 +192,18 @@
         </div>
         <div class="col-md-6">
             <div style="padding: 1rem; border:0px solid #eceeef">
-                <h2 class="text-danger">Our Partners</h2>
-                Famo Pizza & Wings
-                <br>Queens Pizza & Wings
-                <br>Le Bella Pizza (Fennell)
-                <br>Bruno's Pizza & Wings (Main St)
-                <br>National Pizza & Wings (Upper James)
-                <br>Bella Pizza (King St)
-                <br>Pizza Italia
+                @if(database == "ai")
+                    <h2 class="text-danger">Our Partners</h2>
+                    Famo Pizza & Wings
+                    <br>Queens Pizza & Wings
+                    <br>Le Bella Pizza (Fennell)
+                    <br>Bruno's Pizza & Wings (Main St)
+                    <br>National Pizza & Wings (Upper James)
+                    <br>Bella Pizza (King St)
+                    <br>Pizza Italia
+                @else
+
+                @endif
             </div>
         </div>
 @endif
@@ -221,20 +225,27 @@
         <!--p class="pull-center">
         <img style="max-width:100%;border:7px solid #eceeef!important" src="<?= webroot("images/ultimatecombo.png"); ?>"/>
         </p-->
-        <p>
-            <!--i class="fa fa-gavel fa-2x"></i-->
-            We’ve partnered up with some of your favourite local pizza {{storenames}} to bring you a one-stop
-            online pizza shop. What makes us different? We offer the lowest prices in town and only use one
-            menu – no more wasting time browsing through {{storenames}}. Once you complete your order, we’ll
-            immediately connect with our closest partner {{storename}} and start preparing your meal right
-            away. Sounds pretty fast and easy right?
-        </p>
-        <p>
-            Best of all, we are a 100% not-for-profit service. Every pizza ordered through our website helps
-            us feed those in need within our local community. Join our movement by making an order today and
-            feeding not just yourself, but someone else! Still not convinced? – Check out our
-            <A HREF="<?= webroot("help"); ?>" CLASS="link-white">About Us</A> for more info.
-        </p>
+        @if(database == "ai")
+            <p>
+                <!--i class="fa fa-gavel fa-2x"></i-->
+                We’ve partnered up with some of your favourite local {{product . " " . storenames}} to bring you a one-stop
+                online {{product}} shop. What makes us different? We offer the lowest prices in town and only use one
+                menu – no more wasting time browsing through {{storenames}}. Once you complete your order, we’ll
+                immediately connect with our closest partner {{storename}} and start preparing your meal right
+                away. Sounds pretty fast and easy right?
+            </p>
+            <p>
+                Best of all, we are a 100% not-for-profit service. Every pizza ordered through our website helps
+                us feed those in need within our local community. Join our movement by making an order today and
+                feeding not just yourself, but someone else! Still not convinced? – Check out our
+                <A HREF="<?= webroot("help"); ?>" CLASS="link-white">About Us</A> for more info.
+            </p>
+        @else
+            <p>
+                We’ve partnered up with some of your favourite local {{product . " " . storenames}} to bring you a one-stop
+                online {{product}} shop.
+            </p>
+        @endif
     </div>
 
     @if($dohours)
@@ -350,8 +361,6 @@
         }
 
         $.validator.addMethod('radioage', function (Data, element) {
-            alert("TESTING: " + Data);
-            console.log("TESTING: " + Data);
             return Data == "yes";
         }, "You must be over 19 to use this site");
 

@@ -157,30 +157,34 @@
         <div class="col-sm-6 py-3 bg-dark">
             <h3><?= getsetting("aboutus"); ?></h3>
             <div class="card-block text-white">
-                <span class="bold bigtext"> Feed Yourself + Someone Else</span>
-                <br><br>
-
-                <p>
-                    <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
-                    complicated. We realize that {{storenames}} are paying enormous commissions to existing online food
-                    service providers. Ultimately, it’s YOU, the customer, who ends up paying the bills. We want to put
-                    that money back where it belongs…in your pocket! Not only do we save you money, but we also use 100%
-                    of all our profits to give back and help out the local community.
-                </p>
-                <p>
-                    How do we do it? We leverage an easy-to-use online platform, one universal menu for all users alike,
-                    and local partnerships with {{storenames}} who share our vision. In an effort to be completely
-                    transparent, we will post a summary all of our contributions below, updated on a monthly basis.
-                </p>
-                <p>
-                    Join us in our mission to change the way we order our food online and make your first order today!
-                </p>
-<br>                <div class="btn-outlined-danger text-center pt-1">
-                    <strong>August, 2018</strong>
-                    <p> Orders: <?= $orders; ?>
+                @if(database == "ai")
+                    <span class="bold bigtext"> Feed Yourself + Someone Else</span>
+                    <br><br>
+                    <p>
+                        <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
+                        complicated. We realize that {{storenames}} are paying enormous commissions to existing online food
+                        service providers. Ultimately, it’s YOU, the customer, who ends up paying the bills. We want to put
+                        that money back where it belongs…in your pocket! Not only do we save you money, but we also use 100%
+                        of all our profits to give back and help out the local community.
+                    </p>
+                    <p>
+                        How do we do it? We leverage an easy-to-use online platform, one universal menu for all users alike,
+                        and local partnerships with {{storenames}} who share our vision. In an effort to be completely
+                        transparent, we will post a summary all of our contributions below, updated on a monthly basis.
+                    </p>
+                    <p>
+                        Join us in our mission to change the way we order our food online and make your first order today!
+                    </p>
+                    <br>
+                    <div class="btn-outlined-danger text-center pt-1">
+                        <strong>August, 2018</strong>
+                        <p> Orders: <?= $orders; ?>
                         <br> Donated: <?= $donations+1 . " " . $units_donated; ?>
                         <br> Charity: Hamilton Food Centre</p>
-                </div>
+                    </div>
+                @else
+                    <span class="bold bigtext"> The higher, the fewer</span>
+                @endif
             </div>
         </div>
         <DIV CLASS="col-sm-6 bg-dark text-white">
@@ -278,7 +282,8 @@
 
             newlist('Your Order');
             newitem("Add an item to your cart", "Click the item on the menu. If it has a + next to the price, there will be a popup allowing you to edit the item options before adding it to the receipt");
-            newitem("Topping/sauces popup", 'If the menu item contains more than 1 item (ie: 2 pizzas), there will be a list at the top of this popup to select which item to edit. Clicking any of the options from the list will add it to the selected item. Some options are part of a group and only 1 option in that group can be added to an item (ie: well done and lightly done will conflict, so only 1 can be added to a pizza). The price will update automatically when you add options.<BR><button class="btn btn-sm mt-0 toppings_btn bg-success flat-border"><i class="fa fa-check"></i><SPAN CLASS="pull-right">$X.XX</SPAN></button> will add the item with the options you selected to the receipt.<BR><button class="btn btn-sm bg-success toppings_btn"><i class="fa fa-fw fa-arrow-left"></i></button> will remove the last option added to the selected item, if it is not dimmed');
+
+            if (database == "ai") newitem("Topping/sauces popup", 'If the menu item contains more than 1 item (ie: 2 ' . product . '), there will be a list at the top of this popup to select which item to edit. Clicking any of the options from the list will add it to the selected item. Some options are part of a group and only 1 option in that group can be added to an item (ie: well done and lightly done will conflict, so only 1 can be added to a ' . product . '). The price will update automatically when you add options.<BR><button class="btn btn-sm mt-0 toppings_btn bg-success flat-border"><i class="fa fa-check"></i><SPAN CLASS="pull-right">$X.XX</SPAN></button> will add the item with the options you selected to the receipt.<BR><button class="btn btn-sm bg-success toppings_btn"><i class="fa fa-fw fa-arrow-left"></i></button> will remove the last option added to the selected item, if it is not dimmed');
             newitem("Editing an item in your cart", 'Click <button class="btn-sm"><i class="fa fa-pencil-alt"></i></button> to the right of the item in the receipt, the same popup you used to add the item will appear');
             newitem("Remove an item from your cart", 'Click <button class="btn-sm"><i class="fa fa-minus"></i></button> to the right of the item in the receipt');
             newitem("Duplicating an item in your cart", 'Click <button class="btn-sm"><i class="fa fa-plus"></i></button> to the right of the item in the receipt (if it is a simple item without any addons/toppings)');
@@ -315,8 +320,8 @@
                     newitem("Escalating a user account to a " . storename, 'Go to <B><i class="fa fa-fw fa-user-plus"></i> Users list</B>, click the Profiletype column for that user, and click "Restaurant" from the drop-down menu');
                     newitem("Changing the price of a topping or the delivery fee", 'Go to <B><i class="fa fa-fw fa-user-plus"></i> Additional_toppings list</B>, click the price column for that item, then change the text in the text box');
                     newlist('<i class="fa fa-fw fa-user-plus"></i> Edit Menu');
-                    newitem("Size Costs", "Edit the cost of toppings for each size of pizza, and the delivery fee");
-                    newitem("Pizza Toppings/Wing Sauces", "Edit toppings/wing sauces, which category they belong to, if they are free toppings or not, and their group ID # (if the ID # is above 0, only 1 item from this group can be added to a menu item)");
+                    if (database == "ai") newitem("Size Costs", "Edit the cost of toppings for each size of " . product . ", and the delivery fee");
+                    if (database == "ai") newitem(product . " Toppings/Wing Sauces", "Edit toppings/wing sauces, which category they belong to, if they are free toppings or not, and their group ID # (if the ID # is above 0, only 1 item from this group can be added to a menu item)");
                     newitem("[New Category]", "Add a new menu item category to the list below");
                     newitem("Category list", "Edit menu items. The Toppings/Wings_sauce numbers refer to how many lists of toppings they must select. ie: 2 Toppings would mean they have to select toppings for 2 pizzas");
                 }

@@ -24,6 +24,11 @@
             <FORM ID="orderinfo" name="orderinfo">
                 <div class="modal-body">
                     <?php
+                        $testing = false;
+                        if(defined("testing")){
+                            $testing = testing;
+                        }
+
                         $order = [ "useraddress", "restaurant","userphone", "deliverytime",  "creditcard", "notes"];
                         $needsphone = true;//needsphonenumber();
                         $index = array_search("userphone", $order);
@@ -150,7 +155,7 @@
                                             <input type="text" size="4" data-stripe="cvc" CLASS="credit-info form-control no-top-margin" autored="red_card" PLACEHOLDER="CVC" style="padding: .54rem .75rem;">
                                             <INPUT class="credit-info no-top-margin" TYPE="hidden" name="istest" id="istest">
                                         </div>
-                                        @if(!islive() || read("profiletype") == 1)
+                                        @if(!islive() || read("profiletype") == 1 || $testing)
                                             <div class="thirdwidth credit-info">
                                                 <a class="float-right btn" onclick="$('#restaurant').html('<OPTION VALUE=0>No {{storename}} within range</OPTION>');">Clear {{ucfirst(storename)}}</a>
                                             </DIV>

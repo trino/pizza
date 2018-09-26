@@ -4,6 +4,13 @@
             <td style="padding: 20px; display:block; background-color: <?= emailheadercolor ?>;">
                 <h1 style="color:#ffffff;font-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif; font-size: 30px; font-weight: 300; line-height: 150%; margin: 0; text-align: left;">
                     @yield('header')
+                    <?php
+                        if(defined("testing")){
+                            if(testing){
+                                echo "[TESTING MODE]";
+                            }
+                        }
+                    ?>
                 </h1>
             </td>
         </tr>
