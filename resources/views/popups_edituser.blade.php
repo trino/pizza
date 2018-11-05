@@ -29,7 +29,7 @@
                 echo '>';
                 if (isset($field["placeholder"]))                               {echo '<OPTION DISABLED SELECTED VALUE="">' . $field["placeholder"] . '</OPTION>';}
                 foreach($field["options"] as $value => $option){
-                    echo '<OPTION VALUE="' . $value . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $option . '</OPTION>';
+                    echo '<OPTION VALUE="' . $value . '">' . $option . '</OPTION>';
                 }
                 echo '</SELECT>';
             } else {
