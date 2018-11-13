@@ -52,7 +52,7 @@
                         $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime2($menublade_filename) . ")";
                     }
                 ?>
-                <div class="col-lg-3 col-md-12 bg-inverse bg-grey">
+                <div class="col-lg-3 col-md-12 bg-inverse bg-grey" titledebug="popups_checkout">
                     @include("popups_checkout")
                 </div>
             </div>

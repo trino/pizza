@@ -60,7 +60,7 @@
         @if(read("profiletype") == 2)
             <INPUT TYPE="hidden" ID="rest_id" VALUE="<?= findrestaurant(); ?>">
         @else
-            <DIV CLASS="col-md-4">
+            <DIV CLASS="col-md-4" titledebug="popups_address">
                 Address:
                 <?= view("popups_address", array("dontincludeGoogle" => true, "unit" => false, "title" => "", "address" => $_GET, "style" => 2, "findclosest" => true))->render(); ?>
             </DIV>
@@ -142,7 +142,7 @@
         <DIV CLASS="col-md-4">
             <A HREF="javascript:settings()"><i class="fas fa-cog"></i> Settings</A>
             <DIV ID="retain"></DIV>
-            <DIV><?= view("popups_googlemaps"); ?></DIV>
+            <DIV titledebug="popups_googlemaps"><?= view("popups_googlemaps"); ?></DIV>
         </DIV>
         <DIV ID="orders_list" CLASS="col-md-2"></DIV>
         <DIV CLASS="col-md-6" ID="orders_content">No search results</DIV>

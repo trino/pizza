@@ -1301,6 +1301,10 @@ function last4(LongForm, includeExpiry){
 function placeorder(StripeResponse) {
     if (!canplaceanorder(false, "placeorder")) {return cantplaceorder("placeorder");}
     if (isUndefined(StripeResponse)) {StripeResponse = "";}
+    if($("#saved-credit-info").val() == "cash"){
+        StripeResponse = "cash";
+    }
+    var ordertype = iif($("#saveaddresses").val() == "pickup", 1, 0);
     if (isObject(userdetails)) {
         var addressinfo = serializeaddress("#orderinfo");//i don't know why the below 2 won't get included. this forces them to be
         addressinfo["cookingnotes"] = $("#cookingnotes").val();
@@ -1308,6 +1312,7 @@ function placeorder(StripeResponse) {
         addressinfo["restaurant_id"] = $("#restaurant").val();
         $.post(webroot + "placeorder", {
             _token: token,
+            type: ordertype,
             info: addressinfo,
             stripe: StripeResponse,
             stripemode: stripemode,
@@ -1324,9 +1329,12 @@ function placeorder(StripeResponse) {
             if (result.contains("ordersuccess")) {
                 var creditinfoval = $("#saved-credit-info").val();
                 var toasttext = ["Order was placed successfully"];
-                if ($("#saveaddresses").val() == "addaddress") {
+                var address = $("#saveaddresses").val();
+                if (address == "addaddress") {
                     ProcessNewAddress(result);
                     toasttext.push("New address saved");
+                } else if (address == "pickup") {
+                    toasttext.push("Pickup order placed");
                 } else {
                     toasttext.push("Used existing address");
                 }
@@ -2059,7 +2067,11 @@ function showcheckout() {
     var needscreditrefresh = false;
     if (loadsavedcreditinfo()) {
         $(".credit-info").hide();
-        var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true, ' + "'showcheckout1'" + ');" class="form-control proper-height"><OPTION value="">Add Card</OPTION>';
+        var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true, ' + "'showcheckout1'" + ');" class="form-control proper-height">';
+        if(allowCash){
+            creditHTML += '<OPTION value="cash">Pay by cash</OPTION>';
+        }
+        creditHTML += '<OPTION value="">Add Card</OPTION>';
         for (var i = 0; i < userdetails.Stripe.length; i++) {
             var card = userdetails.Stripe[i];
             creditHTML += '<OPTION value="' + card.id + '" id="card_' + card.id + '"';

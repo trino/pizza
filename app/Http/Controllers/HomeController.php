@@ -264,6 +264,7 @@ class HomeController extends Controller {
         }
         $addressID = $this->processaddress($info);
         if (isset($_POST["order"])) {
+            $info["type"] = $_POST["type"];
             $info["placed_at"] = my_now();
             $info["last4"] = $_POST["last4"];
             unset($info["name"]);
@@ -313,69 +314,79 @@ class HomeController extends Controller {
                 if ($amount > 0) {
                     initStripe();
                     $failedat = "";
-                    try {
-                        if ($user["stripecustid"]) {
-                            $customer_id = $user["stripecustid"];//load customer ID from user profile
-                            $cu = \Stripe\Customer::retrieve($customer_id);
-                            //$_POST["creditcard"] will have a value only if the customer selected a saved card
-                            //$info["stripeToken"] will have a value only if the customer made a new card
-                            if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
-                                $failedat = "Update card info";
-                                $data = $cu->sources->create(array("source" => $info['stripeToken']));
-                                $_POST["creditcard"] = $data["id"];//save it to $_POST["creditcard"] since it now exists
-                                $cu->save();
+                    if($info["stripeToken"] == "cash") {
+                        if (!$savebefore) {
+                            $orderid = $this->saveorder($info, $order);
+                            $HTML = str_replace('<span ID="receipt_id"></span>', '<span ID="receipt_id">' . $orderid . '</span>', $HTML);
+                        }
+                        insertdb("orders", array("id" => $orderid, "paid" => 2, "stripeToken" => "cash", "last4" => "cash"));//will only happen if the $charge succeeds
+                        $this->order_placed($orderid, $info);
+                        $chargeinfo = array("amount" => $amount,"currency" => "cad","source" => "cash","description" => $description);
+                    } else {
+                        try {
+                            if ($user["stripecustid"]) {
+                                $customer_id = $user["stripecustid"];//load customer ID from user profile
+                                $cu = \Stripe\Customer::retrieve($customer_id);
+                                //$_POST["creditcard"] will have a value only if the customer selected a saved card
+                                //$info["stripeToken"] will have a value only if the customer made a new card
+                                if (isset($info["stripeToken"]) && $info["stripeToken"]) {//update credit card info
+                                    $failedat = "Update card info";
+                                    $data = $cu->sources->create(array("source" => $info['stripeToken']));
+                                    $_POST["creditcard"] = $data["id"];//save it to $_POST["creditcard"] since it now exists
+                                    $cu->save();
+                                }
+                            } else {
+                                $failedat = "Create customer";
+                                $customer = \Stripe\Customer::create(array(
+                                    "source" => $info["stripeToken"],
+                                    "description" => $user["name"] . iif(debugmode, ' (ID:' . $user["id"] . ')')
+                                ));
+                                $customer_id = $customer["id"];
+                                insertdb("users", array("id" => $user["id"], "stripecustid" => $customer_id));//attempt to update user profile
                             }
-                        } else {
-                            $failedat = "Create customer";
-                            $customer = \Stripe\Customer::create(array(
-                                "source" => $info["stripeToken"],
-                                "description" => $user["name"] . iif(debugmode, ' (ID:' . $user["id"] . ')')
-                            ));
-                            $customer_id = $customer["id"];
-                            insertdb("users", array("id" => $user["id"], "stripecustid" => $customer_id));//attempt to update user profile
-                        }
 
-                        $charge = array(
-                            "amount" => $amount,
-                            "currency" => "cad",
-                            //"source" => $info["stripeToken"],//charge card directly
-                            "customer" => $customer_id,//charge customer ID
-                            "description" => $description
-                        );
-                        if (isset($_POST["creditcard"]) && $_POST["creditcard"]) {
-                            $charge["source"] = $_POST["creditcard"];//charge a specific credit card
-                        }
-
-                        // https://stripe.com/docs/charges https://stripe.com/docs/api
-                        $failedat = "Charge the card";
-                        $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
-                        if($charge["outcome"]["type"] == "authorized") {
-                            if(!$savebefore) {
-                                $orderid = $this->saveorder($info, $order);
-                                $HTML = str_replace('<span ID="receipt_id"></span>', '<span ID="receipt_id">' . $orderid . '</span>', $HTML);
+                            $charge = array(
+                                "amount" => $amount,
+                                "currency" => "cad",
+                                //"source" => $info["stripeToken"],//charge card directly
+                                "customer" => $customer_id,//charge customer ID
+                                "description" => $description
+                            );
+                            if (isset($_POST["creditcard"]) && $_POST["creditcard"]) {
+                                $charge["source"] = $_POST["creditcard"];//charge a specific credit card
                             }
-                            insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"], "last4" => $_POST["last4"]));//will only happen if the $charge succeeds
-                            $this->order_placed($orderid, $info);
-                            $chargeinfo = $charge["source"];
-                            $chargeinfo['customer'] = $customer_id;
-                            //die("Charged: " . $charge["source"]["id"]);
-                        } else {
-                            die($charge["outcome"]["type"]);
+
+                            // https://stripe.com/docs/charges https://stripe.com/docs/api
+                            $failedat = "Charge the card";
+                            $charge = \Stripe\Charge::create($charge);// Create the charge on Stripe's servers - this will charge the user's card
+                            if ($charge["outcome"]["type"] == "authorized") {
+                                if (!$savebefore) {
+                                    $orderid = $this->saveorder($info, $order);
+                                    $HTML = str_replace('<span ID="receipt_id"></span>', '<span ID="receipt_id">' . $orderid . '</span>', $HTML);
+                                }
+                                insertdb("orders", array("id" => $orderid, "paid" => 1, "stripeToken" => $charge["id"], "last4" => $_POST["last4"]));//will only happen if the $charge succeeds
+                                $this->order_placed($orderid, $info);
+                                $chargeinfo = $charge["source"];
+                                $chargeinfo['customer'] = $customer_id;
+                                //die("Charged: " . $charge["source"]["id"]);
+                            } else {
+                                die($charge["outcome"]["type"]);
+                            }
+                        } catch (Stripe_CardError $e) {
+                            $error = $e->getMessage();
+                        } catch (Stripe_InvalidRequestError $e) {
+                            $error = $e->getMessage();//Invalid parameters were supplied to Stripe's API
+                        } catch (Stripe_AuthenticationError $e) {
+                            $error = $e->getMessage();//Authentication with Stripe's API failed
+                        } catch (Stripe_ApiConnectionError $e) {
+                            $error = $e->getMessage();//Network communication with Stripe failed
+                        } catch (Stripe_Error $e) {
+                            $error = $e->getMessage();//Display a very generic error to the user
+                        } catch (Exception $e) {
+                            $error = $e->getMessage();//Something else happened, completely unrelated to Stripe
+                        } catch (\Stripe\Error\Card $e) {
+                            $error = $e->getMessage();
                         }
-                    } catch (Stripe_CardError $e) {
-                        $error = $e->getMessage();
-                    } catch (Stripe_InvalidRequestError $e) {
-                        $error = $e->getMessage();//Invalid parameters were supplied to Stripe's API
-                    } catch (Stripe_AuthenticationError $e) {
-                        $error = $e->getMessage();//Authentication with Stripe's API failed
-                    } catch (Stripe_ApiConnectionError $e) {
-                        $error = $e->getMessage();//Network communication with Stripe failed
-                    } catch (Stripe_Error $e) {
-                        $error = $e->getMessage();//Display a very generic error to the user
-                    } catch (Exception $e) {
-                        $error = $e->getMessage();//Something else happened, completely unrelated to Stripe
-                    } catch (\Stripe\Error\Card $e) {
-                        $error = $e->getMessage();
                     }
                 } else {
                     $error = " Order ID " . $orderid . " total was $0.00";

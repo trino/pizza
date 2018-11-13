@@ -188,8 +188,10 @@
     }
     $time = '';
     $Delivery = "Delivered on ";
+    if($Order["type"] == 1){$Delivery = "Picked up on ";}
     if($place == "email" || $timer){
         $Delivery = "Delivery ";
+        if($Order["type"] == 1){$Delivery = "Pickup ";}
     }
     if ($timer) {
         if ($minutes < 60) {
@@ -295,11 +297,20 @@
                                 . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
                             echo '</TD><TD ID="custaddress" ONCLICK="addmarker(' . "'" . $Order["name"] . "\'s Address\', " . $Order["latitude"] . ", " . $Order["longitude"] . ', true);" WIDTH="49%" ID="restaddress">';
                             */
-                            echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
-                            echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
-                            if($Order["unit"]){echo $Order["unit"]. '<BR>';}
-                            echo formatphone($Order["phone"]);
-                            $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
+                            if($Order["type"] == 0){
+                                echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
+                                echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
+                                if($Order["unit"]){echo $Order["unit"]. '<BR>';}
+                                echo formatphone($Order["phone"]);
+                                $custaddress = $Order["number"] . " " . $Order["street"] . ", " . $Order["city"];
+                            } else {
+                                echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Pickup Order</h2>';
+                                echo $Raddress["number"] . " " . $Raddress["street"] . "<BR>";
+                                echo $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"];
+                                if($Raddress["unit"]){
+                                    echo "Unit: " . $Raddress["unit"];
+                                }
+                            }
 
 
                         echo '<br><br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
