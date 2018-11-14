@@ -1,6 +1,6 @@
 <?php
     startfile("popups_checkout");
-    $allowPickup = true;
+    $allowPickup = false;
     $allowCash = true;
 ?>
 
