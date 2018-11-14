@@ -10,7 +10,9 @@
     var debugmode = "<?= debugmode; ?>";
 
     function log(text) {
-        @if(debugmode) console.log(text); @endif
+        //if(debugmode)
+        console.log(text);
+        //endif
         return text;
     }
 
@@ -489,7 +491,11 @@ includefile("public/scripts/api.js");
         $(".profiletype_not").show();
         $(".profiletype_not" + user["profiletype"]).hide();
 
-        var HTML = 'form-control saveaddresses" id="saveaddresses" onchange="addresschanged(' + "'saveaddress'" + ');"><OPTION value="0">Select Delivery Address</OPTION>';
+        var HTML = 'form-control saveaddresses" id="saveaddresses" onchange="addresschanged(' + "'saveaddress'" + ');">';
+        if(allowPickup){
+            HTML += '<OPTION value="pickup">Pickup at a {{storename}}</OPTION>';
+        }
+        HTML += '<OPTION value="0">Select Delivery Address</OPTION>';
         var FirstAddress = false;
 
         if (user["Addresses"].length > 0) {
@@ -544,6 +550,7 @@ includefile("public/scripts/api.js");
     }
 
     //address dropdown changed
+    var isPickup = false;
     function addresschanged(why) {
         clearphone("addresschanged - " + why);
         var Selected = $("#saveaddresses option:selected");
@@ -567,11 +574,17 @@ includefile("public/scripts/api.js");
         $("#ffaddress").hide();
         clearvalidation("#red_address");
         refreshform("#saveaddresses").trigger("click");
+        var willbepickup = SelectedVal == "pickup";
+        if(willbepickup != isPickup){
+            var text = iif(willbepickup, "Pickup", "Deliver");
+            $("#asap").text(text + " ASAP (" + $("#asap").attr("dayname") + ")");
+            isPickup = willbepickup;
+        }
         if (SelectedVal == 0) {
             Text = '';
         } else {
             $("#formatted_address").hide();
-            if (SelectedVal == "addaddress") {
+            if (SelectedVal == "addaddress" || willbepickup) {
                 visible_address(true);
                 $("#add_unit").show();
                 //focuson(getGoogleAddressSelector(true));
@@ -613,7 +626,6 @@ includefile("public/scripts/api.js");
         }
     }
 
-
     function GenerateHours(hours, increments) {
         //doesn't take into account <= because it takes more than 1 minute to place an order
         //now.setMinutes(now.getMinutes() + minutes);//start 40 minutes ahead
@@ -650,7 +662,7 @@ includefile("public/scripts/api.js");
         dayofweek = now.getDay();
         if (isopen(hours, dayofweek, temp[2]) > -1) {
             thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
-            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '">Deliver ASAP (' + thedayname + ')</option>';
+            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '" dayname="' + thedayname + '" ID="asap">Deliver ASAP (' + thedayname + ')</option>';
             time = addtotime(time, increments);
         }
         var thetime, minutes, thedayname, thedate;
@@ -684,7 +696,6 @@ includefile("public/scripts/api.js");
                 }
             }
         }
-
         $("#deliverytimealias").html(HTML);
         $("#deliverytime").html(HTML).val(oldValue);
     }
@@ -844,6 +855,9 @@ includefile("public/scripts/api.js");
         window.onbeforeunload = function () {
             return "Are you sure?";
         };
+        $('*[titledebug]').each(function( index ) {
+            $( this ).attr("title", $( this ).attr('titledebug'));
+        });
     @endif
 
     function skiphash() {

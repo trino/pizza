@@ -187,7 +187,7 @@
                 @endif
             </div>
         </div>
-        <DIV CLASS="col-sm-6 bg-dark text-white">
+        <DIV CLASS="col-sm-6 bg-dark text-white" titledebug="popups_login">
             <?= view("popups_login", array("justright" => true))->render(); ?>
         </DIV>
     </DIV>

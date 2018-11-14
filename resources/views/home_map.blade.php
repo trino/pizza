@@ -11,7 +11,7 @@
         }
         use App\Http\Controllers\HomeController;//used for order "closestrestaurant"
         //profiletypes: 0=user, 1=admin, 2=restaurant
-        echo '<DIV CLASS="row"><DIV CLASS="col-md-9">';
+        echo '<DIV CLASS="row"><DIV CLASS="col-md-9" titledebug="popups_address">';
         echo view("popups_address", array("dontincludeGoogle" => true, "unit" => false, "title" => "", "address" => $_GET))->render();
         echo '</DIV><DIV CLASS="col-md-3" ><BUTTON  CLASS="btn btn-sm btn-success full-width full-height" ONCLICK="search();">Search</BUTTON></DIV></DIV>';
         function get_number($GET){

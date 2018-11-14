@@ -64,6 +64,7 @@
     if (!isset($dohours)) {$dohours = true;}
     if (!isset($showlogin)) {$showlogin = true;}
     $iscanbii = database == "canbii";
+    $minimumage19 = false; //database == "canbii"
     // @formatter:off
 ?>
 
@@ -166,7 +167,7 @@
                     ?>
                 </FORM>
                 <FORM Name="regform" id="regform">
-                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true, "age" => database == "canbii"))->render(); ?>
+                    <?= view("popups_edituser", array("phone" => true, "autocomplete" => "new-password", "required" => true, "icons" => true, "age" => $minimumage19))->render(); ?>
                 </FORM>
                 <div class="clearfix py-2"></div>
                 <button class="btn btn-block {{btncolor}}" onclick="register();">
@@ -348,7 +349,7 @@
 
         function checkage(){
             var ret = true;
-            @if($iscanbii)
+            @if($minimumage19)
                 $("#reg_minimumage-error").remove();
                 $("#cminimumage").removeClass("redhighlite");
                 ret = $("#reg_minimumage").val() === "yes";

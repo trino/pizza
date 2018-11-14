@@ -1,4 +1,8 @@
-<?php startfile("popups_checkout"); ?>
+<?php
+    startfile("popups_checkout");
+    $allowPickup = true;
+    $allowCash = true;
+?>
 
 <div class="list-group-item">
     <h2 CLASS="float-left text-success">My Order</h2>
@@ -38,7 +42,7 @@
                         foreach($order as $key){
                             switch($key){
                                 case "deliverytime": ?>
-                                    <div class="input_left_icon">
+                                    <div class="input_left_icon" titledebug="deliverytime">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
                                            <i class="fa fa-clock text-white fa-stack-1x"></i>
@@ -52,13 +56,13 @@
                                         </div>
                                     </div>
                                 <?php break; case "useraddress": ?>
-                                    <div class="input_left_icon" id="red_address">
+                                    <div class="input_left_icon" id="red_address" titledebug="useraddress">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
                                            <i class="fa fa-car text-white fa-stack-1x"></i>
                                         </span>
                                     </div>
-                                    <div class="input_right">
+                                    <div class="input_right" titledebug="popups_address">
                                         <div class="clear_loggedout addressdropdown proper-height" id="checkoutaddress"></div>
                                         <?php
                                             echo view("popups_address", array("dontincludeAPI" => true, "style" => 1, "saveaddress" => true, "form" => false, "findclosest" => true, "autored" => "red_address"))->render();
@@ -67,7 +71,7 @@
                                         <DIV ID="error-saveaddresses"></DIV>
                                     </div>
                                 <?php break; case "userphone": if($needsphone){ ?>
-                                    <DIV ID="userphone">
+                                    <DIV ID="userphone" titledebug="userphone">
                                         <div class="input_left_icon redhighlite" id="red_phone">
                                             <span class="fa-stack fa-2x">
                                                <i class="fa fa-circle fa-stack-2x"></i>
@@ -76,12 +80,11 @@
                                         </div>
                                         <div class="input_right">
                                             <input type="tel" name="phone" id="order_phone" class="form-control session_phone_val"
-                                                   placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true"
-                                                   value="<?= read('phone'); ?>">
+                                                   placeholder="Cell Phone" required="true" autored="red_phone" aria-required="true" value="<?= read('phone'); ?>">
                                         </div>
                                     </DIV>
                                 <?php } break; case "restaurant": ?>
-                                    <div class="input_left_icon" id="red_rest">
+                                    <div class="input_left_icon" id="red_rest" titledebug="restaurant">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
                                            <i class="fa fa-utensils text-white fa-stack-1x"></i>
@@ -93,7 +96,7 @@
                                         </SELECT>
                                     </div>
                                 <?php break; case "notes": ?>
-                                    <div class="input_left_icon">
+                                    <div class="input_left_icon" titledebug="notes">
                                         <span class="fa-stack fa-2x">
                                             <i class="fa fa-circle fa-stack-2x"></i>
                                             <i class="fa fa-pencil-alt text-white fa-stack-1x"></i>
@@ -103,7 +106,7 @@
                                         <textarea placeholder="Order Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
                                     </div>
                                 <?php break; case "creditcard": ?>
-                                    <div class="input_left_icon" id="red_card">
+                                    <div class="input_left_icon" id="red_card" titledebug="creditcard">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
                                            <i class="fa fa-credit-card text-white fa-stack-1x"></i>
@@ -232,6 +235,8 @@
     });
 
     var shortitems = [];
+    var allowPickup = '<?= $allowPickup; ?>';
+    var allowCash = '<?= $allowPickup; ?>';
 
     function validdeliverytime() {
         return totimestamp() < $("#deliverytime option:selected").attr("timestamp");
