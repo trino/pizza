@@ -236,7 +236,7 @@
 
     var shortitems = [];
     var allowPickup = '<?= $allowPickup; ?>';
-    var allowCash = '<?= $allowPickup; ?>';
+    var allowCash = '<?= $allowCash; ?>';
 
     function validdeliverytime() {
         return totimestamp() < $("#deliverytime option:selected").attr("timestamp");

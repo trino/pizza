@@ -155,6 +155,7 @@ class HomeController extends Controller {
     }
 
     public function saveorder($info, $order){
+        unset($info["paymethod"]);
         $orderid = insertdb("orders", $info);
         $dir = public_path("orders");
         if (!is_dir($dir)) {mkdir($dir, 0777);}

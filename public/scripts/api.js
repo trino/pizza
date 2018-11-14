@@ -1260,6 +1260,8 @@ function isnewcard(){
     return $("#saved-credit-info").val() == "";
 }
 
+
+
 var credit_card_types = {1: "American Express", 2: "Visa", 3: "MasterCard"};
 function last4(LongForm, includeExpiry){
     var value = $("#saved-credit-info option:selected").val(), ret = "", endit = 0;
@@ -1281,6 +1283,8 @@ function last4(LongForm, includeExpiry){
         }
         endit = ret.indexOf("(ID:");
         if(endit > -1){ret = ret.left(endit);}
+    } else if ($("#saved-credit-info").val() == "cash") {
+        return "cash";
     } else {
         var card_type = cardtype($("input[data-stripe=number]").val());
         var card_number = $("input[data-stripe=number]").val().trim().right(4);
@@ -2053,6 +2057,11 @@ function userisloggedin(){
     return userdetails.hasOwnProperty("id");
 }
 
+function payby(iscash){
+    $("#saved-credit-info").val(iif(iscash, "cash", ""));
+    visible(".credit-info", !iscash);
+}
+
 var needscheckout = false;
 function showcheckout() {
     if(!userisloggedin()){
@@ -2067,9 +2076,9 @@ function showcheckout() {
     var needscreditrefresh = false;
     if (loadsavedcreditinfo()) {
         $(".credit-info").hide();
-        var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true, ' + "'showcheckout1'" + ');" class="form-control proper-height">';
+        var creditHTML = '<SELECT ID="saved-credit-info" name="creditcard" onchange="changecredit(true, ' + "'showcheckout1'" + ');" class="form-control proper-height credit-info">';
         if(allowCash){
-            creditHTML += '<OPTION value="cash">Pay by cash</OPTION>';
+            creditHTML += '<OPTION value="cash">Pay with Cash</OPTION>';
         }
         creditHTML += '<OPTION value="">Add Card</OPTION>';
         for (var i = 0; i < userdetails.Stripe.length; i++) {
@@ -2083,11 +2092,16 @@ function showcheckout() {
             log("Card: " + (i+1) + " of " + userdetails.Stripe.length + " = " + cardtext);
             creditHTML += '>' + cardtext + '</OPTION>';
         }
-        $("#credit-info").html(creditHTML + '</SELECT>');
+        creditHTML += '</SELECT>';
     } else {
-        $("#credit-info").html('<INPUT TYPE="hidden" ID="saved-credit-info">');
+        var creditHTML = '<INPUT TYPE="hidden" ID="saved-credit-info">';
+        if(allowCash) {
+            creditHTML += '<LABEL><INPUT NAME="paymethod" TYPE="radio" ONCLICK="payby(false);" CHECKED>Pay with Credit Card</LABEL> ';
+            creditHTML += '<LABEL><INPUT NAME="paymethod" TYPE="radio" ONCLICK="payby(true);">Pay with Cash</LABEL>';
+        }
         needscreditrefresh = true;
     }
+    $("#credit-info").html(creditHTML);
     $("#checkoutaddress").html(HTML);
     $("#deliverytime").val($("#deliverytime option:first").val());
 
