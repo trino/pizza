@@ -18,6 +18,7 @@ class AuthController extends Controller {
     protected $redirectTo = '/tasks';
 
     /**
+	*test
      * Create a new authentication controller instance.
      * @return void
      */
