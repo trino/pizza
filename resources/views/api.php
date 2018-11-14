@@ -590,7 +590,9 @@ function loadsettings(){
     $settings = first("SELECT * FROM `settings` WHERE keyname NOT IN (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . $GLOBALS["database"] . "') AND keyname NOT IN ('lastSQL', 'menucache')", false, "API.loadsettings");
     foreach($settings as $ID => $Value){
         $settings[$Value["keyname"]] = $Value["value"];
-        define($Value["keyname"], $Value["value"]);
+        if(!defined($Value["keyname"])) {
+            define($Value["keyname"], $Value["value"]);
+        }
         unset($settings[$ID]);
     }
     return $settings;
