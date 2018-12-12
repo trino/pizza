@@ -146,7 +146,7 @@ function mid($text, $start, $length){
     return substr($text, $start, $length);
 }
 function textcontains($text, $searchfor){
-    return strpos(strtolower($text), strtolower($searchfor)) !== false;
+    return stripos($text, $searchfor) !== false;
 }
 
 function escapeSQL($text){
