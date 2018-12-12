@@ -36,15 +36,16 @@ return [
     'constants' => [
         "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/pizza/",
         "callurl" => "hamiltonpizza.ca",
-        "sitename" => "Canbii (localhost)",
+        "sitename" => "Canbii.com<br>Hamilton Cannabis Delivery",
         "cityname" => "local",
         "islive" => false,
         "timezone" => "America/Toronto",
+        "storename" => "America",
 
         "emailheadercolor" => "#008000",//can't be a CSS color
-        "headercolor" => "bg-white",
-        "headertextcolor" => "text-green",
-        "textcolor" => "text-green",
+        "headercolor" => "bg-success",
+        "headertextcolor" => "text-white",
+        "textcolor" => "text-success",
         "btncolor" => "btn-success",
         "logo" => "canbiilogo.png"
     ],
@@ -57,13 +58,13 @@ return [
             'prefix' => '',
         ],
 
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => 'canbii',
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
+            'mysql' => [
+                'driver' => 'mysql',
+                'host' => env('DB_HOST', 'localhost'),
+                'port' => env('DB_PORT', '3306'),
+                'database' => 'canbii',
+                'username' => env('DB_USERNAME', 'root'),
+                'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

@@ -24,3 +24,4 @@ public/error_log
 ai.sql
 config/database.php
 config/mail.php
+error_log
