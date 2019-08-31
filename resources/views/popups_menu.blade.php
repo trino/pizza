@@ -209,7 +209,7 @@
                             }
                         ?>
                         <span class="align-middle item-name">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 0)}}<?= $icon; ?></span>
+                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
                     </button>
                 @endforeach
                 @if(in_array($catclass, $newcolumns))

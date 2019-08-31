@@ -61,7 +61,7 @@
         <div class="input_right">
     @endif
     @if($unit)
-        <INPUT TYPE="text" NAME="<?= $unitname; ?>" ID="add_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to" <?=address("unit"); ?> >
+        <INPUT TYPE="text" NAME="<?= $unitname; ?>" ID="add_unit" PLACEHOLDER="aaa999Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to" <?=address("unit"); ?> >
     @endif
     @if($icons)
         </div>
@@ -78,20 +78,6 @@
 
 <SCRIPT>
     var formatted_address = "has not initialized";
-    //if($firefox)
-    /*  why is this commented out?
-        if(is_firefox_for_android) {
-            $(window).load(function () {
-                var HTML = $("#gmapc").html();
-                HTML = HTML.replaceAll("style=", "oldstyle=");
-                log("Moving: " + HTML);
-                $("#gmapffac").html(HTML);
-                $("#gmapc").html('<DIV CLASS="fake-form-control"><SPAN CLASS="address fake-address" ID="ffaddress"></SPAN><BUTTON CLASS="btn btn-sm btn-primary radius0 pull-right full-height" ONCLICK="handlefirefox();return false;">EDIT</BUTTON></DIV><DIV CLASS="separator"></DIV>');
-                initAutocomplete();
-            });
-        }
-        */
-    //endif
 
     function visible_address(state) {
         visible(getGoogleAddressSelector(), state);

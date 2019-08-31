@@ -125,6 +125,7 @@ includefile("public/scripts/api.js");
 <script>
     var currentURL = "<?= Request::url(); ?>";
     var debugmode = '<?= !islive(); ?>' == '1';
+    var debugmode = '<?= !islive(); ?>' == '0';
     var timestampoffset;
     timestampoffset = parseInt('<?= time(); ?>') - totimestamp();
     var database = "<?= database; ?>";

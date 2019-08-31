@@ -1,0 +1,2 @@
+----------------------------------------------------------------------------------------------
+2018-08-21 06:11:57 pm (USER # : [NOT LOGGED IN])  --  SELECT id FROM menu WHERE hastax = '0' AND enabled = '1' ORDER BY id asc returned no results

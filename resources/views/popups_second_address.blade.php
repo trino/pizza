@@ -1,12 +1,12 @@
 <SPAN ID="gmac_<?= $name; ?>">
-    <INPUT class="form-control google-address" TYPE="text" <?php
-        if(!isset($function)){$function = false;}
-        echo 'ID="gmap_' . $name . '" name="' . $name . '"';
-    ?> >
+    <INPUT class="form-control google-address" placeholder="Address" TYPE="text" <?php if(!isset($function)){$function = false;}  echo 'ID="gmap_' . $name . '" name="' . $name . '"'; ?> >
     @if($unit)
-        <INPUT TYPE="text" NAME="<?= $name; ?>_unit" ID="<?= $name; ?>_unit" PLACEHOLDER="Apt/Buzzer" CLASS="form-control address" TITLE="ie: Apt/Unit, buzz code, which door to go to">
+        <INPUT TYPE="text" NAME="<?= $name; ?>_unit" ID="<?= $name; ?>_unit" PLACEHOLDER="Address 2" CLASS="form-control address" TITLE="">
     @endif
 </SPAN>
+
+
+
 <SCRIPT>
     var <?= $name; ?>_address;
     window.onload = function () {

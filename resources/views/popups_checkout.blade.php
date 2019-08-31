@@ -1,7 +1,7 @@
 <?php
     startfile("popups_checkout");
     $allowPickup = false;
-    $allowCash = true;
+    $allowCash = false;
 ?>
 
 <div class="list-group-item">
@@ -103,7 +103,7 @@
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <textarea placeholder="Order Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
+                                        <textarea placeholder="Additional Notes" id="cookingnotes" class="form-control" maxlength="255"></textarea>
                                     </div>
                                 <?php break; case "creditcard": ?>
                                     <div class="input_left_icon" id="red_card" titledebug="creditcard">
@@ -127,18 +127,18 @@
                                     <div class="input_right">
                                         <div class="thirdwidth pr-1">
                                             <SELECT CLASS="credit-info form-control no-top-margin" data-stripe="exp_month">
-                                                <OPTION VALUE="01">01/Jan</OPTION>
-                                                <OPTION VALUE="02">02/Feb</OPTION>
-                                                <OPTION VALUE="03">03/Mar</OPTION>
-                                                <OPTION VALUE="04">04/Apr</OPTION>
-                                                <OPTION VALUE="05">05/May</OPTION>
-                                                <OPTION VALUE="06">06/Jun</OPTION>
-                                                <OPTION VALUE="07">07/Jul</OPTION>
-                                                <OPTION VALUE="08">08/Aug</OPTION>
-                                                <OPTION VALUE="09">09/Sep</OPTION>
-                                                <OPTION VALUE="10">10/Oct</OPTION>
-                                                <OPTION VALUE="11">11/Nov</OPTION>
-                                                <OPTION VALUE="12">12/Dec</OPTION>
+                                                <OPTION VALUE="01">01</OPTION>
+                                                <OPTION VALUE="02">02</OPTION>
+                                                <OPTION VALUE="03">03</OPTION>
+                                                <OPTION VALUE="04">04</OPTION>
+                                                <OPTION VALUE="05">05</OPTION>
+                                                <OPTION VALUE="06">06</OPTION>
+                                                <OPTION VALUE="07">07</OPTION>
+                                                <OPTION VALUE="08">08</OPTION>
+                                                <OPTION VALUE="09">09</OPTION>
+                                                <OPTION VALUE="10">10</OPTION>
+                                                <OPTION VALUE="11">11</OPTION>
+                                                <OPTION VALUE="12">12</OPTION>
                                             </SELECT>
                                             <div class="clearfix"></div>
                                         </div>

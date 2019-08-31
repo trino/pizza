@@ -94,10 +94,10 @@ return [
 
     //'username' => "roy@trinoweb.com",
     //'password' => '316Burloak9056393129',
-    //'username' => "hamiltonpizza.ca@gmail.com",
-    //'password' => 'Pass1234!',
-    'username' => "admin@trinoweb.com",
-    'password' => 'clarisse2',
+   // 'username' => "hamiltonpizza.ca@gmail.com",
+   // 'password' => 'Pass1234!',
+   'username' => "info@trinoweb.com",
+    'password' => 'Pass4000!',
 
     /*
     |--------------------------------------------------------------------------
