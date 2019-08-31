@@ -314,17 +314,6 @@
         $("#firefoxandroid").hide();
     }
 
-    /*
-    $('#orderinfo input').each(function () {
-        $(this).click(function () {
-            refreshform(this)
-        }).blur(function () {
-            refreshform(this)
-        });
-        log("Autored: " + refreshform(this).attr("id"));
-    });
-    */
-
     function refreshform(t) {
         var ID = t;
         if (!$(t).is(":visible")) {
