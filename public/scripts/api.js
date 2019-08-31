@@ -818,11 +818,11 @@ function generatereceipt(forcefade) {
 
             tempHTML += '</SPAN> <span class="mr-auto itemname">' + itemname + '</SPAN>';
             tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
-            tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus"></I></button>';
+            tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus text-muted"></I></button>';
             if (hasaddons) {
-                tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt"></I></button>';
+                tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt text-muted"></I></button>';
             } else {
-                tempHTML += '<button class="bg-transparent" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus"></I></button>';
+                tempHTML += '<button class="bg-transparent" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus text-muted"></I></button>';
             }
             tempHTML += '</div>';
 
@@ -1350,7 +1350,7 @@ function placeorder(StripeResponse) {
                 if(!debugmode) {$(".ordersuccess").html("");}
                 clearorder();
                 $("#checkoutmodal").modal("hide");
-                handleresult(result, "ORDER RECEIPT");
+                handleresult(result, "Success - Thank You For Your Order");
                 userdetails["Orders"].unshift({
                     id: $(".ordersuccess").attr("orderid"),
                     placed_at: formattednow(),

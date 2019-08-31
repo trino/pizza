@@ -258,8 +258,6 @@
         addressstatus(true, true, false, false, "restchange " + where);
         if (closest.length > 0) {
             GenerateHours(closest[index].hours);
-            /* shortitems = CheckforShortage(closest[index].shortage);
-            alertshortage(); //this should not be commented out */
         }
     }
 
@@ -307,13 +305,13 @@
         }
         return false;
     }
-
+/*
     function fffa() {
         $("#ffaddress").text($("#formatted_address").val());
         $('#checkoutmodal').modal('show');
         $("#firefoxandroid").hide();
     }
-
+*/
     function refreshform(t) {
         var ID = t;
         if (!$(t).is(":visible")) {
@@ -351,10 +349,10 @@
 </SCRIPT>
 <?php endfile("popups_checkout"); ?>
 
-<DIV ID="firefoxandroid" class="fullscreen grey-backdrop dont-show">
+<!--DIV ID="firefoxandroid" class="fullscreen grey-backdrop dont-show">
     <DIV CLASS="centered firefox-child bg-white">
         <i class="fab fa-firefox"></i> Firefox Address editor
         <DIV ID="gmapffac" class="bg-white"></DIV>
         <BUTTON ONCLICK="fffa();" CLASS="btn {{btncolor}} radius0 btn-full pull-down-right">OK</BUTTON>
     </DIV>
-</DIV>
+</DIV-->

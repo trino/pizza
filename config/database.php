@@ -35,18 +35,18 @@ return [
 
     'constants' => [
         "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/pizza/",
-        "callurl" => "hamiltonpizza.ca",
-        "sitename" => "Canbii.com<br>Hamilton Cannabis Delivery",
+        "callurl" => "canbii.com",
+        "sitename" => "Canbii.com<br>We'll Come to You",
         "cityname" => "local",
         "islive" => false,
         "timezone" => "America/Toronto",
         "storename" => "America",
 
-        "emailheadercolor" => "#008000",//can't be a CSS color
-        "headercolor" => "bg-success",
+        "emailheadercolor" => "blue",//can't be a CSS color
+        "headercolor" => "bg-primary",
         "headertextcolor" => "text-white",
-        "textcolor" => "text-success",
-        "btncolor" => "btn-success",
+        "textcolor" => "text-primary",
+        "btncolor" => "btn-primary",
         "logo" => "canbiilogo.png"
     ],
 

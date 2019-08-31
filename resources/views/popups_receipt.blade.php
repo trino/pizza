@@ -2,18 +2,11 @@
 @section('content')
     <?php
     //do not in-line the styles as this is used in emails
-    //http://localhost/ai/public/list/orders?action=getreceipt&orderid=224
     startfile("popups_receipt");
     $debugmode = !islive();
     $debug = "";
     if(!isset($Order) && isset($orderid)){
         $Order = first("SELECT orders.*, users.name, users.id as userid, users.email FROM orders, users WHERE orders.id = " . $orderid . " HAVING user_id = users.id");
-        /* testing
-        $Order["userid"] = 12;
-        if($Order["userid"] <> read("id") && $party == "user"){$party = "private";}
-                echo "Order User ID: " . $Order["userid"];
-                echo "PARTY: " . $party;
-        */
         $filename = orderpath($orderid);//
         if (!isset($includeextradata)) {
             $includeextradata = false;
@@ -193,6 +186,7 @@
         $Delivery = "Delivery ";
         if($Order["type"] == 1){$Delivery = "Pickup ";}
     }
+    $Delivery="";
     if ($timer) {
         if ($minutes < 60) {
             $time = $minutes;
@@ -211,8 +205,6 @@
 
     @if($includeextradata)
         @if($timer)
-            <!--div style="font-size: 2rem !important;" CLASS="mb-2 countdown btn-lg badge badge-pill badge-success" hours="<?= $hours; ?>" minutes="<?= $minutes; ?>" seconds="<?= $seconds; ?>"
-             title="Time is approximate and not a guarantee"><?= $time; ?></div-->
         @elseif($place != "email")
             <span class="badge badge-pill badge-danger">[EXPIRED]</span>
         @endif
@@ -252,9 +244,9 @@
             $last4 = "Private information";//do not allow other users to view this data!!!
         }
         if(is_numeric($last4)){
-            $last4 = '<strong style="color:#ff0000">Paid by ' . formatlast4($last4) . '</strong>';
+            $last4 = '<span style="">' . formatlast4($last4) . '</span>';
         } else if ($last4){
-            $last4 = '<strong style="color:#ff0000">' . $last4 . '</strong>';
+            $last4 = '<span style="">' . $last4 . '</span>';
         } else {
             $last4 = "";
         }
@@ -289,14 +281,6 @@
                 <TR>
                     <TD ONCLICK="addmarker('<?= $Restaurant["name"] . "'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                         <?php
-
-                            /*
-                            echo $Raddress["city"] . " " . $Raddress["province"] . " " . $Raddress["postalcode"] . '<BR>' . $Raddress["unit"] . " " . formatphone($Restaurant["phone"]);
-                            echo '<INPUT TYPE="HIDDEN" ID="cust_latitude" VALUE="' . $Order["latitude"] . '"><INPUT TYPE="HIDDEN" ID="cust_longitude" VALUE="' . $Order["longitude"]
-                                . '"><INPUT TYPE="HIDDEN" ID="rest_latitude" VALUE="' . $Raddress["latitude"]
-                                . '"><INPUT TYPE="HIDDEN" ID="rest_longitude" VALUE="' . $Raddress["longitude"] . '">';
-                            echo '</TD><TD ID="custaddress" ONCLICK="addmarker(' . "'" . $Order["name"] . "\'s Address\', " . $Order["latitude"] . ", " . $Order["longitude"] . ', true);" WIDTH="49%" ID="restaddress">';
-                            */
                             if($Order["type"] == 0){
                                 echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Delivery Info</h2>';
                                 echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
@@ -311,8 +295,6 @@
                                     echo "Unit: " . $Raddress["unit"];
                                 }
                             }
-
-
                         echo '<br><br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
                         echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "" ;
                         ?>
@@ -335,12 +317,10 @@
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
                 <h2 class="mt-4">Questions about your order?</h2>
-                <p>Please contact the {{storename}} directly.</p>
+                <p>Please contact the us at (905) 531-5331</p>
                 <DIV CLASS="clearfix"></DIV>
             @endif
-            <p>
-            <a class="btn-link btn {{btncolor}} pl-0" href="<?= webroot("help"); ?>">About Us</a>
-            </p>
+
         </DIV>
     @endif
 

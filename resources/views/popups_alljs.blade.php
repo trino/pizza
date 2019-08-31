@@ -709,9 +709,9 @@ includefile("public/scripts/api.js");
         }
         <?php
             if (islive()) {
-                echo "setPublishableKey('pk_vnR0dLVmyF34VAqSegbpBvhfhaLNi', 'live');";
+                echo "setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', 'live');";
             } else {
-                echo "setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', 'test');";
+                echo "setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', 'test');";
             }
         ?>
         $("input").blur(function () {
