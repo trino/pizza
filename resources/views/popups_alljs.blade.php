@@ -306,6 +306,7 @@ includefile("public/scripts/api.js");
         }, function (result) {
             try {
                 var data = JSON.parse(result);
+                if(isUndefined(data["Reason"])){data["Reason"] = action + " [UNKNOWN ERROR]";}
                 skipunloadingscreen = false;
                 log("ACTION: " + action + " STATUS: " + data["Status"] + " REASON: " + data["Reason"]);
                 if (data["Status"] == "false" || !data["Status"]) {

@@ -61,7 +61,8 @@ class AuthController extends Controller {
         $attempttime = 300;//5 minutes
         if(!count($_POST)){$_POST = $_GET;}
         if(!$action && isset($_POST["action"])){$action = $_POST["action"];}
-        $ret = array("Status" => false, "Action" => "NOT SPECIFIED");
+        $ret = array("Status" => false, "Action" => "NOT SPECIFIED", "Reason" => "ACTION: '" . $action . "' [REASON NOT SPECIFIED]");
+        if(count($_POST) == 0){$ret["Reason"] = "POST IS EMPTY!!!!";}
         if($action) {
             $ret = array("Status" => true, "Action" => $action);
             if ($action == "logout") {
