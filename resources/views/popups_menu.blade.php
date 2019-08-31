@@ -85,7 +85,7 @@
         }
 
         function makecategory(&$ID, $Name){
-            echo '<div class="' . textcolor . ' strong list-group-item" ID="category_' . $ID . '" catname="' . toclass($Name) . '">
+            echo '<div class="'  . ' strong list-group-item" ID="category_' . $ID . '" catname="' . toclass($Name) . '">
 <h2 CLASS="pull-left align-middle h2-middle">' . $Name . '</h2><span class="align-middle hidden item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium"></span></div>';
             $ID +=1;
         }

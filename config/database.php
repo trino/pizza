@@ -41,7 +41,6 @@ return [
         "islive" => false,
         "timezone" => "America/Toronto",
         "storename" => "America",
-
         "emailheadercolor" => "blue",//can't be a CSS color
         "headercolor" => "bg-primary",
         "headertextcolor" => "text-white",
@@ -51,13 +50,11 @@ return [
     ],
 
     'connections' => [
-
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
         ],
-
             'mysql' => [
                 'driver' => 'mysql',
                 'host' => env('DB_HOST', 'localhost'),
@@ -126,7 +123,6 @@ return [
     'redis' => [
 
         'client' => 'predis',
-
         'default' => [
             'host' => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),

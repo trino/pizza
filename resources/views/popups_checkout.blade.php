@@ -5,7 +5,7 @@
 ?>
 
 <div class="list-group-item">
-    <h2 CLASS="float-left text-success">My Order</h2>
+    <h2 CLASS="float-left">My Order</h2>
     <span class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium hidden"></span>
     <button class="ml-auto bg-transparent" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
