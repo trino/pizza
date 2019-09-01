@@ -56,7 +56,7 @@
         }
     }
 </STYLE>
-<DIV ID="timeselect">
+<DIV ID="timeselect" style="display: none">
     <DIV CLASS="timecaption strong">Debug Time</DIV>
     <FORM>
         <LABEL>

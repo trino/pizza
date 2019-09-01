@@ -54,9 +54,9 @@ function webroot($file = "", $justroot = false){
         if($file && strpos($file, "public/") === false){
             $public = "public/";
         }
-        return serverurl . "/" . $public . $file;
+        return serverurl . "" . $public . $file;
     } else if (islive()) {
-        $webroot = "/";
+        $webroot = "";
         if ($isSecure) {
             $protocol = "https";
         }

@@ -36,7 +36,7 @@ return [
     'constants' => [
         "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/pizza/",
         "callurl" => "canbii.com",
-        "sitename" => "Canbii.com<br>We'll Come to You",
+        "sitename" => "Canbii.com",
         "cityname" => "local",
         "islive" => false,
         "timezone" => "America/Toronto",

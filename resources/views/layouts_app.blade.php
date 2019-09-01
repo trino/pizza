@@ -116,7 +116,10 @@
         @endif
     </ul>
 
-    <a style="color: white; text-decoration: none;font-weight: bold" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><?= sitename; ?></a>
+    <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold" ><?= sitename; ?></span><br>
+        <span style="color: white;" >On Demand Services</span>
+
+    </a>
 
     <?php
         if (debugmode) {

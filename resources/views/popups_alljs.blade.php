@@ -298,6 +298,11 @@ includefile("public/scripts/api.js");
         skipunloadingscreen = true;
         var redirectonlogin = false;
         var redirectonlogout = false;
+
+
+
+
+
         $.post(webroot + "auth/login", {
             action: action,
             _token: token,
@@ -750,7 +755,7 @@ includefile("public/scripts/api.js");
         @if(islive())
             log("Changing stripe key");
             $("#istest").val("true");
-            setPublishableKey('pk_rlgl8pX7nDG2JA8O3jwrtqKpaDIVf', "test");
+            setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', "test");
             log("Stripe key changed");
         @endif
     }
