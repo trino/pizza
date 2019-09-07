@@ -1,3 +1,4 @@
+
 .bg-green {
     background-color: #008000 !important;
 }
@@ -724,7 +725,7 @@ ul {
 }
 
 .togglemenu {
-    margin-right: .75rem !important;
+    margin-right: .15rem !important;
 }
 
 .helpbtn {
@@ -1223,4 +1224,9 @@ td {
 
 .list-group-item-action:focus {
     text-decoration: none;
-}
+}.no-right-border{
+     border-right:0 !important;
+ }
+ .display-none{
+     display: none;
+ }

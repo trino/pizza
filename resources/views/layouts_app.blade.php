@@ -61,7 +61,7 @@
 <div id="snackbar"></div>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
-<div style="padding: .5rem .75rem;" class="list-group-item container-fluid {{ headercolor }}">
+<div style="padding: .5rem .75rem;border:0 !important;z-index: 999;" class="list-group-item shadow container-fluid {{ headercolor }}">
     <?php
         if(defined("logo")){
             echo '<IMG CLASS="sitelogo" SRC="' . webroot("images/" . logo) . '">';

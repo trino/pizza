@@ -502,7 +502,7 @@ includefile("public/scripts/api.js");
         if(allowPickup){
             HTML += '<OPTION value="pickup">Pickup at a {{storename}}</OPTION>';
         }
-        HTML += '<OPTION value="0">Select Delivery Address</OPTION>';
+        HTML += '<OPTION value="0">Address</OPTION>';
         var FirstAddress = false;
 
         if (user["Addresses"].length > 0) {
@@ -669,7 +669,7 @@ includefile("public/scripts/api.js");
         dayofweek = now.getDay();
         if (isopen(hours, dayofweek, temp[2]) > -1) {
             thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
-            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '" dayname="' + thedayname + '" ID="asap">Deliver ASAP (' + thedayname + ')</option>';
+            HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '" dayname="' + thedayname + '" ID="asap">ASAP (' + thedayname + ')</option>';
             time = addtotime(time, increments);
         }
         var thetime, minutes, thedayname, thedate;

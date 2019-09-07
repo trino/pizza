@@ -30,6 +30,7 @@
                 }
                 $addons[$Table][$topping["type"]][] = explodetrim($topping["name"]);
                 $addons[$Table . "_id"][$topping["id"]] = $topping["name"];
+
                 $topping["displayname"] = $topping["name"];
                 if ($topping["isfree"]) {
                     $isfree[$Table][] = $topping["name"];
@@ -105,6 +106,7 @@
     $qualifiers = array("DEFAULT" => array("1/2", "1x", "2x", "3x"));
     $categories = Query("SELECT * FROM menu WHERE enabled = '1' GROUP BY category ORDER BY id", true, "popups_menu.categories");
     $isfree = collapsearray(Query("SELECT * FROM additional_toppings", true, "popups_menu.isfree"), "price", "size");
+
     foreach($GLOBALS["settings"] as $key => $value){
         if(is_numeric($value)){$isfree[$key] = $value;}
     }
@@ -209,7 +211,7 @@
                             }
                         ?>
                         <span class="align-middle item-name">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}<?= $icon; ?></span>
+                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}</span>
                     </button>
                 @endforeach
                 @if(in_array($catclass, $newcolumns))
@@ -261,6 +263,28 @@
     var classlist = <?= json_encode($classlist); ?>;
     var ordinals = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"];
     var notaxes = <?= json_encode($notaxes); ?>;
+
+
+
+  //  console.log(tables);
+//    console.log(alladdons);
+
+    console.log(freetoppings);/*
+    console.log(qualifiers);
+    console.log(groups);
+    console.log(theorder);
+    console.log(deliveryfee);
+    console.log(minimumfee);
+    console.log(classlist);
+    console.log(ordinals);
+    console.log(notaxes);
+
+*/
+
+
+
+
+
 
     $(".hoveritem").hover(
         function(e){

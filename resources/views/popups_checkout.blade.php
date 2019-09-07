@@ -59,7 +59,7 @@
                                     <div class="input_left_icon" id="red_address" titledebug="useraddress">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                           <i class="fa fa-car text-white fa-stack-1x"></i>
+                                           <i class="fa fa-home text-white fa-stack-1x"></i>
                                         </span>
                                     </div>
                                     <div class="input_right" titledebug="popups_address">
@@ -84,17 +84,22 @@
                                         </div>
                                     </DIV>
                                 <?php } break; case "restaurant": ?>
-                                    <div class="input_left_icon" id="red_rest" titledebug="restaurant">
+
+                                    <div class="input_left_icon display-none" id="red_rest" titledebug="restaurant">
                                         <span class="fa-stack fa-2x">
                                            <i class="fa fa-circle fa-stack-2x"></i>
                                            <i class="fa fa-utensils text-white fa-stack-1x"></i>
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <SELECT class="form-control" ID="restaurant" ONCHANGE="restchange('elementchange');">
+                                        <SELECT class="form-control display-none" ID="restaurant" ONCHANGE="restchange('elementchange');">
                                             <OPTION VALUE="0" SELECTED>Select {{ucfirst(storename)}}</OPTION>
                                         </SELECT>
                                     </div>
+
+
+
+
                                 <?php break; case "notes": ?>
                                     <div class="input_left_icon" titledebug="notes">
                                         <span class="fa-stack fa-2x">

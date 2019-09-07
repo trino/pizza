@@ -2308,7 +2308,7 @@ if (isUndefined(unikeys)) {
         email_needed: "Please enter a valid email address",
         long_lat: "Longitude and/or latitude missing",
         ten_closest: "10 closest restaurants",
-        clear_order: "Clear your order?",
+        clear_order: "Clear our order?",
         myaddress: "My Addresses",
         noaddresses: 'No Addresses Saved',
         mycreditcard: 'My Credit Cards',
@@ -2353,7 +2353,7 @@ function generateaddons(ItemIndex, ToppingIndex) {
         var tempstr = '';
         var classname = 'itemcontents itemcontents' + itemindex;
 
-        HTML += '<DIV ONCLICK="selectitem(event, ' + itemindex + ');" CLASS="list-group-item d-flex flex-wrap receipt-addons currentitem currentitem' + itemindex;
+        HTML += '<DIV ONCLICK="selectitem(event, ' + itemindex + ');" CLASS="list-group-item no-right-border d-flex flex-wrap receipt-addons currentitem currentitem' + itemindex;
         if (currentitemindex == itemindex) {
             HTML += ' thisside';
         }
@@ -2497,36 +2497,20 @@ function list_addons(table, halves) {
         $("#addonlist").html(HTML + '</DIV>');
     } else {
         HTML += '<div class="toppinglist">';
+        console.log(types);
 
-        var breaker_green = 0;
-        var breaker_red = 0;
         for (var i = 0; i < types.length; i++) {
             for (var i2 = 0; i2 < alladdons[currentaddontype][types[i]].length; i2++) {
                 var addon = alladdons[currentaddontype][types[i]][i2];
-                var title = "";
-                var breaker_css_green = "";
-                var breaker_css_red = "";
-
-
-                if(types[i] == 'Vegetable' && breaker_green == 0){
-                    //   breaker_css_green = ' note_green ';
-                    //   breaker_green = 1;
-                }
-                if(types[i] == 'Meat' && breaker_red == 0){
-                    //    breaker_css_red = ' note_red ';
-                    //   breaker_red = 1;
-                }
-
-                HTML += '<button class="fourthwidth bg-white2 bg-'+types[i]+ ' ' + breaker_css_green +  breaker_css_red + ' addon-addon list-group-item-action toppings_btn';
-                if (isaddon_free(String(currentaddontype), String(addon))) {
-                    title = "Free addon";
-                }
-                HTML += '" TITLE="' + title + '">' + addon +'</button>';
+                HTML += '<button class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon +'</button>';
             }
         }
 
-        HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>' +
-            '<button class="btn-primary fourthwidth toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
+       //HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>';
+
+
+        HTML += '<button class="btn-primary fourthwidth toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
+
 
         $("#addonlist").html(HTML);
         $(".addon-addon").click(
