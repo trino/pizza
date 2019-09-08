@@ -232,7 +232,7 @@ class AuthController extends Controller {
         $names = explode(" ", $firstname);
         if(isset($names[0])) {$firstname = $names[0];}
         if(count($names) > 1){$lastname = $names[count($names) - 1];}
-        Newsletter::subscribeOrUpdate($email, ["FNAME" => $firstname, "LNAME" => $lastname, "PHONE" => $phone]);
+      //  Newsletter::subscribeOrUpdate($email, ["FNAME" => $firstname, "LNAME" => $lastname, "PHONE" => $phone]);
     }
 
     //make a GUID

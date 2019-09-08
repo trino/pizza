@@ -1357,7 +1357,7 @@ function placeorder(StripeResponse) {
                 if(!debugmode) {$(".ordersuccess").html("");}
                 clearorder();
                 $("#checkoutmodal").modal("hide");
-                handleresult(result, "Success - Thank You For Your Order");
+                handleresult(result, "Thank You For Your Order");
                 userdetails["Orders"].unshift({
                     id: $(".ordersuccess").attr("orderid"),
                     placed_at: formattednow(),

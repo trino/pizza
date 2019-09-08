@@ -154,11 +154,11 @@
         }
     </SCRIPT>
     <DIV class="row">
-        <div class="col-sm-6 py-3 bg-dark">
+        <div class="col-sm-6 py-3">
             <h3><?= getsetting("aboutus"); ?></h3>
-            <div class="card-block text-white">
-                @if(database == "ai")
-                    <span class="bold bigtext"> Feed Yourself + Someone Else</span>
+            <div class="card-block ">
+
+                    <span class="bold bigtext"> On Demand Home Services</span>
                     <br><br>
                     <p>
                         <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
@@ -182,9 +182,8 @@
                         <br> Donated: <?= $donations+1 . " " . $units_donated; ?>
                         <br> Charity: Hamilton Food Centre</p>
                     </div>
-                @else
-                    <span class="bold bigtext"> The higher, the fewer</span>
-                @endif
+
+
             </div>
         </div>
         <DIV CLASS="col-sm-6 bg-dark text-white" titledebug="popups_login">

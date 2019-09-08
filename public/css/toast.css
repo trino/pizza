@@ -17,7 +17,7 @@
     background-color: #DC3545; /* RED background color */
 }
 .snackbar-canbii{
-    background-color: green !important;
+    background-color: #333 !important;
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
