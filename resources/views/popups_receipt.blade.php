@@ -183,7 +183,7 @@
     $Delivery = "Delivered on ";
     if($Order["type"] == 1){$Delivery = "Picked up on ";}
     if($place == "email" || $timer){
-        $Delivery = "Delivery ";
+        $Delivery = "Service Fee ";
         if($Order["type"] == 1){$Delivery = "Pickup ";}
     }
     $Delivery="";
@@ -199,7 +199,7 @@
 ?>
 
     @if($party != "private")
-            <h2 class="text-center py-2" style="color: #FF0000">{{ $Delivery . $duration }}</h2>
+            <h2 class="text-center pb-3" style="color: #FF0000">{{ $Delivery . $duration }}</h2>
             <!--p class="text-center">Please allow + or - 10 minutes for delivery.</p-->
     @endif
 

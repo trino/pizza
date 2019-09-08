@@ -280,7 +280,7 @@
                                     break;
                                 case "wings_sauce":
                                     $itemtype = "lb";
-                                    $none = "No Sauce";
+                                    $none = "No Notes";
                                     break;
                             }
                             if (isset($addon->addons)) {
@@ -374,7 +374,7 @@
         }
         $tax = ($subtotal + $deliveryfee) * $tax_percent;
         $total = $subtotal + $subtotal_notax + $deliveryfee + $tax;
-        if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Delivery &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
+        if($deliveryfee>0){echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Service Fee &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($deliveryfee, 2) . '</TD></TR>';}
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tax &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($tax, 2) . '</TD></TR>';
         if($Order["tip"] > 0){
             echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Tip &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($Order["tip"], 2) . '</TD></TR>';

@@ -20,6 +20,10 @@
             $toppings_display = '';
             $currentsection = "";
             $isfree[$Table] = array();
+
+
+
+
             foreach ($toppings as $ID => $topping) {
                 if ($currentsection != $topping["type"]) {
                     if ($toppings_display) {
@@ -30,6 +34,8 @@
                 }
                 $addons[$Table][$topping["type"]][] = explodetrim($topping["name"]);
                 $addons[$Table . "_id"][$topping["id"]] = $topping["name"];
+                $addons[$Table . "_price"][$topping["name"]] = $topping["price"];
+
 
                 $topping["displayname"] = $topping["name"];
                 if ($topping["isfree"]) {
@@ -127,7 +133,7 @@
     $CurrentCol = 1;
     $CurrentCat = 0;
 
-    $newcolumns = ["dips", "sides", "1oz_indica", "indica_basic", "sativa_premium"];//which categories to start a new column on
+    $newcolumns = ["house_&_apartment", "grass_cutting_&_trimming"];//which categories to start a new column on
     $fontawesomeicons = [
         "far fa-moon"   => ["color" => "bg-dark-blue",  "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
         "far fa-sun"    => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
@@ -150,8 +156,20 @@
                         $CurrentCol += 1;
                     }
                     $itemsInCol += $menuitemcount;
-                    makecategory($CurrentCat, $category['category']);
+               //     makecategory($CurrentCat, $category['category']);
                 ?>
+
+
+                    <div id="home-section" class="image-bg vertical-align" style="background-image:url({{webroot("public/images/". $category['image']) }});" >
+                        <div class="container">
+                            <div class="home-content">
+                                <h3 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['category']}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 @foreach ($menuitems as $menuitem)
                     <button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
                          itemid="{{$menuitem["id"]}}"
@@ -161,6 +179,7 @@
                          itemcat="{{$menuitem['category']}}"
                          calories="{{$menuitem['calories']}}"
                          allergens="{{$menuitem['allergens']}}"
+                         itemdescription="{!!$menuitem['description']!!}"
                          <?php
                             $itemclass = $catclass;
                             if ($itemclass == "sides") {
@@ -196,6 +215,8 @@
                             echo $HTML;
                             ?>
                         >
+
+                        @if(false)
                         <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium" style="max-height:100%">
                             <?php
                                 if(database == "canbii"){
@@ -210,8 +231,12 @@
                                 echo '</span>';
                             }
                         ?>
+                        @endif
+
+
+
                         <span class="align-middle item-name">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                        <span class="ml-auto align-middle btn-sm-padding item-cost"> ${{number_format($menuitem["price"], 2)}}</span>
+                        <span class="ml-auto align-middle btn-sm-padding item-cost " style="font-size: .75rem;font-weight: bold3"> ${{number_format($menuitem["price"], 2)}}</span>
                     </button>
                 @endforeach
                 @if(in_array($catclass, $newcolumns))
@@ -223,19 +248,16 @@
     </DIV>
 </DIV>
 
-
 <!-- order menu item Modal -->
 <div class="modal modal-fullscreen force-fullscreen" id="menumodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
             <div class="dont-show" id="modal-hiddendata">
                 <SPAN ID="modal-itemprice"></SPAN>
                 <SPAN ID="modal-itemid"></SPAN>
                 <SPAN ID="modal-itemsize"></SPAN>
                 <SPAN ID="modal-itemcat"></SPAN>
             </div>
-
             <div class="list-group-item toppinglistitem">
                 <h2 class="text-normal" id="myModalLabel">
                     <SPAN ID="modal-itemname"></SPAN><br>
@@ -243,13 +265,16 @@
                 </h2>
                 <button data-dismiss="modal" class="btn align-middle ml-auto bg-transparent"><i class="fa fa-times"></i></button>
             </div>
-
+            <div class="list-group-item toppinglistitem">
+                    <SPAN ID="modal-itemdescription"></SPAN>
+            </div>
             <div class="modal-body menumodal">
                 <DIV ID="addonlist" class="addonlist"></DIV>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     var tables = <?= json_encode($tables); ?>;
@@ -265,23 +290,19 @@
     var notaxes = <?= json_encode($notaxes); ?>;
 
 
-
-  //  console.log(tables);
-//    console.log(alladdons);
-
-    console.log(freetoppings);/*
-    console.log(qualifiers);
-    console.log(groups);
-    console.log(theorder);
-    console.log(deliveryfee);
-    console.log(minimumfee);
-    console.log(classlist);
-    console.log(ordinals);
-    console.log(notaxes);
-
+/*
+console.log(alladdons);
+console.log(tables);
+console.log(freetoppings);
+console.log(qualifiers);
+console.log(groups);
+console.log(theorder);
+console.log(deliveryfee);
+console.log(minimumfee);
+console.log(classlist);
+console.log(ordinals);
+console.log(notaxes);
 */
-
-
 
 
 

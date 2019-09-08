@@ -392,7 +392,11 @@ $(document).on('touchend', function () {
 
 //generates the order menu item modal
 var currentitem;
-
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
 function loadmodal(element, notparent) {
     if (isUndefined(notparent)) {
         element = $(element);
@@ -401,6 +405,9 @@ function loadmodal(element, notparent) {
     for (var i = 0; i < items.length; i++) {
         $("#modal-item" + items[i]).text($(element).attr("item" + items[i]));
     }
+
+    $("#modal-itemdescription").html($(element).attr("itemdescription"));
+
     var itemname = $(element).attr("itemname");
     var itemcost = $(element).attr("itemprice");
     var size = $(element).attr("itemsize");
@@ -410,7 +417,7 @@ function loadmodal(element, notparent) {
         $(".toppings").attr("data-placeholder", "Add Toppings: $" + toppingcost);
         $(".toppings_price").text(toppingcost);
     }
-    $("#modal-toppingcost").text(toppingcost);
+    $("#modal-toppingcost").text(toppingcost + 'AAA999');
     if (toppingcost > 0) {
         $("#toppingcost").show();
     } else {
@@ -725,7 +732,7 @@ function generatereceipt(forcefade) {
     $("#oldvalues").stop().html("").hide().remove();
     $("#newvalues").stop().html("").hide().remove();
     var itemnames = {toppings: "pizza", wings_sauce: "lb"};
-    var nonames = {toppings: "toppings", wings_sauce: "sauce"};
+    var nonames = {toppings: "toppings", wings_sauce: "notes "};
     for (var itemid = 0; itemid < theorder.length; itemid++) {
         var item = theorder[itemid];
         var hasaddons = item.hasOwnProperty("itemaddons") && item["itemaddons"].length > 0;
@@ -839,7 +846,7 @@ function generatereceipt(forcefade) {
                         tempHTML += ordinals[currentitem] + " " + itemname + ': ';
                     }
                     if(!addons.hasOwnProperty("addons") || addons["addons"].length == 0) {
-                        tempHTML += 'no ' + nonames[tablename];
+                      //  tempHTML += 'no ' + nonames[tablename];
                     } else {
                         for (var addonid = 0; addonid < addons["addons"].length; addonid++) {
                             if (isfirstinstance2(addons["addons"], addonid)) {
@@ -897,7 +904,7 @@ function generatereceipt(forcefade) {
         if(discount>0){
             tempHTML += '<TR><TD>Discount (' + discountpercent + '%) &nbsp;</TD><TD> $' + discount + '</TD></TR>';
         }
-        if(deliveryfee>0){ tempHTML += '<TR><TD>Delivery &nbsp;</TD><TD> $' + deliveryfee.toFixed(2) + '</TD></TR>';}
+        if(deliveryfee>0){ tempHTML += '<TR><TD>Service Fee &nbsp;</TD><TD> $' + deliveryfee.toFixed(2) + '</TD></TR>';}
         tempHTML += '<TR><TD>Tax &nbsp;</TD><TD> $' + taxes.toFixed(2) + '</TD></TR>';
 
         //var thetip = calculatetip(totalcost);
@@ -1900,7 +1907,7 @@ function forceloading(state, where){
 
 function stripeResponseHandler(status, response) {
     var errormessage = "";
-    log("Stripe response");
+
     switch (status) {
         case 400: errormessage = "Bad Request:<BR>The request was unacceptable, often due to missing a required parameter."; break;
         case 401: errormessage = "Unauthorized:<BR>No valid API key provided."; break;
@@ -1913,7 +1920,7 @@ function stripeResponseHandler(status, response) {
             if (response.error) {
                 ajaxerror(response.error.message);
             } else {
-                log("Stripe successful - token: " + response.id);
+
                 loading(false, "stripe");
                 placeorder(response.id);
             } break;
@@ -2004,7 +2011,7 @@ function loadsavedcreditinfo() {
 
 function changecredit(focus, where) {
     ajaxerror();
-    log("changecredit: " + where);
+
     $("#saved-credit-info").removeClass("red");
     $("[data-stripe=number]").removeClass("red");
     var val = $("#saved-credit-info").val();
@@ -2325,7 +2332,9 @@ function toclassname(text) {
     return text.toLowerCase().replaceAll(" ", "_");
 }
 
-function generateaddons(ItemIndex, ToppingIndex) {
+function generateaddons(ItemIndex, ToppingIndex, addonprice1) {
+
+
     var HTML = '';
     var totaltoppings = 0;
     if (isUndefined(ItemIndex)) {
@@ -2338,8 +2347,8 @@ function generateaddons(ItemIndex, ToppingIndex) {
             item_name = "Pizza ";
             break;
         case "wings_sauce":
-            addonname = "Sauce";
-            item_name = "Lb";
+            addonname = "Notes";
+            item_name = "Notes";
             break;
         default:
             addonname = "Error: " + currentaddontype;
@@ -2347,6 +2356,7 @@ function generateaddons(ItemIndex, ToppingIndex) {
 
     var thisside = ' CLASS="thisside">';
     var showthisitem = 0;
+
     for (var itemindex = 0; itemindex < currentaddonlist.length; itemindex++) {
         var freetoppings = 0;
         var paidtoppings = 0;
@@ -2357,11 +2367,13 @@ function generateaddons(ItemIndex, ToppingIndex) {
         if (currentitemindex == itemindex) {
             HTML += ' thisside';
         }
-        HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ' #' + (itemindex + 1) + '</strong>';
+     //   HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ' #' + (itemindex + 1) + '</strong>';
+        HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ': '  + '</strong>';
 
         if(currentaddonlist[itemindex].length == 0){
-            tempstr += ' No ' + addonname; //leave for the users who assume we'll pick toppings for them
+            tempstr += 'No ' + addonname; //leave for the users who assume we'll pick toppings for them
         }
+
         for (var i = 0; i < currentaddonlist[itemindex].length; i++) {
             var currentaddon = currentaddonlist[itemindex][i];
             var qualifier = "";
@@ -2394,13 +2406,11 @@ function generateaddons(ItemIndex, ToppingIndex) {
         }
         HTML += tempstr + '</DIV>';
     }
-
-    itemtotalprice(getcost(totaltoppings));
+    itemtotalprice(getcost(totaltoppings,addonprice1));
     $("#theaddons").html(HTML);
     $(".currentitem.thisside").trigger("click");
     refreshremovebutton();
     if (ItemIndex > -1) {
-        log("FADE: #topping_" + ItemIndex + "_" + ToppingIndex);
         $("#topping_" + ItemIndex + "_" + ToppingIndex).hide().fadeTo(fade_speed, 1);
     }
 }
@@ -2422,7 +2432,7 @@ function itemtotalprice(newprice, fade){
 }
 
 function ismatch(itemindex, toppingindex1, toppingindex2){
-    log("itemindex: " + itemindex + " toppingindex1: " +  toppingindex1 + " toppingindex2: " + toppingindex2 + " currentaddonlist.length: " + currentaddonlist.length);
+  //  log("itemindex: " + itemindex + " toppingindex1: " +  toppingindex1 + " toppingindex2: " + toppingindex2 + " currentaddonlist.length: " + currentaddonlist.length);
     if(itemindex >= currentaddonlist.length){return false;}
     if (toppingindex1 == -1 || toppingindex2 == -1 || toppingindex1 >= currentaddonlist[itemindex].length || toppingindex2 >= currentaddonlist[itemindex].length){return false;}
     var topping1 = currentaddonlist[itemindex][toppingindex1];
@@ -2464,12 +2474,14 @@ function countaddons(itemindex, toppingindex){
     return total + "x ";
 }
 
-function getcost(Toppings) {
-    //itemcost, itemname, size, toppingcost
+function getcost(Toppings,addonprice1) {
+
     if (currentitem.toppingcost) {
+        log(currentitem);
         var itemcost = parseFloat(currentitem.itemcost.replace("$", ""));
-        itemcost += parseFloat(currentitem.toppingcost) * Number(Toppings);
-        return itemcost.toFixed(2);// + " (" + Toppings + " addons)";
+    itemcost += parseFloat(currentitem.toppingcost) * Number(Toppings);
+   //     itemcost +=  Number(addonprice1);
+        return itemcost.toFixed(2);
     }
     return $("#modal-itemprice").text();
 }
@@ -2497,20 +2509,19 @@ function list_addons(table, halves) {
         $("#addonlist").html(HTML + '</DIV>');
     } else {
         HTML += '<div class="toppinglist">';
-        console.log(types);
 
         for (var i = 0; i < types.length; i++) {
-            for (var i2 = 0; i2 < alladdons[currentaddontype][types[i]].length; i2++) {
+            for (var i2 = 0; i2 < alladdons[currentaddontype][types[i]].length; i2++)
+            {
                 var addon = alladdons[currentaddontype][types[i]][i2];
-                HTML += '<button class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon +'</button>';
+                var price = alladdons[currentaddontype+'_price'][addon];
+             //   HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + ' $' + price + '</button>';
+                HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
             }
         }
 
-       //HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>';
-
-
+        HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>';
         HTML += '<button class="btn-primary fourthwidth toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
-
 
         $("#addonlist").html(HTML);
         $(".addon-addon").click(
@@ -2549,9 +2560,12 @@ function list_addon_type(e) {
 
 function list_addon_addon(e) {
     addonname = $(e.target).text();
+    addonprice = e.target.id;
+
+
     if (oneclick) {
         currentqualifier = 1;
-        return addtoitem();
+        return addtoitem(addonprice);
     }
     $(".addon-addon").removeClass("addon-selected");
     $(e.target).addClass("addon-selected");
@@ -2610,10 +2624,11 @@ function list_addon_list(e, classname, index) {
         case "addon-side":
             currentside = index; break;
     }
-    log(classname + "." + listitemname + "=" + index);
+
 }
 
-function addtoitem() {
+function addtoitem(addonprice1) {
+    console.log(addonprice1);
     if (!hashalves) {
         currentside = 1;
     }
@@ -2645,8 +2660,9 @@ function addtoitem() {
     if (removed) {
         removed += " was removed";
     }
+
     // $("#removelist").text(removed);
-    generateaddons(currentitemindex, currentaddonlist[currentitemindex].length - 1);
+    generateaddons(currentitemindex, currentaddonlist[currentitemindex].length - 1,addonprice1 );
 }
 
 function selectitem(e, index) {
