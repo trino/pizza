@@ -15,7 +15,7 @@
     if (!isset($justright)) {$justright = false;}
     if (!isset($noclose)) {$noclose = false;}
     if (!isset($dohours)) {$dohours = true;}
-    if (!isset($showlogin)) {$showlogin = true;}
+    if (!isset($showlogin)) {$showlogin = false;}
     $iscanbii = database == "canbii";
     $minimumage19 = false; //database == "canbii"
 ?>
@@ -433,7 +433,7 @@
 
         function CheckLoggedIn(Where) {
             if (!userisloggedin() && !$('#loginmodal').is(':visible') && isIndex()) {
-                showlogin("document ready: " + currentRoute + " Where: " + Where);
+            showlogin("document ready: " + currentRoute + " Where: " + Where);
             }
         }
 

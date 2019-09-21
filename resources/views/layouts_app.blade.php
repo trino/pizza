@@ -39,7 +39,7 @@
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
     <!--title><?= cityname . " " . product ?> Delivery</title-->
-    <title>On Demand Home Services - Hamilton</title>
+    <title>On Demand Home Cleaning - Hamilton</title>
     <link rel="icon" sizes="128x128" href="<?= webroot("images/" . strtolower(product) . "128.png"); ?>">
     <link rel="icon" sizes="192x192" href="<?= webroot("images/" . strtolower(product) . "192.png"); ?>">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -95,7 +95,7 @@
         </SPAN>
 
         <SPAN class="loggedout">
-            <LI><A CLASS="dropdown-item" HREF="javascript:showlogin('login');"><i class="fa fa-user icon-width"></i> Log In</A></LI>
+            <LI><A CLASS="dropdown-item" HREF="javascript:showlogin('login');"><i class="fa fa-user icon-width"></i> Login / Signup</A></LI>
         </SPAN>
 
         @if($routename == "help")
@@ -104,7 +104,7 @@
             <LI><A CLASS="dropdown-item" HREF="<?= webroot("help", true); ?>"><i class="fa fa-question-circle icon-width"></i> About Us</A></LI>
         @endif
 
-        <LI><A CLASS="dropdown-item" HREF="#"><i class="fa fa-star icon-width"></i> Weekly Giveaway</A></LI>
+        <!--LI><A CLASS="dropdown-item" HREF="#"><i class="fa fa-star icon-width"></i> Weekly Giveaway</A></LI-->
         <LI class="loggedin"><A CLASS="dropdown-item" href="javascript:handlelogin('logout');"><i class="fa fa-sign-out-alt icon-width"></i> Log Out</A></LI>
 
         @if(false)
@@ -118,7 +118,7 @@
     </ul>
 
     <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold" ><?= sitename; ?></span><br>
-        <span style="color: white;" >On Demand Services</span>
+        <span style="color: white;" >On Demand Home Cleaning</span>
 
     </a>
 
@@ -150,7 +150,7 @@
     ?>
 </div>
 
-<div class="container-fluid shadow menu">
+<div class="contain7er-fluid menu" s>
     @yield('content')
 </div>
 

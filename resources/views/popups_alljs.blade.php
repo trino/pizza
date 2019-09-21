@@ -391,7 +391,7 @@ includefile("public/scripts/api.js");
         $(".profiletype").hide();
         userdetails = false;
         firstsignin = false;
-        if(isIndex()){showlogin("logout");}
+     //   if(isIndex()){showlogin("logout");}
         handlelinks();
     }
 

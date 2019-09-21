@@ -388,7 +388,6 @@ h2 {
 }
 
 .container-fluid {
-    max-width: 1240px !important;
 }
 
 .medtext {
@@ -1233,7 +1232,7 @@ td {
 
 #home-section {
     color:#fff;
-    height:130px;
+    height:200px;
     position:relative;  background-repeat: no-repeat;
     background-size: cover;
 }

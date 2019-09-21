@@ -295,7 +295,7 @@
                                     echo "Unit: " . $Raddress["unit"];
                                 }
                             }
-                        echo '<br><br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Order #<span ID="receipt_id">'  . $orderid . '</span></h2>';
+                        echo '<br><br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Receipt #<span ID="receipt_id">'  . $orderid . '</span></h2>';
                         echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "" ;
                         ?>
                     </TD>
@@ -316,7 +316,7 @@
     @if($includeextradata)
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
-                <h2 class="mt-4">Questions about your order?</h2>
+                <h2 class="mt-4">Questions or comments?</h2>
                 Please contact the us at (905) 531-5331
                 <DIV CLASS="clearfix"></DIV>
                 <br>                <DIV CLASS="clearfix"></DIV>

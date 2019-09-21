@@ -37,11 +37,11 @@ return [
         "serverurl" => "http://" . $_SERVER["SERVER_NAME"] . "/pizza/",
         "callurl" => "canbii.com",
         "sitename" => "Canbii.com",
-        "cityname" => "local",
+        "cityname" => "Hamilton",
         "islive" => false,
         "timezone" => "America/Toronto",
         "storename" => "America",
-        "emailheadercolor" => "blue",//can't be a CSS color
+        "emailheadercolor" => "darkgray",//can't be a CSS color
         "headercolor" => "bg-primary",
         "headertextcolor" => "text-white",
         "textcolor" => "text-primary",

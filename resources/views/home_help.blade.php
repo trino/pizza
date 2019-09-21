@@ -158,7 +158,7 @@
             <h3><?= getsetting("aboutus"); ?></h3>
             <div class="card-block ">
 
-                    <span class="bold bigtext"> On Demand Home Services</span>
+                    <span class="bold bigtext"> On Demand Home Cleaning</span>
                     <br><br>
                     <p>
                         <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so

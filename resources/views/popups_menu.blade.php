@@ -133,7 +133,7 @@
     $CurrentCol = 1;
     $CurrentCat = 0;
 
-    $newcolumns = ["house_&_apartment", "grass_cutting_&_trimming"];//which categories to start a new column on
+    $newcolumns = ["small_home","medium_home", "large_home"];//which categories to start a new column on
     $fontawesomeicons = [
         "far fa-moon"   => ["color" => "bg-dark-blue",  "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
         "far fa-sun"    => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
@@ -161,7 +161,7 @@
 
 
                     <div id="home-section" class="image-bg vertical-align" style="background-image:url({{webroot("public/images/". $category['image']) }});" >
-                        <div class="container">
+                        <div class="container-fluid">
                             <div class="home-content">
                                 <h3 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['category']}}</h3>
                             </div>
