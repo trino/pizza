@@ -5,7 +5,7 @@
 ?>
 
 <div class="list-group-item">
-    <h2 CLASS="float-left">Service Receipt</h2>
+    <h2 CLASS="float-left">Receipt</h2>
     <span class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium hidden"></span>
     <button class="ml-auto bg-transparent" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
@@ -16,11 +16,11 @@
     <i class="fa fa-shopping-cart mr-2"></i> CHECKOUT
 </button>
 
-<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="myModalLabel" class="align-middle">Hi <SPAN CLASS="session_name"></SPAN>, Ready To Check Out?</h2>
+                <h2 id="myModalLabel" class="align-middle"><SPAN style="display: none" CLASS="session_name"></SPAN>Checkout</h2>
                 <button data-dismiss="modal" data-popup-close="checkoutmodal" class="btn ml-auto align-middle bg-transparent">
                     <i class="fa fa-times"></i>
                 </button>
@@ -108,7 +108,7 @@
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <textarea placeholder="Private Notes For The Cleaner" id="cookingnotes" class="form-control" maxlength="255"></textarea>
+                                        <textarea placeholder="Notes For The Cleaner" id="cookingnotes" class="form-control" maxlength="255"></textarea>
                                     </div>
                                 <?php break; case "creditcard": ?>
                                     <div class="input_left_icon" id="red_card" titledebug="creditcard">
@@ -215,7 +215,14 @@
 
                 <div class="modal-body no-padding">
                     <button class="btn-block list-padding radius-bottom btn {{btncolor}} text-white payfororder" onclick="payfororder(); return false;">
-                        <i class="fa fa-lock mr-2"></i> ORDER
+
+<div class="clearfix"></div>
+                        <img class="" src="<?=webroot("images/stripe_icon.png")?>" />
+                        <span style="margin-left:15px;padding:20px;">
+                            <strong>ORDER NOW</strong>
+
+
+                        </span>
                     </button>
                     <span class="payment-errors error"></span>
                     <div class="clearfix"></div>

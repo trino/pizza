@@ -22,7 +22,7 @@
 
 @if(!$justright)
     @if($minimal)
-        <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -107,7 +107,7 @@
                 <FORM id="addform">
                     <?php
                         if ($minimal) {
-                            echo '<div class="input_left_icon"><span ID="addressicon" class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-car text-white fa-stack-1x"></i></span></div><div class="input_right">';
+                            echo '<div class="input_left_icon"><span ID="addressicon" class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-home text-white fa-stack-1x"></i></span></div><div class="input_right">';
                             echo view("popups_second_address", array("name" => "signupaddress", "unit" => true))->render();
                             echo '</DIV>';
                         } else {
@@ -170,7 +170,11 @@
     @endif
 
     <div class="py-3 px-3">
-        <span class="bold bigtext"> <?= cityname ?>'s Premier {{ucfirst(product)}} Delivery Service</span><br><br>
+
+        <h1>                <strong> <?= cityname ?>'s Premier Home Cleaning Service</strong></h1>
+
+
+ <br>
         <!--p class="pull-center">
         <img style="max-width:100%;border:7px solid #eceeef!important" src="<?= webroot("images/ultimatecombo.png"); ?>"/>
         </p-->
@@ -191,8 +195,7 @@
             </p>
         @else
             <p>
-                We’ve partnered up with some of your favourite local {{product . " " . storenames}} to bring you a one-stop
-                online {{product}} shop.
+                We’ve partnered up with some of your favourite local cleaners to bring you a one-stop ahop for all your cleaning needs.
             </p>
         @endif
     </div>

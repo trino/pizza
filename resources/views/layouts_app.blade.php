@@ -65,7 +65,7 @@
 <div style="padding: .5rem .75rem;border:0 !important;z-index: 999;" class="list-group-item shadow container-fluid {{ headercolor }}">
     <?php
         if(defined("logo")){
-            echo '<IMG CLASS="sitelogo" SRC="' . webroot("images/" . logo) . '">';
+            echo  '<a HREF="' .webroot("") .'"><IMG CLASS="sitelogo" SRC="' . webroot("images/" . logo) . '"></a>';
         }
     ?>
 

@@ -923,7 +923,7 @@ function generatereceipt(forcefade) {
             $("#checkout-btn").show();
         } else {
             $("#checkout-btn").hide();
-            tempHTML += '<button CLASS="list-padding bg-secondary btn-block no-icon text-dark">Minimum $' + minimumfee + ' to Order</button>';
+            tempHTML += '<button CLASS="list-padding bg-secondary btn-block no-icon text-dark">Minimum $' + minimumfee + ' to checkout</button>';
         }
     }
     $("#myorder").html(HTML + tempHTML);
@@ -2363,7 +2363,7 @@ function generateaddons(ItemIndex, ToppingIndex, addonprice1) {
         var tempstr = '';
         var classname = 'itemcontents itemcontents' + itemindex;
 
-        HTML += '<DIV ONCLICK="selectitem(event, ' + itemindex + ');" CLASS="list-group-item no-right-border d-flex flex-wrap receipt-addons currentitem currentitem' + itemindex;
+        HTML += '<DIV ONCLICK="selectitem(event, ' + itemindex + ');" CLASS="list-group-item no-right-border  no-bottom-border d-flex flex-wrap receipt-addons currentitem currentitem' + itemindex;
         if (currentitemindex == itemindex) {
             HTML += ' thisside';
         }
@@ -2492,13 +2492,14 @@ function list_addons_quantity(quantity, tablename, halves, name, basecost, addon
     for (var i = 0; i < quantity; i++) {
         currentaddonlist.push([]);
     }
+
     currentitemname = name;
     currentbasecost = basecost;
     currentaddoncost = addoncost;
-    list_addons(tablename, halves);
+    list_addons(tablename, halves,name);
 }
 
-function list_addons(table, halves) {
+function list_addons(table, halves,itemname) {
     currentaddontype = table;
     var HTML = '<DIV class="receipt-addons-list"><DIV id="theaddons"></DIV></DIV>';
     if (currentstyle == 0) {
@@ -2509,15 +2510,52 @@ function list_addons(table, halves) {
         $("#addonlist").html(HTML + '</DIV>');
     } else {
         HTML += '<div class="toppinglist">';
-
         for (var i = 0; i < types.length; i++) {
+
+
+
             for (var i2 = 0; i2 < alladdons[currentaddontype][types[i]].length; i2++)
             {
                 var addon = alladdons[currentaddontype][types[i]][i2];
                 var price = alladdons[currentaddontype+'_price'][addon];
              //   HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + ' $' + price + '</button>';
-                HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-            }
+
+
+
+
+                if(itemname=='Small Home Light Cleaning' || itemname=='Medium Home Light Cleaning' || itemname=='Large Home Light Cleaning') {
+
+                    if(addon == 'I have Pets' || addon == 'Laundry Wash & Dry') {
+                        HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+                    }
+
+                }
+                else if(itemname=='Small Home Standard Cleaning' || itemname=='Medium Home Standard Cleaning' || itemname=='Large Home Standard Cleaning') {
+
+                    if(addon == 'I have Pets' || addon == 'Inside Cabinets' || addon == 'Inside Fridge' || addon == 'Inside Oven' || addon == 'Laundry Wash & Dry' || addon == 'Ironing & Hanging' ) {
+                        HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+                    }
+
+                }
+                else{
+                    HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+
+                }
+
+
+
+
+
+
+
+
+/*
+organize closert eco friendly
+                Interior Windows
+                Interior Walls
+                Move In Cleaning
+                Move Out Cleaning
+  */          }
         }
 
         HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>';

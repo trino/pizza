@@ -16,8 +16,8 @@
     }
     function isFileUpToDate2($SettingKey, $Filename = false)
     {
+        $SettingKey = getsetting($SettingKey, "0");
         if (file_exists($Filename)) {
-            $SettingKey = getsetting($SettingKey, "0");
             $lastFILupdate = filemtime($Filename);
             return $lastFILupdate <= $SettingKey;
         }
@@ -31,66 +31,102 @@
     }
     ?>
 
+    @if(!read("id"))
+
+    <div id="home-section" class="jumbotron image-bg vertical-align" style="background-image:url({{webroot("public/images/banner.jpg")}});height:450px;border-radius: 0;">
+
+        <div class="container-fluid">
+            <div class="btn-group-sm">
+
+                <h1 class="display-4 banner-text text-normal" style="">Hello, Hamilton!</h1>
 
 
-    <div id="home-section" class="image-bg vertical-align" style="background-image:url(http://localhost/pizza/public/images/general-labour.jpg);height:400px">
+                <h1 style="font-size: 2.25rem;" class="display-4 text-normal banner-text">The easiest way to book a home cleaning expert</h1>
+                <p class="lead  text-normal banner-text" style=";">Canbii Cleaning is the easiest way to book house cleaners near you</p>
+                <p class="lead" >
+                    <a class="btn btn-primary btn-lg" href="#booknow" >Book now</a>
+                    <a class="btn btn-secondary btn-lg" href="#" role="button">Learn more</a>
 
-
-        <div class="container ">
-            <div class="row py-3">
-
-                <div class="col-lg-12 py-3">
-                    <h1 style="text-shadow: black 0px 0px 10px;" class="home-head-primary">Find house cleaning services near you</h1>
-
-                    <h1 style="text-shadow: black 0px 0px 10px;font-size: 2rem;" class="home-head-secondary">Servicing Hamilton & The GTA</1>
-
-                </div>
-
-
+                </p>
             </div>
         </div>
     </div>
 
+
+
     <div class="container-fluid">
-        <div class="row my-4 py-3">
-
-            <div class="col-lg-3">
-                <div class="trust-card-header">
-                    <h3>Trustworthy housekeeping</h3></div>
-                <div class="trust-card-content">Each cleaner is interviewed and background checked.</div>
-            </div>
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-3">
-                <div class="trust-card-header">
-                    <h3>Book in 60 seconds</h3></div>
-                <div class="trust-card-content">Review total price and book online instantly.</div>
-            </div>
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-3">
-                <div class="trust-card-header">
-                    <h3><i class="fa fa-file"></i>Hamilton local</h3></div>
-                <div class="trust-card-content">Local service you know you can trust</div>
-            </div>
 
 
+    <div class="row my-4">
+        <div class="col-lg-3 pa-3">
+            <div class="   list-group-item">
+                <div class="card-body bg-white">
+                    <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
+
+                    <h5 class="card-title">Trustworthy housekeeping</h5>
+                    <p class="card-text">Each cleaner is interviewed and background checked We have teams that do 100% green cleaning</p>
+                    <a href="#" class="card-link">Card link</a>
+                </div>
+            </div>
         </div>
+        <div class="col-lg-3 pa-3 ">
+            <div class="   list-group-item">
+                <div class="card-body bg-white">
+                    <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
 
-        <div class="row py-3">
-
-            <div class="col-lg-12 py-1">
-                <h3>Ready to book your first service?</h3>
-
+                    <h5 class="card-title"> Book in 60 seconds</h5>
+                    <p class="card-text"> Review total price and book online instantly We have teams that do 100% green cleaning
+                    </p>
+                    <a href="#" class="card-link">Card link</a>
+                </div>
             </div>
-
-
         </div>
+        <div class="col-lg-3 pa-3 ">
+            <div class="   list-group-item">
+                <div class="card-body bg-white">
+                    <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
 
+                    <h5 class="card-title">Hamilton native</h5>
+                    <p class="card-text"> Local service you can trust We have teams that do 100% green cleaning
+                    </p>
+                    <a href="#" class="card-link">Card link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 pa-3  ">
+            <div class=" list-group-item">
+                <div class="card-body bg-white">
+                    <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
+                    <h5 class="card-title">Eco-Friendly Cleaning Products</h5>
+                    <p class="card-text"> We have teams that do 100% green cleaning We have teams that do 100% green cleaning
+                    </p>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <div class="row shadow">
+    <div class="row my-3">
+    </div>
+    <div class="row  list-group-item">
+        <div class="col-lg-2  text-center"></div>
+        <div class="col-lg-8  text-center">
+            <h1 class="mb-2" name="booknow">Ready to book your first cleaning?</h1>
+            <p>We offer simple flat pricing based on the size of the home. All flat rate pricing includes your bedrooms,
+                bathrooms, kitchen, and common areas. We offer our hourly package for any Custom Jobs, Large Apartments/Homes,
+                and Offices. No surprises. Cancel anytime!
+            </p>
+        </div>
+        <div class="col-lg-2  text-center"></div>
 
+    </div>
+    <div class="row my-3">
+    </div>
+    </div>
 
+    @endif
+    <div class="container-fluid">
+        <div class="row">
             <?php
             $doCache = $GLOBALS["settings"]["domenucache"];
             $menucache_filename = public_path() . "/menucache.html";
@@ -115,11 +151,13 @@
                 $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime2($menublade_filename) . ")";
             }
             ?>
-            <div class="col-lg-3 col-md-12 bg-inverse bg-grey" titledebug="popups_checkout">
+            <div class="col-lg-3 col-md-12 bg-inverse" titledebug="popups_checkout">
                 @include("popups_checkout")
             </div>
         </div>
     </div>
+
+
     <?php } ?>
 
     @include("popups_editprofile_modal")
