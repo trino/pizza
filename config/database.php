@@ -41,7 +41,7 @@ return [
         "islive" => false,
         "timezone" => "America/Toronto",
         "storename" => "America",
-        "emailheadercolor" => "darkgray",//can't be a CSS color
+        "emailheadercolor" => "gray",//can't be a CSS color
         "headercolor" => "bg-primary",
         "headertextcolor" => "text-white",
         "textcolor" => "text-primary",

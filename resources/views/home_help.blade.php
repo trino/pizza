@@ -13,8 +13,8 @@
         $launched = " (" . $days . " day" . iif($days > 1, "s") . " away)";
     }
     $orders = first('SELECT count(*) as count FROM orders WHERE status <> 2 AND status <> 4 AND placed_at > "' . $SQLdate . '"')["count"];
-    $donation_per_order = 0.1;
-    $units_donated = "Pizzas";
+    $donation_per_order = 0.9;
+    $units_donated = "";
     //$donations = number_format((float)$orders * $donation_per_order, 0, '.', '');
     $donations = floor($orders * $donation_per_order);
     $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . sitename . '">info@trinoweb.ca</A>';
@@ -153,62 +153,173 @@
             }
         }
     </SCRIPT>
-    <DIV class="row">
-        <div class="col-sm-6 py-3">
-            <h3><?= getsetting("aboutus"); ?></h3>
-            <div class="card-block ">
 
-                <h1>                <strong>On Demand Home Cleaning</strong></h1>
-                <br>
-                <p>
-                    <?= sitename; ?> was founded with the simple belief that online food ordering doesn’t have to be so
-                    complicated. We realize that {{storenames}} are paying enormous commissions to existing online food
-                    service providers. Ultimately, it’s YOU, the customer, who ends up paying the bills. We want to put
-                    that money back where it belongs…in your pocket! Not only do we save you money, but we also use 100%
-                    of all our profits to give back and help out the local community.
-                </p>
-                <p>
-                    How do we do it? We leverage an easy-to-use online platform, one universal menu for all users alike,
-                    and local partnerships with {{storenames}} who share our vision. In an effort to be completely
-                    transparent, we will post a summary all of our contributions below, updated on a monthly basis.
-                </p>
-                <p>
-                    Join us in our mission to change the way we order our food online and make your first order today!
-                </p>
-                <br>
-                <div class="btn-outlined-danger text-center pt-1">
-                    <strong>August, 2018</strong>
-                    <p> Orders: <?= $orders; ?>
-                        <br> Donated: <?= $donations + 1 . " " . $units_donated; ?>
-                        <br> Charity: Hamilton Food Centre</p>
+
+    <div class="container">
+
+
+        <DIV class="row">
+            <div class="col-sm-6 py-3">
+                <h3><?= getsetting("aboutus"); ?></h3>
+                <div class="card-block ">
+
+                    <h1><strong>The Premier On Demand Home Cleaning App</strong></h1>
+                    <br>
+                    <p>
+                        <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is
+                        thorough
+                        and professional.
+                        <BR><BR>
+                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Cleaners. Over time, parts of your home – particularly kitchens and bathrooms –
+                        can
+                        accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
+                        condition.
+
+                    </p>
+                    <p>
+                        How do we do it? We leverage an easy-to-use online platform, one universal price list for all users alike,
+                        and local partnerships with {{storenames}} who share our vision. In an effort to be completely
+                        transparent, we will post a summary all of our contributions below, updated on a monthly basis.
+                    </p>
+
+                    <div class="btn-outlined-danger text-center pt-1">
+                        <strong>November, 2019</strong>
+                        <p> Bookings: <?= $orders; ?>
+                            <br> Donated: $<?= $donations . ".00" . $units_donated; ?>
+                            <br> Charity: Hamilton Food Centre</p>
+                    </div>
+
                 </div>
+            </div>
+            <DIV CLASS="col-sm-6 bg-secondary " style="color:#373a3c" titledebug="popups_login">
+                <?= view("popups_login", array("justright" => true))->render(); ?>
+            </DIV>
+        </DIV>
 
 
+        <DIV class="row">
+            <div class="col-sm-12 pt-3">
+                <hr>
             </div>
         </div>
-        <DIV CLASS="col-sm-6 bg-dark text-white" titledebug="popups_login">
-            <?= view("popups_login", array("justright" => true))->render(); ?>
-        </DIV>
-    </DIV>
 
 
+        <DIV class="row">
+            <div class="col-sm-12 pt-3 ">
+                <div class="card-block  ">
 
-    <DIV class="row">
-        <div class="col-sm-12 pt-3"><hr>
+
+                    <h1><strong>What's included in the service?</strong></h1>
+                    <br>
+                    <p>All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. If you'd like your cleaner to use your own products, please add a note to your appointment with relevant
+                        instructions. The following list outlines common tasks our cleaners perform on the job:
+
+                    </p>
+                    <strong>Bathrooms</strong>
+                    <ul>
+                        <li> Cleaning toilets, showers, and sinks
+                        </li>
+                        <li> Dusting all surfaces
+                        </li>
+                        <li> Wiping down all mirrors and glass surfaces/furniture
+                        </li>
+                        <li> Vacuuming/Cleaning floors
+                        </li>
+                        <li> Taking out garbage
+                        </li>
+                    </ul>
+
+                    <strong>Bedrooms & Common Areas</strong>
+                    <ul>
+                        <li> General dusting of all surfaces
+                        </li>
+                        <li> Wiping down mirrors and glass surfaces/furniture
+                        </li>
+                        <li> Vacuuming / Cleaning floors
+                        </li>
+                        <li> Taking out garbage
+                        </li>
+                    </ul>
+
+                    <strong>Kitchen</strong>
+                    <ul>
+                        <li> General dusting of all surfaces
+                        </li>
+                        <li> Washing dishes / loading dishwasher
+                        </li>
+                        <li> Cleaning exterior surfaces (stove, cabinets, fridge)
+                        </li>
+                        <li> Vacuuming / Cleaning floors
+                        </li>
+                        <li> Taking out garbage
+                        </li>
+                    </ul>
+                    <p> We pay special attention to details of every project to ensure the complete satisfaction of each client. ​Our goal is to make sure that we leave your home with sparkling kitchen, bathrooms, and
+                        floors,
+                        organized and tidy living spaces, and refreshing aromas of cleanliness.
+                    </p>
+
+
+                </div>
+            </div>
         </div>
+
+        <DIV class="row">
+            <div class="col-sm-12 pt-3">
+                <hr>
+            </div>
         </div>
 
 
-    <DIV class="row">
-        <div class="col-sm-6 py-3">
-        <div class="card-block ">
+        <DIV class="row">
+            <div class="col-sm-12 pt-3">
+<div class="card-block">
+
+                <h1>Our Promise</h1>
+
+                <br><b> Background Checked</b>
+                <br> All cleaners on Canbii undergo federal and provincial background checks
+
+                <br><br><b> Supplies Supplied</b>
+                <br> Canbii cleaners will bring all necessary supplies
+
+                <br><br> <b>Cancel / Reschedule Online</b>
+                <br> Non-refundable 24 hrs before appointment, $25 otherwise
+
+                <br><br> <b>Parking</b>
+                <br> You are responsible for parking fees
+
+                <br><br> <b>Upfront pricing</b>
+                <br> Canbii technology calculates the total price for your service so you can have piece of mind before booking
+
+                <br><br> <b>Real-time updates</b>
+                <br> Get a text message when your provider is on the way, when they arrive and when they're finished.
+
+                <br><br> <b>Everything online</b>
+                <br> The Canbii web app makes it easy to reschedule, cancel, pay and tip from your phone or computer.
+
+                <br><br> <b>No commitment</b>
+                <br> No contracts, free to cancel
+
+</div>
+            </div>
+        </div>
 
 
+        <DIV class="row">
+            <div class="col-sm-12 pt-3">
+                <hr>
+            </div>
+        </div>
+
+        <DIV class="row">
+            <div class="col-sm-6 py-3">
+                <div class="card-block ">
 
 
-            <h1>                <strong>  United States and Canada: Terms &amp; Conditions</strong></h1>
+                    <h1><strong> United States and Canada: Terms &amp; Conditions</strong></h1>
 
-<br>
+                    <br>
 
                     <p style="margin: 0px 0px 10px;">
                         The terms and conditions stated herein (collectively, this "Agreement") constitute a legal agreement between you and Trino, Inc. (dba Cleaner Love), a Delaware corporation or the appropriate
@@ -524,238 +635,276 @@
                         you.</p>
 
 
-        </div>
-        </div>
-        <DIV CLASS="col-sm-6 py-3">
-
-
-            <div class="card-block ">
-                <h1>
-                    <strong>Privacy Policy</strong></h1>
-<br>
-                <p>
-                    <strong>Last updated: October, 2019</strong></p>
-
-                <p>
-                    <strong>Our Policy</strong></p>
-                <p>
-                    Welcome to the web site (the "Site") of Trino, Inc. (doing business as Cleaner Love). This Site is operated by Cleaner Love and has been created to provide information about our company and the
-                    Cleaner Love house cleaning services, whether accessible to you via web, mobile app or other platform (our services, together with the Site, are the "Services") by visitors and users of the Services
-                    ("you" and/or "your").</p>
-                <p>
-                    This Privacy Policy sets out Cleaner Love's policy with respect to information, including in particular information which identifies you personally (known as 'personally identifiable information' in
-                    the USA which we'll call "Personal Data") and other information that is collected from visitors and users of the Services.</p>
-                <p>
-                    Please read this privacy policy carefully so that you understand how we will treat your information.&nbsp; By using any of our Services, you confirm that you have read, understood and agree to this
-                    privacy policy.&nbsp; If you do not agree to this policy, please do not use any of the Services.&nbsp; If you have any queries, please email us at info@canbii.com</p>
-                <p>
-                    <strong>Who we are:</strong></p>
-                <p>
-                    In the USA, we are Trino, Inc. (doing business as Cleaner Love), a Delaware corporation with our head office at 2711 Centerville Road, Suite 400, Wilmington, New Castle County, Delaware 19808.</p>
-                <p>
-                    We will refer to these companies together as "Cleaner Love", "we", "us" and/or "our".</p>
-                <p>
-                    <strong>Our legal status under applicable data privacy laws</strong></p>
-                <p>
-                    <strong>Information We Collect:</strong></p>
-                <p>
-                    When you interact with us through the Services, we may collect Personal Data and other information from you, as further described below:</p>
-                <p>
-                    <strong>Personal Data That You Provide Through the Services:</strong>&nbsp;We collect Personal Data from you when you voluntarily provide such information, such as when you contact us with inquiries,
-                    respond to one of our surveys, register for access to the Services or use certain Services, which typically includes your: (i) name; (ii) telephone number; (iii) email address; (iv) home address; (v)
-                    information about your home which you give us; (v) your payment details; (iv) your IP address; and (vi) any other personal information which you give us in connection with the Services.</p>
-                <p>
-                    Wherever Cleaner Love collects Personal Data we make an effort to provide a link to this Privacy Policy.</p>
-                <p>
-                    <strong>By voluntarily providing us with Personal Data, you are consenting to our use of it in connection with the Services and in accordance with this Privacy Policy.</strong></p>
-                <p>
-                    <strong>Non-Identifiable Data:</strong>&nbsp;When you interact with Cleaner Love through the Services, we receive and store certain information which does not identify you personally (referred to as
-                    personally non-identifiable information in the USA).&nbsp; Such information is collected passively using various technologies.&nbsp; This includes:</p>
-                <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Technical or other details about any device which you use to access the Services, including: Internet and/or
-                    network connection; your Media Access Control (MAC); any device Unique Device Identifier (UDID) or equivalent; your operating system, browser type or other software; your hardware or mobile device
-                    details (including your mobile device type and number and mobile carrier details), if applicable; or other technical details.&nbsp; This is technical data about our users and their actions and
-                    patterns, which we do not believe identifies any individual;</p>
-                <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ii.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Details of your use of our Services including, but not limited to: metrics information about when and how you use
-                    the Services; traffic data; and your geographical location data.</p>
-                <p>
-                    Cleaner Love may store such information itself or such information may be included in databases owned and maintained by Cleaner Love's affiliates, agents or service providers. The Services may use
-                    such information and pool it with other information on an anonymised and generalised basis to track, for example, the total number of users of our Services, the number of visitors to each page of our
-                    Site and the domain names of our visitors' Internet service providers. It is important to note that no Personal Data is available or used in this process.</p>
-                <p>
-                    <strong>Platform Communications</strong></p>
-                <p>
-                    In addition to appointment reminders sent to the email address &amp; phone number provided during booking, you may contact us at info@canbii.com. Additionally, we may provide an optional phone number
-                    that connects you with your Cleaning Professional(s).</p>
-                <p>
-                    By providing your phone number and using the Cleaner Love Platform, you agree that we may, to the extent permitted by applicable law, use your mobile phone number for calls and, if such phone number
-                    is a mobile number, for text (SMS) messages, in order to assist with facilitating the requested Professional Services. Standard call or message charges or other charges from your phone carrier may
-                    apply to calls or text (SMS) messages we send you. You may opt-out of receiving text (SMS) messages from us by replying with the word "STOP" to a text message from us. You acknowledge that opting out
-                    of text (SMS) messages may impact your ability to use the Cleaner Love Platform.
-                </p>
-
-                <p>
-                    By providing your phone number, you expressly consent that your numbers provided will be used to communicate with between you, Cleaner Love and your customers/cleaners unless and until you opt-out via
-                    email to info@canbii.com.
-                </p>
-                <p>
-                    You agree to Cleaner Love's use of a service provider to mask your telephone number when you call or exchange text (SMS) messages with a Service Provider or Service Requestor using a telephone number
-                    provided by Cleaner Love. During this process, Cleaner Love and its service provider will receive in real time and store call data, including the date and time of the call or text (SMS) message, the
-                    parties’ phone numbers, and the content of the text (SMS) messages. You agree to the masking process described above and to Cleaner Love's use and disclosure of this call data for its legitimate
-                    business purposes.
-                </p>
-                <p>
-                    By using the Services, you acknowledge and agree that any incoming or outgoing calls, text SMS messages, and other communications transmitted to or through the Services may be monitored and/or
-                    recorded for quality assurance purposes, including but not limited to assisting in the resolution of any disputes you may have with the Services.
-                </p>
-                <p>
-                    <br>
-
-                </p>
-                <p>
-                    <strong>Use of cookies:</strong></p>
-                <p>
-                    In operating the Services, we may use a technology called "cookies."</p>
-                <p>
-                    <br>
-                    <strong>Our Use of Your Personal Data and Other Information:</strong></p>
-                <p>
-                    By providing us with the information about you discussed above, you consent for us and our subsidiaries and affiliates (the "Cleaner Love Related Companies to use that information in the following
-                    ways:</p>
-                <p>
-                    (1) to implement and monitor any Cleaner Love bookings which you make using our Services; (2) to share your Personal Data with Cleaner Love professionals in order to carry out your Cleaner Love
-                    bookings using our Serviecs; (3) to ensure that content from our Services is presented in the most effective manner for you and for your computer or other device from which you access the Services;
-                    (4) to provide you with information, products or services that you request from us or which we feel may interest you; (5) to carry out our obligations arising from any contracts between you and us;
-                    (6) to allow you to participate in interactive features of our Services, when you choose to do so; (7) to notify you about changes to our Services; (8) to improve or modify the Services, for example
-                    based on how you use our Services; (9) to calculate conversion rates and other elements of Services' performance; and (10) for marketing purposes (which we discuss further below).</p>
-                <p>
-                    &nbsp;</p>
-                <p>
-                    <br>
-                    <strong>Our Disclosure of Your Personal Data and Other Information:</strong></p>
-                <p>
-                    Cleaner Love is not in the business of selling your information. We consider this information to be a vital part of our relationship with you. There are, however, certain circumstances in which we may
-                    share your Personal Data with certain third parties, as set out below:</p>
-                <p>
-                    <strong>Cleaning Services:</strong>&nbsp;We will share your Personal Data with cleaning service providers as necessary for them to provide their cleaning services to you.</p>
-                <p>
-                    <strong>Business Transfers:</strong>&nbsp;As we develop our business, we might sell or buy businesses or assets. In the event of a corporate sale, merger, reorganization, dissolution or similar event,
-                    Personal Data may be part of the transferred assets.</p>
-                <p>
-                    <strong>Related Companies:</strong>&nbsp;We may also share your Personal Data with the Cleaner Love Related Companies &nbsp;if we need to do so to fulfil this Privacy Policy.</p>
-                <p>
-                    <strong>Agents, Consultants and Related Third Parties:</strong>&nbsp;Cleaner Love, like many businesses, sometimes hires other companies to perform certain business-related functions. Examples of such
-                    functions include mailing information, maintaining databases and processing payments. When we employ another company to perform a function of this nature, we only provide them with the information
-                    that they need to perform their specific function and under the same standards and protections as in this privacy policy.</p>
-                <p>
-                    <strong>Legal Requirements:</strong>&nbsp;Cleaner Love may disclose your Personal Data if required to do so by law or in the good faith belief that such action is necessary to (i) comply with a legal
-                    obligation, (ii) protect and defend the rights or property of Cleaner Love, (iii) act in urgent circumstances to protect the personal safety of users of the Services or the public, or (iv) protect
-                    against legal liability.</p>
-                <p>
-                    <strong>Aggregated Personal Data:</strong>&nbsp;In an ongoing effort to better understand and serve the users of the Services, Cleaner Love conducts research on its user demographics, interests and
-                    behavior based on the Personal Data and other information provided to us. This research will be compiled and analyzed on an aggregate basis, and Cleaner Love may share this aggregate data with its
-                    affiliates, agents and business partners. This aggregate information does not identify you personally. Cleaner Love may also disclose aggregated user statistics in order to describe our Services to
-                    current and prospective business partners, and to other third parties for other lawful purposes in fulfilment of this privacy policy.</p>
-                <p>
-                    <strong>Marketing and advertising:</strong>&nbsp;Cleaner Love and its affiliates may use Personal Data to contact you in the future to tell you about services we believe will be of interest to you. If
-                    we do so, each communication we send you will contain instructions permitting you to "opt-out" of receiving future communications. In addition, if at any time you wish not to receive any future
-                    communications or you wish to have your name deleted from our mailing lists, please contact us as indicated below.</p>
-                <p>
-                    <br>
-                    We do not disclose personal information about identifiable individuals to advertisers, but we may provide them with aggregate and/or anonymised information about our users to help advertisers reach
-                    the kind of audience they want to target. We may make use of the information we have collected from you to enable us to comply with our advertisers' wishes by displaying their advertisement to that
-                    target audience.</p>
-                <p>
-                    <strong>Your Choices:</strong></p>
-                <p>
-                    You can visit the Services without providing any Personal Data. If you choose not to provide any Personal Data, you may not be able to use certain Cleaner Love Services.</p>
-                <p>
-                    <strong>Where and how we store your personal information:</strong></p>
-                <p>
-                    The information that we collect from you will be held in servers in the USA and/or potentially in the European Union.&nbsp; If data is collected from you in the European Union then it may be
-                    transferred to, stored and processed at a destination outside the European Economic Area (including the USA).&nbsp; By submitting your personal information, you agree to this transfer, storing or
-                    processing. We will take all steps reasonably necessary to ensure that your information is treated securely and in accordance with this privacy policy.<strong></strong></p><strong>
-                </strong>
-                <p><strong>Unsolicited information and public forums:</strong></p>
-                <p>
-                    Please be aware that we do not accept unsolicited Personal Data unconnected with the Services and we will delete it as soon as we become aware you have sent us any such Personal Data (unless we are
-                    required to keep that Personal Data under this Privacy Policy).</p>
-                <p>
-                    You are responsible for any public publishing of information including Personal Data (for example on a discussion forum).&nbsp; Please remember that this may mean third parties gaining access to that
-                    information, for which you will be responsible.</p>
-                <p>
-                    <strong>Children:</strong></p>
-                <p>
-                    Cleaner Love does not knowingly collect Personal Data from children under the age of 13. If you are under the age of 13, please do not submit any Personal Data through the Services. We encourage
-                    parents and legal guardians to monitor their children's Internet usage and to help enforce our Privacy Policy by instructing their children never to provide Personal Data on the Services without their
-                    permission. If you have reason to believe that a child under the age of 13 has provided Personal Data to Cleaner Love through the Services, please contact us, and we will endeavor to delete that
-                    information from our databases.</p>
-                <p>
-                    <br>
-                    <strong>Links to Other Web Sites:</strong></p>
-                <p>
-                    This Privacy Policy applies only to the Services. The Services may contain links to other web sites not operated or controlled by Cleaner Love (the "Third Party Sites"). The policies and procedures we
-                    described here do not apply to the Third Party Sites. The links from the Services do not imply that Cleaner Love endorses or has reviewed the Third Party Sites. We suggest contacting those sites
-                    directly for information on their privacy policies.</p>
-                <p>
-                    <br>
-                    <strong>Security:</strong></p>
-                <p>
-                    Cleaner Love takes reasonable steps to protect the Personal Data provided via the Services from loss, misuse, and unauthorized access, disclosure, alteration, or destruction. However, no Internet or
-                    e-mail transmission is ever fully secure or error free; any transmission is at your own risk. In particular, e-mail sent to or from the Services may not be secure. Therefore, you should take special
-                    care in deciding what information you send to us via e-mail. Please keep this in mind when disclosing any Personal Data to Cleaner Love via the Internet. Once we have received your information, we
-                    will use strict procedures and security features to try to prevent unauthorised access.</p>
-                <p>
-                    Registered Cleaner Love users will have an account name and password which enables you to access certain parts of our Services.&nbsp; You &nbsp;are responsible for keeping them confidential. Please
-                    don't share them with anyone.</p>
-                <p>
-                    <br>
-                    <strong>Other Terms and Conditions:</strong></p>
-                <p>
-                    Your access to and use of the Services is also subject to the Terms of Use at canbii.com</p>
-                <p>
-                    <strong>Your rights:</strong></p>
-                <p>
-                    <em>In the European Union</em></p>
-                <p>
-                    If you are a European Union citizen, you have the right to ask us not to process your personal information for marketing purposes by contacting us at info@canbii.com.&nbsp; EU data protection
-                    legislation gives EU citizens the right to access information held about you.&nbsp; Any access request may be subject to a small administrative fee to meet our costs in providing you with details of
-                    the information we hold about you.&nbsp; You may also email us at info@canbii.com to request that we delete your personal information from our database. We will use commercially reasonable efforts to
-                    honour your request. We may retain an archived copy of your records as required by law or for legitimate business purposes (and if so we will explain this to you at the time).</p>
-                <p>
-                    <em>Your California privacy rights</em></p>
-                <p>
-                    Under California law, California residents who have an established business relationship with us may choose to opt out of disclosure of personal information about them to third parties for direct
-                    marketing purposes. If you choose to opt-out at any time after granting approval, email info@canbii.com.</p>
-                <p>
-                    <br>
-                    <strong>Changes to Cleaner Love's Privacy Policy:</strong></p>
-                <p>
-                    The Services and our business may change from time to time. As a result, at times it may be necessary for Cleaner Love to make changes to this Privacy Policy. Therefore, we may update this privacy
-                    policy from time to time (for example, to reflect changes in our business or the law).&nbsp; Any changes we may make will be posted on this page and we will highlight to you any material changes which
-                    we make.&nbsp; This Privacy Policy was last updated on the date indicated above. Your continued use of the Services after any changes or revisions to this Privacy Policy shall indicate your agreement
-                    with the revised terms.</p>
-                <p>
-                    <br>
-                    <strong>Access to Information; Contacting Cleaner Love:</strong></p>
-                <p>
-                    To keep your Personal Data accurate, current, and complete, please contact us as specified below. We will take reasonable steps to update or correct Personal Data in our possession that you have
-                    previously submitted via the Services.</p>
-                <p>
-                    Please also feel free to contact us if you have any questions about Cleaner Love’s Privacy Policy or the information practices of the Services.</p>
-                <p>
-                    You may contact us as follows: info@canbii.com</p>
-                <p>
-                    &nbsp;</p>
+                </div>
             </div>
+            <DIV CLASS="col-sm-6 py-3">
 
 
+                <div class="card-block ">
+                    <h1>
+                        <strong>Privacy Policy</strong></h1>
+                    <br>
+                    <p>
+                        <strong>Last updated: October, 2019</strong></p>
+
+                    <p>
+                        <strong>Our Policy</strong></p>
+                    <p>
+                        Welcome to the web site (the "Site") of Trino, Inc. (doing business as Cleaner Love). This Site is operated by Cleaner Love and has been created to provide information about our company and the
+                        Cleaner Love house cleaning services, whether accessible to you via web, mobile app or other platform (our services, together with the Site, are the "Services") by visitors and users of the
+                        Services
+                        ("you" and/or "your").</p>
+                    <p>
+                        This Privacy Policy sets out Cleaner Love's policy with respect to information, including in particular information which identifies you personally (known as 'personally identifiable information'
+                        in
+                        the USA which we'll call "Personal Data") and other information that is collected from visitors and users of the Services.</p>
+                    <p>
+                        Please read this privacy policy carefully so that you understand how we will treat your information.&nbsp; By using any of our Services, you confirm that you have read, understood and agree to
+                        this
+                        privacy policy.&nbsp; If you do not agree to this policy, please do not use any of the Services.&nbsp; If you have any queries, please email us at info@canbii.com</p>
+                    <p>
+                        <strong>Who we are:</strong></p>
+                    <p>
+                        In the USA, we are Trino, Inc. (doing business as Cleaner Love), a Delaware corporation with our head office at 2711 Centerville Road, Suite 400, Wilmington, New Castle County, Delaware 19808.</p>
+                    <p>
+                        We will refer to these companies together as "Cleaner Love", "we", "us" and/or "our".</p>
+                    <p>
+                        <strong>Our legal status under applicable data privacy laws</strong></p>
+                    <p>
+                        <strong>Information We Collect:</strong></p>
+                    <p>
+                        When you interact with us through the Services, we may collect Personal Data and other information from you, as further described below:</p>
+                    <p>
+                        <strong>Personal Data That You Provide Through the Services:</strong>&nbsp;We collect Personal Data from you when you voluntarily provide such information, such as when you contact us with
+                        inquiries,
+                        respond to one of our surveys, register for access to the Services or use certain Services, which typically includes your: (i) name; (ii) telephone number; (iii) email address; (iv) home address;
+                        (v)
+                        information about your home which you give us; (v) your payment details; (iv) your IP address; and (vi) any other personal information which you give us in connection with the Services.</p>
+                    <p>
+                        Wherever Cleaner Love collects Personal Data we make an effort to provide a link to this Privacy Policy.</p>
+                    <p>
+                        <strong>By voluntarily providing us with Personal Data, you are consenting to our use of it in connection with the Services and in accordance with this Privacy Policy.</strong></p>
+                    <p>
+                        <strong>Non-Identifiable Data:</strong>&nbsp;When you interact with Cleaner Love through the Services, we receive and store certain information which does not identify you personally (referred to
+                        as
+                        personally non-identifiable information in the USA).&nbsp; Such information is collected passively using various technologies.&nbsp; This includes:</p>
+                    <p>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Technical or other details about any device which you use to access the Services, including: Internet
+                        and/or
+                        network connection; your Media Access Control (MAC); any device Unique Device Identifier (UDID) or equivalent; your operating system, browser type or other software; your hardware or mobile device
+                        details (including your mobile device type and number and mobile carrier details), if applicable; or other technical details.&nbsp; This is technical data about our users and their actions and
+                        patterns, which we do not believe identifies any individual;</p>
+                    <p>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ii.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Details of your use of our Services including, but not limited to: metrics information about when and how you
+                        use
+                        the Services; traffic data; and your geographical location data.</p>
+                    <p>
+                        Cleaner Love may store such information itself or such information may be included in databases owned and maintained by Cleaner Love's affiliates, agents or service providers. The Services may use
+                        such information and pool it with other information on an anonymised and generalised basis to track, for example, the total number of users of our Services, the number of visitors to each page of
+                        our
+                        Site and the domain names of our visitors' Internet service providers. It is important to note that no Personal Data is available or used in this process.</p>
+                    <p>
+                        <strong>Platform Communications</strong></p>
+                    <p>
+                        In addition to appointment reminders sent to the email address &amp; phone number provided during booking, you may contact us at info@canbii.com. Additionally, we may provide an optional phone
+                        number
+                        that connects you with your Cleaning Professional(s).</p>
+                    <p>
+                        By providing your phone number and using the Cleaner Love Platform, you agree that we may, to the extent permitted by applicable law, use your mobile phone number for calls and, if such phone
+                        number
+                        is a mobile number, for text (SMS) messages, in order to assist with facilitating the requested Professional Services. Standard call or message charges or other charges from your phone carrier may
+                        apply to calls or text (SMS) messages we send you. You may opt-out of receiving text (SMS) messages from us by replying with the word "STOP" to a text message from us. You acknowledge that opting
+                        out
+                        of text (SMS) messages may impact your ability to use the Cleaner Love Platform.
+                    </p>
+
+                    <p>
+                        By providing your phone number, you expressly consent that your numbers provided will be used to communicate with between you, Cleaner Love and your customers/cleaners unless and until you opt-out
+                        via
+                        email to info@canbii.com.
+                    </p>
+                    <p>
+                        You agree to Cleaner Love's use of a service provider to mask your telephone number when you call or exchange text (SMS) messages with a Service Provider or Service Requestor using a telephone
+                        number
+                        provided by Cleaner Love. During this process, Cleaner Love and its service provider will receive in real time and store call data, including the date and time of the call or text (SMS) message,
+                        the
+                        parties’ phone numbers, and the content of the text (SMS) messages. You agree to the masking process described above and to Cleaner Love's use and disclosure of this call data for its legitimate
+                        business purposes.
+                    </p>
+                    <p>
+                        By using the Services, you acknowledge and agree that any incoming or outgoing calls, text SMS messages, and other communications transmitted to or through the Services may be monitored and/or
+                        recorded for quality assurance purposes, including but not limited to assisting in the resolution of any disputes you may have with the Services.
+                    </p>
+                    <p>
+                        <br>
+
+                    </p>
+                    <p>
+                        <strong>Use of cookies:</strong></p>
+                    <p>
+                        In operating the Services, we may use a technology called "cookies."</p>
+                    <p>
+                        <br>
+                        <strong>Our Use of Your Personal Data and Other Information:</strong></p>
+                    <p>
+                        By providing us with the information about you discussed above, you consent for us and our subsidiaries and affiliates (the "Cleaner Love Related Companies to use that information in the following
+                        ways:</p>
+                    <p>
+                        (1) to implement and monitor any Cleaner Love bookings which you make using our Services; (2) to share your Personal Data with Cleaner Love professionals in order to carry out your Cleaner Love
+                        bookings using our Serviecs; (3) to ensure that content from our Services is presented in the most effective manner for you and for your computer or other device from which you access the
+                        Services;
+                        (4) to provide you with information, products or services that you request from us or which we feel may interest you; (5) to carry out our obligations arising from any contracts between you and
+                        us;
+                        (6) to allow you to participate in interactive features of our Services, when you choose to do so; (7) to notify you about changes to our Services; (8) to improve or modify the Services, for
+                        example
+                        based on how you use our Services; (9) to calculate conversion rates and other elements of Services' performance; and (10) for marketing purposes (which we discuss further below).</p>
+                    <p>
+                        &nbsp;</p>
+                    <p>
+                        <br>
+                        <strong>Our Disclosure of Your Personal Data and Other Information:</strong></p>
+                    <p>
+                        Cleaner Love is not in the business of selling your information. We consider this information to be a vital part of our relationship with you. There are, however, certain circumstances in which we
+                        may
+                        share your Personal Data with certain third parties, as set out below:</p>
+                    <p>
+                        <strong>Cleaning Services:</strong>&nbsp;We will share your Personal Data with cleaning service providers as necessary for them to provide their cleaning services to you.</p>
+                    <p>
+                        <strong>Business Transfers:</strong>&nbsp;As we develop our business, we might sell or buy businesses or assets. In the event of a corporate sale, merger, reorganization, dissolution or similar
+                        event,
+                        Personal Data may be part of the transferred assets.</p>
+                    <p>
+                        <strong>Related Companies:</strong>&nbsp;We may also share your Personal Data with the Cleaner Love Related Companies &nbsp;if we need to do so to fulfil this Privacy Policy.</p>
+                    <p>
+                        <strong>Agents, Consultants and Related Third Parties:</strong>&nbsp;Cleaner Love, like many businesses, sometimes hires other companies to perform certain business-related functions. Examples of
+                        such
+                        functions include mailing information, maintaining databases and processing payments. When we employ another company to perform a function of this nature, we only provide them with the information
+                        that they need to perform their specific function and under the same standards and protections as in this privacy policy.</p>
+                    <p>
+                        <strong>Legal Requirements:</strong>&nbsp;Cleaner Love may disclose your Personal Data if required to do so by law or in the good faith belief that such action is necessary to (i) comply with a
+                        legal
+                        obligation, (ii) protect and defend the rights or property of Cleaner Love, (iii) act in urgent circumstances to protect the personal safety of users of the Services or the public, or (iv) protect
+                        against legal liability.</p>
+                    <p>
+                        <strong>Aggregated Personal Data:</strong>&nbsp;In an ongoing effort to better understand and serve the users of the Services, Cleaner Love conducts research on its user demographics, interests
+                        and
+                        behavior based on the Personal Data and other information provided to us. This research will be compiled and analyzed on an aggregate basis, and Cleaner Love may share this aggregate data with its
+                        affiliates, agents and business partners. This aggregate information does not identify you personally. Cleaner Love may also disclose aggregated user statistics in order to describe our Services
+                        to
+                        current and prospective business partners, and to other third parties for other lawful purposes in fulfilment of this privacy policy.</p>
+                    <p>
+                        <strong>Marketing and advertising:</strong>&nbsp;Cleaner Love and its affiliates may use Personal Data to contact you in the future to tell you about services we believe will be of interest to
+                        you. If
+                        we do so, each communication we send you will contain instructions permitting you to "opt-out" of receiving future communications. In addition, if at any time you wish not to receive any future
+                        communications or you wish to have your name deleted from our mailing lists, please contact us as indicated below.</p>
+                    <p>
+                        <br>
+                        We do not disclose personal information about identifiable individuals to advertisers, but we may provide them with aggregate and/or anonymised information about our users to help advertisers
+                        reach
+                        the kind of audience they want to target. We may make use of the information we have collected from you to enable us to comply with our advertisers' wishes by displaying their advertisement to
+                        that
+                        target audience.</p>
+                    <p>
+                        <strong>Your Choices:</strong></p>
+                    <p>
+                        You can visit the Services without providing any Personal Data. If you choose not to provide any Personal Data, you may not be able to use certain Cleaner Love Services.</p>
+                    <p>
+                        <strong>Where and how we store your personal information:</strong></p>
+                    <p>
+                        The information that we collect from you will be held in servers in the USA and/or potentially in the European Union.&nbsp; If data is collected from you in the European Union then it may be
+                        transferred to, stored and processed at a destination outside the European Economic Area (including the USA).&nbsp; By submitting your personal information, you agree to this transfer, storing or
+                        processing. We will take all steps reasonably necessary to ensure that your information is treated securely and in accordance with this privacy policy.<strong></strong></p><strong>
+                    </strong>
+                    <p><strong>Unsolicited information and public forums:</strong></p>
+                    <p>
+                        Please be aware that we do not accept unsolicited Personal Data unconnected with the Services and we will delete it as soon as we become aware you have sent us any such Personal Data (unless we
+                        are
+                        required to keep that Personal Data under this Privacy Policy).</p>
+                    <p>
+                        You are responsible for any public publishing of information including Personal Data (for example on a discussion forum).&nbsp; Please remember that this may mean third parties gaining access to
+                        that
+                        information, for which you will be responsible.</p>
+                    <p>
+                        <strong>Children:</strong></p>
+                    <p>
+                        Cleaner Love does not knowingly collect Personal Data from children under the age of 13. If you are under the age of 13, please do not submit any Personal Data through the Services. We encourage
+                        parents and legal guardians to monitor their children's Internet usage and to help enforce our Privacy Policy by instructing their children never to provide Personal Data on the Services without
+                        their
+                        permission. If you have reason to believe that a child under the age of 13 has provided Personal Data to Cleaner Love through the Services, please contact us, and we will endeavor to delete that
+                        information from our databases.</p>
+                    <p>
+                        <br>
+                        <strong>Links to Other Web Sites:</strong></p>
+                    <p>
+                        This Privacy Policy applies only to the Services. The Services may contain links to other web sites not operated or controlled by Cleaner Love (the "Third Party Sites"). The policies and
+                        procedures we
+                        described here do not apply to the Third Party Sites. The links from the Services do not imply that Cleaner Love endorses or has reviewed the Third Party Sites. We suggest contacting those sites
+                        directly for information on their privacy policies.</p>
+                    <p>
+                        <br>
+                        <strong>Security:</strong></p>
+                    <p>
+                        Cleaner Love takes reasonable steps to protect the Personal Data provided via the Services from loss, misuse, and unauthorized access, disclosure, alteration, or destruction. However, no Internet
+                        or
+                        e-mail transmission is ever fully secure or error free; any transmission is at your own risk. In particular, e-mail sent to or from the Services may not be secure. Therefore, you should take
+                        special
+                        care in deciding what information you send to us via e-mail. Please keep this in mind when disclosing any Personal Data to Cleaner Love via the Internet. Once we have received your information, we
+                        will use strict procedures and security features to try to prevent unauthorised access.</p>
+                    <p>
+                        Registered Cleaner Love users will have an account name and password which enables you to access certain parts of our Services.&nbsp; You &nbsp;are responsible for keeping them confidential.
+                        Please
+                        don't share them with anyone.</p>
+                    <p>
+                        <br>
+                        <strong>Other Terms and Conditions:</strong></p>
+                    <p>
+                        Your access to and use of the Services is also subject to the Terms of Use at canbii.com</p>
+                    <p>
+                        <strong>Your rights:</strong></p>
+                    <p>
+                        <em>In the European Union</em></p>
+                    <p>
+                        If you are a European Union citizen, you have the right to ask us not to process your personal information for marketing purposes by contacting us at info@canbii.com.&nbsp; EU data protection
+                        legislation gives EU citizens the right to access information held about you.&nbsp; Any access request may be subject to a small administrative fee to meet our costs in providing you with details
+                        of
+                        the information we hold about you.&nbsp; You may also email us at info@canbii.com to request that we delete your personal information from our database. We will use commercially reasonable efforts
+                        to
+                        honour your request. We may retain an archived copy of your records as required by law or for legitimate business purposes (and if so we will explain this to you at the time).</p>
+                    <p>
+                        <em>Your California privacy rights</em></p>
+                    <p>
+                        Under California law, California residents who have an established business relationship with us may choose to opt out of disclosure of personal information about them to third parties for direct
+                        marketing purposes. If you choose to opt-out at any time after granting approval, email info@canbii.com.</p>
+                    <p>
+                        <br>
+                        <strong>Changes to Cleaner Love's Privacy Policy:</strong></p>
+                    <p>
+                        The Services and our business may change from time to time. As a result, at times it may be necessary for Cleaner Love to make changes to this Privacy Policy. Therefore, we may update this privacy
+                        policy from time to time (for example, to reflect changes in our business or the law).&nbsp; Any changes we may make will be posted on this page and we will highlight to you any material changes
+                        which
+                        we make.&nbsp; This Privacy Policy was last updated on the date indicated above. Your continued use of the Services after any changes or revisions to this Privacy Policy shall indicate your
+                        agreement
+                        with the revised terms.</p>
+                    <p>
+                        <br>
+                        <strong>Access to Information; Contacting Cleaner Love:</strong></p>
+                    <p>
+                        To keep your Personal Data accurate, current, and complete, please contact us as specified below. We will take reasonable steps to update or correct Personal Data in our possession that you have
+                        previously submitted via the Services.</p>
+                    <p>
+                        Please also feel free to contact us if you have any questions about Cleaner Love’s Privacy Policy or the information practices of the Services.</p>
+                    <p>
+                        You may contact us as follows: info@canbii.com</p>
+                    <p>
+                        &nbsp;</p>
+                </div>
+
+
+            </DIV>
         </DIV>
-    </DIV>
 
 
-
+    </div>
 
 
 

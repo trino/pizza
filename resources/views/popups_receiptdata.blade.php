@@ -276,7 +276,7 @@
                             switch ($tablename) {
                                 case "toppings":
                                     $itemtype = "Pizza";
-                                    $none = "No Toppings";
+                                    $none = "No Notes";
                                     break;
                                 case "wings_sauce":
                                     $itemtype = "lb";

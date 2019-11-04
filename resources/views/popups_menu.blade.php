@@ -147,7 +147,7 @@ $itemsInCol = 0;
 $CurrentCol = 1;
 $CurrentCat = 0;
 
-$newcolumns = ["small_home", "medium_home", "large_home", "custom_cleaning",  "2_cleaners", "tip"];//which categories to start a new column on
+$newcolumns = ["small_home", "medium_home", "large_home", "custom_cleaning", "2_cleaners", "tip"];//which categories to start a new column on
 $fontawesomeicons = [
     "far fa-moon" => ["color" => "bg-dark-blue", "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
     "far fa-sun" => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
@@ -157,15 +157,15 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 // dd($categories);
 ?>
-<DIV CLASS="col-md-9">
+<DIV CLASS="col-lg-8 bg-white">
     <DIV CLASS="row no-margin">
-        <div class="col-lg-4 col-md-12 bg-white ismenu">
+        <div class="col-lg-6 col-md-12 bg-white ismenu">
             @foreach ($categories as $category)
                 <?php
                 $toppings_extra = '+';
                 $catclass = toclass($category['category']);
                 $classlist[] = $catclass;
-                $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' order by id", true, "popups_menu.foreach");
+                $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' and enabled = 1 order by id", true, "popups_menu.foreach");
                 $menuitemcount = count($menuitems);
                 if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
                     $itemsInCol = 0;
@@ -178,9 +178,9 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
                 <div id="home-section" class="image-bg vertical-align" style="background-image:url({{webroot("public/images/". $category['image']) }});">
                     <div class="container-fluid">
-                        <div class="home-content" style="background: black;opacity: .6;padding:1rem;">
+                        <div class="home-content" style="bottom:10px;">
                             <h4 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['category']}}</h4>
-                            <h6 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['description_main']}}</h6>
+                            <!--h6 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['description_main']}}</h6-->
                         </div>
                     </div>
                 </div>
@@ -190,7 +190,6 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                     <button
 
                             @if($catclass=='custom_cleaning' || $catclass=='2_cleaners')
-                            style="width:50%;float:left;"
                             @endif
 
 
@@ -259,13 +258,13 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                         @endif
 
 
-                        <span class="align-middle item-name text-secondary" style="font-size: .85rem;">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                        <span class="ml-auto align-middle btn-sm-padding item-cost text-secondary" style="font-size: .85rem;padding-right:0 !important;"> ${{number_format($menuitem["price"], 0)}}</span>
+                        <span class="align-middle item-name text-se5condary" style="font-size: .875rem">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
+                        <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem"> ${{number_format($menuitem["price"], 0)}}</span>
                     </button>
                 @endforeach
                 @if(in_array($catclass, $newcolumns))
         </div>
-        <div class="col-lg-4 col-md-12 bg-white ismenu">
+        <div class="col-lg-6 col-md-12 bg-white ismenu">
             @endif
             @endforeach
         </div>

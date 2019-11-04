@@ -4,8 +4,8 @@
     $allowCash = false;
 ?>
 
-<div class="list-group-item">
-    <h2 CLASS="float-left">Receipt</h2>
+<div class="list-group-item" style="border:0 !important;">
+    <h2 CLASS="float-left">My Booking</h2>
     <span class="align-middle item-icon rounded-circle sprite sprite-drinks sprite-crush-orange sprite-medium hidden"></span>
     <button class="ml-auto bg-transparent" ONCLICK="confirmclearorder();" id="confirmclearorder"><i class="fa fa-times"></i></button>
 </div>
@@ -213,13 +213,23 @@
 
                 <DIV class="ajaxprompt"></DIV>
 
+                <div class="modal-body">
+
+                    <label>Your billing information is not stored by us. It is transferred over an encrypted connection to certified third party payment processor.
+                        The technology is the same used by online banking, so you can rest assured that it's safe.</label>
+
+
+
+                </div>
                 <div class="modal-body no-padding">
+
+
                     <button class="btn-block list-padding radius-bottom btn {{btncolor}} text-white payfororder" onclick="payfororder(); return false;">
 
 <div class="clearfix"></div>
-                        <img class="" src="<?=webroot("images/stripe_icon.png")?>" />
-                        <span style="margin-left:15px;padding:20px;">
-                            <strong>ORDER NOW</strong>
+                        <img class="float-left" style="width:105px;" src="<?=webroot("images/stripe_icon.png")?>" />
+                        <span style="float: right">
+                            <strong>BOOK NOW</strong>
 
 
                         </span>

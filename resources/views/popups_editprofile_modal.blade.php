@@ -43,7 +43,7 @@
                 </div>
                 <div CLASS="editprofilediv mt-2 dont-show">
                     <button ONCLICK="handlelogin('logout');" CLASS="btn {{btncolor}} pull-left" href="#">LOG OUT</button>
-                    <button ONCLICK="orders();" CLASS="btn {{btncolor}} pull-right" href="#">PAST ORDERS</button>
+                    <button ONCLICK="orders();" CLASS="btn {{btncolor}} pull-right" href="#">MY BOOKINGS</button>
                     <div class="clearfix"></div>
                 </div>
             </div>

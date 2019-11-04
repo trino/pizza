@@ -62,14 +62,19 @@
 <div id="snackbar"></div>
 <div ID="loading" class="fullscreen grey-backdrop dont-show"></div>
 
-<div style="padding: .5rem .75rem;border:0 !important;z-index: 999;" class="list-group-item shadow container-fluid {{ headercolor }}">
+
+<style>
+    *{bo90rder:1px solid black !important;}
+</style>
+<div class=" contai3ner-fluid {{ headercolor }}" style="padding-right: 0">
+<div style="border:0 !important;z-index: 999;padd3ing:0 !important;" class="list-group-item container">
     <?php
         if(defined("logo")){
             echo  '<a HREF="' .webroot("") .'"><IMG CLASS="sitelogo" SRC="' . webroot("images/" . logo) . '"></a>';
         }
     ?>
 
-    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-settings bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
+    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 0" class="btn btn-settings bg-transparent togglemenu" ONCLICK="$('#dropdown-menu').toggle();">
         <i class="fa fa-bars loggedout {{ headertextcolor }}"></i>
         <i class="fa fa-user loggedin {{ headertextcolor }}"></i>
     </button>
@@ -90,7 +95,7 @@
                 <i class="fa fa-user icon-width"></i> My Profile</A>
             </li>
             @if($routename != "help")
-                <li class="profiletype_not profiletype_not2"><A CLASS="dropdown-item" HREF="javascript:orders();"><i class="fa fa-clock icon-width"></i> Past Orders</A></li>
+                <li class="profiletype_not profiletype_not2"><A CLASS="dropdown-item" HREF="javascript:orders();"><i class="fa fa-clock icon-width"></i> My Bookings</A></li>
             @endif
         </SPAN>
 
@@ -149,8 +154,8 @@
         }
     ?>
 </div>
-
-<div class="contain7er-fluid menu" s>
+</div>
+<div class="contai6ner menu">
     @yield('content')
 </div>
 

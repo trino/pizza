@@ -100,7 +100,7 @@
                     <div class="clearfix py-2"></div>
                     <BUTTON CLASS="btn-block btn {{btncolor}}" href="#" onclick="handlelogin('login'); return false;">LOG IN</BUTTON>
                     <div class="clearfix py-2"></div>
-                    <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" style="font-weight: normal !important;" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
+                    <BUTTON CLASS="btn-sm pl-0 text-muted btn-link" style="" href="#" onclick="handlelogin('forgotpassword'); return false;">Forgot Password</BUTTON>
                 </FORM>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="buzz">
@@ -122,14 +122,25 @@
                 <button class="btn btn-block {{btncolor}}" onclick="register();">
                     SIGN UP
                 </button>
+                <div class="clearfix py-2"></div>
+
+               <label>By creating an account, I agree to receive updates and exclusive offers from Canbii. For more details see our <a HREF="<?= webroot("help"); ?>">Help Page</a>.</label>
+
+
+
             </div>
+
+
+
+
+
         </div>
         <DIV CLASS="clearfix"></DIV>
     </DIV>
 
     <DIV class="ajaxprompt margin-sm"></DIV>
 
-    <div class="row py-1"  style="font-size: .85rem">
+    <div class="row py-1"  style="font-size: .875rem">
         <!--div class="col-md-6" style="padding-top: 1rem">
             <center>
                 <img src="<?= webroot("images/delivery.jpg"); ?>" class="width-50"/>
@@ -171,7 +182,7 @@
 
     <div class="py-3 px-3">
 
-        <h1>                <strong> <?= cityname ?>'s Premier Home Cleaning Service</strong></h1>
+        <h1>                <strong> Hamilton, we're always ready to serve you</strong></h1>
 
 
  <br>
@@ -194,15 +205,13 @@
                 <A HREF="<?= webroot("help"); ?>" CLASS="link-white">About Us</A> for more info.
             </p>
         @else
-            <p>
                 We’ve partnered up with some of your favourite local cleaners to bring you a one-stop ahop for all your cleaning needs.
-            </p>
         @endif
     </div>
 
     @if($dohours)
         <div class="col-md-12 ">
-            <div class="py-3 px-3">
+            <div class="px-3">
                 <TABLE class="inline">
                     <TR>
                         <TD COLSPAN="3"><p class="lead strong">HOURS OF OPERATION</p></TD>
@@ -222,6 +231,19 @@
                         }
                     ?>
                 </TABLE>
+
+
+
+
+                <p></p> <br>
+                <h2>Canbii At A Glance</h2>
+                Maid Cleaning Service in Hamilton
+                <br> Easy Online Booking (Takes only 60 seconds!)
+                <br> Certified Professional Cleaners
+                <br> ALL Cleaning Supplies Included
+                <br> 100% Satisfaction Guarantee
+                <br> We Are Bonded and Insured
+
             </div>
 
             <div class="col-md-6  dont-show">

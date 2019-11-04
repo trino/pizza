@@ -885,7 +885,7 @@ function generatereceipt(forcefade) {
     oldvalues = '<DIV id="oldvalues" class="float-right">' + oldvalues + '</div>';
 
     if (theorder.length == 0) {
-        HTML = oldvalues + '<DIV CLASS="clearfix"></DIV><div CLASS="list-padding py-3 btn-block radius0"><div class="d-flex justify-content-center"><i class="fa fa-shopping-cart empty-shopping-cart fa-2x pb-1 text-muted"></i></div><div class="d-flex justify-content-center text-muted">Empty</div></div>';
+        HTML = oldvalues + '<DIV CLASS="clearfix"></DIV><div CLASS="list-padding pt-3  pb-5 btn-block radius0"><div class="d-flex justify-content-center"><i class="fa fa-shopping-cart empty-shopping-cart fa-2x pb-1 text-muted"></i></div><div class="d-flex justify-content-center text-muted">Empty</div></div>';
         $("#checkout").hide();
         $("#checkoutbutton").hide();
         $("#confirmclearorder").hide();
@@ -1357,7 +1357,7 @@ function placeorder(StripeResponse) {
                 if(!debugmode) {$(".ordersuccess").html("");}
                 clearorder();
                 $("#checkoutmodal").modal("hide");
-                handleresult(result, "Thank You For Your Order");
+                handleresult(result, "Thank You For Booking With Us");
                 userdetails["Orders"].unshift({
                     id: $(".ordersuccess").attr("orderid"),
                     placed_at: formattednow(),
@@ -2020,7 +2020,7 @@ function changecredit(focus, where) {
         $(".credit-info").show();//let cust edit the card
         if(focus){focuson("input[data-stripe=number]");}
     } else {
-        $(".credit-info").hide();//use saved card info
+       // $(".credit-info").hide();//use saved card info
     }
     return val;
 }
@@ -2518,44 +2518,53 @@ function list_addons(table, halves,itemname) {
             {
                 var addon = alladdons[currentaddontype][types[i]][i2];
                 var price = alladdons[currentaddontype+'_price'][addon];
-             //   HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + ' $' + price + '</button>';
+//   HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + ' $' + price + '</button>';
+
+if (itemname == '2 Hours Cleaning' || itemname == '3 Hours Cleaning' || itemname == '4 Hours Cleaning' || itemname == '2 Cleaners for 2 Hours' || itemname == '2 Cleaners for 3 Hours' || itemname == '2 Cleaners for 4 Hours') {
+
+if (
+    addon == 'Remove Pet Hair' ||
+    addon == 'Clean Dishes' ||
+    addon == 'Clean Baseboards' ||
+    addon == 'Laundry Wash & Dry' ||
+    addon == 'Ironing & Hanging' ||
+    addon == 'Organize Closet'
+
+
+
+    ) {
+HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+}
+}
+else if (itemname == '5 Hours Cleaning' || itemname == '6 Hours Cleaning' || itemname == '2 Cleaners for 5 Hours' || itemname == '2 Cleaners for 6 Hours') {
+
+if (
+    addon == 'Remove Pet Hair' ||
+    addon == 'Clean Dishes' ||
+    addon == 'Clean Baseboards' ||
+    addon == 'Laundry Wash & Dry' ||
+    addon == 'Ironing & Hanging' ||
+    addon == 'Organize Closet' ||
+    addon == 'Inside Cabinets' ||
+    addon == 'Inside Fridge' ||
+    addon == 'Inside Oven' ||
+    addon == 'Clean Blinds'
+
+) {
+HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+}
+}
+
+
+
+else {
+HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+}
 
 
 
 
-                if(itemname=='Small Home Light Cleaning' || itemname=='Medium Home Light Cleaning' || itemname=='Large Home Light Cleaning') {
-
-                    if(addon == 'I have Pets' || addon == 'Laundry Wash & Dry') {
-                        HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-                    }
-
-                }
-                else if(itemname=='Small Home Standard Cleaning' || itemname=='Medium Home Standard Cleaning' || itemname=='Large Home Standard Cleaning') {
-
-                    if(addon == 'I have Pets' || addon == 'Inside Cabinets' || addon == 'Inside Fridge' || addon == 'Inside Oven' || addon == 'Laundry Wash & Dry' || addon == 'Ironing & Hanging' ) {
-                        HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-                    }
-
-                }
-                else{
-                    HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-
-                }
-
-
-
-
-
-
-
-
-/*
-organize closert eco friendly
-                Interior Windows
-                Interior Walls
-                Move In Cleaning
-                Move Out Cleaning
-  */          }
+    }
         }
 
         HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>';
