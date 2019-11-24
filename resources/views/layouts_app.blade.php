@@ -123,7 +123,7 @@
     </ul>
 
     <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold" ><?= sitename; ?></span><br>
-        <span style="color: white;" >On Demand Home Cleaning</span>
+        <span style="color: white;font-weight: normal" >On Demand Home Cleaning</span>
 
     </a>
 

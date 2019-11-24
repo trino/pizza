@@ -159,52 +159,6 @@
 
 
         <DIV class="row">
-            <div class="col-sm-6 py-3">
-                <h3><?= getsetting("aboutus"); ?></h3>
-                <div class="card-block ">
-
-                    <h1><strong>The Premier On Demand Home Cleaning App</strong></h1>
-                    <br>
-                    <p>
-                        <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is
-                        thorough
-                        and professional.
-                        <BR><BR>
-                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Cleaners. Over time, parts of your home – particularly kitchens and bathrooms –
-                        can
-                        accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
-                        condition.
-
-                    </p>
-                    <p>
-                        How do we do it? We leverage an easy-to-use online platform, one universal price list for all users alike,
-                        and local partnerships with {{storenames}} who share our vision. In an effort to be completely
-                        transparent, we will post a summary all of our contributions below, updated on a monthly basis.
-                    </p>
-
-                    <div class="btn-outlined-danger text-center pt-1">
-                        <strong>November, 2019</strong>
-                        <p> Bookings: <?= $orders; ?>
-                            <br> Donated: $<?= $donations . ".00" . $units_donated; ?>
-                            <br> Charity: Hamilton Food Centre</p>
-                    </div>
-
-                </div>
-            </div>
-            <DIV CLASS="col-sm-6 bg-secondary " style="color:#373a3c" titledebug="popups_login">
-                <?= view("popups_login", array("justright" => true))->render(); ?>
-            </DIV>
-        </DIV>
-
-
-        <DIV class="row">
-            <div class="col-sm-12 pt-3">
-                <hr>
-            </div>
-        </div>
-
-
-        <DIV class="row">
             <div class="col-sm-12 pt-3 ">
                 <div class="card-block  ">
 
@@ -269,6 +223,52 @@
                 <hr>
             </div>
         </div>
+
+        <DIV class="row">
+            <div class="col-sm-6 py-3">
+                <h3><?= getsetting("aboutus"); ?></h3>
+                <div class="card-block ">
+
+                    <h1><strong>The Premier On Demand Home Cleaning App</strong></h1>
+                    <br>
+                    <p>
+                        <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is
+                        thorough
+                        and professional.
+                        <BR><BR>
+                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Cleaners. Over time, parts of your home – particularly kitchens and bathrooms –
+                        can
+                        accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
+                        condition.
+
+                    </p>
+                    <p>
+                        How do we do it? We leverage an easy-to-use online platform, one universal price list for all users alike,
+                        and local partnerships with {{storenames}} who share our vision. In an effort to be completely
+                        transparent, we will post a summary all of our contributions below, updated on a monthly basis.
+                    </p>
+
+                    <div class="btn-outlined-danger text-center pt-1">
+                        <strong>November, 2019</strong>
+                        <p> Bookings: <?= $orders; ?>
+                            <br> Donated: $<?= $donations . ".00" . $units_donated; ?>
+                            <br> Charity: Hamilton Food Centre</p>
+                    </div>
+
+                </div>
+            </div>
+            <DIV CLASS="col-sm-6 bg-secondary " style="color:#373a3c" titledebug="popups_login">
+                <?= view("popups_login", array("justright" => true))->render(); ?>
+            </DIV>
+        </DIV>
+
+
+        <DIV class="row">
+            <div class="col-sm-12 pt-3">
+                <hr>
+            </div>
+        </div>
+
 
 
         <DIV class="row">

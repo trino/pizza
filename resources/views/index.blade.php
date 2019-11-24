@@ -62,24 +62,21 @@
     @if(true)
 
         <div id="home-section" class=" image-bg vertical-align" style="background-image:url({{webroot("public/images/banner.jpg")}});height:500px;border-radius: 0;">
-
             <div class="container list-group-item" style="border: 0 !important;">
-
-
                 <div class="">
-                    <div class="pt-5 pb-5" style=" ">
-                        <h1 class="display-4 banner-text text-normal" style="color: rgba(0,0,0,0.6);text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);font-size: 2.75rem;">Hello, Hamilton!</h1>
-                        <h1 style="color: #616161;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;" class="display-4 text-normal banner-text">The easiest way to book a home cleaning expert</h1>
-                        <p class="lead  text-normal banner-text" style="color: rgba(0,0,0,0.6);text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);">Five star service at an affordable price!</p>
+                    <div class="pt-5 pb-4" style=" ">
+                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2.25rem;font-weight: bold">Hello, Hamilton!</h1>
+                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;font-we4ight: bold" class="display-4 text-normal banner-text">The easiest way to book a home cleaning expert</h1>
+                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Grand Opening Special!</h1>
+                        <h1 class="display-4 banner-text text-normal" style="color: #fff !important;text-shadow: 2px 8px 6px rgba(0,0,0,0.25), 0px -5px 35px rgba(255,255,255,0.25);
+                        font-size: 2.25rem;font-weight: bold">40% Off All Services</h1>
                     </div>
-
-
                     <div class="">
                         <a class="btn btn-primary btn-lg" href="#booknow">Book now</a>
                         <a class="btn btn-secondary btn-lg" HREF="<?= webroot("help"); ?>" role="button">Learn more</a>
                     </div>
+                    <h1 style="color: #666 !important;text-shadow: #dadada 1px 1px 0;font-size: 1rem;font-wei4ght: bold" class="display-4 text-normal banner-text"><br>Contact:<br>info@canbii.com<br>(289) 683-1944   </h1>
                 </div>
-
             </div>
         </div>
 
@@ -95,7 +92,7 @@
 
                             <h5 class="card-title"> CHOOSE YOUR TIME
                             </h5>
-                            <p class="card-text"> Choose your ideal date/time and package. We'll take care of the rest!
+                            <p class="card-text"> Choose your ideal date/time and cleaning hours required. We'll take care of the rest!
                             </p>
                         </div>
                     </div>
@@ -107,7 +104,7 @@
 
                             <h5 class="card-title"> PAY SECURELY ONLINE
                             </h5>
-                            <p class="card-text"> Canbii uses the same technology that bank uses for secure online payments
+                            <p class="card-text"> Canbii uses the same technology that bank uses for secure online payments.
 
                             </p>
                         </div>
@@ -120,7 +117,7 @@
 
                             <h5 class="card-title"> SIT BACK & RELAX
                             </h5>
-                            <p class="card-text"> Your cleaner will arrive at your scheduled date and get your home spic and span
+                            <p class="card-text"> Your cleaner will arrive at your scheduled date and get your home spic and span.
 
                             </p>
                         </div>
@@ -132,7 +129,7 @@
                             <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
                             <h5 class="card-title"> THE CANBII PROMISE
                             </h5>
-                            <p class="card-text"> With our 100% Satisfaction Guarantee, we will re-clean for free
+                            <p class="card-text"> With our 100% Satisfaction Guarantee, we will re-clean for free. No questions asked.
 
                             </p>
                         </div>
@@ -144,9 +141,9 @@
 
 
             <div class="col-md-4 text-center" id="">
-                <a class="icon-box" href="tel:9055315331"> <i class="fa  fa-phone  fa-3x"></i>
+                <a class="icon-box" href="tel:2896831944"> <i class="fa  fa-phone  fa-3x"></i>
                     <div class="icon-box__text">
-                        <h4 class="">(905) 531-5331</h4> <span class="icon-box__subtitle">CALL NOW!</span>
+                        <h4 class="">289.683.1944</h4> <span class="icon-box__subtitle">CALL NOW!</span>
                     </div>
                 </a></div>
                 <div class="col-md-4 text-center" id="">
@@ -170,10 +167,16 @@
 
 
                     <h3 class="mb-2" name="booknow">What's included in a cleaning?</h3>
-                    <p> All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. If you'd like your cleaner to use your own products, please add a note to your appointment with relevant
-                        instructions. See what's included in a cleaning service <a class="" HREF="<?= webroot("help"); ?>" role="button">here</a>.
+                    <p> All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. See what's included in a cleaning service <a class="" HREF="<?= webroot("help"); ?>" role="button">here</a>.
 
                     </p>
+
+                    <!--p>
+                        Trusted - All cleaners are interviewed and background checked
+                        <br>Supplies - Canbii cleaners will bring all necessary supplies
+                        <br>Cancel / Reschedule - Free 48 hrs before appointment, $25 otherwise
+                        <br>Our Promise - 100% Satisfaction Guarantee, we will re-clean for free
+                    </p-->
                     <br>
 
                     <h2 style="font-size: 1.25rem !important;" class="mb-2" id="booknow">Ready to book your first cleaning?</h2>
@@ -221,7 +224,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container d-none d-sm-block">
         <div class="row">
             <div class="col-md-12">
                 <label class=" d-block text-center py-2 mt-2">

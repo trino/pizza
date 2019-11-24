@@ -2526,7 +2526,7 @@ if (
     addon == 'Remove Pet Hair' ||
     addon == 'Clean Dishes' ||
     addon == 'Clean Baseboards' ||
-    addon == 'Laundry Wash & Dry' ||
+    addon == 'Laundry Wash/Dry' ||
     addon == 'Ironing & Hanging' ||
     addon == 'Organize Closet'
 
@@ -2542,7 +2542,7 @@ if (
     addon == 'Remove Pet Hair' ||
     addon == 'Clean Dishes' ||
     addon == 'Clean Baseboards' ||
-    addon == 'Laundry Wash & Dry' ||
+    addon == 'Laundry Wash/Dry' ||
     addon == 'Ironing & Hanging' ||
     addon == 'Organize Closet' ||
     addon == 'Inside Cabinets' ||
