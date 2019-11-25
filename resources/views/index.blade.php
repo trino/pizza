@@ -65,11 +65,13 @@
             <div class="container list-group-item" style="border: 0 !important;">
                 <div class="">
                     <div class="pt-5 pb-4" style=" ">
-                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2.25rem;font-weight: bold">Hello, Hamilton!</h1>
+                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 1.95rem;font-weight: bold">Hello, Hamilton!</h1>
                         <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;font-we4ight: bold" class="display-4 text-normal banner-text">The easiest way to book a home cleaning expert</h1>
-                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Grand Opening Special!</h1>
-                        <h1 class="display-4 banner-text text-normal" style="color: #fff !important;text-shadow: 2px 8px 6px rgba(0,0,0,0.25), 0px -5px 35px rgba(255,255,255,0.25);
-                        font-size: 2.25rem;font-weight: bold">40% Off All Services</h1>
+                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Grand Opening Special!</h1>
+                        <!--h1 class="display-4 banner-text text-normal" style="color: #fff !important;text-shadow: 2px 8px 6px rgba(0,0,0,0.25), 0px -5px 35px rgba(255,255,255,0.25);
+                        font-size: 2.25rem;font-weight: bold">40% Off All Services</h1-->
+                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2.25rem;font-weight: bold">40% Off All Services</h1>
+
                     </div>
                     <div class="">
                         <a class="btn btn-primary btn-lg" href="#booknow">Book now</a>
@@ -227,7 +229,7 @@
     <div class="container d-none d-sm-block">
         <div class="row">
             <div class="col-md-12">
-                <label class=" d-block text-center py-2 mt-2">
+                <label class=" d-block text-center py-2 mt-4">
                     Copyright &copy; 2019 / Canbii Cleaners / <a HREF="<?= webroot("help");?>" class="text-muted">Terms</a>
                 </label>
             </div>

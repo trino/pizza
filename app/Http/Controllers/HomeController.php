@@ -30,6 +30,10 @@ class HomeController extends Controller {
         return view("home_help")->render();
     }
 
+    public function agreement(Request $request){
+        return view("agreement")->render();
+    }
+
     public function search(Request $request){
         return view("home_search")->render();
     }

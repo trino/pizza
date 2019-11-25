@@ -434,7 +434,7 @@ function loadmodal(element, notparent) {
         }
     }
     currentitemID = -1;
-    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline"><i class="fa fa-shopping-cart"></i></div><div class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div></SPAN>';
+    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline"><i class="fa fa-shopping-cart MR-2"></i></div> &nbsp;&nbsp;ADD <div style="display: none !important;" class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div></SPAN>';
     if (!isUndefined(notparent)) {
         $("#menumodal").modal("show");
         refreshremovebutton();

@@ -47,6 +47,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::any('/cron',                     'HomeController@cron');
     Route::any('/test',                     'HomeController@index');
     Route::any('/help',                     'HomeController@help');
+    Route::any('/agreement',                     'HomeController@agreement');
     Route::any('/tos',                      'HomeController@termsofservice');
     Route::any('/ourstory',                 'HomeController@ourstory');
     Route::any('/privacy',                  'HomeController@privacy');

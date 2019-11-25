@@ -258,8 +258,11 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                         @endif
 
 
-                        <span class="align-middle item-name text-se5condary" style="fo3nt-size: .875rem">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                        <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;font-weight: bold"> ${{number_format($menuitem["price"], 2)}}</span>
+                        <span class="align-middle item-name text-se5condary" style="font-size: .875rem">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
+                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;"> <strike class=" text-secondary">${{number_format($menuitem["price"], 0)}}</strike>
+
+                                <strong>${{number_format($menuitem["price"]*.6, 2)}}</strong>
+                            </span>
                     </button>
                 @endforeach
                 @if(in_array($catclass, $newcolumns))

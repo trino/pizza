@@ -353,7 +353,8 @@
                 Last-minute cancellations lead to unfillable time slots in your cleaner's schedule, so cancellations within 24 hours of your appointment are charged in full.
                 <br><br>
                 <strong> I need more help. </strong><br>
-                Please contact the us at (905) 531-5331
+                Please contact us at (289) 683-1944
+
                 <br>
 
 
