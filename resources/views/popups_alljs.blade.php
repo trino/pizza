@@ -1,10 +1,10 @@
 <?php
-    startfile("popups_alljs");
-    $CURRENT_YEAR = date("Y");
-    $STREET_FORMAT = "[number] [street], [city] [postalcode]";
-    //["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
-    $scripts = webroot("public/scripts");
-    $nprog = "#F0AD4E";//color for loading bar
+startfile("popups_alljs");
+$CURRENT_YEAR = date("Y");
+$STREET_FORMAT = "[number] [street], [city] [postalcode]";
+//["id", "value", "user_id", "number", "unit", "buzzcode", "street", "postalcode", "city", "province", "latitude", "longitude", "phone"];
+$scripts = webroot("public/scripts");
+$nprog = "#F0AD4E";//color for loading bar
 ?>
 <script>
     var debugmode = "<?= debugmode; ?>";
@@ -138,7 +138,7 @@ includefile("public/scripts/api.js");
             foreach($GLOBALS["settings"] as $key => $value){
                 echo 'Text = Text.replaceAll("{' . $key . '}", "' . $value . '");';
             }
-        ?>
+            ?>
         if (!isUndefined(Variables)) {
             if(isObject(Variables)) {
                 var keys = Object.keys(Variables);
@@ -391,7 +391,7 @@ includefile("public/scripts/api.js");
         $(".profiletype").hide();
         userdetails = false;
         firstsignin = false;
-     //   if(isIndex()){showlogin("logout");}
+        //   if(isIndex()){showlogin("logout");}
         handlelinks();
     }
 
@@ -425,10 +425,10 @@ includefile("public/scripts/api.js");
         });
 
         @if(isset($user) && $user)
-            login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
+        login(<?= json_encode($user); ?>, false); //user is already logged in, use the data
         @else
-            logout();
-        @endif
+        logout();
+                @endif
 
         var HTML = '';
         var todaysdate = isopen(generalhours);
@@ -629,20 +629,20 @@ includefile("public/scripts/api.js");
         } else if (dayofweek == tomorrow) {
             return tomor_text + thetime;
         } else {
-            return daysofweek[dayofweek] + " " + monthnames[date.getMonth()] + " " + date.getDate() + thetime;
+            return daysofweek[dayofweek] + ", " + monthnames[date.getMonth()] + " " + date.getDate() + thetime;
         }
     }
 
-    function GenerateHours(hours, increments) {
+    function GenerateHours(hours, increments){
         //doesn't take into account <= because it takes more than 1 minute to place an order
         //now.setMinutes(now.getMinutes() + minutes);//start 40 minutes ahead
         if (isUndefined(increments)) {
-            increments = 15;
+            increments = 30;
         }
         var minutes = <?= getdeliverytime(); ?>;
         var dayofweek = getNow(3);//day of week (virtual)
         var minutesinaday = 1440;
-        var totaldays = 2;
+        var totaldays = 7;
         var dayselapsed = 0;
         var today = getNow(3, false);//day of week (actual)
         var tomorrow = validdayofweek(today + 1);
@@ -658,7 +658,7 @@ includefile("public/scripts/api.js");
 
         var oldValue = $("#deliverytime").val();
         var HTML = '';
-        var temp = gettime(now, minutes, 15, time);
+        var temp = gettime(now, minutes, 30, time);
         if (time < oldtime) {
             dayofweek = validdayofweek(dayofweek + 1);
         }
@@ -679,7 +679,7 @@ includefile("public/scripts/api.js");
             if (isopen(hours, dayofweek, time) > -1) {
                 minutes = time % 100;
                 if (minutes < 60) {
-                    thedate = monthnames[now.getMonth()] + " " + now.getDate();
+                    thedate = monthnames[now.getMonth()] + ", " + now.getDate();
                     thetime = GenerateTime(time);
                     dayofweek = now.getDay();
                     if (dayofweek == tomorrow) {
@@ -687,7 +687,7 @@ includefile("public/scripts/api.js");
                     }
                     thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
                     var timestamp = totimestamp(time, now);
-                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + timestamp + '"';
+                    var tempstr = '<OPTION VALUE="' + thedate + " " + time.pad(4) + '" timestamp="' + timestamp + '"';
                     tempstr += ' now="' + now + '"';
                     HTML += tempstr + '>' + thedayname + '</OPTION>';
                 }
@@ -713,11 +713,12 @@ includefile("public/scripts/api.js");
             reseturl("document ready");
         }
         <?php
-            if (islive()) {
-                echo "setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', 'live');";
-            } else {
-                echo "setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', 'test');";
-            }
+        if (islive()) {
+            echo "setPublishableKey('pk_live_8J7QrcMAc6VyzY9D1hosWRkq00kstnG6x0', 'live');";
+            //aaa999
+        } else {
+            echo "setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', 'test');";
+        }
         ?>
         $("input").blur(function () {
             var ID = $(this).attr("id");
@@ -753,10 +754,10 @@ includefile("public/scripts/api.js");
         $('input[data-stripe=cvc]').val(rnd(100, 999)).trigger("click");
         $('select[data-stripe=exp_year]').val({{ right($CURRENT_YEAR,2) }} +1).trigger("click");
         @if(islive())
-            log("Changing stripe key");
-            $("#istest").val("true");
-            setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', "test");
-            log("Stripe key changed");
+        log("Changing stripe key");
+        $("#istest").val("true");
+        setPublishableKey('pk_test_OAz7mPTzXUKprFvLCyY436Nq00TgNTX7bm', "test");
+        log("Stripe key changed");
         @endif
     }
 
@@ -791,7 +792,7 @@ includefile("public/scripts/api.js");
         return ret;
     }
 
-    document.addEventListener('keydown', HandleBackKey);
+    //document.addEventListener('keydown', HandleBackKey);
 
     function HandleBackKey(e) {
         if (isObject(e)) {
@@ -825,10 +826,10 @@ includefile("public/scripts/api.js");
     }
 
     window.addEventListener('popstate', function (event) {
-        hashchange("popstate");
+        //  hashchange("popstate");
     }, false);
     $(window).on('hashchange', function (event) {//delete button closes modal
-        hashchange("hashchange");
+        //   hashchange("hashchange");
     });
 
     var prevhash = "";
@@ -860,11 +861,11 @@ includefile("public/scripts/api.js");
 
     @if(debugmode)
         window.onbeforeunload = function () {
-            return "Are you sure?";
-        };
-        $('*[titledebug]').each(function( index ) {
-            $( this ).attr("title", $( this ).attr('titledebug'));
-        });
+        return "Are you sure?";
+    };
+    $('*[titledebug]').each(function( index ) {
+        $( this ).attr("title", $( this ).attr('titledebug'));
+    });
     @endif
 
     function skiphash() {

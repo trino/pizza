@@ -800,9 +800,12 @@ function initStripe(){
         $mode = $_POST["stripemode"];
     }
     if($mode == "test"){
-        \Stripe\Stripe::setApiKey("sk_test_XQtucnLz4KFBXYP5NSF4FWb0001iNXwbJZ"); //test
+        \Stripe\Stripe::setApiKey("sk_test_XQtucnLz4KFBXYP5NSF4FWb0001iNXwbJZ");
+        //aaa999
+
+
     } else {
-        \Stripe\Stripe::setApiKey("sk_test_XQtucnLz4KFBXYP5NSF4FWb0001iNXwbJZ"); //live
+        \Stripe\Stripe::setApiKey("sk_live_JeWbHJw0LqRellogg81jM90W00cbyAi91Y");
     }
 }
 

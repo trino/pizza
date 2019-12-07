@@ -434,7 +434,12 @@ function loadmodal(element, notparent) {
         }
     }
     currentitemID = -1;
-    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline"><i class="fa fa-shopping-cart MR-2"></i></div> &nbsp;&nbsp;ADD <div style="display: none !important;" class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div></SPAN>';
+    var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline">' +
+        '<div class="ml-2 pull-left d-inline" style="font-weight: normal !important;FLOAT:LEFT">' +
+        '<strike>$<SPAN ID="modal-itemtotalprice-discount"></SPAN></strike>' +
+        '</div><div STYLE="FLOAT:LEFT" class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div>' +
+        '  <!--i class="fa fa-shopping-cart MR-2"></i--></div><DIV CLASS="mr-2" STYLE="FLOAT:RIGHT"> ADD</DIV> </SPAN>';
+
     if (!isUndefined(notparent)) {
         $("#menumodal").modal("show");
         refreshremovebutton();
@@ -846,7 +851,7 @@ function generatereceipt(forcefade) {
                         tempHTML += ordinals[currentitem] + " " + itemname + ': ';
                     }
                     if(!addons.hasOwnProperty("addons") || addons["addons"].length == 0) {
-                      //  tempHTML += 'no ' + nonames[tablename];
+                        //  tempHTML += 'no ' + nonames[tablename];
                     } else {
                         for (var addonid = 0; addonid < addons["addons"].length; addonid++) {
                             if (isfirstinstance2(addons["addons"], addonid)) {
@@ -1535,7 +1540,7 @@ function addresses() {
     $("#saveaddresses option").each(function () {
         var ID = $(this).val();
         if (ID > 0) {
-            HTML += '<DIV class="list-group-item" ID="add_' + ID + '"><A TITLE="Delete this address" onclick="deleteaddress(' + ID + ');" class="cursor-pointer"><i class="fa fa-fw fa-times error"></i></A> ';
+            HTML += '<DIV class="list-group-it4em" ID="add_' + ID + '"><A TITLE="Delete this address" onclick="deleteaddress(' + ID + ');" class="cursor-pointer"><i class="fa fa-fw fa-times error"></i></A> ';
             HTML += $(this).text() + '</DIV>';
             AddNew = true;
         }
@@ -1547,7 +1552,7 @@ function addresses() {
 }
 
 function creditcards() {
-    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
+    var HTML = '<DIV CLASS="section mt-3"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
     if (!loadsavedcreditinfo()) {
         return HTML + makestring("{nocreditcards}");
     }
@@ -1861,9 +1866,9 @@ function flash(delay){
 //state: true=can't place orders, false=can place orders
 function placeorderstate(state){
     if(state){//THIS SHOULD NOT BE COMMENTED OUT!!!!
-      //  $(".payfororder").removeClass("disabled");
+        //  $(".payfororder").removeClass("disabled");
     } else {
-      //  $(".payfororder").addClass("disabled");
+        //  $(".payfororder").addClass("disabled");
     }
     paydisabled = state;
 }
@@ -2020,7 +2025,7 @@ function changecredit(focus, where) {
         $(".credit-info").show();//let cust edit the card
         if(focus){focuson("input[data-stripe=number]");}
     } else {
-       // $(".credit-info").hide();//use saved card info
+        // $(".credit-info").hide();//use saved card info
     }
     return val;
 }
@@ -2139,8 +2144,8 @@ function clearvalidation(specificselector){
     $(".error").hide();
 }
 
-var daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var monthnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var daysofweek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+var monthnames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function now() {
     if(testing){return newtime;}
@@ -2221,22 +2226,22 @@ function getNow(Index, AllowTesting){
             return now.getDay();
             break;
         case 4: case 5: //date
-            if(testing && AllowTesting){
-                now.setHours(Math.floor(newtime / 100));
-                now.setMinutes(Math.floor(newtime % 100));
-                now.setSeconds(0);
-                var currentday = now.getDay();
-                if(currentday > newday){
-                    now.add("day", 6 - currentday + newday);
-                } else if (currentday < newday){
-                    now.add("day", newday - currentday);
-                }
+        if(testing && AllowTesting){
+            now.setHours(Math.floor(newtime / 100));
+            now.setMinutes(Math.floor(newtime % 100));
+            now.setSeconds(0);
+            var currentday = now.getDay();
+            if(currentday > newday){
+                now.add("day", 6 - currentday + newday);
+            } else if (currentday < newday){
+                now.add("day", newday - currentday);
             }
-            if(Index == 5){
-                return now.add("day", 1);
-            }
-            return now;
-            break;
+        }
+        if(Index == 5){
+            return now.add("day", 1);
+        }
+        return now;
+        break;
     }
 }
 
@@ -2319,7 +2324,7 @@ if (isUndefined(unikeys)) {
         myaddress: "My Addresses",
         noaddresses: 'No Addresses Saved',
         mycreditcard: 'My Credit Cards',
-        nocreditcards: 'No Credit Cards',
+        nocreditcards: 'No Saved Credit Cards ',
         norestaurants: 'No {storename} within range'
     };
 }
@@ -2367,7 +2372,7 @@ function generateaddons(ItemIndex, ToppingIndex, addonprice1) {
         if (currentitemindex == itemindex) {
             HTML += ' thisside';
         }
-     //   HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ' #' + (itemindex + 1) + '</strong>';
+        //   HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ' #' + (itemindex + 1) + '</strong>';
         HTML += '">' + '<strong class="pr-3" id="item_' + itemindex + '">' + ucfirst(item_name) + ': '  + '</strong>';
 
         if(currentaddonlist[itemindex].length == 0){
@@ -2420,19 +2425,24 @@ function itemtotalprice(newprice, fade){
     newprice = Number(newprice).toFixed(2);
     var current = $("#modal-itemtotalprice").text();
     if(current != newprice) {
+        newprice_discount =   Number(newprice*.6).toFixed(2)
+
+
         if (fade) {
             $("#modal-itemtotalprice-all").stop(true, true).fadeTo(fade_speed, 0, function() {
-                $("#modal-itemtotalprice").text(newprice);
+                $("#modal-itemtotalprice").text(newprice_discount);
+                $("#modal-itemtotalprice-discount").text(newprice);
                 $("#modal-itemtotalprice-all").fadeTo(fade_speed, 1);
             });
         } else {
-            $("#modal-itemtotalprice").text(newprice);
+            $("#modal-itemtotalprice").text(newprice_discount);
+            $("#modal-itemtotalprice-discount").text(newprice);
         }
     }
 }
 
 function ismatch(itemindex, toppingindex1, toppingindex2){
-  //  log("itemindex: " + itemindex + " toppingindex1: " +  toppingindex1 + " toppingindex2: " + toppingindex2 + " currentaddonlist.length: " + currentaddonlist.length);
+    //  log("itemindex: " + itemindex + " toppingindex1: " +  toppingindex1 + " toppingindex2: " + toppingindex2 + " currentaddonlist.length: " + currentaddonlist.length);
     if(itemindex >= currentaddonlist.length){return false;}
     if (toppingindex1 == -1 || toppingindex2 == -1 || toppingindex1 >= currentaddonlist[itemindex].length || toppingindex2 >= currentaddonlist[itemindex].length){return false;}
     var topping1 = currentaddonlist[itemindex][toppingindex1];
@@ -2479,8 +2489,8 @@ function getcost(Toppings,addonprice1) {
     if (currentitem.toppingcost) {
         log(currentitem);
         var itemcost = parseFloat(currentitem.itemcost.replace("$", ""));
-    itemcost += parseFloat(currentitem.toppingcost) * Number(Toppings);
-   //     itemcost +=  Number(addonprice1);
+        itemcost += parseFloat(currentitem.toppingcost) * Number(Toppings);
+        //     itemcost +=  Number(addonprice1);
         return itemcost.toFixed(2);
     }
     return $("#modal-itemprice").text();
@@ -2520,55 +2530,56 @@ function list_addons(table, halves,itemname) {
                 var price = alladdons[currentaddontype+'_price'][addon];
 //   HTML += '<button id="'+price+'" class="fourthwidth bg-white2 bg-'+types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + ' $' + price + '</button>';
 
-if (itemname == '2 Hours Cleaning' || itemname == '3 Hours Cleaning' || itemname == '4 Hours Cleaning' || itemname == '2 Cleaners for 2 Hours' || itemname == '2 Cleaners for 3 Hours' || itemname == '2 Cleaners for 4 Hours') {
+                if (itemname == '2 Hours Cleaning' || itemname == '3 Hours Cleaning' || itemname == '4 Hours Cleaning' || itemname == '2 Cleaners for 2 Hours' || itemname == '2 Cleaners for 3 Hours' || itemname == '2 Cleaners for 4 Hours') {
 
-if (
-    addon == 'Remove Pet Hair' ||
-    addon == 'Clean Dishes' ||
-    addon == 'Clean Baseboards' ||
-    addon == 'Laundry Wash/Dry' ||
-    addon == 'Ironing & Hanging' ||
-    addon == 'Organize Closet'
-
-
-
-    ) {
-HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-}
-}
-else if (itemname == '5 Hours Cleaning' || itemname == '6 Hours Cleaning' || itemname == '2 Cleaners for 5 Hours' || itemname == '2 Cleaners for 6 Hours') {
-
-if (
-    addon == 'Remove Pet Hair' ||
-    addon == 'Clean Dishes' ||
-    addon == 'Clean Baseboards' ||
-    addon == 'Laundry Wash/Dry' ||
-    addon == 'Ironing & Hanging' ||
-    addon == 'Organize Closet' ||
-    addon == 'Inside Cabinets' ||
-    addon == 'Inside Fridge' ||
-    addon == 'Inside Oven' ||
-    addon == 'Clean Blinds'
-
-) {
-HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-}
-}
+                    if (
+                        addon == 'Remove Pet Hair' ||
+                        addon == 'Clean Dishes' ||
+                        addon == 'Clean Baseboards' ||
+                        addon == 'Laundry Wash/Dry' ||
+                        addon == 'Ironing & Hanging' ||
+                        addon == 'Organize Closet'
 
 
 
-else {
-HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
-}
+                    ) {
+                        HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+                    }
+                }
+                else if (itemname == '5 Hours Cleaning' || itemname == '6 Hours Cleaning' || itemname == '2 Cleaners for 5 Hours' || itemname == '2 Cleaners for 6 Hours') {
+
+                    if (
+                        addon == 'Remove Pet Hair' ||
+                        addon == 'Clean Dishes' ||
+                        addon == 'Clean Baseboards' ||
+                        addon == 'Laundry Wash/Dry' ||
+                        addon == 'Ironing & Hanging' ||
+                        addon == 'Organize Closet' ||
+                        addon == 'Inside Cabinets' ||
+                        addon == 'Inside Fridge' ||
+                        addon == 'Inside Oven' ||
+                        addon == 'Clean Blinds'
+
+                    ) {
+                        HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+                    }
+                }
+
+
+
+                else {
+                    HTML += '<button id="' + price + '" class="fourthwidth bg-white2 bg-' + types[i] + ' addon-addon list-group-item-action toppings_btn' + '">' + addon + '</button>';
+                }
 
 
 
 
-    }
+            }
         }
 
         HTML += '<button class="fourthwidth toppings_btn bg-white2 list-group-item-action" id="removeitemfromorder"><i style="font-size: 1rem !important;" class=" fa fa-arrow-left removeitemarrow" ></i></button>';
-        HTML += '<button class="btn-primary fourthwidth toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
+        // HTML += '<button class="btn-primary fourthwidth toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
+        HTML = '<button class="btn-primary btn-block toppings_btn" data-popup-close="menumodal" data-dismiss="modal" id="additemtoorder" onclick="additemtoorder();">ADD</button>';
 
         $("#addonlist").html(HTML);
         $(".addon-addon").click(
@@ -2805,22 +2816,22 @@ function loading(state, where) {
 }
 
 $.ajaxSetup({ xhr: function () {
-    var xhr = new window.XMLHttpRequest();
-    xhr.upload.addEventListener("progress", function(evt) {
-        if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total * 0.9;//stop event will handle 100%
-            NProgress.set(percentComplete);
-        }
-    }, false);
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function(evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = evt.loaded / evt.total * 0.9;//stop event will handle 100%
+                NProgress.set(percentComplete);
+            }
+        }, false);
 
-    xhr.addEventListener("progress", function(evt) {
-        if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total * 0.9;//stop event will handle 100%
-            NProgress.set(percentComplete);
-        }
-    }, false);
-    return xhr;
-} });
+        xhr.addEventListener("progress", function(evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = evt.loaded / evt.total * 0.9;//stop event will handle 100%
+                NProgress.set(percentComplete);
+            }
+        }, false);
+        return xhr;
+    } });
 
 function checkblock(e) {
     var checked = $(e.target).is(':checked');

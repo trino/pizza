@@ -37,9 +37,9 @@
                     <DIV ID="newsletter"></DIV>
                 </DIV>
 
-                <div class="alert alert-info mt-3 mb-0 font-size-85rem">
-                     Add new address or credit card on checkout
-                    <br>  <a href="help" class="btn-link">More info</a>
+                <div class="alert alert-warning mt-3 mb-0 font-size-85rem">
+                     You can add new addresses or credit cards on checkout
+                    <!--br>  <a href="help" class="btn-link">More info</a-->
                 </div>
                 <div CLASS="editprofilediv mt-2 dont-show">
                     <button ONCLICK="handlelogin('logout');" CLASS="btn {{btncolor}} pull-left" href="#">LOG OUT</button>

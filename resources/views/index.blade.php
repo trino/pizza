@@ -67,15 +67,15 @@
                     <div class="pt-5 pb-4" style=" ">
                         <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 1.95rem;font-weight: bold">Hello, Hamilton!</h1>
                         <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;font-we4ight: bold" class="display-4 text-normal banner-text">The easiest way to book a home cleaning expert</h1>
-                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Grand Opening Special!</h1>
+                        <h1 style="font-weight:bold;color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Grand Opening Special!</h1>
                         <!--h1 class="display-4 banner-text text-normal" style="color: #fff !important;text-shadow: 2px 8px 6px rgba(0,0,0,0.25), 0px -5px 35px rgba(255,255,255,0.25);
                         font-size: 2.25rem;font-weight: bold">40% Off All Services</h1-->
-                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2.25rem;font-weight: bold">40% Off All Services</h1>
+                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2rem;font-weight: bold">40% Off All Services!</h1>
 
                     </div>
                     <div class="">
-                        <a class="btn btn-primary btn-lg" href="#booknow">Book now</a>
-                        <a class="btn btn-secondary btn-lg" HREF="<?= webroot("help"); ?>" role="button">Learn more</a>
+                        <a class="btn btn-primary b3tn-lg" href="#booknow">Book now</a>
+                        <a class="btn btn-secondary b3tn-lg" HREF="<?= webroot("help"); ?>" role="button">Learn more</a>
                     </div>
                     <h1 style="color: #666 !important;text-shadow: #dadada 1px 1px 0;font-size: 1rem;font-wei4ght: bold" class="display-4 text-normal banner-text"><br>Contact:<br>info@canbii.com<br>(289) 683-1944   </h1>
                 </div>
@@ -161,6 +161,73 @@
 
             </div>
             @endif
+
+
+
+
+            <div class="row my-3">
+            </div>
+            <div class="row  list-group-item">
+                <div class="col-lg-2 "></div>
+                <div class="col-lg-8 ">
+
+
+            <h1><strong>What's included in the service?</strong></h1>
+            <br>
+            <p>All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. If you'd like your cleaner to use your own products, please add a note to your appointment with relevant
+                instructions. The following list outlines common tasks our cleaners perform on the job:
+
+            </p>
+            <strong>Bathrooms</strong>
+            <ul>
+                <li> Cleaning toilets, showers, and sinks
+                </li>
+                <li> Dusting all surfaces
+                </li>
+                <li> Wiping down all mirrors and glass surfaces/furniture
+                </li>
+                <li> Vacuuming/Cleaning floors
+                </li>
+                <li> Taking out garbage
+                </li>
+            </ul>
+
+            <strong>Bedrooms & Common Areas</strong>
+            <ul>
+                <li> General dusting of all surfaces
+                </li>
+                <li> Wiping down mirrors and glass surfaces/furniture
+                </li>
+                <li> Vacuuming / Cleaning floors
+                </li>
+                <li> Taking out garbage
+                </li>
+            </ul>
+
+            <strong>Kitchen</strong>
+            <ul>
+                <li> General dusting of all surfaces
+                </li>
+                <li> Washing dishes / loading dishwasher
+                </li>
+                <li> Cleaning exterior surfaces (stove, cabinets, fridge)
+                </li>
+                <li> Vacuuming / Cleaning floors
+                </li>
+                <li> Taking out garbage
+                </li>
+            </ul>
+            <p> We pay special attention to details of every project to ensure the complete satisfaction of each client. ​Our goal is to make sure that we leave your home with sparkling kitchen, bathrooms, and
+                floors,
+                organized and tidy living spaces, and refreshing aromas of cleanliness.
+            </p>
+
+
+                </div>
+                <div class="col-lg-2  text-center"></div>
+
+            </div>
+
             <div class="row my-3">
             </div>
             <div class="row  list-group-item">
@@ -168,10 +235,14 @@
                 <div class="col-lg-8  text-center">
 
 
-                    <h3 class="mb-2" name="booknow">What's included in a cleaning?</h3>
-                    <p> All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. See what's included in a cleaning service <a class="" HREF="<?= webroot("help"); ?>" role="button">here</a>.
+                    <h1 class="mb-2" name="booknow"><strong>Ready to book your first cleaning?</strong></h1>
+                    <p> We offer simple flat pricing by the hour. We'll bring all the supplies. No surprises. Cancel anytime! </p>
 
-                    </p>
+
+                    <div class="alert alert-success" role="alert">
+                        Grand Opening Special — <strong>40% Off All Services!</strong>
+                    </div>
+
 
                     <!--p>
                         Trusted - All cleaners are interviewed and background checked
@@ -179,11 +250,6 @@
                         <br>Cancel / Reschedule - Free 48 hrs before appointment, $25 otherwise
                         <br>Our Promise - 100% Satisfaction Guarantee, we will re-clean for free
                     </p-->
-                    <br>
-
-                    <h2 style="font-size: 1.25rem !important;" class="mb-2" id="booknow">Ready to book your first cleaning?</h2>
-                    <p>We offer simple flat pricing by the hour. No surprises. Cancel anytime!
-                    </p>
 
 
                 </div>
@@ -221,7 +287,7 @@
                 $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime2($menublade_filename) . ")";
             }
             ?>
-            <div class="col-lg-4 col-md-12 bg-inverse" titledebug="popups_checkout">
+            <div class="col-lg-6  bg-inverse" titledebug="popups_checkout">
                 @include("popups_checkout")
             </div>
         </div>

@@ -167,7 +167,7 @@
             } else {
                 $timer = false;
             }
-            $duration = GenerateDate($date, $timer, true) . " at " . GenerateTime(intval($Time));
+            $duration = GenerateDate($date, $timer, true) . " " . GenerateTime(intval($Time));
         } else if ($Order["deliverytime"] == "Deliver Now") {
             $time = strtotime($Order["placed_at"]) + ($minutes * 60);
             $open = parsetime(gethours($Order["restaurant_id"])[$day_of_week]["open"]) + ($minutes * 60);

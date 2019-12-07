@@ -157,9 +157,9 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 // dd($categories);
 ?>
-<DIV CLASS="col-lg-8 bg-white">
+<DIV CLASS="col-lg-6 bg-white">
     <DIV CLASS="row no-margin">
-        <div class="col-lg-6 col-md-12 bg-white ismenu">
+        <div class="col-lg-12 bg-white ismenu">
             @foreach ($categories as $category)
                 <?php
                 $toppings_extra = '+';
@@ -258,8 +258,8 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                         @endif
 
 
-                        <span class="align-middle item-name text-se5condary" style="font-size: .875rem">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;"> <strike class=" text-secondary">${{number_format($menuitem["price"], 0)}}</strike>
+                        <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
+                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;"> <strike class=" text-secondary">${{number_format($menuitem["price"], 2)}}</strike>
 
                                 <strong>${{number_format($menuitem["price"]*.6, 2)}}</strong>
                             </span>

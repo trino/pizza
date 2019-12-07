@@ -229,7 +229,7 @@
                 <h3><?= getsetting("aboutus"); ?></h3>
                 <div class="card-block ">
 
-                    <h1><strong>The Premier On Demand Home Cleaning App</strong></h1>
+                    <h1><strong>The Premier On-Demand Home Cleaning App</strong></h1>
                     <br>
                     <p>
                         <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is

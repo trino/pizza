@@ -276,11 +276,11 @@
                             switch ($tablename) {
                                 case "toppings":
                                     $itemtype = "Pizza";
-                                    $none = "No Notes";
+                                    $none = "";
                                     break;
                                 case "wings_sauce":
                                     $itemtype = "lb";
-                                    $none = "No Notes";
+                                    $none = "";
                                     break;
                             }
                             if (isset($addon->addons)) {

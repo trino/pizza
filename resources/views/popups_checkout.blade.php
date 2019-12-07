@@ -108,7 +108,7 @@
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <textarea placeholder="Notes For The Cleaner" id="cookingnotes" class="form-control" maxlength="255"></textarea>
+                                        <textarea style="height: 90px !important;" placeholder="Notes for the cleaner" id="cookingnotes" class="form-control" maxlength="999"></textarea>
                                     </div>
                                 <?php break; case "creditcard": ?>
                                     <div class="input_left_icon" id="red_card" titledebug="creditcard">
