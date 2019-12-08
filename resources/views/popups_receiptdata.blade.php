@@ -387,7 +387,7 @@
         if($orderid) {insertdb("orders", array("id" => $orderid, "price" => $total));}//saved for stripe
 
         if ($Order["cookingnotes"]){
-            echo '<TR><TD COLSPAN="' . 2 . '"><h2>Notes </h2>' . $Order["cookingnotes"] . '</TD></TR>';
+            echo '<TR><TD COLSPAN="' . 2 . '"><h2 style="margin-bottom:0">Notes </h2>' . $Order["cookingnotes"] . '</TD></TR>';
         }
     }
     echo '</TABLE>';

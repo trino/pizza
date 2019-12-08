@@ -123,7 +123,7 @@
     </ul>
 
     <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold" ><?= sitename; ?></span><br>
-        <span style="color: white;font-weight: normal" >On-Demand Home Cleaning</span>
+        <span style="color: #efefef;font-weight: normal;fo3nt-size: 90%;" >On-Demand Home Cleaning</span>
 
     </a>
 
@@ -285,4 +285,10 @@
         echo view("popups_login", array("minimal" => $minimal, "noclose" => $noclose))->render();
     }
 ?>
+
+
+
+
+
+
 </html>

@@ -830,9 +830,9 @@ function generatereceipt(forcefade) {
 
             tempHTML += '</SPAN> <span class="mr-auto itemname">' + itemname + '</SPAN>';
             tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
-            tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus text-muted"></I></button>';
+            tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus-circle text-danger"></I></button>';
             if (hasaddons) {
-                tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt text-muted"></I></button>';
+               // tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt text-muted"></I></button>';
             } else {
                 tempHTML += '<button class="bg-transparent" onclick="cloneitem(this, ' + itemid + ');"><I CLASS="fa fa-plus text-muted"></I></button>';
             }
@@ -2320,7 +2320,7 @@ if (isUndefined(unikeys)) {
         email_needed: "Please enter a valid email address",
         long_lat: "Longitude and/or latitude missing",
         ten_closest: "10 closest restaurants",
-        clear_order: "Clear our order?",
+        clear_order: "Clear your order?",
         myaddress: "My Addresses",
         noaddresses: 'No Addresses Saved',
         mycreditcard: 'My Credit Cards',

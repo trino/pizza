@@ -291,8 +291,9 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                 </h2>
                 <button data-dismiss="modal" class="btn align-middle ml-auto bg-transparent"><i class="fa fa-times"></i></button>
             </div>
-            <div class="list-group-item toppinglistitem">
+            <div class="list-group-item toppinglistitem pb-3">
                 <SPAN ID="modal-itemdescription"></SPAN>
+
             </div>
             <div class="modal-body menumodal">
                 <DIV ID="addonlist" class="addonlist"></DIV>

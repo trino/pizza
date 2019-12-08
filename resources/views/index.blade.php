@@ -77,11 +77,10 @@
                         <a class="btn btn-primary b3tn-lg" href="#booknow">Book now</a>
                         <a class="btn btn-secondary b3tn-lg" HREF="<?= webroot("help"); ?>" role="button">Learn more</a>
                     </div>
-                    <h1 style="color: #666 !important;text-shadow: #dadada 1px 1px 0;font-size: 1rem;font-wei4ght: bold" class="display-4 text-normal banner-text"><br>Contact:<br>info@canbii.com<br>(289) 683-1944   </h1>
+                    <h1 style="color: #666 !important;text-shadow: #dadada 1px 1px 0;font-size: 1rem;font-wei4ght: bold" class="display-4 text-normal banner-text"><br>Contact Canbii Cleaners<br>info@canbii.com<br>(289) 683-1944   </h1>
                 </div>
             </div>
         </div>
-
 
 
         <div class="container">
@@ -170,9 +169,11 @@
             <div class="row  list-group-item">
                 <div class="col-lg-2 "></div>
                 <div class="col-lg-8 ">
+                <div class="card">
+                <div class="card-block">
 
-
-            <h1><strong>What's included in the service?</strong></h1>
+<br>
+            <h1 class="text-center"><strong>What's included in the service?</strong></h1>
             <br>
             <p>All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. If you'd like your cleaner to use your own products, please add a note to your appointment with relevant
                 instructions. The following list outlines common tasks our cleaners perform on the job:
@@ -224,6 +225,8 @@
 
 
                 </div>
+                </div>
+                </div>
                 <div class="col-lg-2  text-center"></div>
 
             </div>
@@ -235,7 +238,11 @@
                 <div class="col-lg-8  text-center">
 
 
-                    <h1 class="mb-2" name="booknow"><strong>Ready to book your first cleaning?</strong></h1>
+
+
+
+                    <h1 class="mb-2"  id="booknow"><strong>Ready to book your first cleaning?</strong></h1>
+
                     <p> We offer simple flat pricing by the hour. We'll bring all the supplies. No surprises. Cancel anytime! </p>
 
 

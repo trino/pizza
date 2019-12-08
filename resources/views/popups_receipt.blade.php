@@ -302,7 +302,7 @@
             <TD ONCLICK="addmarker('<?= $Restaurant["name"] . "'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                 <?php
                 if ($Order["type"] == 0) {
-                    echo '<h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Customer Info</h2>';
+                    echo '<br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Customer Info</h2>';
                     echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
                     if ($Order["unit"]) {
                         echo $Order["unit"] . '<BR>';
