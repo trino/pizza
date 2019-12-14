@@ -88,7 +88,7 @@
             <div class="row my-4">
                 <div class="col-lg-3 pa-3">
                     <div class="   list-group-item">
-                        <div class="card-body bg-white">
+                        <div class="card card-body bg-white">
                             <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
 
                             <h5 class="card-title"> CHOOSE YOUR TIME
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-lg-3 pa-3 ">
                     <div class="   list-group-item">
-                        <div class="card-body bg-white">
+                        <div class="card card-body bg-white">
                             <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
 
                             <h5 class="card-title"> PAY SECURELY ONLINE
@@ -113,7 +113,7 @@
                 </div>
                 <div class="col-lg-3 pa-3 ">
                     <div class="   list-group-item">
-                        <div class="card-body bg-white">
+                        <div class="card card-body bg-white">
                             <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
 
                             <h5 class="card-title"> SIT BACK & RELAX
@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-lg-3 pa-3  ">
                     <div class=" list-group-item">
-                        <div class="card-body bg-white">
+                        <div class="card card-body bg-white">
                             <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
                             <h5 class="card-title"> THE CANBII PROMISE
                             </h5>

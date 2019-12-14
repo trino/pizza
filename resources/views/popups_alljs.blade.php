@@ -669,6 +669,7 @@ includefile("public/scripts/api.js");
         dayofweek = now.getDay();
         if (isopen(hours, dayofweek, temp[2]) > -1) {
             thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
+           // HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '" dayname="' + thedayname + '" ID="asap">ASAP</option>';
             HTML = '<option value="Deliver Now" timestamp="' + totimestamp(time, now) + '" dayname="' + thedayname + '" ID="asap">ASAP (' + thedayname + ')</option>';
             time = addtotime(time, increments);
         }
@@ -687,7 +688,7 @@ includefile("public/scripts/api.js");
                     }
                     thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
                     var timestamp = totimestamp(time, now);
-                    var tempstr = '<OPTION VALUE="' + thedate + " " + time.pad(4) + '" timestamp="' + timestamp + '"';
+                    var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + timestamp + '"';
                     tempstr += ' now="' + now + '"';
                     HTML += tempstr + '>' + thedayname + '</OPTION>';
                 }

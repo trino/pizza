@@ -2144,8 +2144,8 @@ function clearvalidation(specificselector){
     $(".error").hide();
 }
 
-var daysofweek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-var monthnames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var daysofweek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var monthnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function now() {
     if(testing){return newtime;}

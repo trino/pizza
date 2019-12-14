@@ -167,7 +167,7 @@
             } else {
                 $timer = false;
             }
-            $duration = GenerateDate($date, $timer, true) . " " . GenerateTime(intval($Time));
+            $duration = GenerateDate($date, $timer, true) . " at " . GenerateTime(intval($Time));
         } else if ($Order["deliverytime"] == "Deliver Now") {
             $time = strtotime($Order["placed_at"]) + ($minutes * 60);
             $open = parsetime(gethours($Order["restaurant_id"])[$day_of_week]["open"]) + ($minutes * 60);
@@ -180,7 +180,7 @@
             } else {
                 $minutes = ceil(($time - time()) / 60);
             }
-            $duration = GenerateDate(date("F j ", $time), $timer, true) . "at " . date("g:i A", $time);
+            $duration = GenerateDate(date("F j ", $time), $timer, true) . " at " . date("g:i A", $time);
         } else {
             $timer = false;
         }
@@ -220,7 +220,7 @@
     @if($includeextradata)
         @if($timer)
         @elseif($place != "email")
-            <span class="badge badge-pill badge-danger">[EXPIRED]</span>
+            <!--span class="badge badge-pill badge-danger">[EXPIRED]</span-->
         @endif
     @endif
 

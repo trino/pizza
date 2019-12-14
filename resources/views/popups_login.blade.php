@@ -242,7 +242,6 @@
                 <br> Certified Professional Cleaners
                 <br> ALL Cleaning Supplies Included
                 <br> 100% Satisfaction Guarantee
-                <br> We Are Bonded and Insured
 
             </div>
 
