@@ -624,6 +624,8 @@ includefile("public/scripts/api.js");
     function verbosedate(date, today, today_text, tomorrow, tomor_text, time) {
         var dayofweek = date.getDay();
         var thetime = " at " + GenerateTime(time);
+        return daysofweek[dayofweek] + ", " + monthnames[date.getMonth()] + " " + date.getDate() + thetime;
+
         if (dayofweek == today) {
             return today_text + thetime;
         } else if (dayofweek == tomorrow) {
@@ -642,7 +644,7 @@ includefile("public/scripts/api.js");
         var minutes = <?= getdeliverytime(); ?>;
         var dayofweek = getNow(3);//day of week (virtual)
         var minutesinaday = 1440;
-        var totaldays = 7;
+        var totaldays = 14;
         var dayselapsed = 0;
         var today = getNow(3, false);//day of week (actual)
         var tomorrow = validdayofweek(today + 1);
@@ -676,6 +678,8 @@ includefile("public/scripts/api.js");
         var thetime, minutes, thedayname, thedate;
         var totalInc = (minutesinaday * totaldays) / increments;
 
+        var next_day = 0;
+        var week_counter = 0;
         for (var i = 0; i < totalInc; i++) {
             if (isopen(hours, dayofweek, time) > -1) {
                 minutes = time % 100;
@@ -684,8 +688,12 @@ includefile("public/scripts/api.js");
                     thetime = GenerateTime(time);
                     dayofweek = now.getDay();
                     if (dayofweek == tomorrow) {
-                        now = tomorrowdate;
+                        //now = tomorrowdate;
                     }
+
+
+
+
                     thedayname = verbosedate(now, today, today_text, tomorrow, tomor_text, time);
                     var timestamp = totimestamp(time, now);
                     var tempstr = '<OPTION VALUE="' + thedate + " at " + time.pad(4) + '" timestamp="' + timestamp + '"';
@@ -698,9 +706,19 @@ includefile("public/scripts/api.js");
                 time = 0;
                 dayselapsed += 1;
                 dayofweek = (dayofweek + 1) % 7;
-                now = new Date(now.getTime() + 24 * 3600 * 1000);
-                if (dayofweek == today || dayselapsed == totaldays) {
-                    i = totalInc;
+                now = new Date(now.getTime() + 86400000+ week_counter);
+                console.log(now);
+
+                if(next_day == 1 ){
+                    next_day = 0;
+                //    week_counter =  604800000;
+                }else{
+                    week_counter = 0;
+                }
+
+                if (dayofweek == today) {
+                    next_day = 1;
+                    // i = totalInc;
                 }
             }
         }

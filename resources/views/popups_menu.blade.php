@@ -147,7 +147,7 @@ $itemsInCol = 0;
 $CurrentCol = 1;
 $CurrentCat = 0;
 
-$newcolumns = ["small_home", "medium_home", "large_home", "custom_cleaning", "2_cleaners", "tip"];//which categories to start a new column on
+$newcolumns = ["monthly_cleaning", "weekly_cleaning", "daily_cleaning"];//which categories to start a new column on
 $fontawesomeicons = [
     "far fa-moon" => ["color" => "bg-dark-blue", "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
     "far fa-sun" => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
@@ -157,9 +157,11 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 // dd($categories);
 ?>
-<DIV CLASS="col-lg-6 bg-white">
+<DIV CLASS="col-lg-8 bg-white">
     <DIV CLASS="row no-margin">
-        <div class="col-lg-12 bg-white ismenu">
+
+
+        <div class="col-lg-6 bg-white ismenu">
             @foreach ($categories as $category)
                 <?php
                 $toppings_extra = '+';
@@ -176,11 +178,11 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                 ?>
 
 
-                <div id="home-section" class="image-bg vertical-align" style="background-image:url({{webroot("public/images/". $category['image']) }});">
+                <div id="home-section" class="image-bg vertical-align bg-{{$category['image']}}" style="bac4kground-image:url({{webroot("public/images/". $category['image']) }});">
                     <div class="container-fluid">
-                        <div class="home-content" style="bottom:10px;">
-                            <h4 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['category']}}</h4>
-                            <!--h6 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['description_main']}}</h6-->
+                        <div class="home-content" style="bottom:20px;">
+                            <h4 class="text-center" style="t33ext-shadow: black 0px 0px 10px;">{{$category['category']}}</h4>
+                            <h6 class="text-center" style="te33xt-shadow: black 0px 0px 10px;font-weight: normal !important;">{{$category['description_main']}}</h6>
                         </div>
                     </div>
                 </div>
@@ -190,9 +192,11 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                     <button
 
                             @if($catclass=='custom_cleaning' || $catclass=='2_cleaners')
+
+
                             @endif
 
-
+style="width:50%;float:left"
                             class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
                             itemid="{{$menuitem["id"]}}"
                             itemname="{{trim($menuitem['item'])}}"
@@ -258,13 +262,20 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                         @endif
 
 
-                        <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;"> <strike class=" text-secondary">${{number_format($menuitem["price"], 2)}}</strike>
+                        <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">
+                            {{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Cleaning"), "", $menuitem['item']) }}
 
-                                <strong>${{number_format($menuitem["price"]*.6, 2)}}</strong>
+
+                        </span>
+                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
+                                <strong class="">${{number_format($menuitem["price"], 0)}}</strong>
+
+                                <!--strong>${{number_format($menuitem["price"]*.6, 2)}}</strong-->
                             </span>
                     </button>
                 @endforeach
+
+
                 @if(in_array($catclass, $newcolumns))
         </div>
         <div class="col-lg-6 col-md-12 bg-white ismenu">

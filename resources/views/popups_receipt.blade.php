@@ -100,7 +100,7 @@
             return strtotime(date("j F Y ") . left($Time, 1) . " hours " . right($Time, 2) . " minutes");
         }
 
-        function roundTime($timestamp, $increment = 15)
+        function roundTime($timestamp, $increment = 30)
         {
             $BEFOREminutes = date('i', $timestamp);
             $AFTERminutes = $increment + $BEFOREminutes - ($BEFOREminutes % $increment);
@@ -347,10 +347,10 @@
                 about your professional prior to your appointment.
                 <br><br>
                 <strong> Can I skip or reschedule bookings? </strong><br>
-                Cancellations up to 24 hours before your appointment are fully refundable with a $25 service fee.
+                Cancellations up to 24 hours before your appointment are fully refundable.
                 <br><br>
                 <strong> What if I cancel within 24 of my appointment? </strong><br>
-                Last-minute cancellations lead to unfillable time slots in your cleaner's schedule, so cancellations within 24 hours of your appointment are charged in full.
+                Last-minute cancellations lead to unfillable time slots in your cleaner's schedule, so cancellations within 24 hours of your appointment are subject to a $25 cancellation fee.
                 <br><br>
                 <strong> I need more help. </strong><br>
                 Please contact us at (289) 683-1944

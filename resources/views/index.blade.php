@@ -63,21 +63,17 @@
 
         <div id="home-section" class=" image-bg vertical-align" style="background-image:url({{webroot("public/images/banner.jpg")}});height:500px;border-radius: 0;">
             <div class="container list-group-item" style="border: 0 !important;">
-                <div class="">
+                <div class="col-md-6">
                     <div class="pt-5 pb-4" style=" ">
-                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 1.95rem;font-weight: bold">Hello, Hamilton!</h1>
-                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.75rem;font-we4ight: bold" class="display-4 text-normal banner-text">The easiest way to book a home cleaning expert</h1>
-                        <h1 style="font-weight:bold;color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Grand Opening Special!</h1>
-                        <!--h1 class="display-4 banner-text text-normal" style="color: #fff !important;text-shadow: 2px 8px 6px rgba(0,0,0,0.25), 0px -5px 35px rgba(255,255,255,0.25);
-                        font-size: 2.25rem;font-weight: bold">40% Off All Services</h1-->
-                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2rem;font-weight: bold">40% Off All Services!</h1>
-
+                        <h1 class="display-4 banner-text text-normal" style="color: #666 !important;font-size: 2rem;font-weight: bold;padding-bottom:1rem;">Now Serving Hamilton & the GTA</h1>
+                        <h1 style="color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1.65rem;font-we4ight: bold" class="display-4 text-normal banner-text">The easiest way to book a home or business cleaning pro</h1>
+                        <h1 style="font-weight:bold;color: #666 !important;text-shadow: #e0e0e0 1px 1px 0;font-size: 1rem;font-wei4ght: bold;padding-top:1rem;" class="display-4 text-normal banner-text">Starting at $28/hour</h1>
                     </div>
                     <div class="">
                         <a class="btn btn-primary b3tn-lg" href="#booknow">Book now</a>
                         <a class="btn btn-secondary b3tn-lg" HREF="<?= webroot("help"); ?>" role="button">Learn more</a>
                     </div>
-                    <h1 style="color: #666 !important;text-shadow: #dadada 1px 1px 0;font-size: 1rem;font-wei4ght: bold" class="display-4 text-normal banner-text"><br>Contact Canbii Cleaners<br>info@canbii.com<br>(289) 683-1944   </h1>
+                    <h1 style="color: #666 !important;text-sh7adow: #dadada 1px 1px 0;font-size: 1rem;font-wei4ght: bold" class="display-4 text-normal banner-text"><br>Contact Us<br>info@canbii.com<br>(289) 683-1944</h1>
                 </div>
             </div>
         </div>
@@ -87,9 +83,9 @@
 
             <div class="row my-4">
                 <div class="col-lg-3 pa-3">
-                    <div class="   list-group-item">
-                        <div class="card card-body bg-white">
-                            <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
+                    <div class="   list-group-item" style="border: 0 !important;">
+                        <div class="card card-body">
+                            <h1 class="mb-3 text-center"><i class="fa fa-clock mr-1 " style="color:  #d7d7d7;"></i></h1>
 
                             <h5 class="card-title"> CHOOSE YOUR TIME
                             </h5>
@@ -100,9 +96,8 @@
                 </div>
                 <div class="col-lg-3 pa-3 ">
                     <div class="   list-group-item">
-                        <div class="card card-body bg-white">
-                            <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
-
+                        <div class="card card-body">
+                            <h1 class="mb-3 text-center"><i class="fa fa-lock mr-1 " style="color:  #d7d7d7;"></i></h1>
                             <h5 class="card-title"> PAY SECURELY ONLINE
                             </h5>
                             <p class="card-text"> Canbii uses the same technology that bank uses for secure online payments.
@@ -113,9 +108,8 @@
                 </div>
                 <div class="col-lg-3 pa-3 ">
                     <div class="   list-group-item">
-                        <div class="card card-body bg-white">
-                            <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
-
+                        <div class="card card-body">
+                            <h1 class="mb-3 text-center"><i class="fa fa-coffee mr-1 " style="color:  #d7d7d7;"></i></h1>
                             <h5 class="card-title"> SIT BACK & RELAX
                             </h5>
                             <p class="card-text"> Your cleaner will arrive at your scheduled date and get your home spic and span.
@@ -126,8 +120,8 @@
                 </div>
                 <div class="col-lg-3 pa-3  ">
                     <div class=" list-group-item">
-                        <div class="card card-body bg-white">
-                            <h3 class="mb-3 text-center"><i class="fa fa-leaf mr-1 " style="color:  #d7d7d7;"></i></h3>
+                        <div class="card card-body">
+                            <h1 class="mb-3 text-center"><i class="fa fa-handshake mr-1 " style="color:  #d7d7d7;"></i></h1>
                             <h5 class="card-title"> THE CANBII PROMISE
                             </h5>
                             <p class="card-text"> With our 100% Satisfaction Guarantee, we will re-clean for free. No questions asked.
@@ -166,6 +160,7 @@
 
             <div class="row my-3">
             </div>
+            @if(false)
             <div class="row  list-group-item">
                 <div class="col-lg-2 "></div>
                 <div class="col-lg-8 ">
@@ -233,6 +228,7 @@
 
             <div class="row my-3">
             </div>
+            @endif
             <div class="row  list-group-item">
                 <div class="col-lg-2  text-center"></div>
                 <div class="col-lg-8  text-center">
@@ -241,15 +237,24 @@
 
 
 
-                    <h1 class="mb-2"  id="booknow"><strong>Ready to book your first cleaning?</strong></h1>
+                    <h1 class="mb-2"  id="booknow"><strong>Ready to book?</strong></h1>
 
-                    <p> We offer simple flat pricing by the hour. We'll bring all the supplies. No surprises. Cancel anytime! </p>
+                    <p>
+                        Billed by the hour • We bring all the supplies • Cancel anytime!</p>
+                    <p>
+
 
 
                     <div class="alert alert-success" role="alert">
-                        Grand Opening Special — <strong>40% Off All Services!</strong>
+                        <strong>100% Satisfaction Guarantee</strong>
+<br>
+                        If you're unhappy with the service, we will send a new cleaner and re-clean for free!
                     </div>
 
+
+                        <a class="btn btn-secondary btn-sm" HREF="<?= webroot("help"); ?>" role="button">Still not convinced?</a>
+
+                    </p>
 
                     <!--p>
                         Trusted - All cleaners are interviewed and background checked
@@ -268,7 +273,10 @@
         </div>
 
     @endif
-    <div class="container">
+
+
+    <div class="container" style="   3bo3x-shadow: 0 2rem 1.5rem -1.5rem rgba(33,37,41,.15), 0 0 1.5rem 0.5rem rgba(33,37,41,.05) !important;
+    overflow: hidden;">
         <div class="row">
             <?php
             $doCache = $GLOBALS["settings"]["domenucache"];
@@ -294,7 +302,7 @@
                 $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime2($menublade_filename) . ")";
             }
             ?>
-            <div class="col-lg-6  bg-inverse" titledebug="popups_checkout">
+            <div class="col-lg-4  bg-inverse" titledebug="popups_checkout">
                 @include("popups_checkout")
             </div>
         </div>
@@ -303,7 +311,7 @@
         <div class="row">
             <div class="col-md-12">
                 <label class=" d-block text-center py-2 mt-4">
-                    Copyright &copy; 2019 / Canbii Cleaners / <a HREF="<?= webroot("help");?>" class="text-muted">Terms</a>
+                    Copyright &copy; 2020 / Canbii Cleaners / <a HREF="<?= webroot("help");?>" class="text-muted">Terms</a>
                 </label>
             </div>
         </div>

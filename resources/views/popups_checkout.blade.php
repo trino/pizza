@@ -108,7 +108,10 @@
                                         </span>
                                     </div>
                                     <div class="input_right">
-                                        <textarea style="height: 90px !important;" placeholder="Notes for the cleaner" id="cookingnotes" class="form-control" maxlength="999"></textarea>
+                                        <textarea style="height: 90px !important;"
+                                                  placeholder="What do you need cleaned?&#10;Please be as detailed as possible&#10;We'll reach out with any questions"
+
+                                                  id="cookingnotes" class="form-control" maxlength="999"></textarea>
                                     </div>
                                 <?php break; case "creditcard": ?>
                                     <div class="input_left_icon" id="red_card" titledebug="creditcard">
@@ -227,8 +230,8 @@
                     <button class="btn-block list-padding radius-bottom btn {{btncolor}} text-white payfororder" onclick="payfororder(); return false;">
 
 <div class="clearfix"></div>
-                        <img class="float-left" style="width:105px;" src="<?=webroot("images/stripe_icon.png")?>" />
-                        <span style="float: right">
+                        <img class="float-left" style="width:135px;" src="<?=webroot("images/stripe_icon.png")?>" />
+                        <span style="float: right;padding:4px;">
                             <strong>BOOK NOW</strong>
 
 

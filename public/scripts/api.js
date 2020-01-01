@@ -434,10 +434,19 @@ function loadmodal(element, notparent) {
         }
     }
     currentitemID = -1;
+    var per_time = "";
+    if (itemname.indexOf("Daily") > 0) {
+        per_time = " / Day";
+    } else if (itemname.indexOf("Weekly") > 0) {
+        per_time = " / Week";
+    } else if (itemname.indexOf("Monthly") > 0) {
+        per_time = " / Month";
+    }
+
     var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline">' +
         '<div class="ml-2 pull-left d-inline" style="font-weight: normal !important;FLOAT:LEFT">' +
-        '<strike>$<SPAN ID="modal-itemtotalprice-discount"></SPAN></strike>' +
-        '</div><div STYLE="FLOAT:LEFT" class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div>' +
+        '<strong>$<SPAN ID="modal-itemtotalprice-discount"></SPAN>'+per_time+'</strong>' +
+        '</div><div STYLE="FLOAT:LEFT;display:none !important;" class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div>' +
         '  <!--i class="fa fa-shopping-cart MR-2"></i--></div><DIV CLASS="mr-2" STYLE="FLOAT:RIGHT"> ADD</DIV> </SPAN>';
 
     if (!isUndefined(notparent)) {
@@ -1532,7 +1541,7 @@ function checknewsletter(status, where){
 
 //generate a list of addresses and send it to the alert modal
 function addresses() {
-    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2><SPAN ID="addresses">';
+    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2><br><SPAN ID="addresses">';
     var number = $("#add_number").val();
     var street = $("#add_street").val();
     var city = $("#add_city").val();
@@ -1552,14 +1561,14 @@ function addresses() {
 }
 
 function creditcards() {
-    var HTML = '<DIV CLASS="section mt-3"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
+    var HTML = '<DIV CLASS="section mt-3"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><br><DIV ID="cardlist">';
     if (!loadsavedcreditinfo()) {
         return HTML + makestring("{nocreditcards}");
     }
     for (var i = 0; i < userdetails.Stripe.length; i++) {
         var card = userdetails.Stripe[i];
         //id,object=card,brand,country,customer,cvc_check=pass,exp_month,exp_year=2018,funding=credit,last4=4242
-        HTML += '<DIV id="card_' + i + '" class="list-group-item"><A ONCLICK="deletecard(' + i + ", '" + card.id + "', " + card.last4 + ", '" + card.exp_month.pad(2) + "', " + right(card.exp_year, 2) + ');" CLASS="cursor-pointer">';
+        HTML += '<DIV id="card_' + i + '" class=""><A ONCLICK="deletecard(' + i + ", '" + card.id + "', " + card.last4 + ", '" + card.exp_month.pad(2) + "', " + right(card.exp_year, 2) + ');" CLASS="cursor-pointer">';
         HTML += '<i class="fa fa-fw fa-times error"></i></A> ' + card.brand + ' x-' + card.last4 + ' Expires: ' + card.exp_month.pad(2) + '/20' + right(card.exp_year, 2) + '</DIV>';
     }
     return HTML + '</DIV></DIV>';

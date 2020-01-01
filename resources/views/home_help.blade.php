@@ -160,7 +160,7 @@
 
         <DIV class="row">
             <div class="col-sm-12 pt-3 ">
-                <div class="card-block  ">
+                <div class="card-block  pt-2">
 
 
                     <h1><strong>What's included in the service?</strong></h1>
@@ -208,9 +208,8 @@
                         <li> Taking out garbage
                         </li>
                     </ul>
-                    <p> We pay special attention to details of every project to ensure the complete satisfaction of each client. ​Our goal is to make sure that we leave your home with sparkling kitchen, bathrooms, and
-                        floors,
-                        organized and tidy living spaces, and refreshing aromas of cleanliness.
+                    <p> We pay special attention to details of every project to ensure the complete satisfaction of each client. ​Our goal is to make sure that we leave your property with sparkling kitchen, bathrooms, and
+                        floors, organized and tidy living spaces, and refreshing aromas of cleanliness.
                     </p>
 
 
@@ -229,10 +228,10 @@
                 <h3><?= getsetting("aboutus"); ?></h3>
                 <div class="card-block ">
 
-                    <h1><strong>The Premier On-Demand Home Cleaning App</strong></h1>
+                    <h1><strong>On Demand Home & Business Cleaning</strong></h1>
                     <br>
                     <p>
-                        <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is
+                        <?= sitename; ?> is the most convenient cleaning service, period. We know you want the cheapest cleaning while still having the confidence that you will receive a cleaner who is
                         thorough
                         and professional.
                         <BR><BR>
@@ -249,7 +248,7 @@
                     </p>
 
                     <div class="btn-outlined-danger text-center pt-1">
-                        <strong>November, 2019</strong>
+                        <strong>December, 2019</strong>
                         <p> Bookings: <?= $orders; ?>
                             <br> Donated: $<?= $donations . ".00" . $units_donated; ?>
                             <br> Charity: Hamilton Food Centre</p>
@@ -284,7 +283,7 @@
                 <br> Canbii cleaners will bring all necessary supplies
 
                 <br><br> <b>Cancel / Reschedule Online</b>
-                <br> Non-refundable 24 hrs before appointment, $25 otherwise
+                <br> Cancel anytime, $25 24 hours before the appointment
 
                 <br><br> <b>Parking</b>
                 <br> You are responsible for parking fees

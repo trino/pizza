@@ -34,7 +34,7 @@
                     </ul>
                     <p>Contractor will supply his/her own cleaning supplies: broom, mop, vacuum, bathroom and kitchen cleaning products, sponges and bucket</p>
                     <p>Must be able to get to customers location in under 2 hours if needed</p>
-                    <p>The Contractor will be paid $22 per hours worked every Friday by Cash, Interac E-Transfer or Cheque</p>
+                    <p>The Contractor will be paid $22-$25 per hours worked every Friday by Cash, Interac E-Transfer or Cheque</p>
                     <p>Contractor must have own vehicle, driving to location. Parking is not covered by Canbii</p>
                     <p>Hourly rate may go up after a 3 months probation</p>
                     <p>Being unprofessional, constantly late or theft will result in termination or reduced pay</p>

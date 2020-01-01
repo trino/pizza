@@ -156,7 +156,7 @@ class AuthController extends Controller {
                                 "phone" => $_POST["phone"],
                                 "password" => \Hash::make($_POST["password"]),
                                 "created_at" => now(),
-                                "updated_at" => 0
+                                "updated_at" => now()
                             ];
                             $this->Subscribe($_POST["name"], $_POST["email"], $_POST["phone"]);
                             if ($RequireAuthorization) {

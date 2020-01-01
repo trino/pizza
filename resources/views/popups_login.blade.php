@@ -182,7 +182,7 @@
 
     <div class="py-3 px-3">
 
-        <h1>                <strong> Hamilton, we're always ready to serve you</strong></h1>
+        <h1>                <strong>GTA,  we're always ready to serve you</strong></h1>
 
 
  <br>
@@ -419,6 +419,9 @@
                         skipunloadingscreen = true;
                         $.post(webroot + "auth/login", formdata, function (result) {
                             if (result) {
+
+                                log("123123 " + result);
+
                                 result = JSON.parse(result);
                                 if (result.Status) {
                                     try {
