@@ -158,7 +158,7 @@
     <div class="container">
 
 
-        <DIV class="row">
+        <!--DIV class="row">
             <div class="col-sm-12 pt-3 ">
                 <div class="card-block  pt-2">
 
@@ -215,7 +215,7 @@
 
                 </div>
             </div>
-        </div>
+        </div-->
 
         <DIV class="row">
             <div class="col-sm-12 pt-3">
@@ -228,7 +228,7 @@
                 <h3><?= getsetting("aboutus"); ?></h3>
                 <div class="card-block ">
 
-                    <h1><strong>On Demand Home & Business Cleaning</strong></h1>
+                    <h1><strong>Canbii - Your Personal Assistant</strong></h1>
                     <br>
                     <p>
                         <?= sitename; ?> is the most convenient cleaning service, period. We know you want the cheapest cleaning while still having the confidence that you will receive a cleaner who is
@@ -247,12 +247,12 @@
                         transparent, we will post a summary all of our contributions below, updated on a monthly basis.
                     </p>
 
-                    <div class="btn-outlined-danger text-center pt-1">
+                    <!--div class="btn-outlined-danger text-center pt-1">
                         <strong>December, 2019</strong>
                         <p> Bookings: <?= $orders; ?>
                             <br> Donated: $<?= $donations . ".00" . $units_donated; ?>
                             <br> Charity: Hamilton Food Centre</p>
-                    </div>
+                    </div-->
 
                 </div>
             </div>
@@ -276,20 +276,14 @@
 
                 <h1>Our Promise</h1>
 
-                <br><b> Background Checked</b>
-                <br> All cleaners on Canbii undergo federal and provincial background checks
+    <br> <b>Upfront pricing</b>
+    <br> Canbii technology calculates the total price for your service so you can have piece of mind before booking
 
-                <br><br><b> Supplies Supplied</b>
-                <br> Canbii cleaners will bring all necessary supplies
-
-                <br><br> <b>Cancel / Reschedule Online</b>
+    <br><br> <b>Cancel / Reschedule Online</b>
                 <br> Cancel anytime, $25 24 hours before the appointment
 
                 <br><br> <b>Parking</b>
                 <br> You are responsible for parking fees
-
-                <br><br> <b>Upfront pricing</b>
-                <br> Canbii technology calculates the total price for your service so you can have piece of mind before booking
 
                 <br><br> <b>Real-time updates</b>
                 <br> Get a text message when your provider is on the way, when they arrive and when they're finished.

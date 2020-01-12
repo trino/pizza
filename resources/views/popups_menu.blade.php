@@ -147,7 +147,7 @@ $itemsInCol = 0;
 $CurrentCol = 1;
 $CurrentCat = 0;
 
-$newcolumns = ["monthly_cleaning", "weekly_cleaning", "daily_cleaning"];//which categories to start a new column on
+$newcolumns = ["monthly", "weekly", "daily", "services"];//which categories to start a new column on
 $fontawesomeicons = [
     "far fa-moon" => ["color" => "bg-dark-blue", "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
     "far fa-sun" => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
@@ -178,6 +178,10 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                 ?>
 
 
+
+
+
+
                 <div id="home-section" class="image-bg vertical-align bg-{{$category['image']}}" style="bac4kground-image:url({{webroot("public/images/". $category['image']) }});">
                     <div class="container-fluid">
                         <div class="home-content" style="bottom:20px;">
@@ -189,13 +193,12 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 
                 @foreach ($menuitems as $menuitem)
+                    @if($menuitem["id"] <9999)
+
+
                     <button
-
                             @if($catclass=='custom_cleaning' || $catclass=='2_cleaners')
-
-
                             @endif
-
 style="width:50%;float:left"
                             class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
                             itemid="{{$menuitem["id"]}}"
@@ -242,44 +245,42 @@ style="width:50%;float:left"
                         ?>
                     >
 
-                        @if(false)
-                            <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium"
-                                  style="max-height:100%">
-                            <?php
-                                if (database == "canbii") {
-                                    echo '<img src="' . webroot("public/images/weed.jpg") . '" />';
-                                }
-                                ?>
-                        </span>
-                            <?php
-                            if (database == "ai") {
-                                echo '<span class="align-middle item-icon rounded-circle bg-warning ' . $CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true);
-                                echo ' sprite-medium">';
-                                echo geticon($fontawesomeicons, $catclass);
-                                echo '</span>';
-                            }
-                            ?>
-                        @endif
-
-
-                        <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">
-                            {{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Cleaning"), "", $menuitem['item']) }}
-
-
+                        <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">{{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Clea4ning"), "", $menuitem['item']) }}
                         </span>
                             <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
                                 <strong class="">${{number_format($menuitem["price"], 0)}}</strong>
-
                                 <!--strong>${{number_format($menuitem["price"]*.6, 2)}}</strong-->
                             </span>
                     </button>
+
+                        @endif
                 @endforeach
+
+
+
+
+
+
+
+
+
+
+
 
 
                 @if(in_array($catclass, $newcolumns))
         </div>
         <div class="col-lg-6 col-md-12 bg-white ismenu">
             @endif
+
+
+
+
+
+
+
+
+
             @endforeach
         </div>
     </DIV>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" class="full">
 <head>
+
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
     <?php
 
     if($_SERVER['REMOTE_ADDR']=='24.36.48.8' || $_SERVER['REMOTE_ADDR']==  '::1'){
@@ -8,6 +11,8 @@
     }else{
        // die("Down for Maintenance. We'll be right back!");
     }
+
+
 /*
     $filename = 'C:\Users\dvt19\Desktop\1.txt';
     $contents = file($filename);
@@ -66,7 +71,7 @@
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
     <!--title><?= cityname . " " . product ?> Delivery</title-->
-    <title>On Demand Cleaning Service - Hamilton</title>
+    <title>On Demand Assistant - Hamilton</title>
     <link rel="icon" sizes="128x128" href="<?= webroot("images/" . strtolower(product) . "128.png"); ?>">
     <link rel="icon" sizes="192x192" href="<?= webroot("images/" . strtolower(product) . "192.png"); ?>">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -152,7 +157,7 @@
     </ul>
 
     <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold" ><?= sitename; ?></span><br>
-        <span style="color: #efefef;font-weight: normal;fo3nt-size: 90%;" >On Demand Cleaning</span>
+        <span style="color: #efefef;font-weight: normal;fo3nt-size: 90%;" >On Demand Assistant</span>
 
     </a>
 

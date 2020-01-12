@@ -182,7 +182,7 @@
 
     <div class="py-3 px-3">
 
-        <h1>                <strong>GTA,  we're always ready to serve you</strong></h1>
+        <h1>                <strong>Hamilton,  we're always ready to serve you</strong></h1>
 
 
  <br>
@@ -233,15 +233,6 @@
                 </TABLE>
 
 
-
-
-                <p></p> <br>
-                <h2>Canbii At A Glance</h2>
-                Maid Cleaning Service in Hamilton
-                <br> Easy Online Booking (Takes only 60 seconds!)
-                <br> Certified Professional Cleaners
-                <br> ALL Cleaning Supplies Included
-                <br> 100% Satisfaction Guarantee
 
             </div>
 
