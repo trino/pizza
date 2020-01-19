@@ -838,7 +838,13 @@ function generatereceipt(forcefade) {
             }
 
             tempHTML += '</SPAN> <span class="mr-auto itemname">' + itemname + '</SPAN>';
-            tempHTML += '<span id="cost_' + itemid + '" >$' + totalcost +'</span>';
+            tempHTML += '<span id="cost_' + itemid +'"';
+
+            if(totalcost == '0.00'){
+                tempHTML += ' styl3e="visibility:hidden;" ';
+            }
+
+            tempHTML += '>$' + totalcost +'</span>';
             tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus-circle text-danger"></I></button>';
             if (hasaddons) {
                // tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt text-muted"></I></button>';

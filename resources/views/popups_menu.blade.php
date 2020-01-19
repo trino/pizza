@@ -1,7 +1,7 @@
 <?php
 startfile("popups_menu");
 if (!function_exists("getsize")) {
-    //gets the size of the pizza
+//gets the size of the pizza
     function getsize($itemname, &$isfree)
     {
         $currentsize = "";
@@ -15,7 +15,7 @@ if (!function_exists("getsize")) {
         return $currentsize;
     }
 
-    //process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
+//process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
     function getaddons($Table, &$isfree, &$qualifiers, &$addons, &$groups)
     {
         $toppings = Query("SELECT * FROM " . $Table . " WHERE enabled = '1' ORDER BY id asc, type ASC, name ASC", true, "popups_menu.getaddons");
@@ -56,7 +56,7 @@ if (!function_exists("getsize")) {
         return $toppings_display . '</optgroup>';
     }
 
-    //same as explode, but makes sure each cell is trimmed
+//same as explode, but makes sure each cell is trimmed
     function explodetrim($text, $delimiter = ",", $dotrim = true)
     {
         if (is_array($text)) {
@@ -72,7 +72,7 @@ if (!function_exists("getsize")) {
         return $text;
     }
 
-    //converts a string to a class name (lowercase, replace spaces with underscores)
+//converts a string to a class name (lowercase, replace spaces with underscores)
     function toclass($text)
     {
         $text = strtolower(str_replace([" ", "/"], "_", trim($text)));
@@ -91,9 +91,9 @@ if (!function_exists("getsize")) {
         }
         echo '<button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_tip" ONCLICK="addtip(' . $tip . ');">';
         echo '<i class="fas fa-dollar-sign rounded-circle align-middle item-icon bg-warning sprite-tip sprite-medium"></i>
-                <span class="align-middle item-name">Tip</span>
-                <span class="ml-auto align-middle btn-sm-padding item-cost" style="padding-right:0 !important;"> $' . $tip . '</span>
-            </button>';
+<span class="align-middle item-name">Tip</span>
+<span class="ml-auto align-middle btn-sm-padding item-cost" style="padding-right:0 !important;"> $' . $tip . '</span>
+</button>';
         if ($cols) {
             echo '</DIV>';
         }
@@ -179,82 +179,139 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 
 
+                @if($category['id'] >8 )
 
-
-
-                <div id="home-section" class="image-bg vertical-align bg-{{$category['image']}}" style="bac4kground-image:url({{webroot("public/images/". $category['image']) }});">
-                    <div class="container-fluid">
-                        <div class="home-content" style="bottom:20px;">
-                            <h4 class="text-center" style="t33ext-shadow: black 0px 0px 10px;">{{$category['category']}}</h4>
-                            <h6 class="text-center" style="te33xt-shadow: black 0px 0px 10px;font-weight: normal !important;">{{$category['description_main']}}</h6>
+                    <div id="home-sect3ion" class="im3age-bg vertical-align bg-{{$category['image']}}" style="padding: .25rem .75rem;">
+                        <div class="container-f2luid">
+                            <div class="home-con3tent" style="bot3tom:20px;">
+                                <h4 class="py-2" >{{$category['category']}} {{$category['description_main']}}</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                    @foreach ($menuitems as $menuitem)
+                        @if($menuitem["id"] <9 && false)
+                            <div class="col-md-3 col-xs-6">
+                                <div class="card ismenu" style="cursor: pointer;">
+                                    <?php
+                                    $image_name = str_replace(" ", "", $menuitem['item']);
+                                    $image_name = $image_name . '.png';
+                                    $image_name = strtolower($image_name);
+                                    ?>
+                                    <div
+                                            itemid="{{$menuitem["id"]}}"
+                                            itemname="{{trim($menuitem['item'])}}"
+                                            itemprice="{{$menuitem['price']}}"
+                                            itemsize="{{getsize($menuitem['item'], $isfree)}}"
+                                            itemcat="{{$menuitem['category']}}"
+                                            calories="{{$menuitem['calories']}}"
+                                            allergens="{{$menuitem['allergens']}}"
+                                            itemdescription="{!!$menuitem['description']!!}"
+                                    <?php
+                                        $itemclass = $catclass;
+                                        if ($itemclass == "sides") {
+                                            $itemclass = str_replace("_", "-", toclass($menuitem['item']));
+                                            if (endwith($itemclass, "lasagna")) {
+                                                $itemclass = "lasagna";
+                                            } else if (endwith($itemclass, "chicken-nuggets")) {
+                                                $itemclass = "chicken-nuggets";
+                                            } else if (endwith($itemclass, "salad")) {
+                                                $itemclass = "salad";
+                                            } else if ($itemclass == "panzerotti") {
+                                                $icon = $toppings_extra;
+                                            }
+                                        } else if ($itemclass == "pizza") {
+                                            if (left($menuitem['item'], 1) == "2") {
+                                                $itemclass = "241_pizza";
+                                            }
+                                            $icon = $toppings_extra;
+                                        }
+                                        $itemclass .= " " . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
+
+                                        $total = 0;
+                                        foreach ($tables as $table) {
+                                            echo $table . '="' . $menuitem[$table] . '" ';
+                                            $total += $menuitem[$table];
+                                        }
+                                        if ($total) {
+                                            $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
+                                        } else {
+                                            $HTML = ' onclick="additemtoorder(this, -1);"';
+                                            $icon = '';
+                                        }
+                                        echo $HTML;
+                                        ?>
+                                    >
+                                        <?php   echo '<img style="max-width:100%;" src="' . webroot("public/images/services/$image_name") . '" />'; ?>
+                                        <div class="card-block">
+                                            <h4 class="text-center" style="margin:1rem 0 ;">{{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Clea4ning"), "", $menuitem['item']) }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @else
 
 
-                @foreach ($menuitems as $menuitem)
-                    @if($menuitem["id"] <9999)
+                            <button
+                                    @if($catclass=='custom_cleaning' || $catclass=='2_cleaners')
+                                    @endif
+                                    style="width:50%;float:left"
+                                    class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
+                                    itemid="{{$menuitem["id"]}}"
+                                    itemname="{{trim($menuitem['item'])}}"
+                                    itemprice="{{$menuitem['price']}}"
+                                    itemsize="{{getsize($menuitem['item'], $isfree)}}"
+                                    itemcat="{{$menuitem['category']}}"
+                                    calories="{{$menuitem['calories']}}"
+                                    allergens="{{$menuitem['allergens']}}"
+                                    itemdescription="{!!$menuitem['description']!!}"
+                            <?php
+                                $itemclass = $catclass;
+                                if ($itemclass == "sides") {
+                                    $itemclass = str_replace("_", "-", toclass($menuitem['item']));
+                                    if (endwith($itemclass, "lasagna")) {
+                                        $itemclass = "lasagna";
+                                    } else if (endwith($itemclass, "chicken-nuggets")) {
+                                        $itemclass = "chicken-nuggets";
+                                    } else if (endwith($itemclass, "salad")) {
+                                        $itemclass = "salad";
+                                    } else if ($itemclass == "panzerotti") {
+                                        $icon = $toppings_extra;
+                                    }
+                                } else if ($itemclass == "pizza") {
+                                    if (left($menuitem['item'], 1) == "2") {
+                                        $itemclass = "241_pizza";
+                                    }
+                                    $icon = $toppings_extra;
+                                }
+                                $itemclass .= " " . $CSS . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
 
+                                $total = 0;
+                                foreach ($tables as $table) {
+                                    echo $table . '="' . $menuitem[$table] . '" ';
+                                    $total += $menuitem[$table];
+                                }
+                                if ($total) {
+                                    $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
+                                } else {
+                                    $HTML = ' onclick="additemtoorder(this, -1);"';
+                                    $icon = '';
+                                }
+                                echo $HTML;
+                                ?>
+                            >
 
-                    <button
-                            @if($catclass=='custom_cleaning' || $catclass=='2_cleaners')
-                            @endif
-style="width:50%;float:left"
-                            class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
-                            itemid="{{$menuitem["id"]}}"
-                            itemname="{{trim($menuitem['item'])}}"
-                            itemprice="{{$menuitem['price']}}"
-                            itemsize="{{getsize($menuitem['item'], $isfree)}}"
-                            itemcat="{{$menuitem['category']}}"
-                            calories="{{$menuitem['calories']}}"
-                            allergens="{{$menuitem['allergens']}}"
-                            itemdescription="{!!$menuitem['description']!!}"
-                    <?php
-                        $itemclass = $catclass;
-                        if ($itemclass == "sides") {
-                            $itemclass = str_replace("_", "-", toclass($menuitem['item']));
-                            if (endwith($itemclass, "lasagna")) {
-                                $itemclass = "lasagna";
-                            } else if (endwith($itemclass, "chicken-nuggets")) {
-                                $itemclass = "chicken-nuggets";
-                            } else if (endwith($itemclass, "salad")) {
-                                $itemclass = "salad";
-                            } else if ($itemclass == "panzerotti") {
-                                $icon = $toppings_extra;
-                            }
-                        } else if ($itemclass == "pizza") {
-                            if (left($menuitem['item'], 1) == "2") {
-                                $itemclass = "241_pizza";
-                            }
-                            $icon = $toppings_extra;
-                        }
-                        $itemclass .= " " . $CSS . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
-
-                        $total = 0;
-                        foreach ($tables as $table) {
-                            echo $table . '="' . $menuitem[$table] . '" ';
-                            $total += $menuitem[$table];
-                        }
-                        if ($total) {
-                            $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
-                        } else {
-                            $HTML = ' onclick="additemtoorder(this, -1);"';
-                            $icon = '';
-                        }
-                        echo $HTML;
-                        ?>
-                    >
-
-                        <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">{{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Clea4ning"), "", $menuitem['item']) }}
-                        </span>
-                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
-                                <strong class="">${{number_format($menuitem["price"], 0)}}</strong>
+<span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">{{ str_replace(array("[", "]"," Daily"," Weekly"," Monthly"," Clea4ning"), "", $menuitem['item']) }}
+</span>
+                                <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
+<strong class="">${{number_format($menuitem["price"], 0)}}</strong>
                                 <!--strong>${{number_format($menuitem["price"]*.6, 2)}}</strong-->
-                            </span>
-                    </button>
+</span>
+                            </button>
 
                         @endif
-                @endforeach
+                    @endforeach
 
 
 
@@ -268,7 +325,7 @@ style="width:50%;float:left"
 
 
 
-                @if(in_array($catclass, $newcolumns))
+                    @if(in_array($catclass, $newcolumns))
         </div>
         <div class="col-lg-6 col-md-12 bg-white ismenu">
             @endif
@@ -278,6 +335,7 @@ style="width:50%;float:left"
 
 
 
+            @endif
 
 
 

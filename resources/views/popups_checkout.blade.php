@@ -218,10 +218,6 @@
 
                 <div class="modal-body">
 
-                    <label>Your billing information is not stored by us. It is transferred over an encrypted connection to Stripe payment processing.
-                        The technology is the same used by online banking, so you can rest assured that it's safe.</label>
-
-
 
                 </div>
                 <div class="modal-body no-padding">

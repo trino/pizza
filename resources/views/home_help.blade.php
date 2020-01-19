@@ -235,7 +235,7 @@
                         thorough
                         and professional.
                         <BR><BR>
-                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Cleaners. Over time, parts of your home – particularly kitchens and bathrooms –
+                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Services. Over time, parts of your home – particularly kitchens and bathrooms –
                         can
                         accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
                         condition.
