@@ -50,7 +50,7 @@ label {
 }
 
 :root {
-    --min-height-global: 60px;
+    --min-height-global: 50px;
 }
 
 .editprofilediv {
@@ -65,7 +65,7 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 h5{font-size: 1rem;}
-h4{font-size: 1.25rem;}
+h4{font-size: 1rem;width:100%;}
 .ajaxerror {
     color: red;
     border: 2px solid red;
@@ -335,7 +335,7 @@ h2 {
     -webkit-box-align: center !important;
     -ms-flex-align: center !important;
     align-items: center !important;
-    padding: .25rem .75rem;
+    padding: .05rem .75rem;
     background: transparent;
     min-height: var(--min-height-global);
     margin-bottom: 0 !important;
@@ -599,6 +599,14 @@ option {
 }
 
 @media screen and (max-width: 990px) {
+
+    .col-xs-6 {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+
     .modal-blue-content {
         margin-left: -1px !important;
     }
@@ -687,7 +695,13 @@ ul {
     list-style-type: none;
 }
 
+
+
 @media screen and (max-width: 400px) {
+
+
+
+
 
     .input_left_icon {
         width: 17%;
@@ -1137,7 +1151,7 @@ table tr td:last-child, table tr th:last-child {
 /* firefox specific */
 @-moz-document url-prefix() {
     .ismenu > .list-group-item {
-        height: 58px;
+        height: 48px;
     }
     .item-icon {
         position: absolute;
@@ -1287,3 +1301,4 @@ div.home-content {
 
     border:10px solid #e7e7e7  !important;
 }
+

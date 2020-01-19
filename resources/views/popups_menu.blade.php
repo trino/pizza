@@ -1,3 +1,4 @@
+<style>*{border:0px solid green;}</style>
 <?php
 startfile("popups_menu");
 if (!function_exists("getsize")) {
@@ -161,7 +162,112 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
     <DIV CLASS="row no-margin">
 
 
-        <div class="col-lg-6 bg-white ismenu">
+
+    @foreach ($categories as $category)
+        <?php
+        $toppings_extra = '+';
+        $catclass = toclass($category['category']);
+        $classlist[] = $catclass;
+        $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' and enabled = 1 order by id", true, "popups_menu.foreach");
+        $menuitemcount = count($menuitems);
+        if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
+            $itemsInCol = 0;
+            $CurrentCol += 1;
+        }
+        $itemsInCol += $menuitemcount;
+        ?>
+        @if($category['id'] <9 )
+
+
+            @foreach ($menuitems as $menuitem)
+
+
+
+
+                    <div class="col-md-3 col-xs-6" style="border-bottom: 1px solid #eceeef !important; ">
+                        <div class="card" style="cursor: pointer;">
+                            <?php
+                            $image_name = str_replace(" ", "", $menuitem['item']);
+                            $image_name = $image_name . '.png';
+                            $image_name = strtolower($image_name);
+                            ?>
+                            <div
+                                    itemid="{{$menuitem["id"]}}"
+                                    itemname="{{trim($menuitem['item'])}}"
+                                    itemprice="{{$menuitem['price']}}"
+                                    itemsize="{{getsize($menuitem['item'], $isfree)}}"
+                                    itemcat="{{$menuitem['category']}}"
+                                    calories="{{$menuitem['calories']}}"
+                                    allergens="{{$menuitem['allergens']}}"
+                                    itemdescription="{!!$menuitem['description']!!}"
+                            <?php
+                                $itemclass = $catclass;
+                                if ($itemclass == "sides") {
+                                    $itemclass = str_replace("_", "-", toclass($menuitem['item']));
+                                    if (endwith($itemclass, "lasagna")) {
+                                        $itemclass = "lasagna";
+                                    } else if (endwith($itemclass, "chicken-nuggets")) {
+                                        $itemclass = "chicken-nuggets";
+                                    } else if (endwith($itemclass, "salad")) {
+                                        $itemclass = "salad";
+                                    } else if ($itemclass == "panzerotti") {
+                                        $icon = $toppings_extra;
+                                    }
+                                } else if ($itemclass == "pizza") {
+                                    if (left($menuitem['item'], 1) == "2") {
+                                        $itemclass = "241_pizza";
+                                    }
+                                    $icon = $toppings_extra;
+                                }
+                                $itemclass .= " " . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
+                                $total = 0;
+                                foreach ($tables as $table) {
+                                    echo $table . '="' . $menuitem[$table] . '" ';
+                                    $total += $menuitem[$table];
+                                }
+                                if ($total) {
+                                    $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
+                                } else {
+                                    $HTML = ' onclick="additemtoorder(this, -1);"';
+                                    $icon = '';
+                                }
+                                echo $HTML;
+                                ?>
+                            >
+                                <?php   echo '<img style="max-width:100%;" src="' . webroot("public/images/services/$image_name") . '" />'; ?>
+                                <div class=" list-group-item" style=" border:0 !important;">
+                                    <h4 class="text-center" style="">{{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Clea4ning"), "", $menuitem['item']) }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+            @endforeach
+
+
+
+
+
+
+
+
+        @endif
+    @endforeach
+
+
+        <div class="col-lg-6 bg-white ">
+
+
+
+
+
+
+
+
+
+
+
             @foreach ($categories as $category)
                 <?php
                 $toppings_extra = '+';
@@ -174,83 +280,19 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                     $CurrentCol += 1;
                 }
                 $itemsInCol += $menuitemcount;
-                //     makecategory($CurrentCat, $category['category']);
                 ?>
+                @if($category['id'] >8  )
 
 
+                    <div id="home-sect3ion" class="list-group-item list-group-item-action im3age-bg vertical-align bg-{{$category['image']}}" style="padding: .25rem .75rem;">
+                        <h4 class="text-center">{{$category['category']}} {{$category['description_main']}}</h4>
 
-                @if($category['id'] >8 )
-
-                    <div id="home-sect3ion" class="im3age-bg vertical-align bg-{{$category['image']}}" style="padding: .25rem .75rem;">
-                        <div class="container-f2luid">
-                            <div class="home-con3tent" style="bot3tom:20px;">
-                                <h4 class="py-2" >{{$category['category']}} {{$category['description_main']}}</h4>
-                            </div>
-                        </div>
                     </div>
 
+
+
                     @foreach ($menuitems as $menuitem)
-                        @if($menuitem["id"] <9 && false)
-                            <div class="col-md-3 col-xs-6">
-                                <div class="card ismenu" style="cursor: pointer;">
-                                    <?php
-                                    $image_name = str_replace(" ", "", $menuitem['item']);
-                                    $image_name = $image_name . '.png';
-                                    $image_name = strtolower($image_name);
-                                    ?>
-                                    <div
-                                            itemid="{{$menuitem["id"]}}"
-                                            itemname="{{trim($menuitem['item'])}}"
-                                            itemprice="{{$menuitem['price']}}"
-                                            itemsize="{{getsize($menuitem['item'], $isfree)}}"
-                                            itemcat="{{$menuitem['category']}}"
-                                            calories="{{$menuitem['calories']}}"
-                                            allergens="{{$menuitem['allergens']}}"
-                                            itemdescription="{!!$menuitem['description']!!}"
-                                    <?php
-                                        $itemclass = $catclass;
-                                        if ($itemclass == "sides") {
-                                            $itemclass = str_replace("_", "-", toclass($menuitem['item']));
-                                            if (endwith($itemclass, "lasagna")) {
-                                                $itemclass = "lasagna";
-                                            } else if (endwith($itemclass, "chicken-nuggets")) {
-                                                $itemclass = "chicken-nuggets";
-                                            } else if (endwith($itemclass, "salad")) {
-                                                $itemclass = "salad";
-                                            } else if ($itemclass == "panzerotti") {
-                                                $icon = $toppings_extra;
-                                            }
-                                        } else if ($itemclass == "pizza") {
-                                            if (left($menuitem['item'], 1) == "2") {
-                                                $itemclass = "241_pizza";
-                                            }
-                                            $icon = $toppings_extra;
-                                        }
-                                        $itemclass .= " " . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
 
-                                        $total = 0;
-                                        foreach ($tables as $table) {
-                                            echo $table . '="' . $menuitem[$table] . '" ';
-                                            $total += $menuitem[$table];
-                                        }
-                                        if ($total) {
-                                            $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
-                                        } else {
-                                            $HTML = ' onclick="additemtoorder(this, -1);"';
-                                            $icon = '';
-                                        }
-                                        echo $HTML;
-                                        ?>
-                                    >
-                                        <?php   echo '<img style="max-width:100%;" src="' . webroot("public/images/services/$image_name") . '" />'; ?>
-                                        <div class="card-block">
-                                            <h4 class="text-center" style="margin:1rem 0 ;">{{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Clea4ning"), "", $menuitem['item']) }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        @else
 
 
                             <button
@@ -301,16 +343,12 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                                 echo $HTML;
                                 ?>
                             >
-
 <span class="align-middle item-name text-se5condary" style="font-weig2ht:bold; font-size: .875rem">{{ str_replace(array("[", "]"," Daily"," Weekly"," Monthly"," Clea4ning"), "", $menuitem['item']) }}
-</span>
-                                <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
-<strong class="">${{number_format($menuitem["price"], 0)}}</strong>
-                                <!--strong>${{number_format($menuitem["price"]*.6, 2)}}</strong-->
-</span>
+</span><span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
+<strong class="">${{number_format($menuitem["price"], 0)}}</strong><!--strong>${{number_format($menuitem["price"]*.6, 2)}}</strong--></span>
                             </button>
 
-                        @endif
+
                     @endforeach
 
 
@@ -320,26 +358,22 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 
 
-
-
-
-
-
-                    @if(in_array($catclass, $newcolumns))
+                        @if(in_array($catclass, $newcolumns))
         </div>
-        <div class="col-lg-6 col-md-12 bg-white ismenu">
+        <div class="col-lg-6 col-md-12 bg-white">
             @endif
 
-
-
-
-
-
             @endif
-
-
-
             @endforeach
+
+
+
+
+
+
+
+
+
         </div>
     </DIV>
 </DIV>
@@ -371,8 +405,6 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
         </div>
     </div>
 </div>
-
-
 <script>
     var tables = <?= json_encode($tables); ?>;
     var alladdons = <?= json_encode($addons); ?>;

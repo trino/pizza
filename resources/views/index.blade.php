@@ -74,91 +74,8 @@
             <div class="row my-4">
 
                 <div class="col-lg-12 pa-3 mb-2">
-                    <h1 id="booknow"><strong>What do you need help with?</strong></h1>
+                    <h1 id="booknow" class="text-center"><strong>Hamilton, how can we help you?</strong></h1>
                 </div>
-
-
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="1" itemname="Home Cleaning" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/homecleaning.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Home Cleaning</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="2" itemname="Laundry Service" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/laundryservice.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Laundry Service</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="3" itemname="Carpet Cleaning" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/carpetcleaning.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Carpet Cleaning</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="4" itemname="Lawn Care" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/lawncare.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Lawn Care</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="5" itemname="Anything Delivered" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/anythingdelivered.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Anything Delivered</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="6" itemname="Dog Walker" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/dogwalking.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Dog Walking</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="7" itemname="Car Cleaning" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/carcleaning.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">Car Cleaning</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="card ismenu" style="cursor: pointer;">
-                            <div itemid="8" itemname="General Labour" itemprice="0" itemsize="" itemcat="Services" calories="" allergens="" itemdescription="" toppings="0" wings_sauce="1" data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);">
-                                <img style="max-width:100%;" src="http://localhost/pizza/public/images/services/generallabour.png">                                        <div class="card-block">
-                                    <h4 class="text-center" style="margin:1rem 0 ;">General Labour</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
 
 
@@ -203,9 +120,7 @@
             @endif
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 pa-3">
-                        <h1><strong>How Often?</strong></h1>
-                    </div>
+
                     <?php
                     $doCache = $GLOBALS["settings"]["domenucache"];
                     $menucache_filename = public_path() . "/menucache.html";
@@ -230,7 +145,7 @@
                         $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime2($menublade_filename) . ")";
                     }
                     ?>
-                    <div class="col-lg-4  bg-inverse" titledebug="popups_checkout">
+                    <div class="col-lg-4 bg-inverse" titledebug="popups_checkout">
                         @include("popups_checkout")
                     </div>
                 </div>
@@ -239,7 +154,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label class=" d-block text-center py-2 mt-4">
-                            Copyright &copy; 2020 / Canbii Helpers / <a HREF="<?= webroot("help");?>" class="text-muted">Terms</a>
+                            Copyright &copy; 2013 - 2020 / Canbii Services/ <a HREF="<?= webroot("help");?>" class="text-muted">Terms of Use</a>
                         </label>
                     </div>
                 </div>
