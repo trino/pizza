@@ -38,7 +38,7 @@
         }
     </style>
     @if(true)
-@if(false)
+@if(true)
         <div id="home-section" class=" image-bg vertical-align" style="background-image:url({{webroot("public/images/banner.jpg")}});height:500px;border-radius: 0;">
             <div class="container list-group-item" style="border: 0 !important;">
                 <div class="col-md-6">
@@ -66,50 +66,16 @@
         </div>
         @endif
         <div class="container">
-            <div class="row my-3">
+            <div class="row my-2">
             </div>
 
 
 
-            <div class="row my-4">
+            <div class="row my-3">
 
-                <div class="col-lg-12 pa-3 mb-2">
-                    <h1 id="booknow" class="text-center"><strong>Hamilton, how can we help you?</strong></h1>
+                <div class="col-lg-12" style="padding:1rem;">
+                    <h1 id="booknow" class="text-center"><strong>Hamilton, how can we help you today?</strong></h1>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -145,7 +111,7 @@
                         $GLOBALS["debugdata"]["menublade_uptodate"] = bool($menublade_uptodate) . " (" . filemtime2($menublade_filename) . ")";
                     }
                     ?>
-                    <div class="col-lg-4 bg-inverse" titledebug="popups_checkout">
+                    <div class="col-lg-4 bg-inverse cool-border cool-border-left" titledebug="popups_checkout">
                         @include("popups_checkout")
                     </div>
                 </div>

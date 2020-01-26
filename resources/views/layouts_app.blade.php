@@ -2,7 +2,6 @@
 <html lang="en" class="full">
 <head>
 
-    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 
     <?php
 
@@ -153,8 +152,8 @@
             @endif
         </ul>
 
-        <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold"><?= sitename; ?></span><br>
-            <span style="color: #efefef;font-weight: normal;fo3nt-size: 90%;">On Demand Helpers</span>
+        <a style="text-decoration: none;" HREF="<?= webroot(""); ?>" class="{{ headertextcolor }} "><span style="color: white; text-decoration: none;font-weight: bold;font-size: 1rem;">Canbii Services</span><br>
+            <!--span style="color: #efefef;font-weight: normal;fo3nt-size: 90%;">On Demand Helpers</span-->
 
         </a>
 
