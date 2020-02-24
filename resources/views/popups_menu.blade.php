@@ -255,7 +255,7 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 
 
-                                <div id="home-section" class="" style="height:120px;background-image:url({{webroot("public/images/services/$image_name")}});">
+                                <div id="home-section" class="" style="height:120px;background-image:url({{webroot("public/images/services/lawncare.png")}});">
 
                                         <?php  // echo '<img style="max-width:100%;" src="' . webroot("public/images/services/$image_name") . '" />'; ?>
                                             <h3 class="text-center " style="padding-top:3.75rem;font-size:1rem;
