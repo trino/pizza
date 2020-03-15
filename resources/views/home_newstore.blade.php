@@ -32,7 +32,7 @@
             "name"          => $_POST["restaurant"],
             "email"         => $_POST["emailaddress"],
             "created_at"    => now(),
-            "updated_at"    => 0,
+            "updated_at"    => now(),
             "password"      => \Hash::make($_POST["password"]),
             "phone"         => $phone,
             "profiletype"   => 2

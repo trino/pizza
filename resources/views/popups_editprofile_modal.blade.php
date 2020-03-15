@@ -19,20 +19,14 @@
                     <DIV CLASS="error" id="edituser_error"></DIV>
                     <DIV class="clearfix mt-1"></DIV>
 
-                    <DIV CLASS="float-right"><BUTTON CLASS="btn {{btncolor}} alert-button" onclick="return userform_submit(true);">SAVE</BUTTON></DIV>
+                    <DIV CLASS="pull-center"><BUTTON CLASS="btn {{btncolor}} alert-button" onclick="return userform_submit(true);">SAVE</BUTTON></DIV>
                 </FORM>
-                <div class="clearfix"></div>
-
-
-                <hr>
 
                 <P><DIV CLASS="ajaxprompt"></DIV><P>
 
                 <div CLASS="editprofilediv">
                     <DIV ID="addresslist"></DIV>
                 </div>
-                <div class="clearfix"></div>
-                <hr>
 
                 <div CLASS="editprofilediv">
                     <DIV ID="creditcardlist"></DIV>
@@ -42,9 +36,9 @@
                     <H2>Newsletter</H2>
                     <DIV ID="newsletter"></DIV>
                 </DIV>
-<br>
+
                 <div class="alert alert-warning mt-3 mb-0 font-size-85rem">
-                     * Add new addresses or credit cards on checkout
+                     You can add new addresses or credit cards on checkout
                     <!--br>  <a href="help" class="btn-link">More info</a-->
                 </div>
                 <div CLASS="editprofilediv mt-2 dont-show">

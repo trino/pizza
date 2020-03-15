@@ -158,84 +158,19 @@
     <div class="container">
 
 
-        <!--DIV class="row">
-            <div class="col-sm-12 pt-3 ">
-                <div class="card-block  pt-2">
-
-
-                    <h1><strong>What's included in the service?</strong></h1>
-                    <br>
-                    <p>All Canbii Cleaning Professionals bring cleaning supplies and a vacuum to appointments. If you'd like your cleaner to use your own products, please add a note to your appointment with relevant
-                        instructions. The following list outlines common tasks our cleaners perform on the job:
-
-                    </p>
-                    <strong>Bathrooms</strong>
-                    <ul>
-                        <li> Cleaning toilets, showers, and sinks
-                        </li>
-                        <li> Dusting all surfaces
-                        </li>
-                        <li> Wiping down all mirrors and glass surfaces/furniture
-                        </li>
-                        <li> Vacuuming/Cleaning floors
-                        </li>
-                        <li> Taking out garbage
-                        </li>
-                    </ul>
-
-                    <strong>Bedrooms & Common Areas</strong>
-                    <ul>
-                        <li> General dusting of all surfaces
-                        </li>
-                        <li> Wiping down mirrors and glass surfaces/furniture
-                        </li>
-                        <li> Vacuuming / Cleaning floors
-                        </li>
-                        <li> Taking out garbage
-                        </li>
-                    </ul>
-
-                    <strong>Kitchen</strong>
-                    <ul>
-                        <li> General dusting of all surfaces
-                        </li>
-                        <li> Washing dishes / loading dishwasher
-                        </li>
-                        <li> Cleaning exterior surfaces (stove, cabinets, fridge)
-                        </li>
-                        <li> Vacuuming / Cleaning floors
-                        </li>
-                        <li> Taking out garbage
-                        </li>
-                    </ul>
-                    <p> We pay special attention to details of every project to ensure the complete satisfaction of each client. ​Our goal is to make sure that we leave your property with sparkling kitchen, bathrooms, and
-                        floors, organized and tidy living spaces, and refreshing aromas of cleanliness.
-                    </p>
-
-
-                </div>
-            </div>
-        </div-->
-
-        <DIV class="row">
-            <div class="col-sm-12 pt-3">
-                <hr>
-            </div>
-        </div>
-
         <DIV class="row">
             <div class="col-sm-6 py-3">
                 <h3><?= getsetting("aboutus"); ?></h3>
                 <div class="card-block ">
 
-                    <h1><strong>Canbii - Your Personal Assistant</strong></h1>
+                    <h1><strong>The Premier On-Demand Home Cleaning App</strong></h1>
                     <br>
                     <p>
-                        <?= sitename; ?> is the most convenient cleaning service, period. We know you want the cheapest cleaning while still having the confidence that you will receive a cleaner who is
+                        <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is
                         thorough
                         and professional.
                         <BR><BR>
-                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Services. Over time, parts of your home – particularly kitchens and bathrooms –
+                        If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Cleaners. Over time, parts of your home – particularly kitchens and bathrooms –
                         can
                         accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
                         condition.
@@ -247,12 +182,12 @@
                         transparent, we will post a summary all of our contributions below, updated on a monthly basis.
                     </p>
 
-                    <!--div class="btn-outlined-danger text-center pt-1">
-                        <strong>December, 2019</strong>
+                    <div class="btn-outlined-danger text-center pt-1">
+                        <strong>March, 2020</strong>
                         <p> Bookings: <?= $orders; ?>
                             <br> Donated: $<?= $donations . ".00" . $units_donated; ?>
                             <br> Charity: Hamilton Food Centre</p>
-                    </div-->
+                    </div>
 
                 </div>
             </div>
@@ -276,14 +211,20 @@
 
                 <h1>Our Promise</h1>
 
-    <br> <b>Upfront pricing</b>
-    <br> Canbii technology calculates the total price for your service so you can have piece of mind before booking
+                <br><b> Background Checked</b>
+                <br> All cleaners on Canbii undergo federal and provincial background checks
 
-    <br><br> <b>Cancel / Reschedule Online</b>
-                <br> Cancel anytime, $25 24 hours before the appointment
+                <br><br><b> Supplies Supplied</b>
+                <br> Canbii cleaners will bring all necessary supplies
+
+                <br><br> <b>Cancel / Reschedule Online</b>
+                <br> Non-refundable 24 hrs before appointment, $25 otherwise
 
                 <br><br> <b>Parking</b>
                 <br> You are responsible for parking fees
+
+                <br><br> <b>Upfront pricing</b>
+                <br> Canbii technology calculates the total price for your service so you can have piece of mind before booking
 
                 <br><br> <b>Real-time updates</b>
                 <br> Get a text message when your provider is on the way, when they arrive and when they're finished.
@@ -422,8 +363,9 @@
                         reason whatsoever. The Company reserves the right to determine final prevailing pricing - Please note the pricing information published on the website may not reflect the prevailing pricing.</p>
                     <p style="margin: 0px 0px 10px;">
                         The Company, at its sole discretion, make promotional offers with different features and different rates to any of our customers. These promotional offers, unless made to you, shall have no
-                        bearing whatsoever on your offer or contract. <span style="">You may be charged for your appointment in full if you cancel within 24 hours of the appointment start subject to our Last Minute Cancellation Policy or if your cleaner is unable to complete as a result of being locked out of your home. Please see our <a
-                                    href="/help">Help Center</a> for Last Minute Cancellation and Lockout Policies.</span> The Company may change the fees for our Service as we deem necessary for our business. We
+                        bearing whatsoever on your offer or contract. <span style="">You may be charged for your appointment in full if you cancel within 24 hours of the appointment start subject to our Last Minute
+                            Cancellation Policy or if your cleaner is unable to complete as a result of being locked out of your home. Please see our Help Center for Last Minute Cancellation and Lockout Policies.</span>
+                        The Company may change the fees for our Service as we deem necessary for our business. We
                         encourage you to check back at our website periodically if you are interested about how we charge for the Service.</p>
                     <br>
                     <b>Intellectual Property Ownership</b>

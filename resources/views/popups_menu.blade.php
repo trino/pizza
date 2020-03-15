@@ -1,10 +1,7 @@
-<style>* {
-        border: 0px solid green;
-    }</style>
 <?php
 startfile("popups_menu");
 if (!function_exists("getsize")) {
-//gets the size of the pizza
+    //gets the size of the pizza
     function getsize($itemname, &$isfree)
     {
         $currentsize = "";
@@ -18,7 +15,7 @@ if (!function_exists("getsize")) {
         return $currentsize;
     }
 
-//process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
+    //process addons, generating the option group dropdown HTML, enumerating free toppings and qualifiers
     function getaddons($Table, &$isfree, &$qualifiers, &$addons, &$groups)
     {
         $toppings = Query("SELECT * FROM " . $Table . " WHERE enabled = '1' ORDER BY id asc, type ASC, name ASC", true, "popups_menu.getaddons");
@@ -59,7 +56,7 @@ if (!function_exists("getsize")) {
         return $toppings_display . '</optgroup>';
     }
 
-//same as explode, but makes sure each cell is trimmed
+    //same as explode, but makes sure each cell is trimmed
     function explodetrim($text, $delimiter = ",", $dotrim = true)
     {
         if (is_array($text)) {
@@ -75,7 +72,7 @@ if (!function_exists("getsize")) {
         return $text;
     }
 
-//converts a string to a class name (lowercase, replace spaces with underscores)
+    //converts a string to a class name (lowercase, replace spaces with underscores)
     function toclass($text)
     {
         $text = strtolower(str_replace([" ", "/"], "_", trim($text)));
@@ -94,9 +91,9 @@ if (!function_exists("getsize")) {
         }
         echo '<button class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_tip" ONCLICK="addtip(' . $tip . ');">';
         echo '<i class="fas fa-dollar-sign rounded-circle align-middle item-icon bg-warning sprite-tip sprite-medium"></i>
-<span class="align-middle item-name">Tip</span>
-<span class="ml-auto align-middle btn-sm-padding item-cost" style="padding-right:0 !important;"> $' . $tip . '</span>
-</button>';
+                <span class="align-middle item-name">Tip</span>
+                <span class="ml-auto align-middle btn-sm-padding item-cost" style="padding-right:0 !important;"> $' . $tip . '</span>
+            </button>';
         if ($cols) {
             echo '</DIV>';
         }
@@ -150,7 +147,7 @@ $itemsInCol = 0;
 $CurrentCol = 1;
 $CurrentCat = 0;
 
-$newcolumns = ["monthly", "weekly", "daily", "services"];//which categories to start a new column on
+$newcolumns = ["small_home", "medium_home", "large_home", "services", "options", "tip"];//which categories to start a new column on
 $fontawesomeicons = [
     "far fa-moon" => ["color" => "bg-dark-blue", "categories" => ["1oz_indica", "1g_indica", "1_4_indica", "1_2_indica"]],
     "far fa-sun" => ["color" => "bg-light-blue", "categories" => ["sativa_basic", "sativa_high_quality", "sativa_premium"]],
@@ -160,219 +157,134 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
 
 // dd($categories);
 ?>
-<DIV CLASS="col-lg-8 bg-wh5ite">
+<DIV CLASS="col-lg-8 bg-white">
     <DIV CLASS="row no-margin">
+        <div class="col-lg-6 bg-white ismenu">
+            @foreach ($categories as $category)
+                <?php
+                $toppings_extra = '+';
+                $catclass = toclass($category['category']);
+                $classlist[] = $catclass;
+                $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' and enabled = 1 order by id", true, "popups_menu.foreach");
+                $menuitemcount = count($menuitems);
+                if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
+                    $itemsInCol = 0;
+                    $CurrentCol += 1;
+                }
+                $itemsInCol += $menuitemcount;
+                //     makecategory($CurrentCat, $category['category']);
+                ?>
 
-<table class="table mb-0 w-100">
-    <tr>
 
-
-        @foreach ($categories as $category)
-            <?php
-
-                $counter = 0;
-            $toppings_extra = '+';
-            $catclass = toclass($category['category']);
-            $classlist[] = $catclass;
-            $menuitems = Query("SELECT * FROM menu WHERE category = '" . $category['category'] . "' and enabled = 1 and id <9 order by id", true, "popups_menu.foreach");
-            $menuitemcount = count($menuitems);
-            if ($itemsInCol + $menuitemcount > $maxmenuitemspercol && $CurrentCol < 3) {
-                $itemsInCol = 0;
-                $CurrentCol += 1;
-            }
-            $itemsInCol += $menuitemcount;
-            ?>
+                <div id="home-section" class="image-bg vertical-align" style="background-image:url({{webroot("public/images/". $category['image']) }});">
+                    <div class="container-fluid">
+                        <div class="home-content" style="bottom:10px;">
+                            <h4 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['category']}}</h4>
+                            <!--h6 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['description_main']}}</h6-->
+                        </div>
+                    </div>
+                </div>
 
 
                 @foreach ($menuitems as $menuitem)
+                    <button
+
+                            @if($catclass=='custom_cleaning' || $catclass=='2_cleaners')
+                            @endif
 
 
+                            class="cursor-pointer list-group-item list-group-item-action hoveritem d-flex justify-content-start item_{{ $catclass }}"
+                            itemid="{{$menuitem["id"]}}"
+                            itemname="{{trim($menuitem['item'])}}"
+                            itemprice="{{$menuitem['price']}}"
+                            itemsize="{{getsize($menuitem['item'], $isfree)}}"
+                            itemcat="{{$menuitem['category']}}"
+                            calories="{{$menuitem['calories']}}"
+                            allergens="{{$menuitem['allergens']}}"
+                            itemdescription="{!!$menuitem['description']!!}"
+                    <?php
+                        $itemclass = $catclass;
+                        if ($itemclass == "sides") {
+                            $itemclass = str_replace("_", "-", toclass($menuitem['item']));
+                            if (endwith($itemclass, "lasagna")) {
+                                $itemclass = "lasagna";
+                            } else if (endwith($itemclass, "chicken-nuggets")) {
+                                $itemclass = "chicken-nuggets";
+                            } else if (endwith($itemclass, "salad")) {
+                                $itemclass = "salad";
+                            } else if ($itemclass == "panzerotti") {
+                                $icon = $toppings_extra;
+                            }
+                        } else if ($itemclass == "pizza") {
+                            if (left($menuitem['item'], 1) == "2") {
+                                $itemclass = "241_pizza";
+                            }
+                            $icon = $toppings_extra;
+                        }
+                        $itemclass .= " " . $CSS . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
 
+                        $total = 0;
+                        foreach ($tables as $table) {
+                            echo $table . '="' . $menuitem[$table] . '" ';
+                            $total += $menuitem[$table];
+                        }
+                        if ($total) {
+                            $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
+                        } else {
+                            $HTML = ' onclick="additemtoorder(this, -1);"';
+                            $icon = '';
+                        }
+                        echo $HTML;
+                        ?>
+                    >
 
-<td style="width:25%;">
-
-
-
-
-
-
-
-
-                            <div
-
-
-
-
-
-
-
-                                itemid="{{$menuitem["id"]}}"
-                                    itemname="{{trim($menuitem['item'])}}"
-                                    itemprice="{{$menuitem['price']}}"
-                                    itemsize="{{getsize($menuitem['item'], $isfree)}}"
-                                    itemcat="{{$menuitem['category']}}"
-                                    calories="{{$menuitem['calories']}}"
-                                    allergens="{{$menuitem['allergens']}}"
-                                    itemdescription="{!!$menuitem['description']!!}"
+                        @if(false)
+                            <span class="align-middle item-icon rounded-circle bg-warning {{$CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true)}} sprite-medium"
+                                  style="max-height:100%">
                             <?php
-                                $itemclass = $catclass;
-                                if ($itemclass == "sides") {
-                                    $itemclass = str_replace("_", "-", toclass($menuitem['item']));
-                                    if (endwith($itemclass, "lasagna")) {
-                                        $itemclass = "lasagna";
-                                    } else if (endwith($itemclass, "chicken-nuggets")) {
-                                        $itemclass = "chicken-nuggets";
-                                    } else if (endwith($itemclass, "salad")) {
-                                        $itemclass = "salad";
-                                    } else if ($itemclass == "panzerotti") {
-                                        $icon = $toppings_extra;
-                                    }
-                                } else if ($itemclass == "pizza") {
-                                    if (left($menuitem['item'], 1) == "2") {
-                                        $itemclass = "241_pizza";
-                                    }
-                                    $icon = $toppings_extra;
+                                if (database == "canbii") {
+                                    echo '<img src="' . webroot("public/images/weed.jpg") . '" />';
                                 }
-                                $itemclass .= " " . "-" . str_replace(".", "", str_replace("_", "-", toclass($menuitem['item'])));
-                                $total = 0;
-                                foreach ($tables as $table) {
-                                    echo $table . '="' . $menuitem[$table] . '" ';
-                                    $total += $menuitem[$table];
-                                }
-                                if ($total) {
-                                    $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
-                                } else {
-                                    $HTML = ' onclick="additemtoorder(this, -1);"';
-                                    $icon = '';
-                                }
-                                echo $HTML;
                                 ?>
-                            >  <?php
-                                $image_name = str_replace(" ", "", $menuitem['item']);
-                                $image_name = $image_name . '.png';
-                                $image_name = strtolower($image_name);
-                                ?>
-
-
-
-                                <div id="home-section" class="" style="height:120px;background-image:url({{webroot("public/images/services/lawncare.png")}});">
-
-                                        <?php  // echo '<img style="max-width:100%;" src="' . webroot("public/images/services/$image_name") . '" />'; ?>
-                                            <h3 class="text-center " style="padding-top:3.75rem;font-size:1rem;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
-
-">{{ str_replace(array("[", "]"," Da5ily"," Weekl5y"," Mon5thly"," Clea4ning"), "", $menuitem['item']) }}</h3>
-
-                                    </div>
-                            </div>
-
-
-</td>
-
-
-                    @if($counter++ == 3)
-                        </tr><tr>
+                        </span>
+                            <?php
+                            if (database == "ai") {
+                                echo '<span class="align-middle item-icon rounded-circle bg-warning ' . $CSS . " " . $CSS . "-" . $itemclass . " " . geticon($fontawesomeicons, $catclass, true);
+                                echo ' sprite-medium">';
+                                echo geticon($fontawesomeicons, $catclass);
+                                echo '</span>';
+                            }
+                            ?>
                         @endif
 
+
+                        <span class="align-middle item-name text-se5condary" style="font-weight:bold; font-size: .875rem;">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
+                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
+
+
+                               @if($menuitem['price'] != 0)
+                                    <!--strike class=" text-secondary">${{number_format($menuitem["price"], 2)}}</strike-->
+
+                                    <strong style="">${{number_format($menuitem["price"]*1, 2)}}</strong>
+
+                                   @else
+
+                                   <i class="fa fa-plus" style="color: #d7d7d7"></i>
+                                   @endif
+                            </span>
+                    </button>
                 @endforeach
-        @endforeach
+
+                @if(in_array($catclass, $newcolumns))
 
 
-
-
-
-
-
-
-
-
-
-        <?php
-        $row = 0;
-        $col = 0;
-        $table_array = array();
-        $apender = "";
-        $menuitems = Query("SELECT * FROM menu WHERE  enabled = 1 and id >8 order by id", true, "popups_menu.foreach");
-        ?>
-        @foreach ($menuitems as $menuitem)
-            <?php
-            $apender = "<button class='btn btn-block' ";
-            foreach ($tables as $table) {
-                $apender .= $table . '="' . $menuitem[$table] . '" ';
-            }
-            $apender .= $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
-            $apender .= 'itemid="' . $menuitem["id"] . '" ';
-            $apender .= 'itemname="' . trim($menuitem['item']) . '" ';
-            $apender .= 'itemprice="' . $menuitem['price'] . '" ';
-            $apender .= 'itemsize="' . getsize($menuitem['item'], $isfree) . '" ';
-            $apender .= 'itemcat="' . $menuitem['category'] . '" ';
-            $apender .= 'calories="' . $menuitem['calories'] . '" ';
-            $apender .= 'allergens="' . $menuitem['allergens'] . '" ';
-            $apender .= 'itemdescription="' . $menuitem['description'] . '" ';
-            $apender .= ">";
-            $apender .= '<span class="mr-auto align-middle">$' . number_format($menuitem["price"], 0) . '</h4></button>';
-            $table_array[$row++] = $apender;
-
-            ?>
-        @endforeach
-
-        <table class="table table-bordered mb-0">
-            <tr>
-                <td style="width:12%" class="table-bg"><div  class="btn btn-block"></div></td>
-                <td  style="width:22%" class="table-bg"><div  class="btn btn-block">Daily</div></td>
-                <td  style="width:22%" class="table-bg"><div  class="btn btn-block">Weekly</div></td>
-                <td  style="width:22%" class="table-bg"><div  class="btn btn-block">Monthly</div></td>
-                <td  style="width:22%" class="table-bg"><div  class="btn btn-block">1 Time</div></td>
-            </tr>
-            <tr>
-                <td class="table-bg"><div   class="btn btn-block" >1 Hr</div></td>
-                <td>{!!$table_array[0]!!}</td>
-                <td>{!!$table_array[6]!!}</td>
-                <td>{!!$table_array[12]!!}</td>
-                <td>{!!$table_array[18]!!}</td>
-            </tr>
-            <tr>
-                <td class="table-bg"><div   class="btn btn-block">2 Hrs</div></td>
-                <td>{!!$table_array[1]!!}</td>
-                <td>{!!$table_array[7]!!}</td>
-                <td>{!!$table_array[13]!!}</td>
-                <td>{!!$table_array[19]!!}</td>
-            </tr>
-            <tr>
-                <td class="table-bg"><div   class="btn btn-block">3 Hrs</div></td>
-                <td>{!!$table_array[2]!!}</td>
-                <td>{!!$table_array[8]!!}</td>
-                <td>{!!$table_array[14]!!}</td>
-                <td>{!!$table_array[20]!!}</td>
-            </tr>
-            <tr>
-                <td class="table-bg"><div  class="btn btn-block">4 Hrs</div></td>
-                <td>{!!$table_array[3]!!}</td>
-                <td>{!!$table_array[9]!!}</td>
-                <td>{!!$table_array[15]!!}</td>
-                <td>{!!$table_array[21]!!}</td>
-            </tr>
-            <tr>
-                <td class="table-bg"><div class="btn btn-block">5 Hrs</div></td>
-                <td>{!!$table_array[4]!!}</td>
-                <td>{!!$table_array[10]!!}</td>
-                <td>{!!$table_array[16]!!}</td>
-                <td>{!!$table_array[22]!!}</td>
-            </tr>
-            <tr>
-                <td class="table-bg"><div class="btn btn-block">6 Hrs</div></td>
-                <td>{!!$table_array[5]!!}</td>
-                <td>{!!$table_array[11]!!}</td>
-                <td>{!!$table_array[17]!!}</td>
-                <td>{!!$table_array[23]!!}</td>
-            </tr>
-
-        </table>
-
-
+        </div>
+        <div class="col-lg-6 col-md-6 bg-white ismenu">
+            @endif
+            @endforeach
+        </div>
     </DIV>
 </DIV>
-
 
 <!-- order menu item Modal -->
 <div class="modal modal-fullscreen force-fullscreen" id="menumodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -401,6 +313,8 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
         </div>
     </div>
 </div>
+
+
 <script>
     var tables = <?= json_encode($tables); ?>;
     var alladdons = <?= json_encode($addons); ?>;

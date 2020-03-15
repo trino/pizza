@@ -434,19 +434,10 @@ function loadmodal(element, notparent) {
         }
     }
     currentitemID = -1;
-    var per_time = "";
-    if (itemname.indexOf("Daily") > 0) {
-        per_time = " / Day";
-    } else if (itemname.indexOf("Weekly") > 0) {
-        per_time = " / Week";
-    } else if (itemname.indexOf("Monthly") > 0) {
-        per_time = " / Month";
-    }
-
     var title = '<SPAN ID="modal-itemtotalprice-all"><div class="pull-left d-inline">' +
         '<div class="ml-2 pull-left d-inline" style="font-weight: normal !important;FLOAT:LEFT">' +
-        '<strong>$<SPAN ID="modal-itemtotalprice-discount"></SPAN>'+per_time+'</strong>' +
-        '</div><div STYLE="FLOAT:LEFT;display:none !important;" class="ml-2 pull-right d-inline">$<SPAN ID="modal-itemtotalprice"></SPAN></div>' +
+        '<strike STYLE="display:none;" ><SPAN  ID="modal-itemtotalprice-discount"></SPAN></strike>' +
+        '</div><div STYLE="FLOAT:LEFT" class="ml-2 pull-right d-inline"><SPAN ID="modal-itemtotalprice"></SPAN></div>' +
         '  <!--i class="fa fa-shopping-cart MR-2"></i--></div><DIV CLASS="mr-2" STYLE="FLOAT:RIGHT"> ADD</DIV> </SPAN>';
 
     if (!isUndefined(notparent)) {
@@ -838,13 +829,15 @@ function generatereceipt(forcefade) {
             }
 
             tempHTML += '</SPAN> <span class="mr-auto itemname">' + itemname + '</SPAN>';
-            tempHTML += '<span id="cost_' + itemid +'"';
 
-            if(totalcost == '0.00'){
-                tempHTML += ' styl3e="visibility:hidden;" ';
+            tempHTML += '<span id="cost_' + itemid + '" >';
+            if(totalcost !=0){
+                tempHTML +=             '$' + totalcost +'</span>';
+
+
             }
 
-            tempHTML += '>$' + totalcost +'</span>';
+
             tempHTML += '<button class="bg-transparent " onclick="removeorderitem(' + itemid + ', ' + quantity + ');"><I CLASS="fa fa-minus-circle text-danger"></I></button>';
             if (hasaddons) {
                // tempHTML += '<button class="bg-transparent" onclick="edititem(this, ' + itemid + ');"><I CLASS="fa fa-pencil-alt text-muted"></I></button>';
@@ -1547,7 +1540,7 @@ function checknewsletter(status, where){
 
 //generate a list of addresses and send it to the alert modal
 function addresses() {
-    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2><br><SPAN ID="addresses">';
+    var HTML = '<DIV CLASS="section"><div class="clearfix mt-1"></div><h2>' + makestring("{myaddress}") + '</h2><SPAN ID="addresses">';
     var number = $("#add_number").val();
     var street = $("#add_street").val();
     var city = $("#add_city").val();
@@ -1567,7 +1560,7 @@ function addresses() {
 }
 
 function creditcards() {
-    var HTML = '<DIV CLASS="section mt-3"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><br><DIV ID="cardlist">';
+    var HTML = '<DIV CLASS="section mt-3"><div class="clearfix mt-1"></div><h2>' + makestring("{mycreditcard}") + '</h2><DIV ID="cardlist">';
     if (!loadsavedcreditinfo()) {
         return HTML + makestring("{nocreditcards}");
     }
@@ -2440,18 +2433,22 @@ function itemtotalprice(newprice, fade){
     newprice = Number(newprice).toFixed(2);
     var current = $("#modal-itemtotalprice").text();
     if(current != newprice) {
-        newprice_discount =   Number(newprice*.6).toFixed(2)
+        newprice_discount =   Number(newprice*1).toFixed(2)
 
 
         if (fade) {
             $("#modal-itemtotalprice-all").stop(true, true).fadeTo(fade_speed, 0, function() {
-                $("#modal-itemtotalprice").text(newprice_discount);
-                $("#modal-itemtotalprice-discount").text(newprice);
-                $("#modal-itemtotalprice-all").fadeTo(fade_speed, 1);
+                if(newprice_discount != 0) {
+                    $("#modal-itemtotalprice").text('$'+newprice_discount); }
+                    $("#modal-itemtotalprice-discount").text(newprice);
+                    $("#modal-itemtotalprice-all").fadeTo(fade_speed, 1);
+
             });
-        } else {
-            $("#modal-itemtotalprice").text(newprice_discount);
+        } else {                if(newprice_discount != 0) {
+
+            $("#modal-itemtotalprice").text('$'+newprice_discount);
             $("#modal-itemtotalprice-discount").text(newprice);
+        }
         }
     }
 }
