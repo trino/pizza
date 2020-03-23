@@ -709,7 +709,7 @@ function addtip(value, removeit, removeall){
             }
             tempHTML += '<span class="mr-auto itemname cursor-pointer" ONCLICK="changetip();" >$' + tips[index] + ' Tip</span><span>$' + (tips[index] * temptip) + '.00</span>';
             tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ', true);"><i class="fa fa-minus"></i></button>';
-            tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ');"><i class="fa fa-plus"></i> </button></div>';
+            tempHTML += '<button class="bg-transparent" onclick="addtip(' + tips[index] + ');"><i class="fa fa-cheveron-right"></i> </button></div>';
             HTML += tempHTML;
         }
     }
@@ -1370,7 +1370,7 @@ function placeorder(StripeResponse) {
                 if(!debugmode) {$(".ordersuccess").html("");}
                 clearorder();
                 $("#checkoutmodal").modal("hide");
-                handleresult(result, "Thank You For Booking With Us");
+                handleresult(result, "Booking Confirmed");
                 userdetails["Orders"].unshift({
                     id: $(".ordersuccess").attr("orderid"),
                     placed_at: formattednow(),

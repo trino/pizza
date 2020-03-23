@@ -213,7 +213,7 @@
     ?>
 
     @if($party != "private")
-        <h2 class="text-center pb-3" style="color: #FF0000">{{ $Delivery . $duration }}</h2>
+        <center><span class="btn-block text-center" style="color: #FF0000">{{ $Delivery . $duration }}</span></center>
         <!--p class="text-center">Please allow + or - 10 minutes for delivery.</p-->
     @endif
 
@@ -302,7 +302,7 @@
             <TD ONCLICK="addmarker('<?= $Restaurant["name"] . "'s Address', " . $Raddress["latitude"] . ", " . $Raddress["longitude"]; ?>, true);">
                 <?php
                 if ($Order["type"] == 0) {
-                    echo '<br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Customer Info</h2>';
+                    echo '<br><strong class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Customer Info</strong><br>';
                     echo $Order["name"] . "<BR>" . $Order["number"] . " " . $Order["street"] . '<BR>' . $Order["city"] . " " . $Order["province"] . " " . $Order["postalcode"] . "<br>";
                     if ($Order["unit"]) {
                         echo $Order["unit"] . '<BR>';
@@ -317,8 +317,8 @@
                         echo "Unit: " . $Raddress["unit"];
                     }
                 }
-                echo '<br><br><h2 class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Receipt #<span ID="receipt_id">' . $orderid . '</span></h2>';
-                echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "";
+                echo '<br><br><strong class="mt-2" style="margin-top: 0px; margin-bottom: 0px; vertical-align: top;">Receipt #<span ID="receipt_id">' . $orderid . '</span></strong><br>';
+                echo $Restaurant["name"] . "<BR>" . formatphone($Restaurant["phone"]) . "<br>";
                 ?>
             </TD>
         </TR>
@@ -338,49 +338,23 @@
     @if($includeextradata)
         <DIV CLASS="extrainfo">
             @if($party != "restaurant")
-                <h2 class="mt-4" style="margin-bottom: 0px;">What happens next?</h2>
-
+                <br><strong class="mt-4" style="margin-bottom: 0px;">What happens next?</strong><br>
                 You’ll get an email and text confirming your booking.<br><br>
-
-                <strong> Which Canbii professional will come to my place? </strong><br>
+                <strong> Which Canbii Cleaner will come to my place? </strong><br>
                 Canbii has a vast network of experienced, top-rated cleaners. Based on the time and date of your request, we work to assign the best professional available. You will receive an email and text with details
                 about your professional prior to your appointment.
                 <br><br>
                 <strong> Can I skip or reschedule bookings? </strong><br>
-                Cancellations up to 24 hours before your appointment are fully refundable with a $25 service fee.
+                Cancellations up to 24 hours before your appointment are fully refundable.
                 <br><br>
                 <strong> What if I cancel within 24 of my appointment? </strong><br>
-                Last-minute cancellations lead to unfillable time slots in your cleaner's schedule, so cancellations within 24 hours of your appointment are charged in full.
+                Last-minute cancellations lead to unfillable time slots in your cleaner's schedule, so cancellations within 24 hours of your appointment are charged $25.
                 <br><br>
-                <strong> I need more help. </strong><br>
-                Please contact us at (289) 683-1944
-
-                <br>
-
-
-
+                <strong> I need more help</strong><br>
+                Please contact us at: (289) 683-1944 or email: info@canbii.com
 
                 <DIV CLASS="clearfix"></DIV>
                 <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,9 +1,11 @@
 .banner-text {
 
 }
+
 .nav-tabs .nav-link {
-    font-size: 25rem;
+    font-size: 1.25rem;
 }
+
 label {
     color: #999 !important;
     font-size: .875rem;
@@ -50,7 +52,7 @@ label {
 }
 
 :root {
-    --min-height-global: 50px;
+    --min-height-global: 47px;
 }
 
 .editprofilediv {
@@ -136,7 +138,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .menumodal {
     padding: 0 !important;
-    background: #E6ECF0;
 }
 
 .text-right {
@@ -342,7 +343,7 @@ h2 {
     border-bottom: 0px solid #eceeef !important;
     border-right: 0px solid #eceeef !important;
 
-    border-radius: 0 !important;
+    bor22der-radius: 0 !important;
 
     border-bottom: 1px solid #eceeef !important;
     border-right: 1px solid #eceeef !important;
@@ -459,7 +460,6 @@ h2 {
 
 .addonlist {
     width: 100%;
-    background: #e6ecf0;
 }
 
 .bg-secondary {
@@ -632,6 +632,10 @@ a.link-white, a.link-white:hover, a.link-white:active, a.link-white:visited {
     padding-top: 3px;
 }
 
+.text-normal {
+    color: #212529;
+}
+
 body {
     /*  prevents horizontal scroll for full width container-fluid */
     overflow-x: hidden;
@@ -649,7 +653,10 @@ body {
     background: #e6ecf0;
     background: #eee;
 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+ */
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
 
 }
 
@@ -792,6 +799,13 @@ ul {
 
 .bg-transparent {
     background: transparent;
+
+
+}
+
+.align-middle.bg-transparent {
+    padding-right: 0 !important;
+
 }
 
 .fa-stack-1x {
@@ -1143,7 +1157,6 @@ table tr td:last-child, table tr th:last-child {
     }
     .item-name {
         position: absolute;
-        left: 60px;
         top: 15px;
     }
     .item-cost {
@@ -1169,6 +1182,7 @@ div.modal-content {
     -moz-box-shadow: none;
     -o-box-shadow: none;
     box-shadow: none;
+    backgro2und: transparent;
 }
 
 .modal-content {
@@ -1274,10 +1288,36 @@ div.home-content {
 .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto,
 .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9,
 .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9,
-.col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto{
+.col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
     min-height: 0;
 }
 
-#modal-itemdescription{
+#modal-itemdescription {
     font-size: .875rem;
+}
+
+
+
+h4 {
+    font-weight: normal;
+    font-size: 1.25rem;
+}
+
+
+.btn {
+    border-radius: 1.25rem;
+    padding: .5rem 1.25rem;
+}
+
+.dropdown-menu, .modal-content, .shadow, .modal-dialog, .card, .alert, .modal-content, .list-group-item {
+    border-radius: 1.25rem;
+}
+
+.btn-primary.btn-block.toppings_btn, .btn-primary.btn-block.payfororder {
+    border-bottom-left-radius: 1.25rem !important;
+    border-bottom-right-radius: 1.25rem !important;
+}
+
+.cursor-pointer {
+    border-radius: 0 !important;
 }

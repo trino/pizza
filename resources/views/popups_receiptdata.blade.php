@@ -1,5 +1,6 @@
 @if($style==1)
     <TABLE cellspacing="0" cellpadding="0" <?= inline("table table-sm"); ?>>
+
         <TR>
             <TH>#</TH>
             <TH>Item</TH>
@@ -16,7 +17,7 @@
 
 <?php
     startfile("popups_receiptdata");
-    $Bold = '<SPAN style="font-weight: bold;">';
+    $Bold = '<SPAN">';
     $ordinals = array("1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th");
     $integrity = true;
     if (!function_exists("findkey")) {
@@ -323,7 +324,7 @@
                             if ($addoncount > 1) {
                                 $itemtitle = $ordinals[$addonID] . " " . $itemtype . ": ";
                             }
-                            $HTML .= $itemtitle . implode(", ", $newtoppings) . "<BR>";
+                            $HTML .= $itemtitle . implode(", ", $newtoppings) . "";
                         }
                     }
                     if ($style == 1) {
@@ -349,7 +350,13 @@
                     }
                     echo '<TD ALIGN="RIGHT"' . $debug . '>';
                 }
-                echo '$' . number_format($itemtotal, 2) . '</TD></TR>';
+
+                if(number_format($itemtotal, 2) == '0'){}else{
+                    echo '$' . number_format($itemtotal, 2) ;
+
+                }
+
+                echo '</TD></TR>';
                 if ($style == 2 && $HTML) {
                     echo '<TR><TD COLSPAN="' . $colspan . '">' . $HTML . '</TD></TR>';
                 }
@@ -365,6 +372,7 @@
 
         $tax_percent = 0.13;
         $colspanminus1 = $colspan - 1;
+        echo "<tr><td><br></td></tr>";
         echo '<TR><TD COLSPAN="' . $colspanminus1 . '" ALIGN="RIGHT">Sub-total &nbsp;</TD><TD ALIGN="RIGHT"> $' . number_format($subtotal + $subtotal_notax, 2) . '</TD></TR>';
         $discountpercent = getdiscount($subtotal);
         if($discountpercent > 0){
@@ -387,7 +395,7 @@
         if($orderid) {insertdb("orders", array("id" => $orderid, "price" => $total));}//saved for stripe
 
         if ($Order["cookingnotes"]){
-            echo '<TR><TD COLSPAN="' . 2 . '"><h2 style="margin-bottom:0">Notes </h2>' . $Order["cookingnotes"] . '</TD></TR>';
+            echo '<TR><TD COLSPAN="' . 2 . '"><strong style="margin-bottom:0">Notes </strong><br>' . $Order["cookingnotes"] . '</TD></TR>';
         }
     }
     echo '</TABLE>';

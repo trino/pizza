@@ -39,7 +39,7 @@
     <meta http-equiv="content-language" content="en-CA">
     <meta name="mobile-web-app-capable" content="yes">
     <!--title><?= cityname . " " . product ?> Delivery</title-->
-    <title>On-Demand Home Cleaning - Hamilton</title>
+    <title>Canbii Cleaners Hamilton</title>
     <link rel="icon" sizes="128x128" href="<?= webroot("images/" . strtolower(product) . "128.png"); ?>">
     <link rel="icon" sizes="192x192" href="<?= webroot("images/" . strtolower(product) . "192.png"); ?>">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>

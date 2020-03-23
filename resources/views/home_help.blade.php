@@ -19,7 +19,7 @@
     $donations = floor($orders * $donation_per_order);
     $email = '<A HREF="mailto:info@trinoweb.ca?subject=' . sitename . '">info@trinoweb.ca</A>';
     ?>
-    <STYLE>
+    <STYLE>/*
         li > .title {
             font-weight: bold;
         }
@@ -111,7 +111,7 @@
 
         .btn-border {
             border: 1px solid black !important;
-        }
+        }*/
     </STYLE>
     <SCRIPT>
         $(document).ready(function () {
@@ -155,10 +155,10 @@
     </SCRIPT>
 
 
-    <div class="container">
+    <div class="container ">
 
 
-        <DIV class="row">
+        <DIV class="row  py-3">
             <div class="col-sm-6 py-3">
                 <h3><?= getsetting("aboutus"); ?></h3>
                 <div class="card-block ">
@@ -167,12 +167,10 @@
                     <br>
                     <p>
                         <?= sitename; ?> is the most convenient home cleaning service, period. We know you want the cheapest house cleaning while still having the confidence that you will receive a cleaner who is
-                        thorough
-                        and professional.
+                        thorough and professional.
                         <BR><BR>
                         If you want to be sure that your cleaning professional will really make things sparkle, look no further than Canbii Cleaners. Over time, parts of your home – particularly kitchens and bathrooms –
-                        can
-                        accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
+                        can accumulate layers of dirt, grease, and grime that could lead to mold and an unsafe environment. When you book a cleaning service with Canbii, you can rest assure that we'll get your in tip top
                         condition.
 
                     </p>
@@ -191,7 +189,7 @@
 
                 </div>
             </div>
-            <DIV CLASS="col-sm-6 bg-secondary " style="color:#373a3c" titledebug="popups_login">
+            <DIV CLASS="col-sm-6 bg-secondary text-normal" titledebug="popups_login">
                 <?= view("popups_login", array("justright" => true))->render(); ?>
             </DIV>
         </DIV>
@@ -209,28 +207,22 @@
             <div class="col-sm-12 pt-3">
 <div class="card-block">
 
-                <h1>Our Promise</h1>
+                <h1><strong>Our Promise</strong></h1>
 
-                <br><b> Background Checked</b>
+                <!--br><b> Background Checked</b>
                 <br> All cleaners on Canbii undergo federal and provincial background checks
-
-                <br><br><b> Supplies Supplied</b>
-                <br> Canbii cleaners will bring all necessary supplies
-
-                <br><br> <b>Cancel / Reschedule Online</b>
-                <br> Non-refundable 24 hrs before appointment, $25 otherwise
-
-                <br><br> <b>Parking</b>
-                <br> You are responsible for parking fees
+    -->
+                <br> <b>Cancel/Reschedule</b>
+                <br> Non-refundable 24 hrs before appointment, free otherwise
 
                 <br><br> <b>Upfront pricing</b>
                 <br> Canbii technology calculates the total price for your service so you can have piece of mind before booking
 
                 <br><br> <b>Real-time updates</b>
-                <br> Get a text message when your provider is on the way, when they arrive and when they're finished.
+                <br> Get a text message when your provider is on the way, when they arrive and when they're finished
 
                 <br><br> <b>Everything online</b>
-                <br> The Canbii web app makes it easy to reschedule, cancel, pay and tip from your phone or computer.
+                <br> Canbii makes it easy to book, cancel, pay and tip from your phone or computer
 
                 <br><br> <b>No commitment</b>
                 <br> No contracts, free to cancel
@@ -578,10 +570,8 @@
                 <div class="card-block ">
                     <h1>
                         <strong>Privacy Policy</strong></h1>
-                    <br>
                     <p>
-                        <strong>Last updated: October, 2019</strong></p>
-
+                        Last updated: October, 2019</p>
                     <p>
                         <strong>Our Policy</strong></p>
                     <p>

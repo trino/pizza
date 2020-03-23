@@ -22,7 +22,7 @@
         <TR>
             <TD style="padding: 20px;" valign="top">
                 Thank you,
-                <br>The <A HREF="<?= serverurl ?>"><?= sitename; ?> Team</A>
+                <br>The <A HREF="<?= serverurl ?>"><?= sitename; ?></A> Team
             </TD>
         </TR>
     </TABLE>

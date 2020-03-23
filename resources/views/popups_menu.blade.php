@@ -179,7 +179,7 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                 <div id="home-section" class="image-bg vertical-align" style="background-image:url({{webroot("public/images/". $category['image']) }});">
                     <div class="container-fluid">
                         <div class="home-content" style="bottom:10px;">
-                            <h4 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['category']}}</h4>
+                            <h4 class="text-center" style="text-shadow: black 1px 1px 15px;font-weight: bold;">{{$category['category']}}</h4>
                             <!--h6 class="text-center" style="text-shadow: black 0px 0px 10px;">{{$category['description_main']}}</h6-->
                         </div>
                     </div>
@@ -229,7 +229,7 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                             $total += $menuitem[$table];
                         }
                         if ($total) {
-                            $HTML = ' data-toggle="modal" data-backdrop="static" data-target="#menumodal" onclick="loadmodal(this);"';
+                            $HTML = ' data-toggle="modal" data-backd3rop="static" data-target="#menumodal" onclick="loadmodal(this);"';
                         } else {
                             $HTML = ' onclick="additemtoorder(this, -1);"';
                             $icon = '';
@@ -258,18 +258,18 @@ echo '<!-- menu cache generated at: ' . my_now() . ' --> ';
                         @endif
 
 
-                        <span class="align-middle item-name text-se5condary" style="font-weight:bold; font-size: .875rem;">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
-                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;font-size: .875rem;">
+                        <span class="align-middle item-name text-se5condary" style="font-we3ight:bold; fo3nt-size: .875rem;">{{ str_replace(array("[", "]"), "", $menuitem['item']) }} </span>
+                            <span class="ml-auto align-middle btn-sm-padding item-cost text-sec5ondary" style="padding-right:0 !important;fon3t-size: .875rem;">
 
 
                                @if($menuitem['price'] != 0)
                                     <!--strike class=" text-secondary">${{number_format($menuitem["price"], 2)}}</strike-->
 
-                                    <strong style="">${{number_format($menuitem["price"]*1, 2)}}</strong>
+                                    <span style="">${{number_format($menuitem["price"]*1, 2)}}</span>
 
                                    @else
 
-                                   <i class="fa fa-plus" style="color: #d7d7d7"></i>
+                                   <i class="fa fa-chevron-right" style="color: #d7d7d7"></i>
                                    @endif
                             </span>
                     </button>
